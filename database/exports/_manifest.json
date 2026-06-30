@@ -1,0 +1,156 @@
+{
+    "generated_at": "2026-05-26T00:30:13+00:00",
+    "driver": "mysql",
+    "tables": [
+        {
+            "name": "admins",
+            "rows": 0,
+            "file": "admins.json"
+        },
+        {
+            "name": "badges",
+            "rows": 4,
+            "file": "badges.json"
+        },
+        {
+            "name": "chat_conversations",
+            "rows": 840,
+            "file": "chat_conversations.json"
+        },
+        {
+            "name": "chat_message_attachments",
+            "rows": 1,
+            "file": "chat_message_attachments.json"
+        },
+        {
+            "name": "chat_message_notifications",
+            "rows": 2751,
+            "file": "chat_message_notifications.json"
+        },
+        {
+            "name": "chat_messages",
+            "rows": 1377,
+            "file": "chat_messages.json"
+        },
+        {
+            "name": "chat_participation",
+            "rows": 1675,
+            "file": "chat_participation.json"
+        },
+        {
+            "name": "couple_investment_planner_drafts",
+            "rows": 0,
+            "file": "couple_investment_planner_drafts.json"
+        },
+        {
+            "name": "couple_timeline_drafts",
+            "rows": 1,
+            "file": "couple_timeline_drafts.json"
+        },
+        {
+            "name": "endorsements",
+            "rows": 1555,
+            "file": "endorsements.json"
+        },
+        {
+            "name": "events",
+            "rows": 3,
+            "file": "events.json"
+        },
+        {
+            "name": "favorites",
+            "rows": 225,
+            "file": "favorites.json"
+        },
+        {
+            "name": "inquiries",
+            "rows": 2745,
+            "file": "inquiries.json"
+        },
+        {
+            "name": "meetings",
+            "rows": 488,
+            "file": "meetings.json"
+        },
+        {
+            "name": "pairings",
+            "rows": 104,
+            "file": "pairings.json"
+        },
+        {
+            "name": "payments",
+            "rows": 0,
+            "file": "payments.json"
+        },
+        {
+            "name": "profiles",
+            "rows": 528,
+            "file": "profiles.json"
+        },
+        {
+            "name": "ranking_categories",
+            "rows": 5,
+            "file": "ranking_categories.json"
+        },
+        {
+            "name": "referrals",
+            "rows": 629,
+            "file": "referrals.json"
+        },
+        {
+            "name": "reviews",
+            "rows": 517,
+            "file": "reviews.json"
+        },
+        {
+            "name": "subscription_items",
+            "rows": 193,
+            "file": "subscription_items.json"
+        },
+        {
+            "name": "subscriptions",
+            "rows": 193,
+            "file": "subscriptions.json"
+        },
+        {
+            "name": "tag_types",
+            "rows": 53,
+            "file": "tag_types.json"
+        },
+        {
+            "name": "tags",
+            "rows": 449,
+            "file": "tags.json"
+        },
+        {
+            "name": "users",
+            "rows": 276,
+            "file": "users.json"
+        },
+        {
+            "name": "vendor_connections",
+            "rows": 470,
+            "file": "vendor_connections.json"
+        },
+        {
+            "name": "vendor_rankings",
+            "rows": 254,
+            "file": "vendor_rankings.json"
+        },
+        {
+            "name": "vendor_timeline_drafts",
+            "rows": 1,
+            "file": "vendor_timeline_drafts.json"
+        },
+        {
+            "name": "vendor_types",
+            "rows": 22,
+            "file": "vendor_types.json"
+        },
+        {
+            "name": "vendors",
+            "rows": 249,
+            "file": "vendors.json"
+        }
+    ]
+}

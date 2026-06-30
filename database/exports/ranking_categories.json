@@ -1,0 +1,42 @@
+[
+    {
+        "id": 1,
+        "category_name": "Client Community",
+        "weight": 30,
+        "goal_value": 3,
+        "created_at": "2024-10-14 10:34:07",
+        "updated_at": "2024-10-14 10:34:07"
+    },
+    {
+        "id": 2,
+        "category_name": "Vendor Community",
+        "weight": 25,
+        "goal_value": 1,
+        "created_at": "2024-10-14 10:34:07",
+        "updated_at": "2024-10-14 10:34:07"
+    },
+    {
+        "id": 3,
+        "category_name": "Reviews",
+        "weight": 20,
+        "goal_value": 5,
+        "created_at": "2024-10-14 10:34:07",
+        "updated_at": "2024-10-14 10:34:07"
+    },
+    {
+        "id": 4,
+        "category_name": "Vendor Referral",
+        "weight": 15,
+        "goal_value": 2,
+        "created_at": "2024-10-14 10:34:07",
+        "updated_at": "2024-10-14 10:34:07"
+    },
+    {
+        "id": 5,
+        "category_name": "Badges",
+        "weight": 10,
+        "goal_value": 5,
+        "created_at": "2024-10-14 10:34:07",
+        "updated_at": "2024-10-14 10:34:07"
+    }
+]

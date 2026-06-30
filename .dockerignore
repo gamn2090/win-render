@@ -1,0 +1,17 @@
+.git
+.gitignore
+.env
+.env.*
+!.env.example
+node_modules
+vendor
+# Si existe (npm run dev local), Laravel usaría HMR y los assets apuntarían a localhost.
+public/hot
+storage/logs/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+bootstrap/cache/*
+.phpunit.result.cache
+npm-debug.log*
+yarn-error.log*

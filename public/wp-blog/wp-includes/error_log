@@ -1,0 +1,12 @@
+[14-Jan-2026 06:28:49 UTC] PHP Fatal error:  Uncaught Error: Undefined constant "ABSPATH" in /home/winetwork/public_html/public/wp-blog/wp-includes/functions.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/winetwork/public_html/public/wp-blog/wp-includes/functions.php on line 8
+[14-Jan-2026 06:28:54 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function is_main_site() in /home/winetwork/public_html/public/wp-blog/wp-includes/update.php:1145
+Stack trace:
+#0 {main}
+  thrown in /home/winetwork/public_html/public/wp-blog/wp-includes/update.php on line 1145
+[14-Jan-2026 06:28:57 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function wp_using_themes() in /home/winetwork/public_html/public/wp-blog/wp-includes/template-loader.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/winetwork/public_html/public/wp-blog/wp-includes/template-loader.php on line 7

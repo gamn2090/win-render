@@ -1,0 +1,1932 @@
+[
+    {
+        "id": 22,
+        "subscription_id": 22,
+        "stripe_id": "si_RZgZcOMBg09MLp",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-12 19:52:15",
+        "updated_at": "2025-01-12 19:52:15"
+    },
+    {
+        "id": 29,
+        "subscription_id": 29,
+        "stripe_id": "si_RaRiVnHMdMXXGr",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-14 20:34:46",
+        "updated_at": "2025-01-14 20:34:46"
+    },
+    {
+        "id": 30,
+        "subscription_id": 30,
+        "stripe_id": "si_RarXTYsvsgUkU7",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-15 23:15:24",
+        "updated_at": "2025-01-15 23:15:24"
+    },
+    {
+        "id": 31,
+        "subscription_id": 31,
+        "stripe_id": "si_RarXEv8fgSWSDn",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-15 23:15:36",
+        "updated_at": "2025-01-15 23:15:36"
+    },
+    {
+        "id": 32,
+        "subscription_id": 32,
+        "stripe_id": "si_Rb7ESJKaSV4gGb",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-16 15:28:41",
+        "updated_at": "2025-01-16 15:28:41"
+    },
+    {
+        "id": 33,
+        "subscription_id": 33,
+        "stripe_id": "si_Rb7v1w58OKTTql",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-16 16:11:59",
+        "updated_at": "2025-01-16 16:11:59"
+    },
+    {
+        "id": 34,
+        "subscription_id": 34,
+        "stripe_id": "si_Rb9YHplgzd0zLh",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-16 17:53:11",
+        "updated_at": "2025-01-16 17:53:11"
+    },
+    {
+        "id": 35,
+        "subscription_id": 35,
+        "stripe_id": "si_RbFHmLZWBnffg7",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-16 23:47:46",
+        "updated_at": "2025-01-16 23:47:46"
+    },
+    {
+        "id": 36,
+        "subscription_id": 36,
+        "stripe_id": "si_RbSNSsk50F9SLh",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-17 13:20:01",
+        "updated_at": "2025-01-17 13:20:01"
+    },
+    {
+        "id": 37,
+        "subscription_id": 37,
+        "stripe_id": "si_RbawqsZEdXLHMY",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-17 22:11:06",
+        "updated_at": "2025-01-17 22:11:06"
+    },
+    {
+        "id": 38,
+        "subscription_id": 38,
+        "stripe_id": "si_RbbhXrU4SON2QO",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-17 22:57:44",
+        "updated_at": "2025-01-17 22:57:44"
+    },
+    {
+        "id": 39,
+        "subscription_id": 39,
+        "stripe_id": "si_Rbv2FAOUFETAW3",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-18 18:56:34",
+        "updated_at": "2025-01-18 18:56:34"
+    },
+    {
+        "id": 40,
+        "subscription_id": 40,
+        "stripe_id": "si_Rbv28xc1hd9Muy",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-18 18:56:56",
+        "updated_at": "2025-01-18 18:56:56"
+    },
+    {
+        "id": 41,
+        "subscription_id": 41,
+        "stripe_id": "si_RbvKZPfEO8rqVa",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-18 19:14:33",
+        "updated_at": "2025-01-18 19:14:33"
+    },
+    {
+        "id": 42,
+        "subscription_id": 42,
+        "stripe_id": "si_RcMXyCKX5lhwgz",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-19 23:21:38",
+        "updated_at": "2025-01-19 23:21:38"
+    },
+    {
+        "id": 43,
+        "subscription_id": 43,
+        "stripe_id": "si_RcMa0LL6a06csy",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-19 23:25:04",
+        "updated_at": "2025-01-19 23:25:04"
+    },
+    {
+        "id": 44,
+        "subscription_id": 44,
+        "stripe_id": "si_RcMduZzXLgpWj5",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-19 23:28:05",
+        "updated_at": "2025-01-19 23:28:05"
+    },
+    {
+        "id": 45,
+        "subscription_id": 45,
+        "stripe_id": "si_RcMdgaLJHxioDV",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-19 23:28:12",
+        "updated_at": "2025-01-19 23:28:12"
+    },
+    {
+        "id": 46,
+        "subscription_id": 46,
+        "stripe_id": "si_RcMy9gZ33FkT74",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-19 23:48:59",
+        "updated_at": "2025-01-19 23:48:59"
+    },
+    {
+        "id": 47,
+        "subscription_id": 47,
+        "stripe_id": "si_RcN6QTuPyuTdEa",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-19 23:57:14",
+        "updated_at": "2025-01-19 23:57:14"
+    },
+    {
+        "id": 48,
+        "subscription_id": 48,
+        "stripe_id": "si_RcNA4lG6tQ8Y5F",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-20 00:00:47",
+        "updated_at": "2025-01-20 00:00:47"
+    },
+    {
+        "id": 49,
+        "subscription_id": 49,
+        "stripe_id": "si_RcNAm10n7XOMj3",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-20 00:00:54",
+        "updated_at": "2025-01-20 00:00:54"
+    },
+    {
+        "id": 50,
+        "subscription_id": 50,
+        "stripe_id": "si_RcNHMqFxexdR4b",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-20 00:08:16",
+        "updated_at": "2025-01-20 00:08:16"
+    },
+    {
+        "id": 51,
+        "subscription_id": 51,
+        "stripe_id": "si_RcNOrerGYhGMyM",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-20 00:15:04",
+        "updated_at": "2025-01-20 00:15:04"
+    },
+    {
+        "id": 52,
+        "subscription_id": 52,
+        "stripe_id": "si_Rcd4t8sxE6WKZQ",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-20 16:26:45",
+        "updated_at": "2025-01-20 16:26:45"
+    },
+    {
+        "id": 53,
+        "subscription_id": 53,
+        "stripe_id": "si_RcdxsNnyJGXdo2",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-20 17:21:44",
+        "updated_at": "2025-01-20 17:21:44"
+    },
+    {
+        "id": 54,
+        "subscription_id": 54,
+        "stripe_id": "si_RcgGuRz0D5q2ca",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-20 19:44:34",
+        "updated_at": "2025-01-20 19:44:34"
+    },
+    {
+        "id": 55,
+        "subscription_id": 55,
+        "stripe_id": "si_Rd0lexZ7YBa3q5",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-21 16:56:18",
+        "updated_at": "2025-01-21 16:56:18"
+    },
+    {
+        "id": 56,
+        "subscription_id": 56,
+        "stripe_id": "si_Rd0qIR4TYboaFb",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-21 17:00:26",
+        "updated_at": "2025-01-21 17:00:26"
+    },
+    {
+        "id": 57,
+        "subscription_id": 57,
+        "stripe_id": "si_Rd2YWp2VeKTF14",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-21 18:46:55",
+        "updated_at": "2025-01-21 18:46:55"
+    },
+    {
+        "id": 58,
+        "subscription_id": 58,
+        "stripe_id": "si_Rd6QhDIrIXq5wE",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-21 22:46:57",
+        "updated_at": "2025-01-21 22:46:57"
+    },
+    {
+        "id": 59,
+        "subscription_id": 59,
+        "stripe_id": "si_Rd75ZLVQjaH0v6",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-21 23:28:01",
+        "updated_at": "2025-01-21 23:28:01"
+    },
+    {
+        "id": 60,
+        "subscription_id": 60,
+        "stripe_id": "si_Rd79zzI6ad9MsZ",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-21 23:32:01",
+        "updated_at": "2025-01-21 23:32:01"
+    },
+    {
+        "id": 61,
+        "subscription_id": 61,
+        "stripe_id": "si_Rd81LuxdPs4ENM",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-22 00:26:12",
+        "updated_at": "2025-01-22 00:26:12"
+    },
+    {
+        "id": 62,
+        "subscription_id": 62,
+        "stripe_id": "si_Rd82qTV6pGROA0",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-22 00:26:48",
+        "updated_at": "2025-01-22 00:26:48"
+    },
+    {
+        "id": 63,
+        "subscription_id": 63,
+        "stripe_id": "si_Rd87N0kCy2sPev",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-22 00:31:47",
+        "updated_at": "2025-01-22 00:31:47"
+    },
+    {
+        "id": 64,
+        "subscription_id": 64,
+        "stripe_id": "si_Rd8ETWEAyWhSp5",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-22 00:38:56",
+        "updated_at": "2025-01-22 00:38:56"
+    },
+    {
+        "id": 65,
+        "subscription_id": 65,
+        "stripe_id": "si_Rd8H8UkCwBqzzk",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-22 00:41:42",
+        "updated_at": "2025-01-22 00:41:42"
+    },
+    {
+        "id": 66,
+        "subscription_id": 66,
+        "stripe_id": "si_Rd8KXOLyRb4FmY",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-22 00:45:13",
+        "updated_at": "2025-01-22 00:45:13"
+    },
+    {
+        "id": 67,
+        "subscription_id": 67,
+        "stripe_id": "si_Rd8OPWf9fGzhgS",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-22 00:48:31",
+        "updated_at": "2025-01-22 00:48:31"
+    },
+    {
+        "id": 68,
+        "subscription_id": 68,
+        "stripe_id": "si_Rd8WCFiJUZ0yQM",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-22 00:56:46",
+        "updated_at": "2025-01-22 00:56:46"
+    },
+    {
+        "id": 69,
+        "subscription_id": 69,
+        "stripe_id": "si_Rd9F3vNv7G29sk",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-22 01:42:04",
+        "updated_at": "2025-01-22 01:42:04"
+    },
+    {
+        "id": 70,
+        "subscription_id": 70,
+        "stripe_id": "si_RdKwo36benXstt",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-22 13:47:15",
+        "updated_at": "2025-01-22 13:47:15"
+    },
+    {
+        "id": 71,
+        "subscription_id": 71,
+        "stripe_id": "si_RdLRovGqop94XS",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-22 14:18:17",
+        "updated_at": "2025-01-22 14:18:17"
+    },
+    {
+        "id": 72,
+        "subscription_id": 72,
+        "stripe_id": "si_RdNtgcL70zdSfK",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-22 16:49:41",
+        "updated_at": "2025-01-22 16:49:41"
+    },
+    {
+        "id": 73,
+        "subscription_id": 73,
+        "stripe_id": "si_RdPOG2eCD69PD3",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-22 18:22:32",
+        "updated_at": "2025-01-22 18:22:32"
+    },
+    {
+        "id": 74,
+        "subscription_id": 74,
+        "stripe_id": "si_RdRMUuoXvjavtq",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-22 20:25:00",
+        "updated_at": "2025-01-22 20:25:00"
+    },
+    {
+        "id": 75,
+        "subscription_id": 75,
+        "stripe_id": "si_RdSHmwITfygxab",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-22 21:21:32",
+        "updated_at": "2025-01-22 21:21:32"
+    },
+    {
+        "id": 76,
+        "subscription_id": 76,
+        "stripe_id": "si_RdTzHa6smcdiOp",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-22 23:07:36",
+        "updated_at": "2025-01-22 23:07:36"
+    },
+    {
+        "id": 77,
+        "subscription_id": 77,
+        "stripe_id": "si_RdVCIDv5hbpxHU",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-23 00:22:59",
+        "updated_at": "2025-01-23 00:22:59"
+    },
+    {
+        "id": 78,
+        "subscription_id": 78,
+        "stripe_id": "si_RdWAE2mq6GJCwN",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-23 01:22:38",
+        "updated_at": "2025-01-23 01:22:38"
+    },
+    {
+        "id": 79,
+        "subscription_id": 79,
+        "stripe_id": "si_RdXov6cH0qRpmj",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-23 03:04:43",
+        "updated_at": "2025-01-23 03:04:43"
+    },
+    {
+        "id": 80,
+        "subscription_id": 80,
+        "stripe_id": "si_Rdi1O1nzc6uIEy",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-23 13:38:13",
+        "updated_at": "2025-01-23 13:38:13"
+    },
+    {
+        "id": 81,
+        "subscription_id": 81,
+        "stripe_id": "si_Rdp7Pc5wIVEOGa",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-23 20:58:06",
+        "updated_at": "2025-01-23 20:58:06"
+    },
+    {
+        "id": 82,
+        "subscription_id": 82,
+        "stripe_id": "si_Re6z2QrqbpXjix",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-24 15:26:04",
+        "updated_at": "2025-01-24 15:26:04"
+    },
+    {
+        "id": 83,
+        "subscription_id": 83,
+        "stripe_id": "si_ReB6LGIjgGyrX2",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-24 19:41:15",
+        "updated_at": "2025-01-24 19:41:15"
+    },
+    {
+        "id": 84,
+        "subscription_id": 84,
+        "stripe_id": "si_ReClcgJvjFqFDv",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-24 21:24:16",
+        "updated_at": "2025-01-24 21:24:16"
+    },
+    {
+        "id": 85,
+        "subscription_id": 85,
+        "stripe_id": "si_ReDSWIxJixGwCg",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-24 22:07:14",
+        "updated_at": "2025-01-24 22:07:14"
+    },
+    {
+        "id": 86,
+        "subscription_id": 86,
+        "stripe_id": "si_ReGtpHHwlmmxXK",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-25 01:39:32",
+        "updated_at": "2025-01-25 01:39:32"
+    },
+    {
+        "id": 87,
+        "subscription_id": 87,
+        "stripe_id": "si_ReTw7QayyBEuxi",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-25 15:09:04",
+        "updated_at": "2025-01-25 15:09:04"
+    },
+    {
+        "id": 88,
+        "subscription_id": 88,
+        "stripe_id": "si_RfGbm8UABWoxzq",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-27 17:26:14",
+        "updated_at": "2025-01-27 17:26:14"
+    },
+    {
+        "id": 89,
+        "subscription_id": 89,
+        "stripe_id": "si_RgUhKi5nE5DXbg",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-31 00:04:08",
+        "updated_at": "2025-01-31 00:04:08"
+    },
+    {
+        "id": 90,
+        "subscription_id": 90,
+        "stripe_id": "si_RgV8MXup0dHdRX",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-31 00:31:16",
+        "updated_at": "2025-01-31 00:31:16"
+    },
+    {
+        "id": 91,
+        "subscription_id": 91,
+        "stripe_id": "si_RgW7sQcBjhCpx8",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-31 01:32:03",
+        "updated_at": "2025-01-31 01:32:03"
+    },
+    {
+        "id": 92,
+        "subscription_id": 92,
+        "stripe_id": "si_RglU048UIZcr88",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-31 17:24:31",
+        "updated_at": "2025-01-31 17:24:31"
+    },
+    {
+        "id": 93,
+        "subscription_id": 93,
+        "stripe_id": "si_Rglvi2xissaveM",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-01-31 17:52:18",
+        "updated_at": "2025-01-31 17:52:18"
+    },
+    {
+        "id": 94,
+        "subscription_id": 94,
+        "stripe_id": "si_RhYOG8UyifK0vw",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-02 19:57:00",
+        "updated_at": "2025-02-02 19:57:00"
+    },
+    {
+        "id": 95,
+        "subscription_id": 95,
+        "stripe_id": "si_RhYuhFeNvfM1Gg",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-02 20:28:34",
+        "updated_at": "2025-02-02 20:28:34"
+    },
+    {
+        "id": 96,
+        "subscription_id": 96,
+        "stripe_id": "si_Rhz1qPDdqnLekT",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-03 23:27:21",
+        "updated_at": "2025-02-03 23:27:21"
+    },
+    {
+        "id": 97,
+        "subscription_id": 97,
+        "stripe_id": "si_RiEsphJbKRPqLS",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-04 15:50:53",
+        "updated_at": "2025-02-04 15:50:53"
+    },
+    {
+        "id": 98,
+        "subscription_id": 98,
+        "stripe_id": "si_RiHxKbnzohyrnu",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-04 19:01:52",
+        "updated_at": "2025-02-04 19:01:52"
+    },
+    {
+        "id": 99,
+        "subscription_id": 99,
+        "stripe_id": "si_RiJ73gbwwDBTp7",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-04 20:14:06",
+        "updated_at": "2025-02-04 20:14:06"
+    },
+    {
+        "id": 100,
+        "subscription_id": 100,
+        "stripe_id": "si_RiLCSdOKjxT7BW",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-04 22:22:24",
+        "updated_at": "2025-02-04 22:22:24"
+    },
+    {
+        "id": 101,
+        "subscription_id": 101,
+        "stripe_id": "si_RiMYncOep7GDMi",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-04 23:46:39",
+        "updated_at": "2025-02-04 23:46:39"
+    },
+    {
+        "id": 102,
+        "subscription_id": 102,
+        "stripe_id": "si_RiN7LX43FaHZTw",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-05 00:22:08",
+        "updated_at": "2025-02-05 00:22:08"
+    },
+    {
+        "id": 103,
+        "subscription_id": 103,
+        "stripe_id": "si_RjmDlZTi0MKImT",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-08 18:21:33",
+        "updated_at": "2025-02-08 18:21:33"
+    },
+    {
+        "id": 104,
+        "subscription_id": 104,
+        "stripe_id": "si_RlGp0nV89wPnc6",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-12 18:03:50",
+        "updated_at": "2025-02-12 18:03:50"
+    },
+    {
+        "id": 105,
+        "subscription_id": 105,
+        "stripe_id": "si_RlhnWSXn9kB3xG",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-13 21:55:26",
+        "updated_at": "2025-02-13 21:55:26"
+    },
+    {
+        "id": 106,
+        "subscription_id": 106,
+        "stripe_id": "si_RlyoGbXkq4sjNw",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-14 15:31:18",
+        "updated_at": "2025-02-14 15:31:18"
+    },
+    {
+        "id": 107,
+        "subscription_id": 107,
+        "stripe_id": "si_Rm7Eh4Sjuli0wL",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-15 00:12:30",
+        "updated_at": "2025-02-15 00:12:30"
+    },
+    {
+        "id": 108,
+        "subscription_id": 108,
+        "stripe_id": "si_RnYbXYdufaw2FS",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-18 20:34:13",
+        "updated_at": "2025-02-18 20:34:13"
+    },
+    {
+        "id": 109,
+        "subscription_id": 109,
+        "stripe_id": "si_RndvJvfkUITo4w",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-19 02:04:16",
+        "updated_at": "2025-02-19 02:04:16"
+    },
+    {
+        "id": 110,
+        "subscription_id": 110,
+        "stripe_id": "si_RnuTIQwhcz1Xqd",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-19 19:09:57",
+        "updated_at": "2025-02-19 19:09:57"
+    },
+    {
+        "id": 111,
+        "subscription_id": 111,
+        "stripe_id": "si_RnuioIySzdJprc",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-19 19:24:56",
+        "updated_at": "2025-02-19 19:24:56"
+    },
+    {
+        "id": 112,
+        "subscription_id": 112,
+        "stripe_id": "si_RoO6UbmkOtCttw",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-21 01:46:58",
+        "updated_at": "2025-02-21 01:46:58"
+    },
+    {
+        "id": 113,
+        "subscription_id": 113,
+        "stripe_id": "si_RoU83FAXjqgwSf",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-21 08:00:58",
+        "updated_at": "2025-02-21 08:00:58"
+    },
+    {
+        "id": 114,
+        "subscription_id": 114,
+        "stripe_id": "si_RogNuh0jIEQo1Z",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-21 20:40:17",
+        "updated_at": "2025-02-21 20:40:17"
+    },
+    {
+        "id": 115,
+        "subscription_id": 115,
+        "stripe_id": "si_RoyeXqnE260LO9",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-22 15:32:35",
+        "updated_at": "2025-02-22 15:32:35"
+    },
+    {
+        "id": 116,
+        "subscription_id": 116,
+        "stripe_id": "si_RoyyFFuXIPLYgM",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-22 15:52:43",
+        "updated_at": "2025-02-22 15:52:43"
+    },
+    {
+        "id": 117,
+        "subscription_id": 117,
+        "stripe_id": "si_RozKdHKhzFWVHD",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-22 16:14:55",
+        "updated_at": "2025-02-22 16:14:55"
+    },
+    {
+        "id": 118,
+        "subscription_id": 118,
+        "stripe_id": "si_Rp0UQJjfLKfeUB",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-22 17:26:25",
+        "updated_at": "2025-02-22 17:26:25"
+    },
+    {
+        "id": 119,
+        "subscription_id": 119,
+        "stripe_id": "si_Rp3m004sviOnbQ",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-22 20:50:23",
+        "updated_at": "2025-02-22 20:50:23"
+    },
+    {
+        "id": 120,
+        "subscription_id": 120,
+        "stripe_id": "si_Rp3zGU73gbxz18",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-22 21:03:49",
+        "updated_at": "2025-02-22 21:03:49"
+    },
+    {
+        "id": 121,
+        "subscription_id": 121,
+        "stripe_id": "si_Rp4SZw10vdGdDP",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-22 21:33:18",
+        "updated_at": "2025-02-22 21:33:18"
+    },
+    {
+        "id": 122,
+        "subscription_id": 122,
+        "stripe_id": "si_Rp59WkF5UDHabH",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-22 22:16:07",
+        "updated_at": "2025-02-22 22:16:07"
+    },
+    {
+        "id": 123,
+        "subscription_id": 123,
+        "stripe_id": "si_RpMXtmgVg1PKVC",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-23 16:13:22",
+        "updated_at": "2025-02-23 16:13:22"
+    },
+    {
+        "id": 124,
+        "subscription_id": 124,
+        "stripe_id": "si_RpQmjoWtt1kiIM",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-23 20:36:58",
+        "updated_at": "2025-02-23 20:36:58"
+    },
+    {
+        "id": 125,
+        "subscription_id": 125,
+        "stripe_id": "si_RpV85zeapmBG9o",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-24 01:06:41",
+        "updated_at": "2025-02-24 01:06:41"
+    },
+    {
+        "id": 126,
+        "subscription_id": 126,
+        "stripe_id": "si_RpiqL4Rma4Qx5i",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-24 15:16:23",
+        "updated_at": "2025-02-24 15:16:23"
+    },
+    {
+        "id": 127,
+        "subscription_id": 127,
+        "stripe_id": "si_Rq5mHG02P2tEGr",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-25 14:59:18",
+        "updated_at": "2025-02-25 14:59:18"
+    },
+    {
+        "id": 128,
+        "subscription_id": 128,
+        "stripe_id": "si_RqVsMr51FtMR5n",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-26 17:56:50",
+        "updated_at": "2025-02-26 17:56:50"
+    },
+    {
+        "id": 129,
+        "subscription_id": 129,
+        "stripe_id": "si_RqW2mSV7z1CxcC",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-26 18:06:51",
+        "updated_at": "2025-02-26 18:06:51"
+    },
+    {
+        "id": 130,
+        "subscription_id": 130,
+        "stripe_id": "si_RqYjDb8vxo3svj",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-26 20:54:18",
+        "updated_at": "2025-02-26 20:54:18"
+    },
+    {
+        "id": 131,
+        "subscription_id": 131,
+        "stripe_id": "si_Rqcow9MsHmheVu",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-27 01:06:42",
+        "updated_at": "2025-02-27 01:06:42"
+    },
+    {
+        "id": 132,
+        "subscription_id": 132,
+        "stripe_id": "si_Rqfzm2en0AjmhO",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-27 04:23:49",
+        "updated_at": "2025-02-27 04:23:49"
+    },
+    {
+        "id": 133,
+        "subscription_id": 133,
+        "stripe_id": "si_RrH9zyf4C6Pxc4",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-28 18:47:34",
+        "updated_at": "2025-02-28 18:47:34"
+    },
+    {
+        "id": 134,
+        "subscription_id": 134,
+        "stripe_id": "si_RrHIboSkMs4l7T",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-02-28 18:56:28",
+        "updated_at": "2025-02-28 18:56:28"
+    },
+    {
+        "id": 135,
+        "subscription_id": 135,
+        "stripe_id": "si_RsWQ98rK6FeAld",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-03-04 02:38:44",
+        "updated_at": "2025-03-04 02:38:44"
+    },
+    {
+        "id": 136,
+        "subscription_id": 136,
+        "stripe_id": "si_RsvpeZZu0yzcwd",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-03-05 04:53:29",
+        "updated_at": "2025-03-05 04:53:29"
+    },
+    {
+        "id": 137,
+        "subscription_id": 137,
+        "stripe_id": "si_RtU0JhCiDktGOQ",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-03-06 16:12:58",
+        "updated_at": "2025-03-06 16:12:58"
+    },
+    {
+        "id": 138,
+        "subscription_id": 138,
+        "stripe_id": "si_RtUBeOKeN5sHZZ",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-03-06 16:23:56",
+        "updated_at": "2025-03-06 16:23:56"
+    },
+    {
+        "id": 139,
+        "subscription_id": 139,
+        "stripe_id": "si_RteZYMKeRhqQJT",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-03-07 03:07:33",
+        "updated_at": "2025-03-07 03:07:33"
+    },
+    {
+        "id": 140,
+        "subscription_id": 140,
+        "stripe_id": "si_Rtej3MPW4QxMRz",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-03-07 03:17:48",
+        "updated_at": "2025-03-07 03:17:48"
+    },
+    {
+        "id": 141,
+        "subscription_id": 141,
+        "stripe_id": "si_Rto3eLG2rMqjly",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-03-07 12:56:08",
+        "updated_at": "2025-03-07 12:56:08"
+    },
+    {
+        "id": 142,
+        "subscription_id": 142,
+        "stripe_id": "si_RtuexssKR7QUFc",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-03-07 19:44:39",
+        "updated_at": "2025-03-07 19:44:39"
+    },
+    {
+        "id": 143,
+        "subscription_id": 143,
+        "stripe_id": "si_RuEBpgswngV3n0",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-03-08 15:55:39",
+        "updated_at": "2025-03-08 15:55:39"
+    },
+    {
+        "id": 144,
+        "subscription_id": 144,
+        "stripe_id": "si_RuM5bRWtloE4de",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-03-09 00:05:36",
+        "updated_at": "2025-03-09 00:05:36"
+    },
+    {
+        "id": 145,
+        "subscription_id": 145,
+        "stripe_id": "si_RubUKMfa7ulIth",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-03-09 16:00:55",
+        "updated_at": "2025-03-09 16:00:55"
+    },
+    {
+        "id": 146,
+        "subscription_id": 146,
+        "stripe_id": "si_Rubl2O6aDqlFjT",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-03-09 16:17:55",
+        "updated_at": "2025-03-09 16:17:55"
+    },
+    {
+        "id": 147,
+        "subscription_id": 147,
+        "stripe_id": "si_RZgZGC6E0vIJyj",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-03-10 00:32:36",
+        "updated_at": "2025-03-10 00:32:36"
+    },
+    {
+        "id": 148,
+        "subscription_id": 148,
+        "stripe_id": "si_RvLEDRgsfekh1P",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-03-11 15:17:16",
+        "updated_at": "2025-03-11 15:17:16"
+    },
+    {
+        "id": 149,
+        "subscription_id": 149,
+        "stripe_id": "si_RvegzSepPyh6Pk",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-03-12 11:22:48",
+        "updated_at": "2025-03-12 11:22:48"
+    },
+    {
+        "id": 150,
+        "subscription_id": 150,
+        "stripe_id": "si_Rvikse8a7cEuZM",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-03-12 15:34:54",
+        "updated_at": "2025-03-12 15:34:54"
+    },
+    {
+        "id": 151,
+        "subscription_id": 151,
+        "stripe_id": "si_RvsQorVqwZ4CCT",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-03-13 01:34:29",
+        "updated_at": "2025-03-13 01:34:29"
+    },
+    {
+        "id": 152,
+        "subscription_id": 152,
+        "stripe_id": "si_Rw8sQI9sa0iuGF",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-03-13 18:34:25",
+        "updated_at": "2025-03-13 18:34:25"
+    },
+    {
+        "id": 153,
+        "subscription_id": 153,
+        "stripe_id": "si_RwSsycq94zBm9A",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-03-14 15:15:19",
+        "updated_at": "2025-03-14 15:15:19"
+    },
+    {
+        "id": 154,
+        "subscription_id": 154,
+        "stripe_id": "si_RwUONcT7A1nDq3",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-03-14 16:49:15",
+        "updated_at": "2025-03-14 16:49:15"
+    },
+    {
+        "id": 155,
+        "subscription_id": 155,
+        "stripe_id": "si_RwYzGga7lW1a5c",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-03-14 21:34:10",
+        "updated_at": "2025-03-14 21:34:10"
+    },
+    {
+        "id": 156,
+        "subscription_id": 156,
+        "stripe_id": "si_RwfY7nF5kidCNb",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-03-15 04:21:15",
+        "updated_at": "2025-03-15 04:21:15"
+    },
+    {
+        "id": 157,
+        "subscription_id": 157,
+        "stripe_id": "si_RwprqOVrRk6yWJ",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-03-15 14:59:59",
+        "updated_at": "2025-03-15 14:59:59"
+    },
+    {
+        "id": 158,
+        "subscription_id": 158,
+        "stripe_id": "si_Rwz8ywgALCv00b",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-03-16 00:35:18",
+        "updated_at": "2025-03-16 00:35:18"
+    },
+    {
+        "id": 159,
+        "subscription_id": 159,
+        "stripe_id": "si_RxDdyjfdsnZu7q",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-03-16 15:33:24",
+        "updated_at": "2025-03-16 15:33:24"
+    },
+    {
+        "id": 160,
+        "subscription_id": 160,
+        "stripe_id": "si_RxbPdV1U7Rd8ni",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-03-17 16:07:53",
+        "updated_at": "2025-03-17 16:07:53"
+    },
+    {
+        "id": 161,
+        "subscription_id": 161,
+        "stripe_id": "si_RxuGEAQdMOIidF",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-03-18 11:36:50",
+        "updated_at": "2025-03-18 11:36:50"
+    },
+    {
+        "id": 162,
+        "subscription_id": 162,
+        "stripe_id": "si_RxzgF3N3J97iJl",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-03-18 17:13:12",
+        "updated_at": "2025-03-18 17:13:12"
+    },
+    {
+        "id": 163,
+        "subscription_id": 163,
+        "stripe_id": "si_RxzwxlxiAVjzv8",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-03-18 17:29:04",
+        "updated_at": "2025-03-18 17:29:04"
+    },
+    {
+        "id": 164,
+        "subscription_id": 164,
+        "stripe_id": "si_Ry7evtJI8OhIXJ",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-03-19 01:26:59",
+        "updated_at": "2025-03-19 01:26:59"
+    },
+    {
+        "id": 165,
+        "subscription_id": 165,
+        "stripe_id": "si_Ry8ZJplfPqFuEO",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-03-19 02:23:56",
+        "updated_at": "2025-03-19 02:23:56"
+    },
+    {
+        "id": 166,
+        "subscription_id": 166,
+        "stripe_id": "si_RyTPaHlQQSnZLv",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-03-19 23:55:53",
+        "updated_at": "2025-03-19 23:55:53"
+    },
+    {
+        "id": 167,
+        "subscription_id": 167,
+        "stripe_id": "si_RygxFQ4YC1PmpY",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-03-20 13:56:13",
+        "updated_at": "2025-03-20 13:56:13"
+    },
+    {
+        "id": 168,
+        "subscription_id": 168,
+        "stripe_id": "si_Ryja1mv8ycui3X",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-03-20 16:39:05",
+        "updated_at": "2025-03-20 16:39:05"
+    },
+    {
+        "id": 169,
+        "subscription_id": 169,
+        "stripe_id": "si_S1JkbxKAb4DrqN",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-03-27 14:09:05",
+        "updated_at": "2025-03-27 14:09:05"
+    },
+    {
+        "id": 170,
+        "subscription_id": 170,
+        "stripe_id": "si_S1m932jbalnXfO",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-03-28 19:30:13",
+        "updated_at": "2025-03-28 19:30:13"
+    },
+    {
+        "id": 171,
+        "subscription_id": 171,
+        "stripe_id": "si_S1n74x9owTbw5q",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-03-28 20:30:08",
+        "updated_at": "2025-03-28 20:30:08"
+    },
+    {
+        "id": 172,
+        "subscription_id": 172,
+        "stripe_id": "si_S222defeA2T6Iy",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-03-29 11:54:29",
+        "updated_at": "2025-03-29 11:54:29"
+    },
+    {
+        "id": 173,
+        "subscription_id": 173,
+        "stripe_id": "si_S2v43kcEQcKzST",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-03-31 20:46:49",
+        "updated_at": "2025-03-31 20:46:49"
+    },
+    {
+        "id": 174,
+        "subscription_id": 174,
+        "stripe_id": "si_S2xGsw9Oplt182",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-03-31 23:02:37",
+        "updated_at": "2025-03-31 23:02:37"
+    },
+    {
+        "id": 175,
+        "subscription_id": 175,
+        "stripe_id": "si_S3bxKrjHBPPhPK",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-04-02 17:06:06",
+        "updated_at": "2025-04-02 17:06:06"
+    },
+    {
+        "id": 176,
+        "subscription_id": 176,
+        "stripe_id": "si_S3d5lczNJOVRPK",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-04-02 18:15:48",
+        "updated_at": "2025-04-02 18:15:48"
+    },
+    {
+        "id": 177,
+        "subscription_id": 177,
+        "stripe_id": "si_S3f72NF1lfPQaq",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-04-02 20:21:37",
+        "updated_at": "2025-04-02 20:21:37"
+    },
+    {
+        "id": 178,
+        "subscription_id": 178,
+        "stripe_id": "si_S3fCPIUsqgqCWv",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-04-02 20:26:49",
+        "updated_at": "2025-04-02 20:26:49"
+    },
+    {
+        "id": 179,
+        "subscription_id": 179,
+        "stripe_id": "si_S3fQQT2ERoS1jW",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-04-02 20:40:43",
+        "updated_at": "2025-04-02 20:40:43"
+    },
+    {
+        "id": 180,
+        "subscription_id": 180,
+        "stripe_id": "si_S3fqwU0BpxuCgz",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-04-02 21:07:08",
+        "updated_at": "2025-04-02 21:07:08"
+    },
+    {
+        "id": 181,
+        "subscription_id": 181,
+        "stripe_id": "si_S3jRqXA9jAsgP0",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-04-03 00:50:20",
+        "updated_at": "2025-04-03 00:50:20"
+    },
+    {
+        "id": 182,
+        "subscription_id": 182,
+        "stripe_id": "si_S3vYRcq240heV0",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-04-03 13:20:54",
+        "updated_at": "2025-04-03 13:20:54"
+    },
+    {
+        "id": 183,
+        "subscription_id": 183,
+        "stripe_id": "si_S3wqZdRF4u4e9H",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-04-03 14:40:48",
+        "updated_at": "2025-04-03 14:40:48"
+    },
+    {
+        "id": 184,
+        "subscription_id": 184,
+        "stripe_id": "si_S3yH58M47ptlva",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-04-03 16:09:44",
+        "updated_at": "2025-04-03 16:09:44"
+    },
+    {
+        "id": 185,
+        "subscription_id": 185,
+        "stripe_id": "si_S40tRtyRsbVl6S",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-04-03 18:52:17",
+        "updated_at": "2025-04-03 18:52:17"
+    },
+    {
+        "id": 186,
+        "subscription_id": 186,
+        "stripe_id": "si_S44SOdoXGuAK3P",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-04-03 22:33:17",
+        "updated_at": "2025-04-03 22:33:17"
+    },
+    {
+        "id": 187,
+        "subscription_id": 187,
+        "stripe_id": "si_S4Jq4zuzDB2jhU",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-04-04 14:26:51",
+        "updated_at": "2025-04-04 14:26:51"
+    },
+    {
+        "id": 188,
+        "subscription_id": 188,
+        "stripe_id": "si_S4MzJKDwWBAmSJ",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-04-04 17:41:35",
+        "updated_at": "2025-04-04 17:41:35"
+    },
+    {
+        "id": 189,
+        "subscription_id": 189,
+        "stripe_id": "si_S4NVB8Mxi13LtW",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-04-04 18:14:11",
+        "updated_at": "2025-04-04 18:14:11"
+    },
+    {
+        "id": 190,
+        "subscription_id": 190,
+        "stripe_id": "si_S4Qs4CkY3rrO4e",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-04-04 21:42:58",
+        "updated_at": "2025-04-04 21:42:58"
+    },
+    {
+        "id": 191,
+        "subscription_id": 191,
+        "stripe_id": "si_S4Th7XQof2t7wJ",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-04-05 00:37:35",
+        "updated_at": "2025-04-05 00:37:35"
+    },
+    {
+        "id": 192,
+        "subscription_id": 192,
+        "stripe_id": "si_S4gGRmVWXmNLNc",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-04-05 13:36:26",
+        "updated_at": "2025-04-05 13:36:26"
+    },
+    {
+        "id": 193,
+        "subscription_id": 193,
+        "stripe_id": "si_S4hspmuqhKckHZ",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-04-05 15:16:42",
+        "updated_at": "2025-04-05 15:16:42"
+    },
+    {
+        "id": 194,
+        "subscription_id": 194,
+        "stripe_id": "si_S4lmTEfkMFfQmf",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-04-05 19:19:15",
+        "updated_at": "2025-04-05 19:19:15"
+    },
+    {
+        "id": 195,
+        "subscription_id": 195,
+        "stripe_id": "si_S4mVmsenGcXlDo",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-04-05 20:03:23",
+        "updated_at": "2025-04-05 20:03:23"
+    },
+    {
+        "id": 196,
+        "subscription_id": 196,
+        "stripe_id": "si_S4tgoaVucVAB35",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-04-06 03:28:56",
+        "updated_at": "2025-04-06 03:28:56"
+    },
+    {
+        "id": 197,
+        "subscription_id": 197,
+        "stripe_id": "si_S53GtbJMyww4VF",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-04-06 13:22:56",
+        "updated_at": "2025-04-06 13:22:56"
+    },
+    {
+        "id": 198,
+        "subscription_id": 198,
+        "stripe_id": "si_S55kK87h2aYR70",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-04-06 15:56:37",
+        "updated_at": "2025-04-06 15:56:37"
+    },
+    {
+        "id": 199,
+        "subscription_id": 199,
+        "stripe_id": "si_S5U7gKs1UvNZcL",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-04-07 17:08:19",
+        "updated_at": "2025-04-07 17:08:19"
+    },
+    {
+        "id": 200,
+        "subscription_id": 200,
+        "stripe_id": "si_S5ZwUui4fPArK1",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-04-07 23:09:09",
+        "updated_at": "2025-04-07 23:09:09"
+    },
+    {
+        "id": 201,
+        "subscription_id": 201,
+        "stripe_id": "si_S5s4Jsa2BuzA7v",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-04-08 17:53:04",
+        "updated_at": "2025-04-08 17:53:04"
+    },
+    {
+        "id": 202,
+        "subscription_id": 202,
+        "stripe_id": "si_S5vNYxlwt5cII2",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-04-08 21:18:03",
+        "updated_at": "2025-04-08 21:18:03"
+    },
+    {
+        "id": 203,
+        "subscription_id": 203,
+        "stripe_id": "si_S6GTmXIlPO6gMd",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-04-09 19:06:16",
+        "updated_at": "2025-04-09 19:06:16"
+    },
+    {
+        "id": 204,
+        "subscription_id": 204,
+        "stripe_id": "si_S6LTKHBTGMOS0J",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-04-10 00:16:05",
+        "updated_at": "2025-04-10 00:16:05"
+    },
+    {
+        "id": 205,
+        "subscription_id": 205,
+        "stripe_id": "si_S6x4lfJzsIuQu3",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-04-11 15:06:37",
+        "updated_at": "2025-04-11 15:06:37"
+    },
+    {
+        "id": 206,
+        "subscription_id": 206,
+        "stripe_id": "si_S8lnJZo9DZbc8Z",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-04-16 11:35:49",
+        "updated_at": "2025-04-16 11:35:49"
+    },
+    {
+        "id": 207,
+        "subscription_id": 207,
+        "stripe_id": "si_S8oSwejRJKfy6g",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-04-16 14:20:34",
+        "updated_at": "2025-04-16 14:20:34"
+    },
+    {
+        "id": 208,
+        "subscription_id": 208,
+        "stripe_id": "si_S8vDjuu1n9PjUa",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-04-16 21:20:07",
+        "updated_at": "2025-04-16 21:20:07"
+    },
+    {
+        "id": 209,
+        "subscription_id": 209,
+        "stripe_id": "si_S9yDtRsBZ6xFpJ",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-04-19 16:30:11",
+        "updated_at": "2025-04-19 16:30:11"
+    },
+    {
+        "id": 210,
+        "subscription_id": 210,
+        "stripe_id": "si_SAgYba7PnrMSY4",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-04-21 14:19:11",
+        "updated_at": "2025-04-21 14:19:11"
+    },
+    {
+        "id": 211,
+        "subscription_id": 211,
+        "stripe_id": "si_SCKQdhsAN3TWM4",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-04-25 23:34:32",
+        "updated_at": "2025-04-25 23:34:32"
+    },
+    {
+        "id": 212,
+        "subscription_id": 212,
+        "stripe_id": "si_SD3230s2VMC0FW",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-04-27 21:41:14",
+        "updated_at": "2025-04-27 21:41:14"
+    },
+    {
+        "id": 213,
+        "subscription_id": 213,
+        "stripe_id": "si_SESz9os8ueI8QO",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-05-01 16:33:58",
+        "updated_at": "2025-05-01 16:33:58"
+    },
+    {
+        "id": 214,
+        "subscription_id": 214,
+        "stripe_id": "si_SH7hjIOM3EvSEd",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-05-08 18:45:46",
+        "updated_at": "2025-05-08 18:45:46"
+    },
+    {
+        "id": 215,
+        "subscription_id": 215,
+        "stripe_id": "si_SHRzBZz8NhFGVy",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-05-09 15:43:31",
+        "updated_at": "2025-05-09 15:43:31"
+    },
+    {
+        "id": 216,
+        "subscription_id": 216,
+        "stripe_id": "si_SHUkiPJ2Z4Js3R",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-05-09 18:34:22",
+        "updated_at": "2025-05-09 18:34:22"
+    },
+    {
+        "id": 217,
+        "subscription_id": 217,
+        "stripe_id": "si_SHVZwAUcsILAnC",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-05-09 19:26:14",
+        "updated_at": "2025-05-09 19:26:14"
+    },
+    {
+        "id": 218,
+        "subscription_id": 218,
+        "stripe_id": "si_SIlpTgpAwLlUEg",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-05-13 04:17:42",
+        "updated_at": "2025-05-13 04:17:42"
+    },
+    {
+        "id": 219,
+        "subscription_id": 219,
+        "stripe_id": "si_SJUBvohC3xSuPr",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-05-15 02:07:37",
+        "updated_at": "2025-05-15 02:07:37"
+    },
+    {
+        "id": 220,
+        "subscription_id": 220,
+        "stripe_id": "si_SJh01EsW9lwGrF",
+        "stripe_product": "prod_RWKChl22ojvVSG",
+        "stripe_price": "price_1QdHXkD7AsRDYMZziFTlqYpC",
+        "quantity": 1,
+        "created_at": "2025-05-15 15:22:53",
+        "updated_at": "2025-05-15 15:22:53"
+    }
+]

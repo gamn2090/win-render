@@ -1,0 +1,4702 @@
+[
+    {
+        "id": 42,
+        "host_vendor": 71,
+        "aff_vendor": 7,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 19,
+        "created_at": "2025-01-14 20:44:57",
+        "updated_at": "2025-01-15 15:57:19"
+    },
+    {
+        "id": 43,
+        "host_vendor": 7,
+        "aff_vendor": 71,
+        "approved": 1,
+        "aff_vendor_type": 19,
+        "host_vendor_type": 9,
+        "created_at": "2025-01-15 15:57:59",
+        "updated_at": "2025-01-15 21:58:14"
+    },
+    {
+        "id": 44,
+        "host_vendor": 76,
+        "aff_vendor": 7,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 7,
+        "created_at": "2025-01-16 15:29:16",
+        "updated_at": "2025-01-16 15:59:59"
+    },
+    {
+        "id": 46,
+        "host_vendor": 7,
+        "aff_vendor": 79,
+        "approved": 1,
+        "aff_vendor_type": 1,
+        "host_vendor_type": 9,
+        "created_at": "2025-01-17 13:22:51",
+        "updated_at": "2025-01-17 20:00:14"
+    },
+    {
+        "id": 47,
+        "host_vendor": 80,
+        "aff_vendor": 7,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 12,
+        "created_at": "2025-01-17 13:42:31",
+        "updated_at": "2025-01-17 14:52:29"
+    },
+    {
+        "id": 48,
+        "host_vendor": 80,
+        "aff_vendor": 71,
+        "approved": 1,
+        "aff_vendor_type": 19,
+        "host_vendor_type": 12,
+        "created_at": "2025-01-17 13:43:09",
+        "updated_at": "2025-01-18 13:24:46"
+    },
+    {
+        "id": 49,
+        "host_vendor": 80,
+        "aff_vendor": 76,
+        "approved": 1,
+        "aff_vendor_type": 7,
+        "host_vendor_type": 12,
+        "created_at": "2025-01-17 13:43:36",
+        "updated_at": "2025-01-18 14:49:49"
+    },
+    {
+        "id": 50,
+        "host_vendor": 80,
+        "aff_vendor": 79,
+        "approved": 1,
+        "aff_vendor_type": 1,
+        "host_vendor_type": 12,
+        "created_at": "2025-01-17 13:44:07",
+        "updated_at": "2025-01-17 19:59:47"
+    },
+    {
+        "id": 51,
+        "host_vendor": 7,
+        "aff_vendor": 80,
+        "approved": 1,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 9,
+        "created_at": "2025-01-17 14:57:35",
+        "updated_at": "2025-01-19 20:11:38"
+    },
+    {
+        "id": 52,
+        "host_vendor": 81,
+        "aff_vendor": 7,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 15,
+        "created_at": "2025-01-17 22:19:54",
+        "updated_at": "2025-01-18 13:55:25"
+    },
+    {
+        "id": 53,
+        "host_vendor": 82,
+        "aff_vendor": 7,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 21,
+        "created_at": "2025-01-17 23:17:45",
+        "updated_at": "2025-01-18 13:54:33"
+    },
+    {
+        "id": 54,
+        "host_vendor": 71,
+        "aff_vendor": 80,
+        "approved": 1,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 19,
+        "created_at": "2025-01-18 13:24:53",
+        "updated_at": "2025-01-19 20:11:30"
+    },
+    {
+        "id": 55,
+        "host_vendor": 71,
+        "aff_vendor": 79,
+        "approved": 1,
+        "aff_vendor_type": 1,
+        "host_vendor_type": 19,
+        "created_at": "2025-01-18 13:25:27",
+        "updated_at": "2025-01-20 23:33:08"
+    },
+    {
+        "id": 56,
+        "host_vendor": 71,
+        "aff_vendor": 76,
+        "approved": 1,
+        "aff_vendor_type": 7,
+        "host_vendor_type": 19,
+        "created_at": "2025-01-18 13:26:24",
+        "updated_at": "2025-01-18 14:49:57"
+    },
+    {
+        "id": 57,
+        "host_vendor": 7,
+        "aff_vendor": 82,
+        "approved": 1,
+        "aff_vendor_type": 21,
+        "host_vendor_type": 9,
+        "created_at": "2025-01-18 13:54:55",
+        "updated_at": "2025-02-24 23:43:26"
+    },
+    {
+        "id": 58,
+        "host_vendor": 7,
+        "aff_vendor": 81,
+        "approved": 1,
+        "aff_vendor_type": 15,
+        "host_vendor_type": 9,
+        "created_at": "2025-01-18 13:55:55",
+        "updated_at": "2025-01-23 01:40:25"
+    },
+    {
+        "id": 59,
+        "host_vendor": 76,
+        "aff_vendor": 80,
+        "approved": 1,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 7,
+        "created_at": "2025-01-18 14:47:20",
+        "updated_at": "2025-01-19 20:11:17"
+    },
+    {
+        "id": 60,
+        "host_vendor": 76,
+        "aff_vendor": 71,
+        "approved": 1,
+        "aff_vendor_type": 19,
+        "host_vendor_type": 7,
+        "created_at": "2025-01-18 14:47:34",
+        "updated_at": "2025-01-20 21:26:17"
+    },
+    {
+        "id": 61,
+        "host_vendor": 7,
+        "aff_vendor": 76,
+        "approved": 1,
+        "aff_vendor_type": 7,
+        "host_vendor_type": 9,
+        "created_at": "2025-01-18 17:57:35",
+        "updated_at": "2025-01-19 04:27:41"
+    },
+    {
+        "id": 71,
+        "host_vendor": 79,
+        "aff_vendor": 80,
+        "approved": 1,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 1,
+        "created_at": "2025-01-20 23:32:23",
+        "updated_at": "2025-01-22 01:24:04"
+    },
+    {
+        "id": 72,
+        "host_vendor": 79,
+        "aff_vendor": 71,
+        "approved": 1,
+        "aff_vendor_type": 19,
+        "host_vendor_type": 1,
+        "created_at": "2025-01-20 23:33:15",
+        "updated_at": "2025-01-22 19:31:54"
+    },
+    {
+        "id": 73,
+        "host_vendor": 79,
+        "aff_vendor": 7,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 1,
+        "created_at": "2025-01-20 23:33:50",
+        "updated_at": "2025-01-21 14:49:23"
+    },
+    {
+        "id": 74,
+        "host_vendor": 97,
+        "aff_vendor": 80,
+        "approved": 1,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 7,
+        "created_at": "2025-01-21 18:56:07",
+        "updated_at": "2025-01-22 01:21:03"
+    },
+    {
+        "id": 75,
+        "host_vendor": 80,
+        "aff_vendor": 97,
+        "approved": 1,
+        "aff_vendor_type": 7,
+        "host_vendor_type": 12,
+        "created_at": "2025-01-22 01:25:30",
+        "updated_at": "2025-01-22 16:37:25"
+    },
+    {
+        "id": 76,
+        "host_vendor": 7,
+        "aff_vendor": 97,
+        "approved": 1,
+        "aff_vendor_type": 7,
+        "host_vendor_type": 9,
+        "created_at": "2025-01-22 18:12:29",
+        "updated_at": "2025-01-24 17:22:00"
+    },
+    {
+        "id": 77,
+        "host_vendor": 126,
+        "aff_vendor": 117,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 9,
+        "created_at": "2025-01-22 18:31:29",
+        "updated_at": "2025-01-22 19:13:00"
+    },
+    {
+        "id": 78,
+        "host_vendor": 126,
+        "aff_vendor": 94,
+        "approved": 0,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 9,
+        "created_at": "2025-01-22 18:31:58",
+        "updated_at": "2025-01-22 18:31:58"
+    },
+    {
+        "id": 79,
+        "host_vendor": 126,
+        "aff_vendor": 123,
+        "approved": 0,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 9,
+        "created_at": "2025-01-22 18:32:16",
+        "updated_at": "2025-01-22 18:32:16"
+    },
+    {
+        "id": 80,
+        "host_vendor": 126,
+        "aff_vendor": 124,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 9,
+        "created_at": "2025-01-22 18:32:41",
+        "updated_at": "2025-02-26 17:55:48"
+    },
+    {
+        "id": 81,
+        "host_vendor": 128,
+        "aff_vendor": 97,
+        "approved": 1,
+        "aff_vendor_type": 7,
+        "host_vendor_type": 9,
+        "created_at": "2025-01-22 21:23:16",
+        "updated_at": "2025-01-24 17:22:21"
+    },
+    {
+        "id": 82,
+        "host_vendor": 128,
+        "aff_vendor": 80,
+        "approved": 1,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 9,
+        "created_at": "2025-01-22 21:23:30",
+        "updated_at": "2025-03-10 14:15:46"
+    },
+    {
+        "id": 83,
+        "host_vendor": 7,
+        "aff_vendor": 132,
+        "approved": 1,
+        "aff_vendor_type": 6,
+        "host_vendor_type": 9,
+        "created_at": "2025-01-23 01:49:44",
+        "updated_at": "2025-02-13 03:22:49"
+    },
+    {
+        "id": 84,
+        "host_vendor": 139,
+        "aff_vendor": 7,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 2,
+        "created_at": "2025-01-24 15:50:40",
+        "updated_at": "2025-01-24 20:15:29"
+    },
+    {
+        "id": 85,
+        "host_vendor": 139,
+        "aff_vendor": 79,
+        "approved": 1,
+        "aff_vendor_type": 1,
+        "host_vendor_type": 2,
+        "created_at": "2025-01-24 15:51:28",
+        "updated_at": "2025-02-03 18:30:57"
+    },
+    {
+        "id": 86,
+        "host_vendor": 97,
+        "aff_vendor": 7,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 7,
+        "created_at": "2025-01-24 17:22:06",
+        "updated_at": "2025-01-24 20:17:01"
+    },
+    {
+        "id": 87,
+        "host_vendor": 97,
+        "aff_vendor": 128,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 7,
+        "created_at": "2025-01-24 17:22:26",
+        "updated_at": "2025-03-07 19:56:06"
+    },
+    {
+        "id": 88,
+        "host_vendor": 7,
+        "aff_vendor": 139,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 9,
+        "created_at": "2025-01-24 20:15:35",
+        "updated_at": "2025-01-27 12:46:49"
+    },
+    {
+        "id": 89,
+        "host_vendor": 7,
+        "aff_vendor": 145,
+        "approved": 0,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 9,
+        "created_at": "2025-01-27 17:51:54",
+        "updated_at": "2025-01-27 17:51:54"
+    },
+    {
+        "id": 90,
+        "host_vendor": 7,
+        "aff_vendor": 148,
+        "approved": 1,
+        "aff_vendor_type": 13,
+        "host_vendor_type": 9,
+        "created_at": "2025-01-31 00:16:57",
+        "updated_at": "2025-01-31 00:17:19"
+    },
+    {
+        "id": 91,
+        "host_vendor": 148,
+        "aff_vendor": 7,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 13,
+        "created_at": "2025-01-31 00:18:11",
+        "updated_at": "2025-01-31 00:18:52"
+    },
+    {
+        "id": 92,
+        "host_vendor": 149,
+        "aff_vendor": 79,
+        "approved": 0,
+        "aff_vendor_type": 1,
+        "host_vendor_type": 8,
+        "created_at": "2025-02-01 22:03:18",
+        "updated_at": "2025-02-01 22:03:18"
+    },
+    {
+        "id": 94,
+        "host_vendor": 7,
+        "aff_vendor": 154,
+        "approved": 0,
+        "aff_vendor_type": 4,
+        "host_vendor_type": 9,
+        "created_at": "2025-02-02 20:03:37",
+        "updated_at": "2025-02-02 20:03:37"
+    },
+    {
+        "id": 95,
+        "host_vendor": 7,
+        "aff_vendor": 155,
+        "approved": 1,
+        "aff_vendor_type": 7,
+        "host_vendor_type": 9,
+        "created_at": "2025-02-02 20:37:34",
+        "updated_at": "2025-02-02 20:44:54"
+    },
+    {
+        "id": 96,
+        "host_vendor": 155,
+        "aff_vendor": 7,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 7,
+        "created_at": "2025-02-02 20:45:04",
+        "updated_at": "2025-02-02 20:45:42"
+    },
+    {
+        "id": 97,
+        "host_vendor": 115,
+        "aff_vendor": 142,
+        "approved": 1,
+        "aff_vendor_type": 5,
+        "host_vendor_type": 9,
+        "created_at": "2025-02-03 15:48:30",
+        "updated_at": "2025-02-03 17:22:19"
+    },
+    {
+        "id": 98,
+        "host_vendor": 79,
+        "aff_vendor": 139,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 1,
+        "created_at": "2025-02-03 18:51:57",
+        "updated_at": "2025-02-05 15:53:08"
+    },
+    {
+        "id": 99,
+        "host_vendor": 155,
+        "aff_vendor": 94,
+        "approved": 0,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 7,
+        "created_at": "2025-02-03 22:05:52",
+        "updated_at": "2025-02-03 22:05:52"
+    },
+    {
+        "id": 100,
+        "host_vendor": 163,
+        "aff_vendor": 7,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 2,
+        "created_at": "2025-02-04 19:04:05",
+        "updated_at": "2025-02-04 19:05:06"
+    },
+    {
+        "id": 101,
+        "host_vendor": 7,
+        "aff_vendor": 163,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 9,
+        "created_at": "2025-02-04 19:05:12",
+        "updated_at": "2025-04-11 13:12:47"
+    },
+    {
+        "id": 102,
+        "host_vendor": 167,
+        "aff_vendor": 79,
+        "approved": 1,
+        "aff_vendor_type": 1,
+        "host_vendor_type": 9,
+        "created_at": "2025-02-05 00:15:37",
+        "updated_at": "2025-02-05 15:47:43"
+    },
+    {
+        "id": 103,
+        "host_vendor": 167,
+        "aff_vendor": 162,
+        "approved": 1,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 9,
+        "created_at": "2025-02-05 00:16:09",
+        "updated_at": "2025-02-23 13:59:04"
+    },
+    {
+        "id": 104,
+        "host_vendor": 167,
+        "aff_vendor": 139,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 9,
+        "created_at": "2025-02-05 00:21:57",
+        "updated_at": "2025-02-05 15:53:01"
+    },
+    {
+        "id": 105,
+        "host_vendor": 162,
+        "aff_vendor": 167,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 12,
+        "created_at": "2025-02-05 15:30:40",
+        "updated_at": "2025-02-19 01:30:50"
+    },
+    {
+        "id": 106,
+        "host_vendor": 162,
+        "aff_vendor": 82,
+        "approved": 1,
+        "aff_vendor_type": 21,
+        "host_vendor_type": 12,
+        "created_at": "2025-02-05 15:38:12",
+        "updated_at": "2025-02-24 23:43:20"
+    },
+    {
+        "id": 107,
+        "host_vendor": 162,
+        "aff_vendor": 124,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 12,
+        "created_at": "2025-02-05 15:40:48",
+        "updated_at": "2025-02-26 17:55:40"
+    },
+    {
+        "id": 108,
+        "host_vendor": 162,
+        "aff_vendor": 168,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 12,
+        "created_at": "2025-02-05 15:41:22",
+        "updated_at": "2025-02-05 18:27:22"
+    },
+    {
+        "id": 109,
+        "host_vendor": 162,
+        "aff_vendor": 139,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 12,
+        "created_at": "2025-02-05 15:42:41",
+        "updated_at": "2025-02-05 15:52:52"
+    },
+    {
+        "id": 110,
+        "host_vendor": 162,
+        "aff_vendor": 149,
+        "approved": 1,
+        "aff_vendor_type": 8,
+        "host_vendor_type": 12,
+        "created_at": "2025-02-05 15:43:54",
+        "updated_at": "2025-02-06 20:26:13"
+    },
+    {
+        "id": 111,
+        "host_vendor": 162,
+        "aff_vendor": 79,
+        "approved": 0,
+        "aff_vendor_type": 1,
+        "host_vendor_type": 12,
+        "created_at": "2025-02-05 15:46:34",
+        "updated_at": "2025-02-05 15:46:34"
+    },
+    {
+        "id": 112,
+        "host_vendor": 168,
+        "aff_vendor": 7,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 9,
+        "created_at": "2025-02-05 18:31:56",
+        "updated_at": "2025-02-05 19:30:23"
+    },
+    {
+        "id": 113,
+        "host_vendor": 168,
+        "aff_vendor": 119,
+        "approved": 0,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 9,
+        "created_at": "2025-02-05 18:32:57",
+        "updated_at": "2025-02-05 18:32:57"
+    },
+    {
+        "id": 114,
+        "host_vendor": 71,
+        "aff_vendor": 125,
+        "approved": 0,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 19,
+        "created_at": "2025-02-05 18:48:19",
+        "updated_at": "2025-02-05 18:48:19"
+    },
+    {
+        "id": 115,
+        "host_vendor": 149,
+        "aff_vendor": 162,
+        "approved": 1,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 8,
+        "created_at": "2025-02-06 20:43:20",
+        "updated_at": "2025-02-23 13:59:15"
+    },
+    {
+        "id": 116,
+        "host_vendor": 108,
+        "aff_vendor": 141,
+        "approved": 1,
+        "aff_vendor_type": 16,
+        "host_vendor_type": 9,
+        "created_at": "2025-02-09 20:01:00",
+        "updated_at": "2025-02-12 21:02:18"
+    },
+    {
+        "id": 117,
+        "host_vendor": 108,
+        "aff_vendor": 82,
+        "approved": 1,
+        "aff_vendor_type": 21,
+        "host_vendor_type": 9,
+        "created_at": "2025-02-09 20:01:33",
+        "updated_at": "2025-02-24 23:43:14"
+    },
+    {
+        "id": 118,
+        "host_vendor": 162,
+        "aff_vendor": 132,
+        "approved": 1,
+        "aff_vendor_type": 6,
+        "host_vendor_type": 12,
+        "created_at": "2025-02-10 19:12:22",
+        "updated_at": "2025-02-13 03:22:39"
+    },
+    {
+        "id": 119,
+        "host_vendor": 139,
+        "aff_vendor": 164,
+        "approved": 1,
+        "aff_vendor_type": 13,
+        "host_vendor_type": 2,
+        "created_at": "2025-02-12 18:01:05",
+        "updated_at": "2025-03-28 12:23:29"
+    },
+    {
+        "id": 120,
+        "host_vendor": 139,
+        "aff_vendor": 162,
+        "approved": 1,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 2,
+        "created_at": "2025-02-12 18:01:34",
+        "updated_at": "2025-02-23 13:59:27"
+    },
+    {
+        "id": 121,
+        "host_vendor": 139,
+        "aff_vendor": 141,
+        "approved": 1,
+        "aff_vendor_type": 16,
+        "host_vendor_type": 2,
+        "created_at": "2025-02-12 18:03:45",
+        "updated_at": "2025-02-12 21:01:46"
+    },
+    {
+        "id": 122,
+        "host_vendor": 141,
+        "aff_vendor": 139,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 16,
+        "created_at": "2025-02-12 21:02:04",
+        "updated_at": "2025-02-13 12:32:50"
+    },
+    {
+        "id": 123,
+        "host_vendor": 141,
+        "aff_vendor": 108,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 16,
+        "created_at": "2025-02-12 21:02:25",
+        "updated_at": "2025-02-12 23:30:53"
+    },
+    {
+        "id": 124,
+        "host_vendor": 7,
+        "aff_vendor": 141,
+        "approved": 1,
+        "aff_vendor_type": 16,
+        "host_vendor_type": 9,
+        "created_at": "2025-02-12 21:07:49",
+        "updated_at": "2025-02-12 21:11:29"
+    },
+    {
+        "id": 125,
+        "host_vendor": 141,
+        "aff_vendor": 7,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 16,
+        "created_at": "2025-02-12 21:12:26",
+        "updated_at": "2025-02-12 21:12:49"
+    },
+    {
+        "id": 126,
+        "host_vendor": 7,
+        "aff_vendor": 142,
+        "approved": 1,
+        "aff_vendor_type": 5,
+        "host_vendor_type": 9,
+        "created_at": "2025-02-13 21:34:52",
+        "updated_at": "2025-02-13 22:44:34"
+    },
+    {
+        "id": 127,
+        "host_vendor": 7,
+        "aff_vendor": 177,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 9,
+        "created_at": "2025-02-13 22:12:23",
+        "updated_at": "2025-02-13 22:12:54"
+    },
+    {
+        "id": 128,
+        "host_vendor": 7,
+        "aff_vendor": 178,
+        "approved": 0,
+        "aff_vendor_type": 5,
+        "host_vendor_type": 9,
+        "created_at": "2025-02-15 15:35:32",
+        "updated_at": "2025-02-15 15:35:32"
+    },
+    {
+        "id": 129,
+        "host_vendor": 179,
+        "aff_vendor": 82,
+        "approved": 1,
+        "aff_vendor_type": 21,
+        "host_vendor_type": 16,
+        "created_at": "2025-02-18 20:35:15",
+        "updated_at": "2025-02-24 23:43:07"
+    },
+    {
+        "id": 130,
+        "host_vendor": 179,
+        "aff_vendor": 108,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 16,
+        "created_at": "2025-02-18 20:36:18",
+        "updated_at": "2025-02-19 13:20:46"
+    },
+    {
+        "id": 131,
+        "host_vendor": 7,
+        "aff_vendor": 179,
+        "approved": 1,
+        "aff_vendor_type": 16,
+        "host_vendor_type": 9,
+        "created_at": "2025-02-18 20:43:13",
+        "updated_at": "2025-02-18 20:43:53"
+    },
+    {
+        "id": 132,
+        "host_vendor": 180,
+        "aff_vendor": 7,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 7,
+        "created_at": "2025-02-19 02:33:20",
+        "updated_at": "2025-02-19 19:29:49"
+    },
+    {
+        "id": 133,
+        "host_vendor": 180,
+        "aff_vendor": 139,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 7,
+        "created_at": "2025-02-19 02:33:28",
+        "updated_at": "2025-02-19 19:33:53"
+    },
+    {
+        "id": 134,
+        "host_vendor": 180,
+        "aff_vendor": 120,
+        "approved": 0,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 7,
+        "created_at": "2025-02-19 02:33:53",
+        "updated_at": "2025-02-19 02:33:53"
+    },
+    {
+        "id": 135,
+        "host_vendor": 180,
+        "aff_vendor": 108,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 7,
+        "created_at": "2025-02-19 02:33:59",
+        "updated_at": "2025-02-19 13:21:03"
+    },
+    {
+        "id": 136,
+        "host_vendor": 180,
+        "aff_vendor": 167,
+        "approved": 0,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 7,
+        "created_at": "2025-02-19 02:34:09",
+        "updated_at": "2025-02-19 02:34:09"
+    },
+    {
+        "id": 137,
+        "host_vendor": 180,
+        "aff_vendor": 82,
+        "approved": 1,
+        "aff_vendor_type": 21,
+        "host_vendor_type": 7,
+        "created_at": "2025-02-19 02:45:33",
+        "updated_at": "2025-02-24 23:43:01"
+    },
+    {
+        "id": 138,
+        "host_vendor": 180,
+        "aff_vendor": 179,
+        "approved": 1,
+        "aff_vendor_type": 16,
+        "host_vendor_type": 7,
+        "created_at": "2025-02-19 02:46:00",
+        "updated_at": "2025-02-19 23:39:43"
+    },
+    {
+        "id": 139,
+        "host_vendor": 7,
+        "aff_vendor": 180,
+        "approved": 1,
+        "aff_vendor_type": 7,
+        "host_vendor_type": 9,
+        "created_at": "2025-02-19 19:30:05",
+        "updated_at": "2025-02-19 19:31:55"
+    },
+    {
+        "id": 140,
+        "host_vendor": 7,
+        "aff_vendor": 181,
+        "approved": 1,
+        "aff_vendor_type": 5,
+        "host_vendor_type": 9,
+        "created_at": "2025-02-19 20:20:55",
+        "updated_at": "2025-02-19 20:23:12"
+    },
+    {
+        "id": 141,
+        "host_vendor": 181,
+        "aff_vendor": 177,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 5,
+        "created_at": "2025-02-19 20:23:57",
+        "updated_at": "2025-02-19 20:24:55"
+    },
+    {
+        "id": 142,
+        "host_vendor": 181,
+        "aff_vendor": 163,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 5,
+        "created_at": "2025-02-19 20:24:15",
+        "updated_at": "2025-04-11 13:07:15"
+    },
+    {
+        "id": 143,
+        "host_vendor": 181,
+        "aff_vendor": 125,
+        "approved": 0,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 5,
+        "created_at": "2025-02-19 20:24:19",
+        "updated_at": "2025-02-19 20:24:19"
+    },
+    {
+        "id": 144,
+        "host_vendor": 181,
+        "aff_vendor": 118,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 5,
+        "created_at": "2025-02-19 20:25:10",
+        "updated_at": "2025-02-22 23:28:35"
+    },
+    {
+        "id": 145,
+        "host_vendor": 181,
+        "aff_vendor": 148,
+        "approved": 1,
+        "aff_vendor_type": 13,
+        "host_vendor_type": 5,
+        "created_at": "2025-02-19 20:26:05",
+        "updated_at": "2025-02-20 12:28:01"
+    },
+    {
+        "id": 146,
+        "host_vendor": 177,
+        "aff_vendor": 181,
+        "approved": 1,
+        "aff_vendor_type": 5,
+        "host_vendor_type": 2,
+        "created_at": "2025-02-19 20:32:02",
+        "updated_at": "2025-02-19 21:42:18"
+    },
+    {
+        "id": 147,
+        "host_vendor": 177,
+        "aff_vendor": 7,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 2,
+        "created_at": "2025-02-19 20:32:20",
+        "updated_at": "2025-02-19 21:04:08"
+    },
+    {
+        "id": 148,
+        "host_vendor": 179,
+        "aff_vendor": 180,
+        "approved": 1,
+        "aff_vendor_type": 7,
+        "host_vendor_type": 16,
+        "created_at": "2025-02-19 23:35:24",
+        "updated_at": "2025-02-19 23:38:26"
+    },
+    {
+        "id": 149,
+        "host_vendor": 179,
+        "aff_vendor": 7,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 16,
+        "created_at": "2025-02-19 23:39:07",
+        "updated_at": "2025-02-20 14:47:16"
+    },
+    {
+        "id": 150,
+        "host_vendor": 148,
+        "aff_vendor": 181,
+        "approved": 1,
+        "aff_vendor_type": 5,
+        "host_vendor_type": 13,
+        "created_at": "2025-02-20 12:27:56",
+        "updated_at": "2025-02-24 15:38:58"
+    },
+    {
+        "id": 151,
+        "host_vendor": 142,
+        "aff_vendor": 7,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 5,
+        "created_at": "2025-02-21 18:32:58",
+        "updated_at": "2025-02-21 18:34:17"
+    },
+    {
+        "id": 152,
+        "host_vendor": 142,
+        "aff_vendor": 115,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 5,
+        "created_at": "2025-02-21 18:37:55",
+        "updated_at": "2025-02-21 18:39:27"
+    },
+    {
+        "id": 153,
+        "host_vendor": 115,
+        "aff_vendor": 177,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 9,
+        "created_at": "2025-02-21 18:40:51",
+        "updated_at": "2025-02-24 20:50:24"
+    },
+    {
+        "id": 154,
+        "host_vendor": 142,
+        "aff_vendor": 139,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 5,
+        "created_at": "2025-02-21 20:12:03",
+        "updated_at": "2025-02-25 15:46:07"
+    },
+    {
+        "id": 155,
+        "host_vendor": 142,
+        "aff_vendor": 177,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 5,
+        "created_at": "2025-02-21 20:12:18",
+        "updated_at": "2025-02-24 20:50:37"
+    },
+    {
+        "id": 156,
+        "host_vendor": 7,
+        "aff_vendor": 113,
+        "approved": 1,
+        "aff_vendor_type": 13,
+        "host_vendor_type": 9,
+        "created_at": "2025-02-22 20:26:10",
+        "updated_at": "2025-02-22 20:26:29"
+    },
+    {
+        "id": 157,
+        "host_vendor": 118,
+        "aff_vendor": 181,
+        "approved": 1,
+        "aff_vendor_type": 5,
+        "host_vendor_type": 9,
+        "created_at": "2025-02-22 23:35:37",
+        "updated_at": "2025-02-24 15:39:07"
+    },
+    {
+        "id": 158,
+        "host_vendor": 118,
+        "aff_vendor": 177,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 9,
+        "created_at": "2025-02-23 00:01:03",
+        "updated_at": "2025-02-24 20:50:45"
+    },
+    {
+        "id": 159,
+        "host_vendor": 118,
+        "aff_vendor": 186,
+        "approved": 0,
+        "aff_vendor_type": 7,
+        "host_vendor_type": 9,
+        "created_at": "2025-02-23 00:02:41",
+        "updated_at": "2025-02-23 00:02:41"
+    },
+    {
+        "id": 160,
+        "host_vendor": 118,
+        "aff_vendor": 80,
+        "approved": 0,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 9,
+        "created_at": "2025-02-23 00:04:21",
+        "updated_at": "2025-02-23 00:04:21"
+    },
+    {
+        "id": 161,
+        "host_vendor": 190,
+        "aff_vendor": 162,
+        "approved": 1,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 10,
+        "created_at": "2025-02-23 05:46:36",
+        "updated_at": "2025-02-23 13:58:16"
+    },
+    {
+        "id": 162,
+        "host_vendor": 190,
+        "aff_vendor": 193,
+        "approved": 0,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 10,
+        "created_at": "2025-02-23 05:47:13",
+        "updated_at": "2025-02-23 05:47:13"
+    },
+    {
+        "id": 163,
+        "host_vendor": 190,
+        "aff_vendor": 137,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 10,
+        "created_at": "2025-02-23 05:48:08",
+        "updated_at": "2025-02-23 12:49:33"
+    },
+    {
+        "id": 164,
+        "host_vendor": 190,
+        "aff_vendor": 113,
+        "approved": 1,
+        "aff_vendor_type": 13,
+        "host_vendor_type": 10,
+        "created_at": "2025-02-23 05:50:23",
+        "updated_at": "2025-02-24 14:33:39"
+    },
+    {
+        "id": 165,
+        "host_vendor": 190,
+        "aff_vendor": 189,
+        "approved": 0,
+        "aff_vendor_type": 16,
+        "host_vendor_type": 10,
+        "created_at": "2025-02-23 05:51:22",
+        "updated_at": "2025-02-23 05:51:22"
+    },
+    {
+        "id": 166,
+        "host_vendor": 137,
+        "aff_vendor": 182,
+        "approved": 1,
+        "aff_vendor_type": 5,
+        "host_vendor_type": 9,
+        "created_at": "2025-02-23 12:52:09",
+        "updated_at": "2025-02-24 04:24:27"
+    },
+    {
+        "id": 167,
+        "host_vendor": 137,
+        "aff_vendor": 190,
+        "approved": 1,
+        "aff_vendor_type": 10,
+        "host_vendor_type": 9,
+        "created_at": "2025-02-23 12:56:57",
+        "updated_at": "2025-02-23 21:23:02"
+    },
+    {
+        "id": 168,
+        "host_vendor": 190,
+        "aff_vendor": 7,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 10,
+        "created_at": "2025-02-23 21:21:48",
+        "updated_at": "2025-02-23 23:09:22"
+    },
+    {
+        "id": 169,
+        "host_vendor": 190,
+        "aff_vendor": 82,
+        "approved": 1,
+        "aff_vendor_type": 21,
+        "host_vendor_type": 10,
+        "created_at": "2025-02-23 21:29:18",
+        "updated_at": "2025-02-24 23:42:52"
+    },
+    {
+        "id": 170,
+        "host_vendor": 7,
+        "aff_vendor": 190,
+        "approved": 1,
+        "aff_vendor_type": 10,
+        "host_vendor_type": 9,
+        "created_at": "2025-02-23 23:10:12",
+        "updated_at": "2025-02-24 06:02:34"
+    },
+    {
+        "id": 171,
+        "host_vendor": 7,
+        "aff_vendor": 191,
+        "approved": 1,
+        "aff_vendor_type": 1,
+        "host_vendor_type": 9,
+        "created_at": "2025-02-24 00:55:41",
+        "updated_at": "2025-02-24 11:15:05"
+    },
+    {
+        "id": 172,
+        "host_vendor": 7,
+        "aff_vendor": 188,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 9,
+        "created_at": "2025-02-24 00:56:30",
+        "updated_at": "2025-02-24 21:54:12"
+    },
+    {
+        "id": 173,
+        "host_vendor": 76,
+        "aff_vendor": 97,
+        "approved": 1,
+        "aff_vendor_type": 7,
+        "host_vendor_type": 7,
+        "created_at": "2025-02-24 14:06:12",
+        "updated_at": "2025-02-24 21:27:01"
+    },
+    {
+        "id": 174,
+        "host_vendor": 113,
+        "aff_vendor": 191,
+        "approved": 1,
+        "aff_vendor_type": 1,
+        "host_vendor_type": 13,
+        "created_at": "2025-02-24 15:08:58",
+        "updated_at": "2025-02-24 15:42:05"
+    },
+    {
+        "id": 175,
+        "host_vendor": 113,
+        "aff_vendor": 94,
+        "approved": 0,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 13,
+        "created_at": "2025-02-24 15:10:43",
+        "updated_at": "2025-02-24 15:10:43"
+    },
+    {
+        "id": 176,
+        "host_vendor": 113,
+        "aff_vendor": 121,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 13,
+        "created_at": "2025-02-24 15:10:53",
+        "updated_at": "2025-02-26 20:33:06"
+    },
+    {
+        "id": 177,
+        "host_vendor": 113,
+        "aff_vendor": 194,
+        "approved": 0,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 13,
+        "created_at": "2025-02-24 15:11:17",
+        "updated_at": "2025-02-24 15:11:17"
+    },
+    {
+        "id": 178,
+        "host_vendor": 113,
+        "aff_vendor": 190,
+        "approved": 1,
+        "aff_vendor_type": 10,
+        "host_vendor_type": 13,
+        "created_at": "2025-02-24 15:11:41",
+        "updated_at": "2025-02-24 15:15:54"
+    },
+    {
+        "id": 179,
+        "host_vendor": 113,
+        "aff_vendor": 187,
+        "approved": 1,
+        "aff_vendor_type": 16,
+        "host_vendor_type": 13,
+        "created_at": "2025-02-24 15:11:53",
+        "updated_at": "2025-02-25 12:37:02"
+    },
+    {
+        "id": 180,
+        "host_vendor": 113,
+        "aff_vendor": 192,
+        "approved": 0,
+        "aff_vendor_type": 20,
+        "host_vendor_type": 13,
+        "created_at": "2025-02-24 15:12:26",
+        "updated_at": "2025-02-24 15:12:26"
+    },
+    {
+        "id": 181,
+        "host_vendor": 197,
+        "aff_vendor": 191,
+        "approved": 1,
+        "aff_vendor_type": 1,
+        "host_vendor_type": 12,
+        "created_at": "2025-02-24 15:22:48",
+        "updated_at": "2025-02-24 15:42:13"
+    },
+    {
+        "id": 182,
+        "host_vendor": 197,
+        "aff_vendor": 196,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 12,
+        "created_at": "2025-02-24 15:29:06",
+        "updated_at": "2025-02-24 16:27:01"
+    },
+    {
+        "id": 183,
+        "host_vendor": 197,
+        "aff_vendor": 7,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 12,
+        "created_at": "2025-02-24 15:30:28",
+        "updated_at": "2025-02-24 17:10:06"
+    },
+    {
+        "id": 184,
+        "host_vendor": 191,
+        "aff_vendor": 197,
+        "approved": 1,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 1,
+        "created_at": "2025-02-24 15:51:47",
+        "updated_at": "2025-02-24 15:52:54"
+    },
+    {
+        "id": 185,
+        "host_vendor": 191,
+        "aff_vendor": 113,
+        "approved": 1,
+        "aff_vendor_type": 13,
+        "host_vendor_type": 1,
+        "created_at": "2025-02-24 15:52:14",
+        "updated_at": "2025-02-24 17:35:13"
+    },
+    {
+        "id": 186,
+        "host_vendor": 191,
+        "aff_vendor": 7,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 1,
+        "created_at": "2025-02-24 15:52:32",
+        "updated_at": "2025-02-24 17:14:46"
+    },
+    {
+        "id": 187,
+        "host_vendor": 196,
+        "aff_vendor": 197,
+        "approved": 1,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 9,
+        "created_at": "2025-02-24 16:28:18",
+        "updated_at": "2025-02-24 16:28:34"
+    },
+    {
+        "id": 188,
+        "host_vendor": 151,
+        "aff_vendor": 177,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 9,
+        "created_at": "2025-02-24 17:21:13",
+        "updated_at": "2025-02-24 20:51:04"
+    },
+    {
+        "id": 189,
+        "host_vendor": 197,
+        "aff_vendor": 179,
+        "approved": 1,
+        "aff_vendor_type": 16,
+        "host_vendor_type": 12,
+        "created_at": "2025-02-24 18:00:17",
+        "updated_at": "2025-02-28 18:38:21"
+    },
+    {
+        "id": 190,
+        "host_vendor": 197,
+        "aff_vendor": 141,
+        "approved": 1,
+        "aff_vendor_type": 16,
+        "host_vendor_type": 12,
+        "created_at": "2025-02-24 18:00:30",
+        "updated_at": "2025-02-24 21:11:40"
+    },
+    {
+        "id": 191,
+        "host_vendor": 196,
+        "aff_vendor": 180,
+        "approved": 1,
+        "aff_vendor_type": 7,
+        "host_vendor_type": 9,
+        "created_at": "2025-02-24 18:39:26",
+        "updated_at": "2025-02-24 21:55:37"
+    },
+    {
+        "id": 192,
+        "host_vendor": 181,
+        "aff_vendor": 151,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 5,
+        "created_at": "2025-02-24 19:46:43",
+        "updated_at": "2025-02-24 22:18:43"
+    },
+    {
+        "id": 193,
+        "host_vendor": 141,
+        "aff_vendor": 197,
+        "approved": 1,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 16,
+        "created_at": "2025-02-24 21:11:52",
+        "updated_at": "2025-02-24 21:12:57"
+    },
+    {
+        "id": 194,
+        "host_vendor": 190,
+        "aff_vendor": 176,
+        "approved": 0,
+        "aff_vendor_type": 15,
+        "host_vendor_type": 10,
+        "created_at": "2025-02-24 21:30:19",
+        "updated_at": "2025-02-24 21:30:19"
+    },
+    {
+        "id": 195,
+        "host_vendor": 180,
+        "aff_vendor": 196,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 7,
+        "created_at": "2025-02-24 21:55:42",
+        "updated_at": "2025-02-25 02:14:31"
+    },
+    {
+        "id": 196,
+        "host_vendor": 188,
+        "aff_vendor": 7,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 2,
+        "created_at": "2025-02-24 22:03:45",
+        "updated_at": "2025-02-24 22:19:43"
+    },
+    {
+        "id": 197,
+        "host_vendor": 151,
+        "aff_vendor": 181,
+        "approved": 1,
+        "aff_vendor_type": 5,
+        "host_vendor_type": 9,
+        "created_at": "2025-02-24 22:19:53",
+        "updated_at": "2025-02-25 15:18:21"
+    },
+    {
+        "id": 198,
+        "host_vendor": 82,
+        "aff_vendor": 193,
+        "approved": 0,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 21,
+        "created_at": "2025-02-24 23:44:07",
+        "updated_at": "2025-02-24 23:44:07"
+    },
+    {
+        "id": 199,
+        "host_vendor": 82,
+        "aff_vendor": 120,
+        "approved": 0,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 21,
+        "created_at": "2025-02-24 23:44:27",
+        "updated_at": "2025-02-24 23:44:27"
+    },
+    {
+        "id": 200,
+        "host_vendor": 82,
+        "aff_vendor": 94,
+        "approved": 0,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 21,
+        "created_at": "2025-02-24 23:44:36",
+        "updated_at": "2025-02-24 23:44:36"
+    },
+    {
+        "id": 201,
+        "host_vendor": 82,
+        "aff_vendor": 172,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 21,
+        "created_at": "2025-02-24 23:44:50",
+        "updated_at": "2025-03-20 17:54:40"
+    },
+    {
+        "id": 202,
+        "host_vendor": 82,
+        "aff_vendor": 136,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 21,
+        "created_at": "2025-02-24 23:44:56",
+        "updated_at": "2025-02-24 23:47:33"
+    },
+    {
+        "id": 203,
+        "host_vendor": 82,
+        "aff_vendor": 140,
+        "approved": 0,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 21,
+        "created_at": "2025-02-24 23:45:08",
+        "updated_at": "2025-02-24 23:45:08"
+    },
+    {
+        "id": 204,
+        "host_vendor": 82,
+        "aff_vendor": 182,
+        "approved": 1,
+        "aff_vendor_type": 5,
+        "host_vendor_type": 21,
+        "created_at": "2025-02-24 23:45:30",
+        "updated_at": "2025-03-03 14:58:34"
+    },
+    {
+        "id": 205,
+        "host_vendor": 82,
+        "aff_vendor": 141,
+        "approved": 1,
+        "aff_vendor_type": 16,
+        "host_vendor_type": 21,
+        "created_at": "2025-02-24 23:46:00",
+        "updated_at": "2025-02-24 23:46:51"
+    },
+    {
+        "id": 206,
+        "host_vendor": 141,
+        "aff_vendor": 82,
+        "approved": 0,
+        "aff_vendor_type": 21,
+        "host_vendor_type": 16,
+        "created_at": "2025-02-24 23:46:59",
+        "updated_at": "2025-02-24 23:46:59"
+    },
+    {
+        "id": 207,
+        "host_vendor": 180,
+        "aff_vendor": 94,
+        "approved": 0,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 7,
+        "created_at": "2025-02-25 01:18:29",
+        "updated_at": "2025-02-25 01:18:29"
+    },
+    {
+        "id": 208,
+        "host_vendor": 79,
+        "aff_vendor": 167,
+        "approved": 0,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 1,
+        "created_at": "2025-02-25 15:43:13",
+        "updated_at": "2025-02-25 15:43:13"
+    },
+    {
+        "id": 209,
+        "host_vendor": 121,
+        "aff_vendor": 201,
+        "approved": 1,
+        "aff_vendor_type": 13,
+        "host_vendor_type": 9,
+        "created_at": "2025-02-27 03:12:30",
+        "updated_at": "2025-03-03 05:19:22"
+    },
+    {
+        "id": 210,
+        "host_vendor": 121,
+        "aff_vendor": 184,
+        "approved": 0,
+        "aff_vendor_type": 5,
+        "host_vendor_type": 9,
+        "created_at": "2025-02-27 03:13:58",
+        "updated_at": "2025-02-27 03:13:58"
+    },
+    {
+        "id": 211,
+        "host_vendor": 121,
+        "aff_vendor": 200,
+        "approved": 0,
+        "aff_vendor_type": 17,
+        "host_vendor_type": 9,
+        "created_at": "2025-02-27 03:15:40",
+        "updated_at": "2025-02-27 03:15:40"
+    },
+    {
+        "id": 212,
+        "host_vendor": 121,
+        "aff_vendor": 7,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 9,
+        "created_at": "2025-02-27 03:16:55",
+        "updated_at": "2025-02-28 13:12:04"
+    },
+    {
+        "id": 213,
+        "host_vendor": 179,
+        "aff_vendor": 197,
+        "approved": 1,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 16,
+        "created_at": "2025-02-28 18:39:40",
+        "updated_at": "2025-02-28 18:40:49"
+    },
+    {
+        "id": 214,
+        "host_vendor": 7,
+        "aff_vendor": 204,
+        "approved": 1,
+        "aff_vendor_type": 18,
+        "host_vendor_type": 9,
+        "created_at": "2025-02-28 19:16:31",
+        "updated_at": "2025-02-28 20:23:40"
+    },
+    {
+        "id": 215,
+        "host_vendor": 196,
+        "aff_vendor": 193,
+        "approved": 0,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-02 04:09:46",
+        "updated_at": "2025-03-02 04:09:46"
+    },
+    {
+        "id": 216,
+        "host_vendor": 196,
+        "aff_vendor": 162,
+        "approved": 1,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-02 04:10:02",
+        "updated_at": "2025-03-03 15:59:53"
+    },
+    {
+        "id": 217,
+        "host_vendor": 196,
+        "aff_vendor": 182,
+        "approved": 0,
+        "aff_vendor_type": 5,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-02 04:11:31",
+        "updated_at": "2025-03-02 04:11:31"
+    },
+    {
+        "id": 218,
+        "host_vendor": 196,
+        "aff_vendor": 190,
+        "approved": 1,
+        "aff_vendor_type": 10,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-02 04:13:11",
+        "updated_at": "2025-03-05 22:07:20"
+    },
+    {
+        "id": 219,
+        "host_vendor": 196,
+        "aff_vendor": 200,
+        "approved": 0,
+        "aff_vendor_type": 17,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-02 04:13:43",
+        "updated_at": "2025-03-02 04:13:43"
+    },
+    {
+        "id": 220,
+        "host_vendor": 196,
+        "aff_vendor": 192,
+        "approved": 0,
+        "aff_vendor_type": 20,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-02 04:15:19",
+        "updated_at": "2025-03-02 04:15:19"
+    },
+    {
+        "id": 221,
+        "host_vendor": 121,
+        "aff_vendor": 203,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-02 12:14:00",
+        "updated_at": "2025-03-13 18:45:20"
+    },
+    {
+        "id": 222,
+        "host_vendor": 121,
+        "aff_vendor": 113,
+        "approved": 1,
+        "aff_vendor_type": 13,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-03 00:15:53",
+        "updated_at": "2025-03-03 00:26:20"
+    },
+    {
+        "id": 223,
+        "host_vendor": 162,
+        "aff_vendor": 196,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 12,
+        "created_at": "2025-03-03 16:01:01",
+        "updated_at": "2025-03-03 16:02:58"
+    },
+    {
+        "id": 224,
+        "host_vendor": 162,
+        "aff_vendor": 148,
+        "approved": 1,
+        "aff_vendor_type": 13,
+        "host_vendor_type": 12,
+        "created_at": "2025-03-03 16:01:54",
+        "updated_at": "2025-04-16 22:37:39"
+    },
+    {
+        "id": 225,
+        "host_vendor": 121,
+        "aff_vendor": 202,
+        "approved": 0,
+        "aff_vendor_type": 5,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-04 21:06:51",
+        "updated_at": "2025-03-04 21:06:51"
+    },
+    {
+        "id": 226,
+        "host_vendor": 190,
+        "aff_vendor": 196,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 10,
+        "created_at": "2025-03-05 22:07:27",
+        "updated_at": "2025-03-05 23:52:40"
+    },
+    {
+        "id": 227,
+        "host_vendor": 190,
+        "aff_vendor": 139,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 10,
+        "created_at": "2025-03-05 22:08:46",
+        "updated_at": "2025-03-10 13:03:35"
+    },
+    {
+        "id": 228,
+        "host_vendor": 207,
+        "aff_vendor": 177,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-07 16:48:08",
+        "updated_at": "2025-03-11 10:56:50"
+    },
+    {
+        "id": 229,
+        "host_vendor": 207,
+        "aff_vendor": 79,
+        "approved": 1,
+        "aff_vendor_type": 1,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-07 16:49:17",
+        "updated_at": "2025-03-16 22:10:59"
+    },
+    {
+        "id": 230,
+        "host_vendor": 126,
+        "aff_vendor": 139,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-07 19:21:50",
+        "updated_at": "2025-03-10 13:03:50"
+    },
+    {
+        "id": 231,
+        "host_vendor": 126,
+        "aff_vendor": 137,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-07 19:22:34",
+        "updated_at": "2025-03-21 22:32:27"
+    },
+    {
+        "id": 232,
+        "host_vendor": 126,
+        "aff_vendor": 128,
+        "approved": 0,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-07 19:22:58",
+        "updated_at": "2025-03-07 19:22:58"
+    },
+    {
+        "id": 233,
+        "host_vendor": 209,
+        "aff_vendor": 118,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 1,
+        "created_at": "2025-03-09 23:33:16",
+        "updated_at": "2025-03-12 13:11:08"
+    },
+    {
+        "id": 234,
+        "host_vendor": 209,
+        "aff_vendor": 181,
+        "approved": 1,
+        "aff_vendor_type": 5,
+        "host_vendor_type": 1,
+        "created_at": "2025-03-09 23:33:34",
+        "updated_at": "2025-03-10 00:02:20"
+    },
+    {
+        "id": 235,
+        "host_vendor": 7,
+        "aff_vendor": 215,
+        "approved": 0,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-10 00:21:48",
+        "updated_at": "2025-03-10 00:21:48"
+    },
+    {
+        "id": 236,
+        "host_vendor": 7,
+        "aff_vendor": 211,
+        "approved": 1,
+        "aff_vendor_type": 19,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-10 00:29:13",
+        "updated_at": "2025-03-10 15:15:35"
+    },
+    {
+        "id": 237,
+        "host_vendor": 80,
+        "aff_vendor": 128,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 12,
+        "created_at": "2025-03-10 14:15:52",
+        "updated_at": "2025-03-10 17:09:07"
+    },
+    {
+        "id": 238,
+        "host_vendor": 121,
+        "aff_vendor": 215,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-11 16:18:43",
+        "updated_at": "2025-03-11 21:43:58"
+    },
+    {
+        "id": 239,
+        "host_vendor": 219,
+        "aff_vendor": 191,
+        "approved": 1,
+        "aff_vendor_type": 1,
+        "host_vendor_type": 12,
+        "created_at": "2025-03-12 15:46:38",
+        "updated_at": "2025-03-12 17:55:21"
+    },
+    {
+        "id": 240,
+        "host_vendor": 219,
+        "aff_vendor": 7,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 12,
+        "created_at": "2025-03-12 15:48:34",
+        "updated_at": "2025-03-12 15:49:19"
+    },
+    {
+        "id": 241,
+        "host_vendor": 7,
+        "aff_vendor": 219,
+        "approved": 1,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-12 15:49:23",
+        "updated_at": "2025-03-12 15:49:55"
+    },
+    {
+        "id": 242,
+        "host_vendor": 191,
+        "aff_vendor": 219,
+        "approved": 1,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 1,
+        "created_at": "2025-03-12 17:56:16",
+        "updated_at": "2025-03-23 15:50:06"
+    },
+    {
+        "id": 243,
+        "host_vendor": 215,
+        "aff_vendor": 121,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 2,
+        "created_at": "2025-03-13 00:01:04",
+        "updated_at": "2025-03-13 00:50:44"
+    },
+    {
+        "id": 244,
+        "host_vendor": 121,
+        "aff_vendor": 139,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-13 01:25:58",
+        "updated_at": "2025-04-02 15:18:17"
+    },
+    {
+        "id": 246,
+        "host_vendor": 218,
+        "aff_vendor": 7,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 19,
+        "created_at": "2025-03-13 17:20:18",
+        "updated_at": "2025-03-13 17:22:59"
+    },
+    {
+        "id": 247,
+        "host_vendor": 121,
+        "aff_vendor": 206,
+        "approved": 1,
+        "aff_vendor_type": 20,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-14 00:37:48",
+        "updated_at": "2025-03-20 16:12:55"
+    },
+    {
+        "id": 248,
+        "host_vendor": 218,
+        "aff_vendor": 80,
+        "approved": 0,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 19,
+        "created_at": "2025-03-14 12:06:55",
+        "updated_at": "2025-03-14 12:06:55"
+    },
+    {
+        "id": 249,
+        "host_vendor": 218,
+        "aff_vendor": 221,
+        "approved": 0,
+        "aff_vendor_type": 10,
+        "host_vendor_type": 19,
+        "created_at": "2025-03-14 12:07:35",
+        "updated_at": "2025-03-14 12:07:35"
+    },
+    {
+        "id": 250,
+        "host_vendor": 218,
+        "aff_vendor": 177,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 19,
+        "created_at": "2025-03-14 12:08:39",
+        "updated_at": "2025-03-19 00:59:08"
+    },
+    {
+        "id": 251,
+        "host_vendor": 218,
+        "aff_vendor": 139,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 19,
+        "created_at": "2025-03-14 12:08:47",
+        "updated_at": "2025-04-02 15:18:43"
+    },
+    {
+        "id": 252,
+        "host_vendor": 218,
+        "aff_vendor": 163,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 19,
+        "created_at": "2025-03-14 12:09:01",
+        "updated_at": "2025-04-11 13:07:33"
+    },
+    {
+        "id": 253,
+        "host_vendor": 218,
+        "aff_vendor": 162,
+        "approved": 0,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 19,
+        "created_at": "2025-03-14 12:10:02",
+        "updated_at": "2025-03-14 12:10:02"
+    },
+    {
+        "id": 254,
+        "host_vendor": 218,
+        "aff_vendor": 197,
+        "approved": 1,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 19,
+        "created_at": "2025-03-14 12:10:10",
+        "updated_at": "2025-03-14 12:16:30"
+    },
+    {
+        "id": 255,
+        "host_vendor": 223,
+        "aff_vendor": 215,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 5,
+        "created_at": "2025-03-14 17:14:09",
+        "updated_at": "2025-03-14 20:41:52"
+    },
+    {
+        "id": 256,
+        "host_vendor": 162,
+        "aff_vendor": 222,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 12,
+        "created_at": "2025-03-14 17:14:16",
+        "updated_at": "2025-04-21 13:59:16"
+    },
+    {
+        "id": 257,
+        "host_vendor": 223,
+        "aff_vendor": 206,
+        "approved": 1,
+        "aff_vendor_type": 20,
+        "host_vendor_type": 5,
+        "created_at": "2025-03-14 17:16:02",
+        "updated_at": "2025-03-20 16:13:30"
+    },
+    {
+        "id": 258,
+        "host_vendor": 223,
+        "aff_vendor": 121,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 5,
+        "created_at": "2025-03-14 17:16:39",
+        "updated_at": "2025-03-14 17:55:19"
+    },
+    {
+        "id": 259,
+        "host_vendor": 223,
+        "aff_vendor": 203,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 5,
+        "created_at": "2025-03-14 17:17:23",
+        "updated_at": "2025-03-14 17:31:54"
+    },
+    {
+        "id": 260,
+        "host_vendor": 223,
+        "aff_vendor": 169,
+        "approved": 0,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 5,
+        "created_at": "2025-03-14 17:18:42",
+        "updated_at": "2025-03-14 17:18:42"
+    },
+    {
+        "id": 261,
+        "host_vendor": 223,
+        "aff_vendor": 221,
+        "approved": 0,
+        "aff_vendor_type": 10,
+        "host_vendor_type": 5,
+        "created_at": "2025-03-14 17:19:40",
+        "updated_at": "2025-03-14 17:19:40"
+    },
+    {
+        "id": 262,
+        "host_vendor": 223,
+        "aff_vendor": 220,
+        "approved": 1,
+        "aff_vendor_type": 15,
+        "host_vendor_type": 5,
+        "created_at": "2025-03-14 17:20:39",
+        "updated_at": "2025-03-14 22:02:41"
+    },
+    {
+        "id": 263,
+        "host_vendor": 203,
+        "aff_vendor": 223,
+        "approved": 1,
+        "aff_vendor_type": 5,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-14 17:37:36",
+        "updated_at": "2025-03-14 19:53:15"
+    },
+    {
+        "id": 265,
+        "host_vendor": 121,
+        "aff_vendor": 223,
+        "approved": 1,
+        "aff_vendor_type": 5,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-14 19:01:38",
+        "updated_at": "2025-03-14 19:53:01"
+    },
+    {
+        "id": 266,
+        "host_vendor": 121,
+        "aff_vendor": 177,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-14 21:38:23",
+        "updated_at": "2025-03-19 01:00:14"
+    },
+    {
+        "id": 267,
+        "host_vendor": 223,
+        "aff_vendor": 7,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 5,
+        "created_at": "2025-03-14 21:41:38",
+        "updated_at": "2025-03-15 23:45:53"
+    },
+    {
+        "id": 268,
+        "host_vendor": 203,
+        "aff_vendor": 121,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-14 22:09:56",
+        "updated_at": "2025-03-14 22:24:35"
+    },
+    {
+        "id": 269,
+        "host_vendor": 203,
+        "aff_vendor": 206,
+        "approved": 1,
+        "aff_vendor_type": 20,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-14 22:46:16",
+        "updated_at": "2025-03-20 16:12:46"
+    },
+    {
+        "id": 270,
+        "host_vendor": 203,
+        "aff_vendor": 221,
+        "approved": 0,
+        "aff_vendor_type": 10,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-14 22:47:29",
+        "updated_at": "2025-03-14 22:47:29"
+    },
+    {
+        "id": 271,
+        "host_vendor": 203,
+        "aff_vendor": 215,
+        "approved": 0,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-14 22:48:31",
+        "updated_at": "2025-03-14 22:48:31"
+    },
+    {
+        "id": 272,
+        "host_vendor": 203,
+        "aff_vendor": 222,
+        "approved": 0,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-14 22:49:03",
+        "updated_at": "2025-03-14 22:49:03"
+    },
+    {
+        "id": 273,
+        "host_vendor": 80,
+        "aff_vendor": 218,
+        "approved": 1,
+        "aff_vendor_type": 19,
+        "host_vendor_type": 12,
+        "created_at": "2025-03-14 23:44:33",
+        "updated_at": "2025-03-15 00:08:12"
+    },
+    {
+        "id": 274,
+        "host_vendor": 149,
+        "aff_vendor": 222,
+        "approved": 0,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 8,
+        "created_at": "2025-03-15 20:14:24",
+        "updated_at": "2025-03-15 20:14:24"
+    },
+    {
+        "id": 275,
+        "host_vendor": 121,
+        "aff_vendor": 227,
+        "approved": 1,
+        "aff_vendor_type": 13,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-16 00:37:36",
+        "updated_at": "2025-03-16 00:42:40"
+    },
+    {
+        "id": 276,
+        "host_vendor": 121,
+        "aff_vendor": 163,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-16 00:56:30",
+        "updated_at": "2025-04-11 13:07:47"
+    },
+    {
+        "id": 277,
+        "host_vendor": 121,
+        "aff_vendor": 220,
+        "approved": 1,
+        "aff_vendor_type": 15,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-16 00:56:55",
+        "updated_at": "2025-03-19 00:44:38"
+    },
+    {
+        "id": 278,
+        "host_vendor": 227,
+        "aff_vendor": 203,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 13,
+        "created_at": "2025-03-16 01:09:14",
+        "updated_at": "2025-03-16 01:10:39"
+    },
+    {
+        "id": 279,
+        "host_vendor": 227,
+        "aff_vendor": 144,
+        "approved": 0,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 13,
+        "created_at": "2025-03-16 01:09:52",
+        "updated_at": "2025-03-16 01:09:52"
+    },
+    {
+        "id": 280,
+        "host_vendor": 227,
+        "aff_vendor": 165,
+        "approved": 0,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 13,
+        "created_at": "2025-03-16 01:10:06",
+        "updated_at": "2025-03-16 01:10:06"
+    },
+    {
+        "id": 281,
+        "host_vendor": 203,
+        "aff_vendor": 227,
+        "approved": 1,
+        "aff_vendor_type": 13,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-16 01:14:05",
+        "updated_at": "2025-03-16 20:59:46"
+    },
+    {
+        "id": 282,
+        "host_vendor": 121,
+        "aff_vendor": 97,
+        "approved": 1,
+        "aff_vendor_type": 7,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-16 01:14:29",
+        "updated_at": "2025-03-17 16:38:45"
+    },
+    {
+        "id": 283,
+        "host_vendor": 121,
+        "aff_vendor": 221,
+        "approved": 0,
+        "aff_vendor_type": 10,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-16 01:18:12",
+        "updated_at": "2025-03-16 01:18:12"
+    },
+    {
+        "id": 284,
+        "host_vendor": 223,
+        "aff_vendor": 225,
+        "approved": 0,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 5,
+        "created_at": "2025-03-16 16:50:42",
+        "updated_at": "2025-03-16 16:50:42"
+    },
+    {
+        "id": 285,
+        "host_vendor": 223,
+        "aff_vendor": 227,
+        "approved": 1,
+        "aff_vendor_type": 13,
+        "host_vendor_type": 5,
+        "created_at": "2025-03-16 16:51:23",
+        "updated_at": "2025-03-16 20:59:33"
+    },
+    {
+        "id": 286,
+        "host_vendor": 203,
+        "aff_vendor": 224,
+        "approved": 1,
+        "aff_vendor_type": 5,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-16 17:53:29",
+        "updated_at": "2025-03-19 01:17:50"
+    },
+    {
+        "id": 287,
+        "host_vendor": 79,
+        "aff_vendor": 207,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 1,
+        "created_at": "2025-03-16 22:12:46",
+        "updated_at": "2025-03-17 18:44:02"
+    },
+    {
+        "id": 288,
+        "host_vendor": 190,
+        "aff_vendor": 222,
+        "approved": 0,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 10,
+        "created_at": "2025-03-16 22:32:49",
+        "updated_at": "2025-03-16 22:32:49"
+    },
+    {
+        "id": 289,
+        "host_vendor": 227,
+        "aff_vendor": 139,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 13,
+        "created_at": "2025-03-16 23:15:19",
+        "updated_at": "2025-04-02 15:18:58"
+    },
+    {
+        "id": 290,
+        "host_vendor": 227,
+        "aff_vendor": 177,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 13,
+        "created_at": "2025-03-16 23:15:39",
+        "updated_at": "2025-03-19 01:01:12"
+    },
+    {
+        "id": 291,
+        "host_vendor": 121,
+        "aff_vendor": 230,
+        "approved": 0,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-17 16:26:50",
+        "updated_at": "2025-03-17 16:26:50"
+    },
+    {
+        "id": 292,
+        "host_vendor": 121,
+        "aff_vendor": 224,
+        "approved": 1,
+        "aff_vendor_type": 5,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-17 16:30:03",
+        "updated_at": "2025-03-19 01:16:17"
+    },
+    {
+        "id": 293,
+        "host_vendor": 223,
+        "aff_vendor": 230,
+        "approved": 0,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 5,
+        "created_at": "2025-03-18 19:10:29",
+        "updated_at": "2025-03-18 19:10:29"
+    },
+    {
+        "id": 294,
+        "host_vendor": 233,
+        "aff_vendor": 108,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 2,
+        "created_at": "2025-03-18 19:29:47",
+        "updated_at": "2025-03-19 01:44:44"
+    },
+    {
+        "id": 295,
+        "host_vendor": 177,
+        "aff_vendor": 214,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 2,
+        "created_at": "2025-03-19 01:02:23",
+        "updated_at": "2025-03-20 13:30:45"
+    },
+    {
+        "id": 296,
+        "host_vendor": 224,
+        "aff_vendor": 203,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 5,
+        "created_at": "2025-03-19 01:18:27",
+        "updated_at": "2025-03-19 02:22:30"
+    },
+    {
+        "id": 297,
+        "host_vendor": 224,
+        "aff_vendor": 199,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 5,
+        "created_at": "2025-03-19 01:18:57",
+        "updated_at": "2025-03-21 12:56:33"
+    },
+    {
+        "id": 298,
+        "host_vendor": 234,
+        "aff_vendor": 121,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 22,
+        "created_at": "2025-03-19 01:42:18",
+        "updated_at": "2025-03-19 01:43:58"
+    },
+    {
+        "id": 299,
+        "host_vendor": 234,
+        "aff_vendor": 108,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 22,
+        "created_at": "2025-03-19 01:42:34",
+        "updated_at": "2025-03-19 01:45:24"
+    },
+    {
+        "id": 300,
+        "host_vendor": 234,
+        "aff_vendor": 196,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 22,
+        "created_at": "2025-03-19 01:42:51",
+        "updated_at": "2025-03-19 03:11:39"
+    },
+    {
+        "id": 301,
+        "host_vendor": 234,
+        "aff_vendor": 172,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 22,
+        "created_at": "2025-03-19 01:43:33",
+        "updated_at": "2025-03-20 17:54:31"
+    },
+    {
+        "id": 302,
+        "host_vendor": 234,
+        "aff_vendor": 140,
+        "approved": 0,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 22,
+        "created_at": "2025-03-19 01:44:07",
+        "updated_at": "2025-03-19 01:44:07"
+    },
+    {
+        "id": 303,
+        "host_vendor": 121,
+        "aff_vendor": 234,
+        "approved": 1,
+        "aff_vendor_type": 22,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-19 01:44:49",
+        "updated_at": "2025-03-21 00:58:04"
+    },
+    {
+        "id": 304,
+        "host_vendor": 234,
+        "aff_vendor": 180,
+        "approved": 1,
+        "aff_vendor_type": 7,
+        "host_vendor_type": 22,
+        "created_at": "2025-03-19 01:45:54",
+        "updated_at": "2025-03-19 02:03:10"
+    },
+    {
+        "id": 305,
+        "host_vendor": 234,
+        "aff_vendor": 221,
+        "approved": 0,
+        "aff_vendor_type": 10,
+        "host_vendor_type": 22,
+        "created_at": "2025-03-19 01:46:50",
+        "updated_at": "2025-03-19 01:46:50"
+    },
+    {
+        "id": 306,
+        "host_vendor": 234,
+        "aff_vendor": 141,
+        "approved": 1,
+        "aff_vendor_type": 16,
+        "host_vendor_type": 22,
+        "created_at": "2025-03-19 01:47:06",
+        "updated_at": "2025-03-29 11:36:29"
+    },
+    {
+        "id": 307,
+        "host_vendor": 234,
+        "aff_vendor": 179,
+        "approved": 1,
+        "aff_vendor_type": 16,
+        "host_vendor_type": 22,
+        "created_at": "2025-03-19 01:47:27",
+        "updated_at": "2025-03-19 12:37:35"
+    },
+    {
+        "id": 308,
+        "host_vendor": 234,
+        "aff_vendor": 192,
+        "approved": 0,
+        "aff_vendor_type": 20,
+        "host_vendor_type": 22,
+        "created_at": "2025-03-19 01:48:16",
+        "updated_at": "2025-03-19 01:48:16"
+    },
+    {
+        "id": 309,
+        "host_vendor": 234,
+        "aff_vendor": 206,
+        "approved": 1,
+        "aff_vendor_type": 20,
+        "host_vendor_type": 22,
+        "created_at": "2025-03-19 01:48:34",
+        "updated_at": "2025-03-20 16:12:37"
+    },
+    {
+        "id": 310,
+        "host_vendor": 234,
+        "aff_vendor": 82,
+        "approved": 0,
+        "aff_vendor_type": 21,
+        "host_vendor_type": 22,
+        "created_at": "2025-03-19 01:49:07",
+        "updated_at": "2025-03-19 01:49:07"
+    },
+    {
+        "id": 311,
+        "host_vendor": 234,
+        "aff_vendor": 201,
+        "approved": 1,
+        "aff_vendor_type": 13,
+        "host_vendor_type": 22,
+        "created_at": "2025-03-19 01:55:33",
+        "updated_at": "2025-04-11 20:17:23"
+    },
+    {
+        "id": 312,
+        "host_vendor": 180,
+        "aff_vendor": 234,
+        "approved": 1,
+        "aff_vendor_type": 22,
+        "host_vendor_type": 7,
+        "created_at": "2025-03-19 02:03:16",
+        "updated_at": "2025-03-19 02:07:34"
+    },
+    {
+        "id": 313,
+        "host_vendor": 180,
+        "aff_vendor": 222,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 7,
+        "created_at": "2025-03-19 02:04:19",
+        "updated_at": "2025-03-25 16:35:45"
+    },
+    {
+        "id": 314,
+        "host_vendor": 180,
+        "aff_vendor": 202,
+        "approved": 0,
+        "aff_vendor_type": 5,
+        "host_vendor_type": 7,
+        "created_at": "2025-03-19 02:05:47",
+        "updated_at": "2025-03-19 02:05:47"
+    },
+    {
+        "id": 315,
+        "host_vendor": 196,
+        "aff_vendor": 234,
+        "approved": 1,
+        "aff_vendor_type": 22,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-19 03:14:00",
+        "updated_at": "2025-03-19 03:53:54"
+    },
+    {
+        "id": 316,
+        "host_vendor": 196,
+        "aff_vendor": 215,
+        "approved": 0,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-19 03:15:01",
+        "updated_at": "2025-03-19 03:15:01"
+    },
+    {
+        "id": 317,
+        "host_vendor": 196,
+        "aff_vendor": 139,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-19 03:15:32",
+        "updated_at": "2025-04-02 15:19:07"
+    },
+    {
+        "id": 318,
+        "host_vendor": 196,
+        "aff_vendor": 231,
+        "approved": 1,
+        "aff_vendor_type": 7,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-19 03:18:26",
+        "updated_at": "2025-03-21 02:01:22"
+    },
+    {
+        "id": 319,
+        "host_vendor": 196,
+        "aff_vendor": 189,
+        "approved": 0,
+        "aff_vendor_type": 16,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-19 03:19:22",
+        "updated_at": "2025-03-19 03:19:22"
+    },
+    {
+        "id": 320,
+        "host_vendor": 179,
+        "aff_vendor": 200,
+        "approved": 0,
+        "aff_vendor_type": 17,
+        "host_vendor_type": 16,
+        "created_at": "2025-03-19 12:38:56",
+        "updated_at": "2025-03-19 12:38:56"
+    },
+    {
+        "id": 321,
+        "host_vendor": 179,
+        "aff_vendor": 219,
+        "approved": 1,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 16,
+        "created_at": "2025-03-19 12:39:45",
+        "updated_at": "2025-03-23 15:50:18"
+    },
+    {
+        "id": 322,
+        "host_vendor": 7,
+        "aff_vendor": 231,
+        "approved": 1,
+        "aff_vendor_type": 7,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-20 17:25:29",
+        "updated_at": "2025-03-21 02:00:30"
+    },
+    {
+        "id": 323,
+        "host_vendor": 172,
+        "aff_vendor": 193,
+        "approved": 0,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-20 17:56:13",
+        "updated_at": "2025-03-20 17:56:13"
+    },
+    {
+        "id": 324,
+        "host_vendor": 237,
+        "aff_vendor": 125,
+        "approved": 0,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 1,
+        "created_at": "2025-03-20 19:19:42",
+        "updated_at": "2025-03-20 19:19:42"
+    },
+    {
+        "id": 325,
+        "host_vendor": 237,
+        "aff_vendor": 177,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 1,
+        "created_at": "2025-03-20 19:20:07",
+        "updated_at": "2025-04-07 15:20:28"
+    },
+    {
+        "id": 326,
+        "host_vendor": 237,
+        "aff_vendor": 182,
+        "approved": 0,
+        "aff_vendor_type": 5,
+        "host_vendor_type": 1,
+        "created_at": "2025-03-20 19:21:33",
+        "updated_at": "2025-03-20 19:21:33"
+    },
+    {
+        "id": 327,
+        "host_vendor": 237,
+        "aff_vendor": 181,
+        "approved": 1,
+        "aff_vendor_type": 5,
+        "host_vendor_type": 1,
+        "created_at": "2025-03-20 19:21:43",
+        "updated_at": "2025-03-20 20:47:34"
+    },
+    {
+        "id": 328,
+        "host_vendor": 203,
+        "aff_vendor": 202,
+        "approved": 0,
+        "aff_vendor_type": 5,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-20 20:18:09",
+        "updated_at": "2025-03-20 20:18:09"
+    },
+    {
+        "id": 329,
+        "host_vendor": 203,
+        "aff_vendor": 234,
+        "approved": 1,
+        "aff_vendor_type": 22,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-20 20:19:03",
+        "updated_at": "2025-03-20 20:35:40"
+    },
+    {
+        "id": 330,
+        "host_vendor": 231,
+        "aff_vendor": 196,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 7,
+        "created_at": "2025-03-21 02:01:09",
+        "updated_at": "2025-03-21 02:37:27"
+    },
+    {
+        "id": 331,
+        "host_vendor": 231,
+        "aff_vendor": 7,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 7,
+        "created_at": "2025-03-21 02:02:31",
+        "updated_at": "2025-03-21 13:58:15"
+    },
+    {
+        "id": 332,
+        "host_vendor": 231,
+        "aff_vendor": 205,
+        "approved": 0,
+        "aff_vendor_type": 1,
+        "host_vendor_type": 7,
+        "created_at": "2025-03-21 02:20:14",
+        "updated_at": "2025-03-21 02:20:14"
+    },
+    {
+        "id": 333,
+        "host_vendor": 168,
+        "aff_vendor": 121,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-21 11:35:49",
+        "updated_at": "2025-03-21 12:41:30"
+    },
+    {
+        "id": 334,
+        "host_vendor": 168,
+        "aff_vendor": 108,
+        "approved": 0,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-21 11:36:15",
+        "updated_at": "2025-03-21 11:36:15"
+    },
+    {
+        "id": 335,
+        "host_vendor": 168,
+        "aff_vendor": 199,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-21 11:36:51",
+        "updated_at": "2025-03-21 12:56:47"
+    },
+    {
+        "id": 336,
+        "host_vendor": 168,
+        "aff_vendor": 124,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-21 11:37:08",
+        "updated_at": "2025-03-21 12:18:21"
+    },
+    {
+        "id": 337,
+        "host_vendor": 168,
+        "aff_vendor": 137,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-21 11:37:29",
+        "updated_at": "2025-03-21 22:32:38"
+    },
+    {
+        "id": 338,
+        "host_vendor": 121,
+        "aff_vendor": 168,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-21 12:41:36",
+        "updated_at": "2025-03-21 19:45:22"
+    },
+    {
+        "id": 339,
+        "host_vendor": 199,
+        "aff_vendor": 224,
+        "approved": 1,
+        "aff_vendor_type": 5,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-21 13:00:23",
+        "updated_at": "2025-03-21 18:19:45"
+    },
+    {
+        "id": 340,
+        "host_vendor": 136,
+        "aff_vendor": 196,
+        "approved": 0,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-21 19:28:16",
+        "updated_at": "2025-03-21 19:28:16"
+    },
+    {
+        "id": 341,
+        "host_vendor": 136,
+        "aff_vendor": 7,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-21 19:29:46",
+        "updated_at": "2025-03-21 19:35:35"
+    },
+    {
+        "id": 342,
+        "host_vendor": 136,
+        "aff_vendor": 231,
+        "approved": 1,
+        "aff_vendor_type": 7,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-21 19:40:52",
+        "updated_at": "2025-04-01 03:01:47"
+    },
+    {
+        "id": 343,
+        "host_vendor": 231,
+        "aff_vendor": 136,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 7,
+        "created_at": "2025-03-22 11:59:04",
+        "updated_at": "2025-03-22 12:04:16"
+    },
+    {
+        "id": 344,
+        "host_vendor": 76,
+        "aff_vendor": 156,
+        "approved": 0,
+        "aff_vendor_type": 7,
+        "host_vendor_type": 7,
+        "created_at": "2025-03-23 03:01:24",
+        "updated_at": "2025-03-23 03:01:24"
+    },
+    {
+        "id": 345,
+        "host_vendor": 224,
+        "aff_vendor": 215,
+        "approved": 0,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 5,
+        "created_at": "2025-03-23 04:07:59",
+        "updated_at": "2025-03-23 04:07:59"
+    },
+    {
+        "id": 347,
+        "host_vendor": 219,
+        "aff_vendor": 82,
+        "approved": 0,
+        "aff_vendor_type": 21,
+        "host_vendor_type": 12,
+        "created_at": "2025-03-23 15:51:15",
+        "updated_at": "2025-03-23 15:51:15"
+    },
+    {
+        "id": 348,
+        "host_vendor": 219,
+        "aff_vendor": 121,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 12,
+        "created_at": "2025-03-23 15:53:57",
+        "updated_at": "2025-03-23 15:57:00"
+    },
+    {
+        "id": 349,
+        "host_vendor": 219,
+        "aff_vendor": 199,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 12,
+        "created_at": "2025-03-23 15:54:16",
+        "updated_at": "2025-04-09 02:06:00"
+    },
+    {
+        "id": 350,
+        "host_vendor": 219,
+        "aff_vendor": 108,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 12,
+        "created_at": "2025-03-23 15:54:37",
+        "updated_at": "2025-04-20 15:15:13"
+    },
+    {
+        "id": 351,
+        "host_vendor": 219,
+        "aff_vendor": 168,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 12,
+        "created_at": "2025-03-23 15:54:57",
+        "updated_at": "2025-03-25 16:06:13"
+    },
+    {
+        "id": 352,
+        "host_vendor": 219,
+        "aff_vendor": 124,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 12,
+        "created_at": "2025-03-23 15:55:15",
+        "updated_at": "2025-03-26 16:32:00"
+    },
+    {
+        "id": 353,
+        "host_vendor": 219,
+        "aff_vendor": 137,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 12,
+        "created_at": "2025-03-23 15:55:30",
+        "updated_at": "2025-03-31 19:13:41"
+    },
+    {
+        "id": 354,
+        "host_vendor": 219,
+        "aff_vendor": 94,
+        "approved": 0,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 12,
+        "created_at": "2025-03-23 15:56:06",
+        "updated_at": "2025-03-23 15:56:06"
+    },
+    {
+        "id": 355,
+        "host_vendor": 219,
+        "aff_vendor": 119,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 12,
+        "created_at": "2025-03-23 15:56:42",
+        "updated_at": "2025-03-28 17:38:51"
+    },
+    {
+        "id": 356,
+        "host_vendor": 121,
+        "aff_vendor": 219,
+        "approved": 1,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-23 15:57:09",
+        "updated_at": "2025-03-23 16:05:42"
+    },
+    {
+        "id": 357,
+        "host_vendor": 219,
+        "aff_vendor": 95,
+        "approved": 0,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 12,
+        "created_at": "2025-03-23 15:57:16",
+        "updated_at": "2025-03-23 15:57:16"
+    },
+    {
+        "id": 358,
+        "host_vendor": 219,
+        "aff_vendor": 207,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 12,
+        "created_at": "2025-03-23 15:57:29",
+        "updated_at": "2025-03-26 13:57:14"
+    },
+    {
+        "id": 359,
+        "host_vendor": 219,
+        "aff_vendor": 231,
+        "approved": 1,
+        "aff_vendor_type": 7,
+        "host_vendor_type": 12,
+        "created_at": "2025-03-23 15:58:38",
+        "updated_at": "2025-03-24 02:03:48"
+    },
+    {
+        "id": 360,
+        "host_vendor": 219,
+        "aff_vendor": 202,
+        "approved": 0,
+        "aff_vendor_type": 5,
+        "host_vendor_type": 12,
+        "created_at": "2025-03-23 15:59:32",
+        "updated_at": "2025-03-23 15:59:32"
+    },
+    {
+        "id": 361,
+        "host_vendor": 219,
+        "aff_vendor": 113,
+        "approved": 1,
+        "aff_vendor_type": 13,
+        "host_vendor_type": 12,
+        "created_at": "2025-03-23 15:59:58",
+        "updated_at": "2025-03-23 16:15:18"
+    },
+    {
+        "id": 362,
+        "host_vendor": 219,
+        "aff_vendor": 141,
+        "approved": 1,
+        "aff_vendor_type": 16,
+        "host_vendor_type": 12,
+        "created_at": "2025-03-23 16:00:49",
+        "updated_at": "2025-03-29 11:35:48"
+    },
+    {
+        "id": 363,
+        "host_vendor": 219,
+        "aff_vendor": 146,
+        "approved": 0,
+        "aff_vendor_type": 16,
+        "host_vendor_type": 12,
+        "created_at": "2025-03-23 16:01:10",
+        "updated_at": "2025-03-23 16:01:10"
+    },
+    {
+        "id": 364,
+        "host_vendor": 219,
+        "aff_vendor": 189,
+        "approved": 0,
+        "aff_vendor_type": 16,
+        "host_vendor_type": 12,
+        "created_at": "2025-03-23 16:01:27",
+        "updated_at": "2025-03-23 16:01:27"
+    },
+    {
+        "id": 365,
+        "host_vendor": 219,
+        "aff_vendor": 206,
+        "approved": 0,
+        "aff_vendor_type": 20,
+        "host_vendor_type": 12,
+        "created_at": "2025-03-23 16:02:18",
+        "updated_at": "2025-03-23 16:02:18"
+    },
+    {
+        "id": 366,
+        "host_vendor": 219,
+        "aff_vendor": 200,
+        "approved": 0,
+        "aff_vendor_type": 17,
+        "host_vendor_type": 12,
+        "created_at": "2025-03-23 16:03:28",
+        "updated_at": "2025-03-23 16:03:28"
+    },
+    {
+        "id": 367,
+        "host_vendor": 219,
+        "aff_vendor": 234,
+        "approved": 1,
+        "aff_vendor_type": 22,
+        "host_vendor_type": 12,
+        "created_at": "2025-03-23 16:04:04",
+        "updated_at": "2025-03-25 19:14:36"
+    },
+    {
+        "id": 368,
+        "host_vendor": 219,
+        "aff_vendor": 162,
+        "approved": 0,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 12,
+        "created_at": "2025-03-23 16:04:38",
+        "updated_at": "2025-03-23 16:04:38"
+    },
+    {
+        "id": 369,
+        "host_vendor": 219,
+        "aff_vendor": 197,
+        "approved": 0,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 12,
+        "created_at": "2025-03-23 16:04:54",
+        "updated_at": "2025-03-23 16:04:54"
+    },
+    {
+        "id": 370,
+        "host_vendor": 219,
+        "aff_vendor": 193,
+        "approved": 0,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 12,
+        "created_at": "2025-03-23 16:05:12",
+        "updated_at": "2025-03-23 16:05:12"
+    },
+    {
+        "id": 371,
+        "host_vendor": 231,
+        "aff_vendor": 219,
+        "approved": 1,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 7,
+        "created_at": "2025-03-24 02:04:19",
+        "updated_at": "2025-03-24 17:19:22"
+    },
+    {
+        "id": 372,
+        "host_vendor": 203,
+        "aff_vendor": 141,
+        "approved": 1,
+        "aff_vendor_type": 16,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-25 20:11:16",
+        "updated_at": "2025-03-29 11:36:46"
+    },
+    {
+        "id": 373,
+        "host_vendor": 203,
+        "aff_vendor": 230,
+        "approved": 0,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-25 20:13:49",
+        "updated_at": "2025-03-25 20:13:49"
+    },
+    {
+        "id": 374,
+        "host_vendor": 203,
+        "aff_vendor": 113,
+        "approved": 1,
+        "aff_vendor_type": 13,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-25 20:14:46",
+        "updated_at": "2025-04-07 23:29:49"
+    },
+    {
+        "id": 375,
+        "host_vendor": 207,
+        "aff_vendor": 219,
+        "approved": 1,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-26 14:22:04",
+        "updated_at": "2025-03-26 16:39:26"
+    },
+    {
+        "id": 376,
+        "host_vendor": 207,
+        "aff_vendor": 231,
+        "approved": 1,
+        "aff_vendor_type": 7,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-26 14:22:25",
+        "updated_at": "2025-04-01 03:01:23"
+    },
+    {
+        "id": 377,
+        "host_vendor": 124,
+        "aff_vendor": 139,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-26 16:50:55",
+        "updated_at": "2025-04-02 15:19:16"
+    },
+    {
+        "id": 378,
+        "host_vendor": 124,
+        "aff_vendor": 177,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-26 16:51:06",
+        "updated_at": "2025-04-07 15:20:36"
+    },
+    {
+        "id": 379,
+        "host_vendor": 124,
+        "aff_vendor": 222,
+        "approved": 0,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-26 16:51:19",
+        "updated_at": "2025-03-26 16:51:19"
+    },
+    {
+        "id": 381,
+        "host_vendor": 124,
+        "aff_vendor": 195,
+        "approved": 0,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-26 16:51:53",
+        "updated_at": "2025-03-26 16:51:53"
+    },
+    {
+        "id": 382,
+        "host_vendor": 124,
+        "aff_vendor": 199,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-26 16:53:28",
+        "updated_at": "2025-04-09 02:07:50"
+    },
+    {
+        "id": 383,
+        "host_vendor": 124,
+        "aff_vendor": 168,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-26 16:53:42",
+        "updated_at": "2025-03-27 17:06:52"
+    },
+    {
+        "id": 384,
+        "host_vendor": 124,
+        "aff_vendor": 137,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-26 16:53:48",
+        "updated_at": "2025-03-31 19:13:59"
+    },
+    {
+        "id": 385,
+        "host_vendor": 124,
+        "aff_vendor": 128,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-26 16:53:58",
+        "updated_at": "2025-05-08 16:51:02"
+    },
+    {
+        "id": 386,
+        "host_vendor": 124,
+        "aff_vendor": 115,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-26 16:55:39",
+        "updated_at": "2025-03-31 13:51:59"
+    },
+    {
+        "id": 387,
+        "host_vendor": 124,
+        "aff_vendor": 227,
+        "approved": 0,
+        "aff_vendor_type": 13,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-26 16:57:45",
+        "updated_at": "2025-03-26 16:57:45"
+    },
+    {
+        "id": 388,
+        "host_vendor": 124,
+        "aff_vendor": 79,
+        "approved": 0,
+        "aff_vendor_type": 1,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-26 16:58:38",
+        "updated_at": "2025-03-26 16:58:38"
+    },
+    {
+        "id": 389,
+        "host_vendor": 223,
+        "aff_vendor": 235,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 5,
+        "created_at": "2025-03-27 15:49:08",
+        "updated_at": "2025-03-27 20:27:36"
+    },
+    {
+        "id": 390,
+        "host_vendor": 235,
+        "aff_vendor": 223,
+        "approved": 1,
+        "aff_vendor_type": 5,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-27 20:27:50",
+        "updated_at": "2025-03-27 20:58:36"
+    },
+    {
+        "id": 391,
+        "host_vendor": 7,
+        "aff_vendor": 239,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-28 14:20:22",
+        "updated_at": "2025-03-28 15:14:59"
+    },
+    {
+        "id": 392,
+        "host_vendor": 119,
+        "aff_vendor": 219,
+        "approved": 1,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-28 17:38:58",
+        "updated_at": "2025-03-29 14:29:39"
+    },
+    {
+        "id": 393,
+        "host_vendor": 241,
+        "aff_vendor": 180,
+        "approved": 1,
+        "aff_vendor_type": 7,
+        "host_vendor_type": 8,
+        "created_at": "2025-03-28 20:56:34",
+        "updated_at": "2025-03-29 14:15:00"
+    },
+    {
+        "id": 394,
+        "host_vendor": 241,
+        "aff_vendor": 7,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 8,
+        "created_at": "2025-03-28 20:56:42",
+        "updated_at": "2025-03-29 15:39:40"
+    },
+    {
+        "id": 395,
+        "host_vendor": 241,
+        "aff_vendor": 108,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 8,
+        "created_at": "2025-03-28 20:57:04",
+        "updated_at": "2025-04-20 15:15:07"
+    },
+    {
+        "id": 396,
+        "host_vendor": 241,
+        "aff_vendor": 124,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 8,
+        "created_at": "2025-03-28 20:57:58",
+        "updated_at": "2025-03-28 21:27:49"
+    },
+    {
+        "id": 397,
+        "host_vendor": 241,
+        "aff_vendor": 141,
+        "approved": 1,
+        "aff_vendor_type": 16,
+        "host_vendor_type": 8,
+        "created_at": "2025-03-28 21:01:06",
+        "updated_at": "2025-03-29 11:35:31"
+    },
+    {
+        "id": 398,
+        "host_vendor": 241,
+        "aff_vendor": 82,
+        "approved": 0,
+        "aff_vendor_type": 21,
+        "host_vendor_type": 8,
+        "created_at": "2025-03-28 21:01:57",
+        "updated_at": "2025-03-28 21:01:57"
+    },
+    {
+        "id": 399,
+        "host_vendor": 180,
+        "aff_vendor": 241,
+        "approved": 1,
+        "aff_vendor_type": 8,
+        "host_vendor_type": 7,
+        "created_at": "2025-03-29 14:15:07",
+        "updated_at": "2025-03-29 14:46:33"
+    },
+    {
+        "id": 400,
+        "host_vendor": 7,
+        "aff_vendor": 241,
+        "approved": 1,
+        "aff_vendor_type": 8,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-29 15:40:17",
+        "updated_at": "2025-03-29 16:31:19"
+    },
+    {
+        "id": 401,
+        "host_vendor": 115,
+        "aff_vendor": 124,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-31 13:52:58",
+        "updated_at": "2025-03-31 19:37:08"
+    },
+    {
+        "id": 402,
+        "host_vendor": 137,
+        "aff_vendor": 219,
+        "approved": 1,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-31 19:28:21",
+        "updated_at": "2025-04-01 16:29:45"
+    },
+    {
+        "id": 403,
+        "host_vendor": 137,
+        "aff_vendor": 124,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 9,
+        "created_at": "2025-03-31 19:28:53",
+        "updated_at": "2025-03-31 19:37:01"
+    },
+    {
+        "id": 404,
+        "host_vendor": 231,
+        "aff_vendor": 180,
+        "approved": 1,
+        "aff_vendor_type": 7,
+        "host_vendor_type": 7,
+        "created_at": "2025-04-01 03:03:39",
+        "updated_at": "2025-04-03 22:13:27"
+    },
+    {
+        "id": 405,
+        "host_vendor": 231,
+        "aff_vendor": 108,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 7,
+        "created_at": "2025-04-01 03:04:00",
+        "updated_at": "2025-04-20 15:14:54"
+    },
+    {
+        "id": 406,
+        "host_vendor": 121,
+        "aff_vendor": 231,
+        "approved": 1,
+        "aff_vendor_type": 7,
+        "host_vendor_type": 9,
+        "created_at": "2025-04-02 00:10:23",
+        "updated_at": "2025-04-02 02:14:12"
+    },
+    {
+        "id": 407,
+        "host_vendor": 231,
+        "aff_vendor": 121,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 7,
+        "created_at": "2025-04-02 02:14:40",
+        "updated_at": "2025-04-02 02:17:20"
+    },
+    {
+        "id": 408,
+        "host_vendor": 231,
+        "aff_vendor": 201,
+        "approved": 1,
+        "aff_vendor_type": 13,
+        "host_vendor_type": 7,
+        "created_at": "2025-04-02 02:16:53",
+        "updated_at": "2025-04-11 20:17:13"
+    },
+    {
+        "id": 409,
+        "host_vendor": 180,
+        "aff_vendor": 231,
+        "approved": 1,
+        "aff_vendor_type": 7,
+        "host_vendor_type": 7,
+        "created_at": "2025-04-03 22:13:34",
+        "updated_at": "2025-04-05 00:22:15"
+    },
+    {
+        "id": 410,
+        "host_vendor": 180,
+        "aff_vendor": 121,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 7,
+        "created_at": "2025-04-03 22:18:48",
+        "updated_at": "2025-04-03 23:10:31"
+    },
+    {
+        "id": 411,
+        "host_vendor": 180,
+        "aff_vendor": 137,
+        "approved": 0,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 7,
+        "created_at": "2025-04-03 22:19:03",
+        "updated_at": "2025-04-03 22:19:03"
+    },
+    {
+        "id": 412,
+        "host_vendor": 121,
+        "aff_vendor": 180,
+        "approved": 1,
+        "aff_vendor_type": 7,
+        "host_vendor_type": 9,
+        "created_at": "2025-04-03 23:10:36",
+        "updated_at": "2025-04-03 23:20:20"
+    },
+    {
+        "id": 413,
+        "host_vendor": 258,
+        "aff_vendor": 239,
+        "approved": 0,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 15,
+        "created_at": "2025-04-05 11:14:41",
+        "updated_at": "2025-04-05 11:14:41"
+    },
+    {
+        "id": 414,
+        "host_vendor": 258,
+        "aff_vendor": 188,
+        "approved": 0,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 15,
+        "created_at": "2025-04-05 11:15:38",
+        "updated_at": "2025-04-05 11:15:38"
+    },
+    {
+        "id": 415,
+        "host_vendor": 113,
+        "aff_vendor": 203,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 13,
+        "created_at": "2025-04-07 23:29:54",
+        "updated_at": "2025-04-07 23:48:36"
+    },
+    {
+        "id": 416,
+        "host_vendor": 252,
+        "aff_vendor": 258,
+        "approved": 1,
+        "aff_vendor_type": 15,
+        "host_vendor_type": 9,
+        "created_at": "2025-04-08 17:16:26",
+        "updated_at": "2025-04-08 20:46:45"
+    },
+    {
+        "id": 417,
+        "host_vendor": 258,
+        "aff_vendor": 252,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 15,
+        "created_at": "2025-04-08 20:46:09",
+        "updated_at": "2025-04-08 20:48:52"
+    },
+    {
+        "id": 418,
+        "host_vendor": 121,
+        "aff_vendor": 277,
+        "approved": 1,
+        "aff_vendor_type": 6,
+        "host_vendor_type": 9,
+        "created_at": "2025-04-08 22:53:18",
+        "updated_at": "2025-04-08 23:37:14"
+    },
+    {
+        "id": 419,
+        "host_vendor": 277,
+        "aff_vendor": 222,
+        "approved": 0,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 6,
+        "created_at": "2025-04-08 23:40:08",
+        "updated_at": "2025-04-08 23:40:08"
+    },
+    {
+        "id": 420,
+        "host_vendor": 277,
+        "aff_vendor": 121,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 6,
+        "created_at": "2025-04-08 23:40:27",
+        "updated_at": "2025-04-09 00:01:30"
+    },
+    {
+        "id": 421,
+        "host_vendor": 277,
+        "aff_vendor": 7,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 6,
+        "created_at": "2025-04-08 23:41:02",
+        "updated_at": "2025-04-09 12:18:33"
+    },
+    {
+        "id": 422,
+        "host_vendor": 277,
+        "aff_vendor": 199,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 6,
+        "created_at": "2025-04-08 23:41:13",
+        "updated_at": "2025-04-09 02:08:13"
+    },
+    {
+        "id": 423,
+        "host_vendor": 277,
+        "aff_vendor": 203,
+        "approved": 0,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 6,
+        "created_at": "2025-04-08 23:41:47",
+        "updated_at": "2025-04-08 23:41:47"
+    },
+    {
+        "id": 424,
+        "host_vendor": 277,
+        "aff_vendor": 172,
+        "approved": 0,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 6,
+        "created_at": "2025-04-08 23:42:49",
+        "updated_at": "2025-04-08 23:42:49"
+    },
+    {
+        "id": 425,
+        "host_vendor": 277,
+        "aff_vendor": 223,
+        "approved": 1,
+        "aff_vendor_type": 5,
+        "host_vendor_type": 6,
+        "created_at": "2025-04-08 23:43:52",
+        "updated_at": "2025-05-15 18:45:38"
+    },
+    {
+        "id": 426,
+        "host_vendor": 277,
+        "aff_vendor": 244,
+        "approved": 1,
+        "aff_vendor_type": 5,
+        "host_vendor_type": 6,
+        "created_at": "2025-04-08 23:44:38",
+        "updated_at": "2025-04-09 12:34:47"
+    },
+    {
+        "id": 427,
+        "host_vendor": 277,
+        "aff_vendor": 224,
+        "approved": 1,
+        "aff_vendor_type": 5,
+        "host_vendor_type": 6,
+        "created_at": "2025-04-08 23:44:56",
+        "updated_at": "2025-04-09 02:13:53"
+    },
+    {
+        "id": 428,
+        "host_vendor": 277,
+        "aff_vendor": 234,
+        "approved": 1,
+        "aff_vendor_type": 22,
+        "host_vendor_type": 6,
+        "created_at": "2025-04-08 23:45:28",
+        "updated_at": "2025-04-27 22:02:36"
+    },
+    {
+        "id": 429,
+        "host_vendor": 277,
+        "aff_vendor": 276,
+        "approved": 0,
+        "aff_vendor_type": 8,
+        "host_vendor_type": 6,
+        "created_at": "2025-04-08 23:46:06",
+        "updated_at": "2025-04-08 23:46:06"
+    },
+    {
+        "id": 430,
+        "host_vendor": 277,
+        "aff_vendor": 241,
+        "approved": 1,
+        "aff_vendor_type": 8,
+        "host_vendor_type": 6,
+        "created_at": "2025-04-08 23:46:41",
+        "updated_at": "2025-04-11 15:16:56"
+    },
+    {
+        "id": 431,
+        "host_vendor": 277,
+        "aff_vendor": 82,
+        "approved": 0,
+        "aff_vendor_type": 21,
+        "host_vendor_type": 6,
+        "created_at": "2025-04-08 23:47:24",
+        "updated_at": "2025-04-08 23:47:24"
+    },
+    {
+        "id": 432,
+        "host_vendor": 277,
+        "aff_vendor": 206,
+        "approved": 0,
+        "aff_vendor_type": 20,
+        "host_vendor_type": 6,
+        "created_at": "2025-04-08 23:50:00",
+        "updated_at": "2025-04-08 23:50:00"
+    },
+    {
+        "id": 433,
+        "host_vendor": 199,
+        "aff_vendor": 219,
+        "approved": 1,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 9,
+        "created_at": "2025-04-09 02:07:39",
+        "updated_at": "2025-04-17 18:50:48"
+    },
+    {
+        "id": 434,
+        "host_vendor": 199,
+        "aff_vendor": 124,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 9,
+        "created_at": "2025-04-09 02:07:55",
+        "updated_at": "2025-05-08 16:10:12"
+    },
+    {
+        "id": 435,
+        "host_vendor": 199,
+        "aff_vendor": 277,
+        "approved": 1,
+        "aff_vendor_type": 6,
+        "host_vendor_type": 9,
+        "created_at": "2025-04-09 02:08:21",
+        "updated_at": "2025-04-09 02:47:31"
+    },
+    {
+        "id": 436,
+        "host_vendor": 224,
+        "aff_vendor": 277,
+        "approved": 1,
+        "aff_vendor_type": 6,
+        "host_vendor_type": 5,
+        "created_at": "2025-04-09 02:14:58",
+        "updated_at": "2025-04-09 02:47:24"
+    },
+    {
+        "id": 437,
+        "host_vendor": 115,
+        "aff_vendor": 255,
+        "approved": 0,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 9,
+        "created_at": "2025-04-09 15:14:41",
+        "updated_at": "2025-04-09 15:14:41"
+    },
+    {
+        "id": 438,
+        "host_vendor": 258,
+        "aff_vendor": 243,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 15,
+        "created_at": "2025-04-10 01:30:37",
+        "updated_at": "2025-04-12 19:15:41"
+    },
+    {
+        "id": 439,
+        "host_vendor": 172,
+        "aff_vendor": 192,
+        "approved": 0,
+        "aff_vendor_type": 20,
+        "host_vendor_type": 9,
+        "created_at": "2025-04-10 17:16:27",
+        "updated_at": "2025-04-10 17:16:27"
+    },
+    {
+        "id": 440,
+        "host_vendor": 172,
+        "aff_vendor": 179,
+        "approved": 1,
+        "aff_vendor_type": 16,
+        "host_vendor_type": 9,
+        "created_at": "2025-04-10 17:17:47",
+        "updated_at": "2025-07-09 13:01:11"
+    },
+    {
+        "id": 441,
+        "host_vendor": 277,
+        "aff_vendor": 79,
+        "approved": 0,
+        "aff_vendor_type": 1,
+        "host_vendor_type": 6,
+        "created_at": "2025-04-10 19:09:13",
+        "updated_at": "2025-04-10 19:09:13"
+    },
+    {
+        "id": 442,
+        "host_vendor": 203,
+        "aff_vendor": 277,
+        "approved": 1,
+        "aff_vendor_type": 6,
+        "host_vendor_type": 9,
+        "created_at": "2025-04-10 20:49:39",
+        "updated_at": "2025-05-29 01:27:26"
+    },
+    {
+        "id": 443,
+        "host_vendor": 241,
+        "aff_vendor": 277,
+        "approved": 1,
+        "aff_vendor_type": 6,
+        "host_vendor_type": 8,
+        "created_at": "2025-04-11 15:17:23",
+        "updated_at": "2025-05-29 01:26:49"
+    },
+    {
+        "id": 444,
+        "host_vendor": 241,
+        "aff_vendor": 121,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 8,
+        "created_at": "2025-04-11 15:17:42",
+        "updated_at": "2025-04-11 15:30:26"
+    },
+    {
+        "id": 445,
+        "host_vendor": 241,
+        "aff_vendor": 137,
+        "approved": 0,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 8,
+        "created_at": "2025-04-11 15:18:07",
+        "updated_at": "2025-04-11 15:18:07"
+    },
+    {
+        "id": 446,
+        "host_vendor": 241,
+        "aff_vendor": 196,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 8,
+        "created_at": "2025-04-11 15:18:28",
+        "updated_at": "2025-04-12 17:48:20"
+    },
+    {
+        "id": 447,
+        "host_vendor": 241,
+        "aff_vendor": 207,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 8,
+        "created_at": "2025-04-11 15:19:07",
+        "updated_at": "2025-04-28 21:05:54"
+    },
+    {
+        "id": 448,
+        "host_vendor": 241,
+        "aff_vendor": 198,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 8,
+        "created_at": "2025-04-11 15:19:33",
+        "updated_at": "2025-04-18 13:45:07"
+    },
+    {
+        "id": 449,
+        "host_vendor": 241,
+        "aff_vendor": 219,
+        "approved": 1,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 8,
+        "created_at": "2025-04-11 15:20:10",
+        "updated_at": "2025-04-17 18:50:56"
+    },
+    {
+        "id": 450,
+        "host_vendor": 241,
+        "aff_vendor": 279,
+        "approved": 1,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 8,
+        "created_at": "2025-04-11 15:20:20",
+        "updated_at": "2025-04-11 15:20:44"
+    },
+    {
+        "id": 451,
+        "host_vendor": 241,
+        "aff_vendor": 193,
+        "approved": 0,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 8,
+        "created_at": "2025-04-11 15:20:27",
+        "updated_at": "2025-04-11 15:20:27"
+    },
+    {
+        "id": 452,
+        "host_vendor": 279,
+        "aff_vendor": 241,
+        "approved": 1,
+        "aff_vendor_type": 8,
+        "host_vendor_type": 12,
+        "created_at": "2025-04-11 15:20:54",
+        "updated_at": "2025-04-11 15:22:44"
+    },
+    {
+        "id": 453,
+        "host_vendor": 241,
+        "aff_vendor": 276,
+        "approved": 0,
+        "aff_vendor_type": 8,
+        "host_vendor_type": 8,
+        "created_at": "2025-04-11 15:21:04",
+        "updated_at": "2025-04-11 15:21:04"
+    },
+    {
+        "id": 454,
+        "host_vendor": 241,
+        "aff_vendor": 202,
+        "approved": 0,
+        "aff_vendor_type": 5,
+        "host_vendor_type": 8,
+        "created_at": "2025-04-11 15:22:29",
+        "updated_at": "2025-04-11 15:22:29"
+    },
+    {
+        "id": 455,
+        "host_vendor": 279,
+        "aff_vendor": 196,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 12,
+        "created_at": "2025-04-11 15:37:55",
+        "updated_at": "2025-04-12 17:48:57"
+    },
+    {
+        "id": 456,
+        "host_vendor": 279,
+        "aff_vendor": 121,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 12,
+        "created_at": "2025-04-11 16:24:07",
+        "updated_at": "2025-04-12 17:41:15"
+    },
+    {
+        "id": 457,
+        "host_vendor": 279,
+        "aff_vendor": 7,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 12,
+        "created_at": "2025-04-11 16:24:24",
+        "updated_at": "2025-04-12 01:58:48"
+    },
+    {
+        "id": 458,
+        "host_vendor": 7,
+        "aff_vendor": 279,
+        "approved": 1,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 9,
+        "created_at": "2025-04-12 01:59:07",
+        "updated_at": "2025-04-12 02:00:35"
+    },
+    {
+        "id": 459,
+        "host_vendor": 7,
+        "aff_vendor": 277,
+        "approved": 1,
+        "aff_vendor_type": 6,
+        "host_vendor_type": 9,
+        "created_at": "2025-04-12 02:01:37",
+        "updated_at": "2025-05-29 01:27:49"
+    },
+    {
+        "id": 460,
+        "host_vendor": 231,
+        "aff_vendor": 278,
+        "approved": 1,
+        "aff_vendor_type": 7,
+        "host_vendor_type": 7,
+        "created_at": "2025-04-12 13:48:12",
+        "updated_at": "2025-05-14 20:28:34"
+    },
+    {
+        "id": 461,
+        "host_vendor": 121,
+        "aff_vendor": 279,
+        "approved": 1,
+        "aff_vendor_type": 12,
+        "host_vendor_type": 9,
+        "created_at": "2025-04-12 17:41:23",
+        "updated_at": "2025-04-12 21:22:00"
+    },
+    {
+        "id": 462,
+        "host_vendor": 243,
+        "aff_vendor": 258,
+        "approved": 1,
+        "aff_vendor_type": 15,
+        "host_vendor_type": 2,
+        "created_at": "2025-04-12 19:16:18",
+        "updated_at": "2025-04-12 21:41:55"
+    },
+    {
+        "id": 463,
+        "host_vendor": 222,
+        "aff_vendor": 282,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 2,
+        "created_at": "2025-04-16 16:50:21",
+        "updated_at": "2025-04-16 17:14:53"
+    },
+    {
+        "id": 464,
+        "host_vendor": 282,
+        "aff_vendor": 222,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 9,
+        "created_at": "2025-04-16 22:35:26",
+        "updated_at": "2025-04-21 13:58:30"
+    },
+    {
+        "id": 465,
+        "host_vendor": 190,
+        "aff_vendor": 281,
+        "approved": 1,
+        "aff_vendor_type": 10,
+        "host_vendor_type": 10,
+        "created_at": "2025-04-20 01:10:24",
+        "updated_at": "2025-04-21 16:53:56"
+    },
+    {
+        "id": 466,
+        "host_vendor": 108,
+        "aff_vendor": 231,
+        "approved": 1,
+        "aff_vendor_type": 7,
+        "host_vendor_type": 9,
+        "created_at": "2025-04-20 15:17:07",
+        "updated_at": "2025-04-20 15:57:22"
+    },
+    {
+        "id": 467,
+        "host_vendor": 222,
+        "aff_vendor": 283,
+        "approved": 0,
+        "aff_vendor_type": 1,
+        "host_vendor_type": 2,
+        "created_at": "2025-04-21 13:59:19",
+        "updated_at": "2025-04-21 13:59:19"
+    },
+    {
+        "id": 468,
+        "host_vendor": 222,
+        "aff_vendor": 244,
+        "approved": 1,
+        "aff_vendor_type": 5,
+        "host_vendor_type": 2,
+        "created_at": "2025-04-21 14:01:27",
+        "updated_at": "2025-04-21 17:11:18"
+    },
+    {
+        "id": 469,
+        "host_vendor": 222,
+        "aff_vendor": 280,
+        "approved": 0,
+        "aff_vendor_type": 8,
+        "host_vendor_type": 2,
+        "created_at": "2025-04-21 14:02:24",
+        "updated_at": "2025-04-21 14:02:24"
+    },
+    {
+        "id": 470,
+        "host_vendor": 222,
+        "aff_vendor": 281,
+        "approved": 1,
+        "aff_vendor_type": 10,
+        "host_vendor_type": 2,
+        "created_at": "2025-04-21 14:02:54",
+        "updated_at": "2025-04-21 16:53:45"
+    },
+    {
+        "id": 471,
+        "host_vendor": 282,
+        "aff_vendor": 286,
+        "approved": 1,
+        "aff_vendor_type": 8,
+        "host_vendor_type": 9,
+        "created_at": "2025-04-21 14:32:56",
+        "updated_at": "2025-04-21 14:49:16"
+    },
+    {
+        "id": 472,
+        "host_vendor": 286,
+        "aff_vendor": 282,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 8,
+        "created_at": "2025-04-21 15:17:58",
+        "updated_at": "2025-04-21 15:18:45"
+    },
+    {
+        "id": 473,
+        "host_vendor": 286,
+        "aff_vendor": 222,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 8,
+        "created_at": "2025-04-21 15:19:22",
+        "updated_at": "2025-04-21 15:25:55"
+    },
+    {
+        "id": 474,
+        "host_vendor": 286,
+        "aff_vendor": 195,
+        "approved": 0,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 8,
+        "created_at": "2025-04-21 15:20:01",
+        "updated_at": "2025-04-21 15:20:01"
+    },
+    {
+        "id": 475,
+        "host_vendor": 222,
+        "aff_vendor": 286,
+        "approved": 1,
+        "aff_vendor_type": 8,
+        "host_vendor_type": 2,
+        "created_at": "2025-04-21 16:57:48",
+        "updated_at": "2025-04-21 17:13:25"
+    },
+    {
+        "id": 476,
+        "host_vendor": 244,
+        "aff_vendor": 222,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 5,
+        "created_at": "2025-04-21 17:20:34",
+        "updated_at": "2025-04-21 17:41:57"
+    },
+    {
+        "id": 477,
+        "host_vendor": 244,
+        "aff_vendor": 282,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 5,
+        "created_at": "2025-04-21 17:20:57",
+        "updated_at": "2025-04-21 17:23:05"
+    },
+    {
+        "id": 478,
+        "host_vendor": 244,
+        "aff_vendor": 286,
+        "approved": 1,
+        "aff_vendor_type": 8,
+        "host_vendor_type": 5,
+        "created_at": "2025-04-21 17:22:47",
+        "updated_at": "2025-04-22 12:22:38"
+    },
+    {
+        "id": 479,
+        "host_vendor": 282,
+        "aff_vendor": 244,
+        "approved": 1,
+        "aff_vendor_type": 5,
+        "host_vendor_type": 9,
+        "created_at": "2025-04-21 17:23:43",
+        "updated_at": "2025-04-21 17:24:38"
+    },
+    {
+        "id": 480,
+        "host_vendor": 7,
+        "aff_vendor": 276,
+        "approved": 0,
+        "aff_vendor_type": 8,
+        "host_vendor_type": 9,
+        "created_at": "2025-04-22 01:00:45",
+        "updated_at": "2025-04-22 01:00:45"
+    },
+    {
+        "id": 481,
+        "host_vendor": 286,
+        "aff_vendor": 244,
+        "approved": 1,
+        "aff_vendor_type": 5,
+        "host_vendor_type": 8,
+        "created_at": "2025-04-22 12:38:43",
+        "updated_at": "2025-04-22 12:49:55"
+    },
+    {
+        "id": 482,
+        "host_vendor": 231,
+        "aff_vendor": 222,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 7,
+        "created_at": "2025-04-26 11:22:48",
+        "updated_at": "2025-05-30 15:18:22"
+    },
+    {
+        "id": 483,
+        "host_vendor": 231,
+        "aff_vendor": 240,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 7,
+        "created_at": "2025-04-26 11:24:49",
+        "updated_at": "2025-05-13 14:21:56"
+    },
+    {
+        "id": 484,
+        "host_vendor": 231,
+        "aff_vendor": 230,
+        "approved": 0,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 7,
+        "created_at": "2025-04-26 11:26:17",
+        "updated_at": "2025-04-26 11:26:17"
+    },
+    {
+        "id": 485,
+        "host_vendor": 222,
+        "aff_vendor": 231,
+        "approved": 1,
+        "aff_vendor_type": 7,
+        "host_vendor_type": 2,
+        "created_at": "2025-04-26 13:48:02",
+        "updated_at": "2025-05-08 15:41:01"
+    },
+    {
+        "id": 486,
+        "host_vendor": 121,
+        "aff_vendor": 240,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 9,
+        "created_at": "2025-04-28 14:13:01",
+        "updated_at": "2025-05-13 14:21:40"
+    },
+    {
+        "id": 487,
+        "host_vendor": 121,
+        "aff_vendor": 274,
+        "approved": 0,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 9,
+        "created_at": "2025-04-28 14:13:50",
+        "updated_at": "2025-04-28 14:13:50"
+    },
+    {
+        "id": 488,
+        "host_vendor": 207,
+        "aff_vendor": 241,
+        "approved": 1,
+        "aff_vendor_type": 8,
+        "host_vendor_type": 9,
+        "created_at": "2025-04-28 21:06:06",
+        "updated_at": "2025-04-28 21:27:13"
+    },
+    {
+        "id": 489,
+        "host_vendor": 180,
+        "aff_vendor": 278,
+        "approved": 1,
+        "aff_vendor_type": 7,
+        "host_vendor_type": 7,
+        "created_at": "2025-05-13 13:33:59",
+        "updated_at": "2025-05-14 20:28:27"
+    },
+    {
+        "id": 490,
+        "host_vendor": 180,
+        "aff_vendor": 233,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 7,
+        "created_at": "2025-05-13 13:34:21",
+        "updated_at": "2025-05-13 13:51:22"
+    },
+    {
+        "id": 491,
+        "host_vendor": 180,
+        "aff_vendor": 195,
+        "approved": 0,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 7,
+        "created_at": "2025-05-13 13:34:31",
+        "updated_at": "2025-05-13 13:34:31"
+    },
+    {
+        "id": 492,
+        "host_vendor": 180,
+        "aff_vendor": 240,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 7,
+        "created_at": "2025-05-13 13:34:39",
+        "updated_at": "2025-05-13 14:21:21"
+    },
+    {
+        "id": 493,
+        "host_vendor": 180,
+        "aff_vendor": 198,
+        "approved": 0,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 7,
+        "created_at": "2025-05-13 13:35:25",
+        "updated_at": "2025-05-13 13:35:25"
+    },
+    {
+        "id": 494,
+        "host_vendor": 180,
+        "aff_vendor": 140,
+        "approved": 0,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 7,
+        "created_at": "2025-05-13 13:35:38",
+        "updated_at": "2025-05-13 13:35:38"
+    },
+    {
+        "id": 495,
+        "host_vendor": 180,
+        "aff_vendor": 260,
+        "approved": 0,
+        "aff_vendor_type": 19,
+        "host_vendor_type": 7,
+        "created_at": "2025-05-13 13:37:20",
+        "updated_at": "2025-05-13 13:37:20"
+    },
+    {
+        "id": 496,
+        "host_vendor": 180,
+        "aff_vendor": 276,
+        "approved": 0,
+        "aff_vendor_type": 8,
+        "host_vendor_type": 7,
+        "created_at": "2025-05-13 13:37:47",
+        "updated_at": "2025-05-13 13:37:47"
+    },
+    {
+        "id": 497,
+        "host_vendor": 297,
+        "aff_vendor": 302,
+        "approved": 0,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 18,
+        "created_at": "2025-05-18 21:21:26",
+        "updated_at": "2025-05-18 21:21:26"
+    },
+    {
+        "id": 498,
+        "host_vendor": 297,
+        "aff_vendor": 295,
+        "approved": 0,
+        "aff_vendor_type": 5,
+        "host_vendor_type": 18,
+        "created_at": "2025-05-18 21:22:52",
+        "updated_at": "2025-05-18 21:22:52"
+    },
+    {
+        "id": 499,
+        "host_vendor": 297,
+        "aff_vendor": 263,
+        "approved": 0,
+        "aff_vendor_type": 4,
+        "host_vendor_type": 18,
+        "created_at": "2025-05-18 21:23:45",
+        "updated_at": "2025-05-18 21:23:45"
+    },
+    {
+        "id": 500,
+        "host_vendor": 297,
+        "aff_vendor": 312,
+        "approved": 0,
+        "aff_vendor_type": 4,
+        "host_vendor_type": 18,
+        "created_at": "2025-05-18 21:24:30",
+        "updated_at": "2025-05-18 21:24:30"
+    },
+    {
+        "id": 501,
+        "host_vendor": 297,
+        "aff_vendor": 304,
+        "approved": 0,
+        "aff_vendor_type": 3,
+        "host_vendor_type": 18,
+        "created_at": "2025-05-18 22:34:03",
+        "updated_at": "2025-05-18 22:34:03"
+    },
+    {
+        "id": 502,
+        "host_vendor": 297,
+        "aff_vendor": 259,
+        "approved": 0,
+        "aff_vendor_type": 15,
+        "host_vendor_type": 18,
+        "created_at": "2025-05-18 22:36:29",
+        "updated_at": "2025-05-18 22:36:29"
+    },
+    {
+        "id": 503,
+        "host_vendor": 297,
+        "aff_vendor": 307,
+        "approved": 0,
+        "aff_vendor_type": 1,
+        "host_vendor_type": 18,
+        "created_at": "2025-05-18 22:38:15",
+        "updated_at": "2025-05-18 22:38:15"
+    },
+    {
+        "id": 504,
+        "host_vendor": 297,
+        "aff_vendor": 294,
+        "approved": 1,
+        "aff_vendor_type": 18,
+        "host_vendor_type": 18,
+        "created_at": "2025-05-18 22:40:55",
+        "updated_at": "2025-05-18 22:49:54"
+    },
+    {
+        "id": 505,
+        "host_vendor": 303,
+        "aff_vendor": 177,
+        "approved": 0,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 9,
+        "created_at": "2025-05-19 20:23:42",
+        "updated_at": "2025-05-19 20:23:42"
+    },
+    {
+        "id": 506,
+        "host_vendor": 303,
+        "aff_vendor": 254,
+        "approved": 1,
+        "aff_vendor_type": 20,
+        "host_vendor_type": 9,
+        "created_at": "2025-05-19 20:25:11",
+        "updated_at": "2025-05-19 21:02:22"
+    },
+    {
+        "id": 507,
+        "host_vendor": 223,
+        "aff_vendor": 274,
+        "approved": 0,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 5,
+        "created_at": "2025-05-21 02:52:03",
+        "updated_at": "2025-05-21 02:52:03"
+    },
+    {
+        "id": 508,
+        "host_vendor": 223,
+        "aff_vendor": 277,
+        "approved": 1,
+        "aff_vendor_type": 6,
+        "host_vendor_type": 5,
+        "created_at": "2025-05-21 02:56:46",
+        "updated_at": "2025-05-29 01:27:13"
+    },
+    {
+        "id": 509,
+        "host_vendor": 121,
+        "aff_vendor": 276,
+        "approved": 0,
+        "aff_vendor_type": 8,
+        "host_vendor_type": 9,
+        "created_at": "2025-05-21 16:23:33",
+        "updated_at": "2025-05-21 16:23:33"
+    },
+    {
+        "id": 511,
+        "host_vendor": 326,
+        "aff_vendor": 121,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 8,
+        "created_at": "2025-05-29 00:01:32",
+        "updated_at": "2025-05-29 00:01:58"
+    },
+    {
+        "id": 512,
+        "host_vendor": 326,
+        "aff_vendor": 215,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 8,
+        "created_at": "2025-05-29 00:26:28",
+        "updated_at": "2025-05-29 17:29:52"
+    },
+    {
+        "id": 513,
+        "host_vendor": 326,
+        "aff_vendor": 240,
+        "approved": 1,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 8,
+        "created_at": "2025-05-29 00:27:30",
+        "updated_at": "2025-05-29 14:02:05"
+    },
+    {
+        "id": 514,
+        "host_vendor": 326,
+        "aff_vendor": 274,
+        "approved": 0,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 8,
+        "created_at": "2025-05-29 00:27:58",
+        "updated_at": "2025-05-29 00:27:58"
+    },
+    {
+        "id": 515,
+        "host_vendor": 326,
+        "aff_vendor": 230,
+        "approved": 0,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 8,
+        "created_at": "2025-05-29 00:28:28",
+        "updated_at": "2025-05-29 00:28:28"
+    },
+    {
+        "id": 516,
+        "host_vendor": 326,
+        "aff_vendor": 325,
+        "approved": 1,
+        "aff_vendor_type": 5,
+        "host_vendor_type": 8,
+        "created_at": "2025-05-29 00:31:41",
+        "updated_at": "2025-05-29 00:51:23"
+    },
+    {
+        "id": 517,
+        "host_vendor": 326,
+        "aff_vendor": 227,
+        "approved": 0,
+        "aff_vendor_type": 13,
+        "host_vendor_type": 8,
+        "created_at": "2025-05-29 00:32:35",
+        "updated_at": "2025-05-29 00:32:35"
+    },
+    {
+        "id": 518,
+        "host_vendor": 326,
+        "aff_vendor": 277,
+        "approved": 1,
+        "aff_vendor_type": 6,
+        "host_vendor_type": 8,
+        "created_at": "2025-05-29 00:35:57",
+        "updated_at": "2025-05-29 01:28:08"
+    },
+    {
+        "id": 519,
+        "host_vendor": 326,
+        "aff_vendor": 206,
+        "approved": 0,
+        "aff_vendor_type": 20,
+        "host_vendor_type": 8,
+        "created_at": "2025-05-29 00:37:33",
+        "updated_at": "2025-05-29 00:37:33"
+    },
+    {
+        "id": 520,
+        "host_vendor": 223,
+        "aff_vendor": 326,
+        "approved": 1,
+        "aff_vendor_type": 8,
+        "host_vendor_type": 5,
+        "created_at": "2025-05-29 00:44:50",
+        "updated_at": "2025-05-30 10:33:00"
+    },
+    {
+        "id": 521,
+        "host_vendor": 325,
+        "aff_vendor": 121,
+        "approved": 1,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 5,
+        "created_at": "2025-05-29 00:51:52",
+        "updated_at": "2025-05-29 01:05:46"
+    },
+    {
+        "id": 522,
+        "host_vendor": 121,
+        "aff_vendor": 325,
+        "approved": 0,
+        "aff_vendor_type": 5,
+        "host_vendor_type": 9,
+        "created_at": "2025-05-29 01:05:52",
+        "updated_at": "2025-05-29 01:05:52"
+    },
+    {
+        "id": 523,
+        "host_vendor": 325,
+        "aff_vendor": 230,
+        "approved": 0,
+        "aff_vendor_type": 2,
+        "host_vendor_type": 5,
+        "created_at": "2025-05-29 02:07:42",
+        "updated_at": "2025-05-29 02:07:42"
+    },
+    {
+        "id": 524,
+        "host_vendor": 203,
+        "aff_vendor": 325,
+        "approved": 0,
+        "aff_vendor_type": 5,
+        "host_vendor_type": 9,
+        "created_at": "2025-06-04 20:29:19",
+        "updated_at": "2025-06-04 20:29:19"
+    },
+    {
+        "id": 525,
+        "host_vendor": 330,
+        "aff_vendor": 265,
+        "approved": 0,
+        "aff_vendor_type": 13,
+        "host_vendor_type": 9,
+        "created_at": "2025-06-09 22:12:38",
+        "updated_at": "2025-06-09 22:12:38"
+    },
+    {
+        "id": 526,
+        "host_vendor": 179,
+        "aff_vendor": 172,
+        "approved": 0,
+        "aff_vendor_type": 9,
+        "host_vendor_type": 16,
+        "created_at": "2025-07-09 13:01:22",
+        "updated_at": "2025-07-09 13:01:22"
+    },
+    {
+        "id": 527,
+        "host_vendor": 121,
+        "aff_vendor": 326,
+        "approved": 0,
+        "aff_vendor_type": 8,
+        "host_vendor_type": 9,
+        "created_at": "2025-07-09 13:02:21",
+        "updated_at": "2025-07-09 13:02:21"
+    }
+]

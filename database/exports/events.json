@@ -1,0 +1,29 @@
+[
+    {
+        "id": 1,
+        "name": "Event Week 1",
+        "code": "join1",
+        "join_link": "joinevent1",
+        "end_date": null,
+        "created_at": null,
+        "updated_at": null
+    },
+    {
+        "id": 2,
+        "name": "Happily Ever Expo",
+        "code": "8952",
+        "join_link": "HappilyEverExpo0406",
+        "end_date": "2025-04-20",
+        "created_at": null,
+        "updated_at": null
+    },
+    {
+        "id": 3,
+        "name": "Happily Ever Expo (5/15/2025)",
+        "code": "HE515",
+        "join_link": "HappilyEverExpo515",
+        "end_date": "2025-05-31",
+        "created_at": null,
+        "updated_at": null
+    }
+]

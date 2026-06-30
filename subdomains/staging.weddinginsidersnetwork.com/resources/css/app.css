@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #fff;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #D5C6E7;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #D5C6E7;
+}
+
+.heart {
+}
+
+.heart.is-active {
+}
+
+/*.button,[type="submit"],[type="button"] {
+    background-color: #6432C8;
+}*/
+.swal2-confirm {
+  background-color: #6432C8 !important; /* Example color: Black */
+}
+.swal2-cancel {
+  background-color: #d33 !important; /* Example color: Black */
+}

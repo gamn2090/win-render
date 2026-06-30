@@ -1,0 +1,178 @@
+[
+    {
+        "id": 1,
+        "priority": 198,
+        "type": "Florist",
+        "icon": "/ico/florist.svg",
+        "created_at": "2024-10-14 10:34:07",
+        "updated_at": "2026-05-26 00:24:34"
+    },
+    {
+        "id": 2,
+        "priority": 0,
+        "type": "Venue",
+        "icon": "/ico/venue.svg",
+        "created_at": "2024-10-14 10:34:07",
+        "updated_at": "2026-05-26 00:24:34"
+    },
+    {
+        "id": 3,
+        "priority": 16,
+        "type": "Bakery / Cake",
+        "icon": "/ico/cake.svg",
+        "created_at": "2024-10-14 10:34:07",
+        "updated_at": "2026-05-26 00:24:34"
+    },
+    {
+        "id": 4,
+        "priority": 14,
+        "type": "Caterer",
+        "icon": "/ico/caterer.svg",
+        "created_at": "2024-10-14 10:34:07",
+        "updated_at": "2026-05-26 00:24:34"
+    },
+    {
+        "id": 5,
+        "priority": 10,
+        "type": "DJ",
+        "icon": "/ico/music.svg",
+        "created_at": "2024-10-14 10:34:07",
+        "updated_at": "2026-05-26 00:24:34"
+    },
+    {
+        "id": 6,
+        "priority": 22,
+        "type": "Live Bands",
+        "icon": "/ico/music.svg",
+        "created_at": "2024-10-14 10:34:07",
+        "updated_at": "2026-05-26 00:24:34"
+    },
+    {
+        "id": 7,
+        "priority": 8,
+        "type": "Hair & Makeup",
+        "icon": "/ico/hair.svg",
+        "created_at": "2024-10-14 10:34:07",
+        "updated_at": "2026-05-26 00:24:34"
+    },
+    {
+        "id": 8,
+        "priority": 26,
+        "type": "Officiant",
+        "icon": "/ico/officiant.svg",
+        "created_at": "2024-10-14 10:34:07",
+        "updated_at": "2026-05-26 00:24:34"
+    },
+    {
+        "id": 9,
+        "priority": 6,
+        "type": "Photographer",
+        "icon": "/ico/camera.svg",
+        "created_at": "2024-10-14 10:34:07",
+        "updated_at": "2026-05-26 00:24:34"
+    },
+    {
+        "id": 10,
+        "priority": 18,
+        "type": "Rentals & Decor",
+        "icon": "/ico/rentals.svg",
+        "created_at": "2024-10-14 10:34:07",
+        "updated_at": "2026-05-26 00:24:34"
+    },
+    {
+        "id": 11,
+        "priority": 28,
+        "type": "Transportation",
+        "icon": "/ico/transportation.svg",
+        "created_at": "2024-10-14 10:34:07",
+        "updated_at": "2026-05-26 00:24:34"
+    },
+    {
+        "id": 12,
+        "priority": 4,
+        "type": "Wedding Planner",
+        "icon": "/ico/plan.svg",
+        "created_at": "2024-10-14 10:34:07",
+        "updated_at": "2026-05-26 00:24:34"
+    },
+    {
+        "id": 13,
+        "priority": 12,
+        "type": "Videographer",
+        "icon": "/ico/video.svg",
+        "created_at": "2024-10-14 10:34:07",
+        "updated_at": "2026-05-26 00:24:34"
+    },
+    {
+        "id": 14,
+        "priority": 32,
+        "type": "Jewelers",
+        "icon": "/ico/jewel.svg",
+        "created_at": "2024-10-14 10:34:07",
+        "updated_at": "2026-05-26 00:24:34"
+    },
+    {
+        "id": 15,
+        "priority": 24,
+        "type": "Photo Booth",
+        "icon": "/ico/photo-booth.svg",
+        "created_at": "2024-10-14 10:34:07",
+        "updated_at": "2026-05-26 00:24:34"
+    },
+    {
+        "id": 16,
+        "priority": 20,
+        "type": "Bar Services",
+        "icon": "/ico/bar.svg",
+        "created_at": "2024-10-14 10:34:07",
+        "updated_at": "2026-05-26 00:24:34"
+    },
+    {
+        "id": 17,
+        "priority": 30,
+        "type": "Content Creators",
+        "icon": "/ico/video.svg",
+        "created_at": "2024-10-14 10:34:07",
+        "updated_at": "2026-05-26 00:24:34"
+    },
+    {
+        "id": 18,
+        "priority": 200,
+        "type": "Other",
+        "icon": "/ico/plan.svg",
+        "created_at": "2024-10-14 10:34:07",
+        "updated_at": "2026-05-26 00:24:34"
+    },
+    {
+        "id": 19,
+        "priority": 21,
+        "type": "Invitations / Stationery",
+        "icon": "/ico/stationery.svg",
+        "created_at": null,
+        "updated_at": "2026-05-26 00:24:34"
+    },
+    {
+        "id": 20,
+        "priority": 23,
+        "type": "Bridal Shops / Tux Rental",
+        "icon": "/ico/dress.svg",
+        "created_at": null,
+        "updated_at": "2026-05-26 00:24:34"
+    },
+    {
+        "id": 21,
+        "priority": 25,
+        "type": "String Ensembles",
+        "icon": "/ico/violin.svg",
+        "created_at": "2024-10-14 10:34:07",
+        "updated_at": "2026-05-26 00:24:34"
+    },
+    {
+        "id": 22,
+        "priority": 34,
+        "type": "Live Artists / Painters",
+        "icon": "/ico/painter.svg",
+        "created_at": null,
+        "updated_at": "2026-05-26 00:24:34"
+    }
+]
