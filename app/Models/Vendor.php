@@ -106,10 +106,13 @@ class Vendor extends Authenticatable
             return $profile;
         }
 
-        return Profile::create([
+        $profile = Profile::create([
             'type' => 'vendor',
             'belongs_to' => $this->id,
         ]);
+        $this->setRelation('profile', $profile);
+
+        return $profile;
     }
 
     /**

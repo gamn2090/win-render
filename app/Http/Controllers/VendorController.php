@@ -38,20 +38,34 @@ class VendorController extends Controller
     ) {}
 
     public function searchVendorType(Request $request){
-        $requestType = $request->type;
         $requestedVendorTypes = VendorTypes::orderBy('priority', 'asc')->get();
-        if($requestType == null){
+
+        $requestType = $request->input('type');
+        if (is_array($requestType)) {
+            $requestType = array_values(array_filter($requestType, fn ($v) => $v !== null && $v !== ''));
+        }
+        if (empty($requestType)) {
             $requestType = 2;
         }
+        $selectedTypeIds = is_array($requestType) ? $requestType : [$requestType];
+        $primaryTypeId = $selectedTypeIds[0];
+
         $filters = $request->input('filter');
-        return view('vendor.search_vendors', [
+        $data = [
             'vendor_types' => $requestedVendorTypes,
-            'allowedFilters' => TagType::where('hidden', 0)->where('vendor_type_id', $requestType)->get(),
+            'allowedFilters' => TagType::where('hidden', 0)->where('vendor_type_id', $primaryTypeId)->get(),
             'requestedTypes' => $requestedVendorTypes, //for parity with client search
-            'vendors' => $this->vendorService->getVendorsByRank($requestType, $filters)->with('profile')->paginate(20),
-            'selected_type' => VendorTypes::where('id', $requestType)->first(),
+            'vendors' => $this->vendorService->getVendorsByRank($requestType, $filters)->with('profile')->paginate(20)->appends($request->query()),
+            'selected_type' => VendorTypes::where('id', $primaryTypeId)->first(),
+            'selected_type_ids' => $selectedTypeIds,
             'page' => 'search_vendors'
-        ]);
+        ];
+
+        if (Auth::guard('web')->check()) {
+            return view('couple.search_vendors', $data);
+        }
+
+        return view('vendor.search_vendors', $data);
     }
 
     public function createClientInvite(Request $request){

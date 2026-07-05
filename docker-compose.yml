@@ -1,0 +1,41 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/var/www/html
+      - vendor:/var/www/html/vendor
+    depends_on:
+      - db
+    command: sh -c "composer install --no-interaction && php artisan migrate --force && if [ \"$$APP_ENV\" = development ]; then php artisan db:seed --force; fi && php artisan serve --host=0.0.0.0 --port=8000"
+
+  vite:
+    image: node:20
+    working_dir: /var/www/html
+    volumes:
+      - .:/var/www/html
+      - node_modules:/var/www/html/node_modules
+    ports:
+      - "5173:5173"
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
+
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: winetwork_main
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 426620
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  vendor:
+  node_modules:
+  db_data:

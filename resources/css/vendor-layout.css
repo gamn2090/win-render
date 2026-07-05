@@ -1,6 +1,6 @@
 /* Vendor app shell — sidebar + main + footer (all vendor sidebar views) */
 
-.vendor-sidebar ~ main {
+.dashboard-sidebar ~ main {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -18,7 +18,7 @@
 }
 
 /* Footer inside main — full bleed within content column (dashboard, etc.) */
-body:has(.vendor-sidebar) main > .site-footer {
+body:has(.dashboard-sidebar) main > .site-footer {
   flex-shrink: 0;
   margin-top: auto;
   margin-left: -30px;
@@ -28,7 +28,7 @@ body:has(.vendor-sidebar) main > .site-footer {
 }
 
 /* Footer outside main — align with content column, not under sidebar */
-body:has(.vendor-sidebar) .site-footer:not(main > .site-footer) {
+body:has(.dashboard-sidebar) .site-footer:not(main > .site-footer) {
   margin-left: 230px;
   width: calc(100vw - 230px);
   max-width: calc(100vw - 230px);
@@ -118,13 +118,13 @@ body:has(.vendor-sidebar) .site-footer:not(main > .site-footer) {
 }
 
 @media (max-width: 1023px) {
-  body:has(.vendor-sidebar) main > .site-footer {
+  body:has(.dashboard-sidebar) main > .site-footer {
     margin-left: -16px;
     margin-right: -16px;
     width: calc(100% + 32px);
   }
 
-  body:has(.vendor-sidebar) .site-footer:not(main > .site-footer) {
+  body:has(.dashboard-sidebar) .site-footer:not(main > .site-footer) {
     margin-left: 0;
     width: 100%;
     max-width: 100%;

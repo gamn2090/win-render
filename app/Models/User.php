@@ -48,7 +48,8 @@ class User extends Authenticatable
         'booking_date',
         'phone',
         'ref_source',
-        'event'
+        'event',
+        'allow_vendor_contact'
     ];
 
     /**
@@ -317,10 +318,18 @@ class User extends Authenticatable
     public function unreadMessagesCount(){
         $notifs = MessageNotification::where([
             ['messageable_id', '=', $this->id],
-            ['messageable_type', '=', 'App\Models\Vendor'],
+            ['messageable_type', '=', 'App\Models\User'],
             ['is_seen', '=', 0],
         ])->count();
         return $notifs;
+    }
+
+    public function unreadConversationsCount(){
+        return MessageNotification::where('messageable_id', $this->id)
+            ->where('messageable_type', 'App\Models\User')
+            ->where('is_seen', 0)
+            ->distinct('conversation_id')
+            ->count('conversation_id');
     }
 
     public function hasFavorite($id){

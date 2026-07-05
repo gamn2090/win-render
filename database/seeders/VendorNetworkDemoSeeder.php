@@ -10,6 +10,10 @@ class VendorNetworkDemoSeeder extends Seeder
 {
     public function run(): void
     {
+        if (! app()->environment('development')) {
+            throw new \RuntimeException('VendorNetworkDemoSeeder only runs when APP_ENV=development.');
+        }
+
         $vendor = Vendor::query()->orderBy('id')->first();
 
         if ($vendor === null) {

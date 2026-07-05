@@ -2,8 +2,8 @@
  * Polls unread message notifications for the vendor sidebar badge.
  */
 (function () {
-  const messagesLink = document.getElementById('vendor-sidebar-messages-link');
-  if (!messagesLink || !document.querySelector('.vendor-sidebar')) {
+  const messagesLink = document.getElementById('dashboard-sidebar-messages-link');
+  if (!messagesLink || !document.querySelector('.dashboard-sidebar')) {
     return;
   }
 
@@ -11,7 +11,7 @@
   let lastCount = null;
 
   function renderBadge(count) {
-    let badge = messagesLink.querySelector('.vendor-sidebar__badge');
+    let badge = messagesLink.querySelector('.dashboard-sidebar__badge');
 
     if (count <= 0) {
       badge?.remove();
@@ -22,7 +22,7 @@
 
     if (!badge) {
       badge = document.createElement('span');
-      badge.className = 'vendor-sidebar__badge';
+      badge.className = 'dashboard-sidebar__badge';
       messagesLink.appendChild(badge);
     }
 

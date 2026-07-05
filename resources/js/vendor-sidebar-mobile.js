@@ -1,7 +1,7 @@
 (function () {
-  const sidebar = document.querySelector('.vendor-sidebar');
-  const toggle = document.querySelector('.vendor-sidebar-toggle');
-  const backdrop = document.querySelector('.vendor-sidebar-backdrop');
+  const sidebar = document.querySelector('.dashboard-sidebar');
+  const toggle = document.querySelector('.dashboard-sidebar-toggle');
+  const backdrop = document.querySelector('.dashboard-sidebar-backdrop');
 
   if (!sidebar || !toggle) {
     return;
@@ -20,7 +20,7 @@
       backdrop.setAttribute('aria-hidden', open ? 'false' : 'true');
     }
 
-    document.body.classList.toggle('vendor-sidebar-open', open);
+    document.body.classList.toggle('dashboard-sidebar-open', open);
   }
 
   function close() {
@@ -39,7 +39,7 @@
 
   backdrop?.addEventListener('click', close);
 
-  sidebar.querySelectorAll('.vendor-sidebar__link, .vendor-sidebar__logout').forEach((el) => {
+  sidebar.querySelectorAll('.dashboard-sidebar__link, .dashboard-sidebar__logout').forEach((el) => {
     el.addEventListener('click', () => {
       if (mq.matches) {
         close();

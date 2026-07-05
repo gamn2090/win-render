@@ -19,7 +19,6 @@ use App\Http\Controllers\MessageAttachmentController;
 use App\Models\Event;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -83,7 +82,8 @@ Route::get('/blog/post/{id}', [BlogController::class, 'viewPost']);
 
 Route::get('/dashboard', [RegisteredUserController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/vendor/dashboard', [VendorController::class, 'vendorDashboard'])
+Route::get('/vendor/dashboard', [VendorController::class, 'vendor
+Dashboard'])
     ->middleware('auth:vendor')->name('vendor.dashboard');
 
 Route::get('ref/user/{id}', [RegisteredUserController::class, 'registerReferral'])
@@ -184,12 +184,14 @@ Route::middleware('auth:vendor')->group(function () {
 Route::middleware('auth:web')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::get('/profile/edit', [ProfileController::class, 'userEdit'])->name('user.profile.edit');
+    Route::get('/profile/me', [UserController::class, 'myProfile'])->name('client.my_profile');
     Route::post('user/upload/image', [RegisteredUserController::class, 'uploadProfileImage'])
         ->name('user.upload.image');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     //Route::post('/user/book', [UserController::class, 'createConnection'])->name('create.booking');
     Route::post('/toggle/favorite', [UserController::class, 'toggleFavoriteVendor'])->name('toggle.favorite');
+    Route::get('/client/favorites', [UserController::class, 'favorites'])->name('client.favorites');
     Route::post('/client/remove/vendor', [UserController::class, 'removePairing'])->name('remove.pairing');
     //search vendors
     Route::get('/search/vendors/{type}', [UserController::class, 'searchVendorType'])->name('search.vendor.type');
@@ -205,7 +207,7 @@ Route::middleware('auth:web')->group(function () {
     Route::post('/client/send/inquiry', [BookingFlowController::class, 'clientSendInquiry'])->name('user.send.inquiry');
     Route::post('/client/book/vendor', [BookingFlowController::class, 'markVendorBooked'])->name('user.book.vendor');
     //lists
-    Route::get('/vendors/list', [UserController::class, 'vendorList']);
+    Route::get('/vendors/list', [UserController::class, 'vendorList'])->name('client.vendor.list');
 
     // Planning tools (new routes only; existing flows stay untouched)
     Route::get('/planning-tools', [PlanningToolsController::class, 'coupleIndex'])

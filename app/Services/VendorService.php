@@ -13,7 +13,11 @@ class VendorService {
 
 
     public function getVendorsByRank($type, $filters = null){
-        return Vendor::where('type', $type)->where("visible", 1)->withTags($filters)->with('events')->orderByRank();
+        return Vendor::when(
+            is_array($type),
+            fn ($query) => $query->whereIn('type', $type),
+            fn ($query) => $query->where('type', $type)
+        )->where("visible", 1)->withTags($filters)->with('events')->orderByRank();
     }
 
     public function getVendorByID($id){

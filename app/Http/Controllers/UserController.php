@@ -14,6 +14,7 @@ use App\Models\Favorite;
 use Illuminate\Support\Facades\Auth;
 use App\Services\VendorService;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -76,21 +77,11 @@ class UserController extends Controller
     public function searchVendorType(Request $request){
         $client = $request->user();
         $requestType = $request->type;
-        $requestedVendorTypes = $client->getRequestedVendorTypeModels();
         if($requestType == null){
-            $requestType = $client->getRequestedVendorTypeModels()[0]->vendor_type;
+            $requestedTypeModels = $client->getRequestedVendorTypeModels();
+            $requestType = $requestedTypeModels[0]->vendor_type ?? null;
         }
-        if($client){
-            return view('client.search_vendors', [
-                'vendor_types' => VendorTypes::orderBy('priority', 'asc')->get(),
-                'requestedTypes' => $client->requestedVendorTypes()->orderBy('priority', 'asc')->get(),
-                'vendors' => $this->vendorService->getVendorsByRank($requestType)->paginate(20),
-                'selected_type' => VendorTypes::where('id', $requestType)->first(),
-                'page' => 'search_vendors'
-            ]);
-        } else {
-            return view('login');
-        }
+        return redirect()->route('search.vendors', array_filter(['type' => $requestType]));
     }
 
     public function searchVendorTypeGuest(Request $request){
@@ -108,20 +99,107 @@ class UserController extends Controller
     }
 
     public function vendorList(Request $request){
-        $data = [
-            "vendors" => []
-        ];
-        $data["vendors"] = $request->user()->vendors();
-        return view('vendor.vendor_list', ['data' => $data, 'page' => 'vendor_list']);
+        $pairings = collect($request->user()->vendorsWithStatus());
+        $bookedVendors = $pairings->filter(fn ($p) => $p->status == 3 && $p->vendor);
+
+        return view('couple.my_vendors', [
+            'bookedVendors' => $bookedVendors,
+            'page' => 'vendor_list',
+        ]);
+    }
+
+    public function myProfile(Request $request){
+        $user = $request->user();
+
+        $weddingDateDisplay = '—';
+        if ($user->wedding_date) {
+            try {
+                $weddingDateDisplay = Carbon::parse($user->wedding_date)->format('m-d-Y');
+            } catch (\Exception $e) {
+                $weddingDateDisplay = $user->wedding_date;
+            }
+        }
+
+        $venueName = 'Name of Venue';
+        $venueLocation = 'City, State';
+        $bioText = $user->bio ?? '';
+
+        if (preg_match('/Wedding venue:\s*([^,\n]+)(?:,\s*([^\n]+))?/i', $bioText, $venueMatch)) {
+            $venueName = trim($venueMatch[1]);
+            if (!empty($venueMatch[2])) {
+                $venueLocation = trim($venueMatch[2]);
+            } elseif ($user->wedding_location) {
+                $venueLocation = $user->wedding_location;
+            }
+        } elseif ($user->wedding_location) {
+            $venueName = $user->wedding_location;
+            $venueLocation = $user->wedding_location;
+        }
+
+        $bioWithoutVenue = trim(preg_replace('/Wedding venue:.*$/im', '', $bioText));
+
+        $bookingWindow = $user->booking_date ?: '0-3 Months';
+
+        $answers = json_decode($user->questions ?? '[]');
+        if (!is_array($answers)) {
+            $answers = [null, null, null, null];
+        }
+        $answers = array_pad($answers, 4, null);
+
+        $pairings = collect($user->vendorsWithStatus());
+        $bookedVendors = $pairings->filter(fn ($p) => $p->status == 3 && $p->vendor);
+
+        return view('couple.my_profile', [
+            'weddingDateDisplay' => $weddingDateDisplay,
+            'venueName' => $venueName,
+            'venueLocation' => $venueLocation,
+            'bioWithoutVenue' => $bioWithoutVenue,
+            'bookingWindow' => $bookingWindow,
+            'answers' => $answers,
+            'vendor_types' => VendorTypes::orderBy('priority', 'asc')->get(),
+            'searching_for' => $user->getRequestedVendorTypes(),
+            'bookedVendors' => $bookedVendors,
+            'page' => 'edit_profile',
+        ]);
+    }
+
+    public function favorites(Request $request){
+        $typeIds = $request->input('type');
+        if (is_array($typeIds)) {
+            $typeIds = array_values(array_filter($typeIds, fn ($v) => $v !== null && $v !== ''));
+        } else {
+            $typeIds = $typeIds ? [$typeIds] : [];
+        }
+
+        $query = $request->user()->favoritedVendors();
+        if (!empty($typeIds)) {
+            $query->whereIn('vendors.type', $typeIds);
+        }
+
+        $vendors = $query->paginate(12)->appends($request->query());
+
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'html' => view('couple.partials.vendor-cards', ['vendors' => $vendors])->render(),
+                'has_more' => $vendors->hasMorePages(),
+                'next_page' => $vendors->currentPage() + 1,
+            ]);
+        }
+
+        return view('couple.favorites', [
+            'vendors' => $vendors,
+            'vendor_types' => VendorTypes::orderBy('priority', 'asc')->get(),
+            'selected_type_ids' => $typeIds,
+            'page' => 'favorites',
+        ]);
     }
 
     //MESSAGES
     public function inbox(Request $request){
-        $data = [
-            "conversations" => null
-        ];  
-        $data["conversations"] = $request->user()->getAllConversations();
-        return view('chat.client_inbox', ['data' => $data, 'page' => 'inbox']);
+        return view('couple.inbox', [
+            'conversations' => $request->user()->getAllConversations(),
+            'page' => 'inbox',
+        ]);
     }
 
     public function message(Request $request){

@@ -75,6 +75,18 @@
 
 <main class="relative transition-all duration-200 ease-in-out">
   <div class="vd-main">
+
+    <div class="vd-topbar">
+      <a href="{{ url('/vendor/couples') }}" class="vd-topbar__btn" aria-label="Find couples">🔍</a>
+      <a href="{{ url('/vendor/inbox') }}" class="vd-topbar__btn" aria-label="Notifications">
+        🔔
+        @if($vendor->unreadMessagesCount() > 0)
+          <span class="vd-topbar__dot"></span>
+        @endif
+      </a>
+      <a href="{{ url('/vendor/profile') }}" class="vd-topbar__btn" aria-label="Settings">⚙️</a>
+    </div>
+
     <div class="vd-announcement" id="vd-announcement" role="region" aria-label="Announcement">
       <p>
         🎉 <strong>New:</strong>
@@ -413,7 +425,7 @@
     <h2 class="vd-browse__title">Browse &amp; Connect with Other Vendors</h2>
     <div class="vd-browse__divider" aria-hidden="true"></div>
     <div class="vd-browse__grid">
-      @php $browseVendors = \App\Models\Vendor::where('id', '!=', $vendor->id)->take(4)->get(); @endphp
+      @php $browseVendors = \App\Models\Vendor::where('id', '!=', $vendor->id)->take(5)->get(); @endphp
       @foreach($browseVendors as $browseVendor)
         <x-vendor-browse-card :vendor="$browseVendor" />
       @endforeach
@@ -458,10 +470,13 @@
       </div>
     </article>
   </section>
+
+  <p class="vd-copyright">&copy; {{ date('Y') }} Wedding Insiders Network.</p>
   </div>
 
   @include('chat.window')
-  @include('layouts.footer')
+  {{-- Site footer disabled per client request — uncomment to restore --}}
+  {{-- @include('layouts.footer') --}}
 </main>
 
 <div id="vd-toast" class="vd-toast" role="status" aria-live="polite" hidden></div>

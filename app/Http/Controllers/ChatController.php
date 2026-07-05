@@ -68,10 +68,13 @@ class ChatController extends Controller
                 $authed = true;
             }
         }
-        $vendor_invite = null;
-        if($authed){
+        if($authed && $other_participant){
             Chat::conversation($conversation)->setParticipant($request->user())->readAll();
-            return view('chat.user_chat', ["chat_id" => $request->id, "participant" => $other_participant, "vendor_invite" => $vendor_invite, "page" => 'inbox']);
+            return view('couple.conversation', [
+                "chat_id" => $request->id,
+                "vendor" => $other_participant->messageable,
+                "page" => 'inbox',
+            ]);
         }
         return redirect('/');
     }

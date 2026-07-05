@@ -54,10 +54,11 @@ class RegisteredUserController extends Controller
             'recentConversations' => $user->recentConversations(3),
             'requestedVendorTypes' => $user->requestedVendorTypes()->get(),
             'favoritedVendors' => $user->favoritedVendors()->get(),
+            'upcomingMeetings' => $user->upcomingMeetings()->take(5)->get(),
             'first_login' => $first_login,
             'profile' => $user->profile
         ];
-        return view('dashboard', $data);
+        return view('couple.dashboard', $data);
     }
 
     /**

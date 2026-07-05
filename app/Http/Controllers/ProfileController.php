@@ -62,10 +62,31 @@ class ProfileController extends Controller
         }
         $user->questions = array_pad(array_values($decoded), 4, '');
 
-        return view('profile.user_edit', [
+        $venueName = '';
+        $venueCity = '';
+        $venueState = '';
+        $bioText = $user->bio ?? '';
+
+        if (preg_match('/Wedding venue:\s*([^,\n]+)(?:,\s*([^\n]+))?/i', $bioText, $venueMatch)) {
+            $venueName = trim($venueMatch[1]);
+            $venueLocation = trim($venueMatch[2] ?? '');
+            $bioText = trim(preg_replace('/Wedding venue:.*$/im', '', $bioText));
+        } else {
+            $venueLocation = trim((string) $user->wedding_location);
+        }
+
+        $locationParts = array_map('trim', explode(',', $venueLocation, 2));
+        $venueCity = $locationParts[0] ?? '';
+        $venueState = $locationParts[1] ?? '';
+
+        return view('couple.edit_profile', [
             'user' => $user,
             'searching_for' => $user->getRequestedVendorTypes(),
-            'vendor_types' => VendorTypes::all(),
+            'vendor_types' => VendorTypes::orderBy('priority', 'asc')->get(),
+            'venueName' => $venueName,
+            'venueCity' => $venueCity,
+            'venueState' => $venueState,
+            'bioText' => $bioText,
             'page' => 'edit_profile',
         ]);
     }
@@ -145,6 +166,10 @@ class ProfileController extends Controller
            $data["wedding_date_available"] = $vendor->isDateAvailable($user->wedding_date);
            $data["related_vendors"] = $related_vendors;
         }
+        if(Auth::guard('web')->check()){
+            return view('couple.storefront', $data);
+        }
+
         if($vendor){
             return view('vendor.storefront', $data);
         } else {
@@ -199,14 +224,30 @@ class ProfileController extends Controller
             }
         }
         $answers = [$request->q1,$request->q2,$request->q3,$request->q4];
-        $request->user()->fill($request->except(['vt','q1','q2','q3','q4']));
+
+        $venueName = trim((string) $request->input('venue_name'));
+        $venueCity = trim((string) $request->input('venue_city'));
+        $venueState = trim((string) $request->input('venue_state'));
+        $bioText = trim((string) $request->input('bio'));
+        $venueLocation = trim(implode(', ', array_filter([$venueCity, $venueState])));
+
+        $bio = $bioText;
+        if ($venueName !== '' || $venueLocation !== '') {
+            $venueLine = 'Wedding venue: ' . $venueName . ($venueLocation !== '' ? ', ' . $venueLocation : '');
+            $bio = trim($venueLine . ($bioText !== '' ? "\n" . $bioText : ''));
+        }
+
+        $request->user()->fill($request->except(['vt', 'q1', 'q2', 'q3', 'q4', 'venue_name', 'venue_city', 'venue_state', 'bio']));
+        $request->user()->wedding_location = $venueLocation;
+        $request->user()->bio = $bio;
+        $request->user()->allow_vendor_contact = $request->boolean('allow_vendor_contact');
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
         $request->user()->questions = $answers;
         $request->user()->save();
 
-        return Redirect::route('user.profile.edit')->with('status', 'profile-updated');
+        return Redirect::route('client.my_profile')->with('status', 'profile-updated');
     }
 
     //update client's our wedding day notes

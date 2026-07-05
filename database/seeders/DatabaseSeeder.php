@@ -12,12 +12,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\User::factory(10)->create();
-        \App\Models\Vendor::factory(10)->create();
+        if (! app()->environment('development')) {
+            throw new \RuntimeException('DatabaseSeeder only runs when APP_ENV=development.');
+        }
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $this->call(VendorTypesSeeder::class);
+        $this->call(TagTypesSeeder::class);
+
+        if (\App\Models\User::count() === 0) {
+            \App\Models\User::factory(10)->create();
+        }
+
+        if (\App\Models\Vendor::count() === 0) {
+            \App\Models\Vendor::factory(10)->create();
+        }
+
+        $this->call(VendorNetworkDemoSeeder::class);
+        $this->call(VendorCurrentClientsDemoSeeder::class);
     }
 }

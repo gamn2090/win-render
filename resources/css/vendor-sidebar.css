@@ -1,14 +1,14 @@
 /* Vendor lateral sidebar — sidebar_new.png (Outfit) */
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap');
 
-.vendor-sidebar,
-.vendor-sidebar * {
+.dashboard-sidebar,
+.dashboard-sidebar * {
   font-family: 'Outfit', 'Poppins', sans-serif;
   box-sizing: border-box;
 }
 
 /* Shell: fixed sidebar + main offset (30px gap each side of dashboard) */
-.vendor-sidebar {
+.dashboard-sidebar {
   position: fixed;
   top: 0;
   left: 0;
@@ -24,7 +24,7 @@
   gap: 14px;
 }
 
-.vendor-sidebar ~ main {
+.dashboard-sidebar ~ main {
   margin-left: 230px;
   padding-left: 30px;
   padding-right: 30px;
@@ -33,7 +33,7 @@
   box-sizing: border-box;
 }
 
-.vendor-sidebar__brand {
+.dashboard-sidebar__brand {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -41,13 +41,13 @@
   padding: 4px 0 8px;
 }
 
-.vendor-sidebar__logo {
+.dashboard-sidebar__logo {
   width: 50px;
   height: auto;
   display: block;
 }
 
-.vendor-sidebar__subtitle {
+.dashboard-sidebar__subtitle {
   margin: 0;
   font-size: 9px;
   font-weight: 500;
@@ -57,7 +57,7 @@
   text-align: center;
 }
 
-.vendor-sidebar__profile {
+.dashboard-sidebar__profile {
   display: flex;
   align-items: center;
   gap: 13px;
@@ -68,7 +68,7 @@
   box-shadow: 0 1px 3px rgba(35, 31, 32, 0.06);
 }
 
-.vendor-sidebar__avatar {
+.dashboard-sidebar__avatar {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -76,7 +76,7 @@
   flex-shrink: 0;
 }
 
-.vendor-sidebar__profile-text {
+.dashboard-sidebar__profile-text {
   min-width: 0;
   flex: 1;
   display: flex;
@@ -85,7 +85,7 @@
   line-height: 1.1;
 }
 
-.vendor-sidebar__profile-name {
+.dashboard-sidebar__profile-name {
   margin: 0;
   font-size: 12px;
   font-weight: 600;
@@ -96,7 +96,7 @@
   line-height: 1.15;
 }
 
-.vendor-sidebar__profile-photo {
+.dashboard-sidebar__profile-photo {
   display: inline-flex;
   align-items: center;
   gap: 3px;
@@ -107,18 +107,18 @@
   line-height: 1.1;
 }
 
-.vendor-sidebar__profile-camera {
+.dashboard-sidebar__profile-camera {
   font-size: 10px;
   line-height: 1;
 }
 
-.vendor-sidebar__section {
+.dashboard-sidebar__section {
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
 
-.vendor-sidebar__section-label {
+.dashboard-sidebar__section-label {
   margin: 10px 0 6px 8px;
   font-size: 9px;
   font-weight: 700;
@@ -126,11 +126,11 @@
   color: #f85705;
 }
 
-.vendor-sidebar__section-label:first-child {
+.dashboard-sidebar__section-label:first-child {
   margin-top: 0;
 }
 
-.vendor-sidebar__nav {
+.dashboard-sidebar__nav {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -139,7 +139,7 @@
   gap: 2px;
 }
 
-.vendor-sidebar__link {
+.dashboard-sidebar__link {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -153,20 +153,20 @@
   transition: background 0.15s ease, color 0.15s ease;
 }
 
-.vendor-sidebar__link:hover {
+.dashboard-sidebar__link:hover {
   background: rgba(255, 255, 255, 0.35);
 }
 
-.vendor-sidebar__link--active {
+.dashboard-sidebar__link--active {
   background: #5a7eff;
   color: #fcf6f3;
 }
 
-.vendor-sidebar__link--active .vendor-sidebar__emoji--dashboard {
+.dashboard-sidebar__link--active .dashboard-sidebar__emoji--dashboard {
   color: #fff;
 }
 
-.vendor-sidebar__emoji {
+.dashboard-sidebar__emoji {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -177,7 +177,7 @@
   max-height: 24px;
 }
 
-.vendor-sidebar__emoji--dashboard {
+.dashboard-sidebar__emoji--dashboard {
   font-size: 24px;
   font-weight: 400;
   color: #231f20;
@@ -185,44 +185,56 @@
   height: 24px;
 }
 
-.vendor-sidebar__emoji--messages {
+.dashboard-sidebar__emoji--messages {
   font-size: 18px;
 }
 
-.vendor-sidebar__emoji--find {
+.dashboard-sidebar__emoji--find {
   font-size: 20px;
 }
 
-.vendor-sidebar__emoji--clients {
+.dashboard-sidebar__emoji--clients {
   font-size: 18px;
 }
 
-.vendor-sidebar__emoji--network {
+.dashboard-sidebar__emoji--network {
   font-size: 18px;
 }
 
-.vendor-sidebar__emoji--storefront {
+.dashboard-sidebar__emoji--storefront {
   font-size: 20px;
 }
 
-.vendor-sidebar__emoji--insights {
+.dashboard-sidebar__emoji--insights {
   font-size: 20px;
 }
 
-.vendor-sidebar__emoji--timeline {
+.dashboard-sidebar__emoji--timeline {
   font-size: 20px;
 }
 
-.vendor-sidebar__emoji--budget {
+.dashboard-sidebar__emoji--budget {
   font-size: 20px;
 }
 
-.vendor-sidebar__label {
+.dashboard-sidebar__emoji--favorites {
+  font-size: 18px;
+}
+
+.dashboard-sidebar__emoji--my-vendors {
+  font-size: 20px;
+}
+
+.dashboard-sidebar__emoji--my-profile {
+  font-size: 18px;
+}
+
+.dashboard-sidebar__label {
   flex: 1;
   min-width: 0;
 }
 
-.vendor-sidebar__badge {
+.dashboard-sidebar__badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -240,18 +252,18 @@
   font-variant-numeric: tabular-nums;
 }
 
-.vendor-sidebar__footer {
+.dashboard-sidebar__footer {
   margin-top: auto;
   padding-top: 12px;
   border-top: 1px solid rgba(35, 31, 32, 0.1);
 }
 
-.vendor-sidebar__logout-form {
+.dashboard-sidebar__logout-form {
   margin: 0;
   width: 100%;
 }
 
-.vendor-sidebar__logout {
+.dashboard-sidebar__logout {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -270,34 +282,34 @@
   transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
 
-.vendor-sidebar__logout:hover {
+.dashboard-sidebar__logout:hover {
   background: #f85705;
   border-color: #f85705;
   color: #fcf6f3;
 }
 
-.vendor-sidebar__logout:focus-visible {
+.dashboard-sidebar__logout:focus-visible {
   outline: 2px solid #5a7eff;
   outline-offset: 2px;
 }
 
-.vendor-sidebar__emoji--logout {
+.dashboard-sidebar__emoji--logout {
   font-size: 18px;
   font-weight: 700;
   transform: scaleX(-1);
 }
 
 /* Mobile / tablet — hamburger toggle + drawer */
-.vendor-sidebar-toggle {
+.dashboard-sidebar-toggle {
   display: none;
 }
 
-.vendor-sidebar-backdrop {
+.dashboard-sidebar-backdrop {
   display: none;
 }
 
 @media (max-width: 1023px) {
-  .vendor-sidebar-toggle {
+  .dashboard-sidebar-toggle {
     display: inline-flex;
     flex-direction: column;
     align-items: center;
@@ -318,14 +330,14 @@
     transition: background 0.15s ease, border-color 0.15s ease;
   }
 
-  .vendor-sidebar-toggle:hover,
-  .vendor-sidebar-toggle:focus-visible {
+  .dashboard-sidebar-toggle:hover,
+  .dashboard-sidebar-toggle:focus-visible {
     background: rgba(255, 255, 255, 0.95);
     border-color: #6432c8;
     outline: none;
   }
 
-  .vendor-sidebar-toggle__bar {
+  .dashboard-sidebar-toggle__bar {
     display: block;
     width: 18px;
     height: 2px;
@@ -334,19 +346,19 @@
     transition: transform 0.2s ease, opacity 0.2s ease;
   }
 
-  .vendor-sidebar-toggle.is-active .vendor-sidebar-toggle__bar:nth-child(1) {
+  .dashboard-sidebar-toggle.is-active .dashboard-sidebar-toggle__bar:nth-child(1) {
     transform: translateY(7px) rotate(45deg);
   }
 
-  .vendor-sidebar-toggle.is-active .vendor-sidebar-toggle__bar:nth-child(2) {
+  .dashboard-sidebar-toggle.is-active .dashboard-sidebar-toggle__bar:nth-child(2) {
     opacity: 0;
   }
 
-  .vendor-sidebar-toggle.is-active .vendor-sidebar-toggle__bar:nth-child(3) {
+  .dashboard-sidebar-toggle.is-active .dashboard-sidebar-toggle__bar:nth-child(3) {
     transform: translateY(-7px) rotate(-45deg);
   }
 
-  .vendor-sidebar-backdrop {
+  .dashboard-sidebar-backdrop {
     display: block;
     position: fixed;
     inset: 0;
@@ -358,17 +370,17 @@
     transition: opacity 0.25s ease, visibility 0.25s ease;
   }
 
-  .vendor-sidebar-backdrop.is-visible {
+  .dashboard-sidebar-backdrop.is-visible {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
   }
 
-  body.vendor-sidebar-open {
+  body.dashboard-sidebar-open {
     overflow: hidden;
   }
 
-  .vendor-sidebar {
+  .dashboard-sidebar {
     width: 230px;
     z-index: 55;
     transform: translateX(-100%);
@@ -376,11 +388,11 @@
     box-shadow: 4px 0 24px rgba(35, 31, 32, 0.15);
   }
 
-  .vendor-sidebar.is-open {
+  .dashboard-sidebar.is-open {
     transform: translateX(0);
   }
 
-  .vendor-sidebar ~ main {
+  .dashboard-sidebar ~ main {
     margin-left: 0;
     padding-top: 52px;
     padding-left: 16px;
