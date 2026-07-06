@@ -12,9 +12,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        if (! app()->environment('development')) {
-            throw new \RuntimeException('DatabaseSeeder only runs when APP_ENV=development.');
-        }
+        // if (! app()->environment('development')) {
+        //     throw new \RuntimeException('DatabaseSeeder only runs when APP_ENV=development.');
+        // }
 
         $this->call(VendorTypesSeeder::class);
         $this->call(TagTypesSeeder::class);

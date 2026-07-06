@@ -10,9 +10,9 @@ class VendorCurrentClientsDemoSeeder extends Seeder
 {
     public function run(): void
     {
-        if (! app()->environment('development')) {
-            throw new \RuntimeException('VendorCurrentClientsDemoSeeder only runs when APP_ENV=development.');
-        }
+        // if (! app()->environment('development')) {
+        //     throw new \RuntimeException('VendorCurrentClientsDemoSeeder only runs when APP_ENV=development.');
+        // }
 
         $vendors = Vendor::query()->limit(10)->get();
 
