@@ -7,7 +7,7 @@ php artisan route:cache
 php artisan view:cache
 
 echo "Running migrations..."
-php artisan migrate --force
+php artisan migrate:fresh --force
 php artisan db:seed --force
 
 echo "Starting Apache..."
