@@ -37,6 +37,9 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' \
 # Habilitar mod_rewrite para las rutas de Laravel
 RUN a2enmod rewrite
 
+# AllowOverride All para que Apache respete el .htaccess de Laravel
+RUN sed -i 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf
+
 # Script de arranque
 COPY docker/start.sh /start.sh
 RUN chmod +x /start.sh
