@@ -109,8 +109,8 @@ Route::middleware('auth:vendor')->group(function () {
     });
     Route::get('/vendor/insights', [VendorController::class, 'insights'])->name('vendor.insights');
     Route::get('/vendor/storefront', [ProfileController::class, 'vendorStorefront'])->name('vendor.storefront');
-    Route::get('/vendor/search/vendors', [VendorController::class, 'searchVendorType'])->name('search.vendors');
-    Route::get('/vendor/search/vendors/{type}', [VendorController::class, 'searchVendorType'])->name('search.vendor.type');
+    Route::get('/vendor/search/vendors', [VendorController::class, 'searchVendorType'])->name('vendor.search.vendors');
+    Route::get('/vendor/search/vendors/{type}', [VendorController::class, 'searchVendorType'])->name('vendor.search.vendor.type');
     Route::get('/vendor/profile', [ProfileController::class, 'vendorEdit'])->name('profile.vendoredit');
     Route::get('/vendor/inquiries', [VendorController::class, 'getInquiries'])->name('vendor.inquiries');
     Route::get('/vendor/pay', [VendorController::class, 'attemptPayment'])->name('vendor.pay');
