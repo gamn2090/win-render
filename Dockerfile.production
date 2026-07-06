@@ -1,0 +1,46 @@
+# Production image: code baked in, assets compiled, served via apache
+FROM php:8.2-apache-bookworm
+
+# System deps
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git unzip libzip-dev libpq-dev libicu-dev libpng-dev libonig-dev \
+    nodejs npm \
+    && docker-php-ext-configure intl \
+    && docker-php-ext-install -j$(nproc) intl pdo_pgsql mbstring zip exif pcntl bcmath \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+WORKDIR /var/www/html
+
+# Copiar código fuente
+COPY . .
+
+# Instalar dependencias PHP (sin dev)
+RUN composer install --no-interaction --optimize-autoloader --no-dev
+
+# Compilar assets con Vite
+RUN npm ci && npm run build && rm -rf node_modules
+
+# Permisos de Laravel
+RUN chown -R www-data:www-data storage bootstrap/cache \
+    && chmod -R 775 storage bootstrap/cache
+
+# Apache: apuntar al /public de Laravel
+ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' \
+        /etc/apache2/sites-available/*.conf \
+    && sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' \
+        /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+
+# Habilitar mod_rewrite para las rutas de Laravel
+RUN a2enmod rewrite
+
+# Script de arranque
+COPY docker/start.sh /start.sh
+RUN chmod +x /start.sh
+
+EXPOSE 80
+
+CMD ["/start.sh"]
