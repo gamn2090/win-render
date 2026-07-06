@@ -27,6 +27,8 @@ class DatabaseSeeder extends Seeder
             \App\Models\Vendor::factory(10)->create();
         }
 
+        $this->call(UsersAndVendorsSeeder::class);
+
         $this->call(VendorNetworkDemoSeeder::class);
         $this->call(VendorCurrentClientsDemoSeeder::class);
     }
