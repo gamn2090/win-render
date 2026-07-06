@@ -8,6 +8,7 @@ php artisan view:cache
 
 echo "Running migrations..."
 php artisan migrate --force
+php artisan db:seed --force
 
 echo "Starting Apache..."
 exec apache2-foreground
