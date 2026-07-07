@@ -19,14 +19,6 @@ class DatabaseSeeder extends Seeder
         $this->call(VendorTypesSeeder::class);
         $this->call(TagTypesSeeder::class);
 
-        if (\App\Models\User::count() === 0) {
-            \App\Models\User::factory(10)->create();
-        }
-
-        if (\App\Models\Vendor::count() === 0) {
-            \App\Models\Vendor::factory(10)->create();
-        }
-
         $this->call(UsersAndVendorsSeeder::class);
 
         $this->call(VendorNetworkDemoSeeder::class);
