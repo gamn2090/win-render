@@ -19,22 +19,35 @@ class hubspot_test extends Command
      *
      * @var string
      */
-    protected $signature = 'vendor:delete {id}';
+    protected $signature = 'vendor:delete {ids*}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Delete one or more vendors and all of their related data';
 
     /**
      * Execute the console command.
      */
     public function handle()
     {
-        $vendor = Vendor::where('id', $this->argument('id'))->first();
+        foreach ($this->argument('ids') as $id) {
+            $vendor = Vendor::where('id', $id)->first();
 
+            if (! $vendor) {
+                $this->error("Vendor {$id} not found, skipping.");
+                continue;
+            }
+
+            $this->deleteVendor($vendor);
+            $this->info("Vendor {$id} and its relationships were deleted.");
+        }
+    }
+
+    protected function deleteVendor(Vendor $vendor): void
+    {
         //delete conversations
         $convos = Chat::conversations()->setPaginationParams(['sorting' => 'desc'])
             ->setParticipant($vendor)
@@ -56,7 +69,7 @@ class hubspot_test extends Command
         //remove vendor connections
         VendorConnection::where('host_vendor', $vendor->id)->delete();
         VendorConnection::where('aff_vendor', $vendor->id)->delete();
-        
+
         //remove pairings
         Pairing::where('vendor_id', $vendor->id)->delete();
 
