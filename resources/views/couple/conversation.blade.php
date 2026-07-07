@@ -32,7 +32,7 @@
           <span class="vd-topbar__dot"></span>
         @endif
       </a>
-      <a href="{{ route('user.profile.edit') }}" class="vd-topbar__btn" aria-label="Settings">⚙️</a>
+      <a href="{{ route('user.account.settings') }}" class="vd-topbar__btn" aria-label="Settings">⚙️</a>
     </div>
 
     <header class="vd-page-header">

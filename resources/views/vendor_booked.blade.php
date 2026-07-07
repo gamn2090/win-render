@@ -158,9 +158,10 @@
       <!-- End Card Section -->
       <!-- end cards -->
     </main>
-       <div class="mt-auto">
+       {{-- Site footer disabled per client request — uncomment to restore --}}
+       {{-- <div class="mt-auto">
        @include('layouts.footer')
-       </div>
+       </div> --}}
   </body>
   <script>
     $("#client-wedding-date").flatpickr({});

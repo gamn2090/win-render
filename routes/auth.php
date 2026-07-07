@@ -111,6 +111,10 @@ Route::middleware('auth')->group(function () {
                 ->name('profile.notes.edit');
 });
 
+Route::middleware('auth:vendor')->group(function () {
+    Route::put('vendor/password', [PasswordController::class, 'updateVendor'])->name('vendor.password.update');
+});
+
 Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])
         ->name('admin.dashboard');

@@ -443,7 +443,9 @@
     @endif
   </div>
 
-  @include('layouts.footer')
+  @unless($authVendor)
+    @include('layouts.footer')
+  @endunless
 </main>
 
 <div id="vsf-lightbox" class="vsf-lightbox" aria-hidden="true">

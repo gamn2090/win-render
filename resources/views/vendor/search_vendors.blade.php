@@ -137,7 +137,8 @@
       </div>
       <!-- end cards -->
     </main>
-    @include('layouts.footer')
+    {{-- Site footer disabled per client request — uncomment to restore --}}
+    {{-- @include('layouts.footer') --}}
   </body>
   <script>
     $('#vendor-type-select-btn').on('click', ()=>{

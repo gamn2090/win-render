@@ -22,7 +22,7 @@
     <div class="vd-topbar">
       <a href="{{ route('search.vendors') }}" class="vd-topbar__btn" aria-label="Search vendors">🔍</a>
       <a href="{{ route('client.inbox') }}" class="vd-topbar__btn" aria-label="Notifications">🔔</a>
-      <a href="{{ route('user.profile.edit') }}" class="vd-topbar__btn" aria-label="Settings">⚙️</a>
+      <a href="{{ route('user.account.settings') }}" class="vd-topbar__btn" aria-label="Settings">⚙️</a>
     </div>
 
     <section class="vd-hero">

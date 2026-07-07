@@ -2473,6 +2473,11 @@
   color: #fff;
 }
 
+.vd-modal__btn--danger {
+  background: #ef4444;
+  color: #fff;
+}
+
 .vd-modal__btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
@@ -2888,6 +2893,7 @@
 .vd-edit-field input[type="text"],
 .vd-edit-field input[type="email"],
 .vd-edit-field input[type="date"],
+.vd-edit-field input[type="password"],
 .vd-edit-field textarea,
 .vd-edit-field select {
   width: 100%;
@@ -3074,6 +3080,57 @@
   font-size: 14px;
   font-weight: 500;
   box-sizing: border-box;
+}
+
+.vd-field-error {
+  font-size: 13px;
+  color: #ef4444;
+}
+
+.vd-settings-section {
+  margin-bottom: 24px;
+}
+
+.vd-settings-section__title {
+  align-self: flex-start;
+  width: 100%;
+  margin: 0 0 4px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #231f20;
+  text-align: left;
+}
+
+.vd-settings-section__desc {
+  align-self: flex-start;
+  width: 100%;
+  margin: 0 0 24px;
+  font-size: 14px;
+  color: #6b7280;
+  text-align: left;
+}
+
+.vd-settings-section--danger {
+  border-color: #f3c7c7;
+  background: #fff6f6;
+}
+
+.vd-danger-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 32px;
+  background: #ef4444;
+  border: none;
+  border-radius: 80px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.vd-danger-btn:hover {
+  opacity: 0.92;
 }
 
 @media (max-width: 1023px) {

@@ -82,8 +82,7 @@ Route::get('/blog/post/{id}', [BlogController::class, 'viewPost']);
 
 Route::get('/dashboard', [RegisteredUserController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/vendor/dashboard', [VendorController::class, 'vendor
-Dashboard'])
+Route::get('/vendor/dashboard', [VendorController::class, 'vendorDashboard'])
     ->middleware('auth:vendor')->name('vendor.dashboard');
 
 Route::get('ref/user/{id}', [RegisteredUserController::class, 'registerReferral'])
@@ -112,6 +111,8 @@ Route::middleware('auth:vendor')->group(function () {
     Route::get('/vendor/search/vendors', [VendorController::class, 'searchVendorType'])->name('vendor.search.vendors');
     Route::get('/vendor/search/vendors/{type}', [VendorController::class, 'searchVendorType'])->name('vendor.search.vendor.type');
     Route::get('/vendor/profile', [ProfileController::class, 'vendorEdit'])->name('profile.vendoredit');
+    Route::get('/vendor/account/settings', [ProfileController::class, 'vendorAccountSettings'])->name('vendor.account.settings');
+    Route::delete('/vendor/profile', [ProfileController::class, 'vendorDestroy'])->name('vendor.profile.destroy');
     Route::get('/vendor/inquiries', [VendorController::class, 'getInquiries'])->name('vendor.inquiries');
     Route::get('/vendor/pay', [VendorController::class, 'attemptPayment'])->name('vendor.pay');
     Route::get('/vendor/subscription/confirm/{session_id}', [VendorController::class, 'confirmSubscription'])->name('vendor.subscription.confirm');
@@ -184,6 +185,7 @@ Route::middleware('auth:vendor')->group(function () {
 Route::middleware('auth:web')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::get('/profile/edit', [ProfileController::class, 'userEdit'])->name('user.profile.edit');
+    Route::get('/account/settings', [ProfileController::class, 'accountSettings'])->name('user.account.settings');
     Route::get('/profile/me', [UserController::class, 'myProfile'])->name('client.my_profile');
     Route::post('user/upload/image', [RegisteredUserController::class, 'uploadProfileImage'])
         ->name('user.upload.image');

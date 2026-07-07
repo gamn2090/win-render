@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -sb cookies.txt http://localhost:8000/profile -o profile3.html -w \"profile status: %{http_code}\\\\n\")"
+    ]
+  }
+}

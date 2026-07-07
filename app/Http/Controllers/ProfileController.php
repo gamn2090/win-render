@@ -35,7 +35,22 @@ class ProfileController extends Controller
     public function edit(Request $request): View
     {
         return view('profile.edit', [
-            'user' => $request->user()
+            'user' => $request->user(),
+            'page' => 'edit_profile',
+        ]);
+    }
+
+    public function accountSettings(Request $request): View
+    {
+        return view('couple.account_settings', [
+            'user' => $request->user(),
+        ]);
+    }
+
+    public function vendorAccountSettings(Request $request): View
+    {
+        return view('vendor.account_settings', [
+            'user' => Auth::guard('vendor')->user(),
         ]);
     }
 
@@ -43,6 +58,7 @@ class ProfileController extends Controller
     {
         $vendor = $request->user()->load('tags');
         $vendor->ensureUuid();
+        $vendor->ensureVendorProfile();
 
         return view('profile.vendor_edit', [
             'user' => $vendor,
@@ -313,6 +329,27 @@ class ProfileController extends Controller
         Auth::logout();
 
         $user->delete();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return Redirect::to('/');
+    }
+
+    /**
+     * Delete the vendor's account.
+     */
+    public function vendorDestroy(Request $request): RedirectResponse
+    {
+        $request->validateWithBag('userDeletion', [
+            'password' => ['required', 'current_password:vendor'],
+        ]);
+
+        $vendor = Auth::guard('vendor')->user();
+
+        Auth::guard('vendor')->logout();
+
+        $vendor->delete();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();

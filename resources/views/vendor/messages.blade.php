@@ -64,7 +64,8 @@
     <x-vm-message-view />
   </div>
 
-  @include('layouts.footer')
+  {{-- Site footer disabled per client request — uncomment to restore --}}
+  {{-- @include('layouts.footer') --}}
 </main>
 </body>
 </html>

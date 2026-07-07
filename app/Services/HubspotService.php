@@ -84,17 +84,26 @@ class HubspotService {
         $client = new \GuzzleHttp\Client(['handler' => $handlerStack]);
 
         $hubspot = \HubSpot\Factory::createWithAccessToken(\Config::get('hubspot.access_token'), $client);
-        $response = $hubspot->apiRequest([
-            'method' => 'POST',
-            'path' => '/marketing/v3/transactional/single-email/send',
-            'body' => [
-                'customProperties' => $properties,
-                'emailId' => $emailID,
-                'message' => [
-                    'to' => $to,
+        try {
+            return $hubspot->apiRequest([
+                'method' => 'POST',
+                'path' => '/marketing/v3/transactional/single-email/send',
+                'body' => [
+                    'customProperties' => $properties,
+                    'emailId' => $emailID,
+                    'message' => [
+                        'to' => $to,
+                    ],
                 ],
-            ],
-        ]);
-        return $response;
+            ]);
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::warning('HubspotService::sendEmail failed', [
+                'emailID' => $emailID,
+                'to' => $to,
+                'message' => $e->getMessage(),
+            ]);
+
+            return null;
+        }
     }
 }
