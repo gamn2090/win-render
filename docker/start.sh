@@ -7,8 +7,7 @@ php artisan route:cache
 php artisan view:cache
 
 echo "Running migrations..."
-php artisan migrate:fresh --force
-php artisan db:seed --force
+php artisan deploy:fresh-seed
 
 echo "Starting Apache..."
 exec apache2-foreground
