@@ -16,6 +16,7 @@ use App\Http\Controllers\CoupleInvestmentPlannerController;
 use App\Http\Controllers\PlanningToolsController;
 use App\Http\Controllers\TimelineToolController;
 use App\Http\Controllers\MessageAttachmentController;
+use App\Http\Controllers\SearchController;
 use App\Models\Event;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
@@ -236,6 +237,7 @@ Route::get('/message/vendor/{vendor_uuid}', [ChatController::class, 'messageVend
 Route::group(['middleware' => ['auth:web,vendor']], function() {
     Route::get('/appointments', [MeetingController::class, 'appointmentListPage'])->name('appointments.list');
     Route::get('/search/vendors', [VendorController::class, 'searchVendorType'])->name('search.vendors');
+    Route::get('/search/results', [SearchController::class, 'results'])->name('search.results');
     Route::get('/messages/attachment/{attachment}/download', [MessageAttachmentController::class, 'download'])
         ->whereNumber('attachment')
         ->name('messages.attachment.download');

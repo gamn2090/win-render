@@ -19,16 +19,21 @@
 <main class="relative transition-all duration-200 ease-in-out">
   <div class="vd-main">
 
-    <div class="vd-topbar">
-      <a href="{{ route('search.vendors') }}" class="vd-topbar__btn" aria-label="Search vendors">🔍</a>
-      <a href="{{ route('client.inbox') }}" class="vd-topbar__btn" aria-label="Notifications">🔔</a>
-      <a href="{{ route('user.account.settings') }}" class="vd-topbar__btn" aria-label="Settings">⚙️</a>
-    </div>
+    @include('layouts.dashboard_topbar', ['role' => 'couple'])
 
     <section class="vd-hero">
       <div class="vd-hero__inner">
         <h1 class="vd-hero__title">Find Vendors</h1>
-        <p class="vd-hero__sub">Choose one or more categories to find matching vendors</p>
+        <p class="vd-hero__sub">Choose a category to find matching vendors</p>
+        <form method="GET" action="{{ route('search.vendors') }}" class="vd-hero__form">
+          <select name="type" class="vd-hero__select">
+            <option value="" @selected(!$selected_type)>All Types</option>
+            @foreach($vendor_types as $type)
+              <option value="{{ $type->id }}" @selected($selected_type && $selected_type->id == $type->id)>{{ $type->type }}</option>
+            @endforeach
+          </select>
+          <button type="submit" class="vd-hero__btn">Search</button>
+        </form>
       </div>
     </section>
 
@@ -39,27 +44,7 @@
       </div>
 
       <form method="GET" action="{{ route('search.vendors') }}" class="vd-filter-bar">
-        <div class="hs-dropdown [--auto-close:inside] relative inline-flex">
-          <button type="button" class="hs-dropdown-toggle py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border bg-white hover:bg-gray-50" aria-haspopup="menu" aria-expanded="false">
-            Vendor Type
-            <svg class="hs-dropdown-open:rotate-180 size-2.5" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M2 5L8.16086 10.6869C8.35239 10.8637 8.64761 10.8637 8.83914 10.6869L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-          </button>
-          <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden bg-white shadow-md rounded-lg mt-2 z-[100] max-h-72 overflow-y-auto" role="menu">
-            <div class="p-1 space-y-0.5">
-              @foreach($vendor_types as $type)
-                <div class="flex items-center gap-x-2 py-2 px-3 rounded-lg hover:bg-gray-100 hover:cursor-pointer">
-                  <input id="filter-type-{{ $type->id }}" name="type[]" type="checkbox" value="{{ $type->id }}" @checked(in_array($type->id, $selected_type_ids ?? [])) class="shrink-0 rounded-sm text-win-purple focus:ring-win-purple checked:border-win-purple disabled:opacity-50 disabled:pointer-events-none">
-                  <label for="filter-type-{{ $type->id }}" class="grow cursor-pointer">
-                    <span class="block text-sm">{{ $type->type }}</span>
-                  </label>
-                </div>
-              @endforeach
-            </div>
-          </div>
-        </div>
-
+        <input type="hidden" name="type" value="{{ $selected_type->id ?? '' }}" />
         @foreach($allowedFilters as $filter)
           @if($filter->search_type == 'checkbox')
             <x-filter-checkbox :filter="$filter" />
@@ -71,7 +56,7 @@
           <x-filter-select :filter="new \App\Models\TagType(['name' => 'Event', 'search_type' => 'select', 'allowed_values' => '[' . $user->event . ']'])" />
         @endif
 
-        <a href="{{ route('search.vendors', ['type' => $selected_type_ids ?? []]) }}" class="vd-filter-bar__clear">Clear Filters</a>
+        <a href="{{ route('search.vendors', ['type' => $selected_type->id ?? null]) }}" class="vd-filter-bar__clear">Clear Filters</a>
         <button type="submit" class="vd-filter-bar__apply">Apply Filters</button>
       </form>
     </div>
@@ -105,7 +90,7 @@
             <div class="vd-vendor-card__meta">
               @if($vendorType)
                 <span class="vd-vendor-card__type">
-                  <img src="{{ asset($vendorType->icon) }}" alt="" class="vd-vendor-card__type-icon" width="18" height="18" />
+                  <span class="vd-vendor-card__type-icon vd-vendor-card__type-icon--solid" style="--icon-url: url('{{ asset($vendorType->icon) }}');" role="img" aria-label=""></span>
                   <span class="vd-vendor-card__type-label">{{ $vendorType->type }}</span>
                 </span>
               @endif
@@ -114,7 +99,7 @@
               </span>
             </div>
 
-            <p class="vd-vendor-card__location">{{ $vendor->location }}{{ $vendor->service_radius ? ' · ' . $vendor->service_radius . ' mi' : '' }}</p>
+            <p class="vd-vendor-card__location">{{ $vendor->location ? $vendor->location . ($vendor->service_radius ? ' · ' . $vendor->service_radius . ' mi' : '') : '-' }}</p>
 
             @if($vendor->badges()->count() > 0)
               <div class="vd-vendor-card__badges">

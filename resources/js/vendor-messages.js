@@ -170,17 +170,20 @@ document.addEventListener('DOMContentLoaded', () => {
       const rowClass = isSender ? 'vm-message-view__row vm-message-view__row--out' : 'vm-message-view__row vm-message-view__row--in';
       const initials = isSender ? vendorMeta.initials : (activeMeta?.other_initials || '?');
       const time = formatTime(message.created_at);
-
-      return `<div class="${rowClass}">
-        <div class="vm-message-view__bubble">
-          ${message.body ? `<p>${escapeHtml(message.body)}</p>` : ''}
-          <a href="${escapeHtml(url)}" target="_blank" rel="noopener" style="color:inherit;font-weight:600;">${escapeHtml(name)}</a>
-        </div>
-        <div class="vm-message-view__meta">
+      const attachMetaHtml = `<div class="vm-message-view__meta">
           <span class="vm-message-view__time">${escapeHtml(time)}</span>
           <span class="vm-message-view__initials">${escapeHtml(initials)}</span>
-        </div>
-      </div>`;
+        </div>`;
+      const attachBubbleHtml = `<div class="vm-message-view__bubble">
+          ${message.body ? `<p>${escapeHtml(message.body)}</p>` : ''}
+          <a href="${escapeHtml(url)}" target="_blank" rel="noopener" style="color:inherit;font-weight:600;">${escapeHtml(name)}</a>
+        </div>`;
+
+      if (isSender) {
+        return `<div class="${rowClass}">${attachMetaHtml}${attachBubbleHtml}</div>`;
+      }
+
+      return `<div class="${rowClass}">${attachBubbleHtml}${attachMetaHtml}</div>`;
     }
 
     return '';
@@ -198,10 +201,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const bubbleHtml = `<div class="vm-message-view__bubble">${escapeHtml(message.body || '')}</div>`;
 
     if (isSender) {
-      return `<div class="${rowClass}">${bubbleHtml}${metaHtml}</div>`;
+      return `<div class="${rowClass}">${metaHtml}${bubbleHtml}</div>`;
     }
 
-    return `<div class="${rowClass}">${metaHtml}${bubbleHtml}</div>`;
+    return `<div class="${rowClass}">${bubbleHtml}${metaHtml}</div>`;
   }
 
   function renderMessages(messages) {

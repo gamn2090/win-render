@@ -19,11 +19,7 @@
 <main class="relative transition-all duration-200 ease-in-out">
   <div class="vd-main">
 
-    <div class="vd-topbar">
-      <a href="{{ route('search.vendors') }}" class="vd-topbar__btn" aria-label="Search vendors">🔍</a>
-      <a href="{{ route('client.inbox') }}" class="vd-topbar__btn" aria-label="Notifications">🔔</a>
-      <a href="{{ route('user.account.settings') }}" class="vd-topbar__btn" aria-label="Settings">⚙️</a>
-    </div>
+    @include('layouts.dashboard_topbar', ['role' => 'couple'])
 
     <header class="vd-page-header">
       <h1 class="vd-page-header__title">My Vendors</h1>

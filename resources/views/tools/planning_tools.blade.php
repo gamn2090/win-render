@@ -6,6 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>WIN: Planning Tools</title>
     @vite('resources/css/app.css')
+    @vite('resources/css/vendor-dashboard.css')
     @vite('resources/js/app.js')
     @include('components.fonts')
 </head>
@@ -18,6 +19,9 @@
 @endif
 
 <main class="relative h-full transition-all duration-200 ease-in-out rounded-xl">
+    @if($role === 'vendor')
+        @include('layouts.dashboard_topbar', ['role' => 'vendor'])
+    @endif
     <div class="bg-[#EDE9F5] lg:mx-8 rounded-3xl pb-8">
         <div class="w-full px-6 py-6 container mx-auto">
             <div class="bg-white rounded-3xl p-6 md:p-8">
@@ -56,6 +60,9 @@
             </div>
         </div>
     </div>
+    @if($role === 'vendor')
+        <p class="vd-copyright">&copy; {{ date('Y') }} Wedding Insiders Network.</p>
+    @endif
 </main>
 </body>
 </html>

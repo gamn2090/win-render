@@ -9,6 +9,7 @@
     <!-- Popper -->
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     @vite('resources/css/app.css')
+    @vite('resources/css/vendor-dashboard.css')
     @vite('resources/js/app.js')
     @include('components.fonts')
   </head>
@@ -20,6 +21,7 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     <main class="relative h-full transition-all duration-200 ease-in-out rounded-xl min-h-[75vh]">
+      @include('layouts.dashboard_topbar', ['role' => 'vendor'])
       <div class="flex flex-wrap mt-6 -mx-3">
         <div class="w-full max-w-full px-3 mt-0">
         <div class="">
@@ -179,6 +181,7 @@
           </div>
         </x-slot>
       </x-table>-->
+      <p class="vd-copyright">&copy; {{ date('Y') }} Wedding Insiders Network.</p>
     </main>
     {{-- Site footer disabled per client request — uncomment to restore --}}
     {{-- <div class="mt-auto">

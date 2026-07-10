@@ -44,26 +44,45 @@ class VendorController extends Controller
         if (is_array($requestType)) {
             $requestType = array_values(array_filter($requestType, fn ($v) => $v !== null && $v !== ''));
         }
-        if (empty($requestType)) {
-            $requestType = 2;
-        }
-        $selectedTypeIds = is_array($requestType) ? $requestType : [$requestType];
-        $primaryTypeId = $selectedTypeIds[0];
+        $selectedTypeIds = is_array($requestType) ? $requestType : ($requestType ? [$requestType] : []);
+        $primaryTypeId = $selectedTypeIds[0] ?? null;
 
         $filters = $request->input('filter');
+        $searchTerm = trim((string) $request->input('q'));
+        $vendorsQuery = $this->vendorService->getVendorsByRank($selectedTypeIds, $filters)->with('profile');
+        if ($searchTerm !== '') {
+            $vendorsQuery->where(function ($q) use ($searchTerm) {
+                $q->where('business_name', 'like', "%{$searchTerm}%")
+                    ->orWhere('first_name', 'like', "%{$searchTerm}%")
+                    ->orWhere('last_name', 'like', "%{$searchTerm}%");
+            });
+        }
+
+        $filterVendorTypeId = VendorTypes::where('type', 'Venue')->value('id');
+        $allowedFilters = TagType::where('hidden', 0)
+            ->where('vendor_type_id', $filterVendorTypeId)
+            ->whereIn('name', ['Venue Type', 'Max Guest Capacity', 'Location', 'Budget'])
+            ->get();
+
         $data = [
             'vendor_types' => $requestedVendorTypes,
-            'allowedFilters' => TagType::where('hidden', 0)->where('vendor_type_id', $primaryTypeId)->get(),
+            'allowedFilters' => $allowedFilters,
             'requestedTypes' => $requestedVendorTypes, //for parity with client search
-            'vendors' => $this->vendorService->getVendorsByRank($requestType, $filters)->with('profile')->paginate(20)->appends($request->query()),
-            'selected_type' => VendorTypes::where('id', $primaryTypeId)->first(),
+            'selected_type' => $primaryTypeId ? VendorTypes::where('id', $primaryTypeId)->first() : null,
             'selected_type_ids' => $selectedTypeIds,
+            'search_term' => $searchTerm,
             'page' => 'search_vendors'
         ];
 
         if (Auth::guard('web')->check()) {
+            $data['vendors'] = $vendorsQuery->paginate(20)->appends($request->query());
             return view('couple.search_vendors', $data);
         }
+
+        $authVendor = Auth::guard('vendor')->user();
+        $vendorsQuery->where('id', '!=', $authVendor->id);
+        $data['vendors'] = $vendorsQuery->paginate(20)->appends($request->query());
+        $data['connectedVendorIds'] = VendorConnection::where('host_vendor', $authVendor->id)->pluck('aff_vendor')->all();
 
         return view('vendor.search_vendors', $data);
     }
@@ -412,18 +431,19 @@ class VendorController extends Controller
         $newConnection->host_vendor_type = $host_vendor->type;
         $newConnection->aff_vendor = $aff_vendor->id;
         $newConnection->aff_vendor_type = $aff_vendor->type;
+        $newConnection->approved = true;
         $newConnection->save();
         $conversation = Chat::conversations()->between($host_vendor, $aff_vendor);
         if($conversation == null){
             $conversation = $request->user()->initiateDirectMessage($aff_vendor);
             $conversation = Chat::conversations()->getById($conversation);
         }
-        $message = Chat::message($host_vendor->first_name . ' has invited you to their storefront!')
+        $message = Chat::message($host_vendor->first_name . ' has added you as a preferred vendor on their storefront!')
             ->from($request->user())
             ->to($conversation)
             ->send();
         $res['status'] = true;
-        $res['msg'] = "You have requested to add this vendor to your connections! Once they accept, they will show up on your profile.";
+        $res['msg'] = "You have added this vendor to your preferred vendors! They now show up on your storefront.";
         return $res;
     }
 

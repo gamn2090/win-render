@@ -25,16 +25,7 @@
 <main class="relative transition-all duration-200 ease-in-out">
   <div class="vd-main">
 
-    <div class="vd-topbar">
-      <a href="{{ route('search.vendors') }}" class="vd-topbar__btn" aria-label="Search vendors">🔍</a>
-      <a href="{{ route('client.inbox') }}" class="vd-topbar__btn" aria-label="Notifications">
-        🔔
-        @if($unreadCount > 0)
-          <span class="vd-topbar__dot"></span>
-        @endif
-      </a>
-      <a href="{{ route('user.account.settings') }}" class="vd-topbar__btn" aria-label="Settings">⚙️</a>
-    </div>
+    @include('layouts.dashboard_topbar', ['role' => 'couple', 'unreadCount' => $unreadCount])
 
     <div class="vd-announcement" id="vd-announcement" role="region" aria-label="Announcement">
       <p>
@@ -45,7 +36,7 @@
       <button type="button" class="vd-announcement__close" id="vd-announcement-close" aria-label="Dismiss">&times;</button>
     </div>
 
-    <header class="vd-greeting vd-greeting--centered">
+    <header class="vd-greeting">
       <h1 class="vd-greeting__title">
         {{ $greeting }}, {{ ucfirst(strtolower($user->first_name)) }} &amp; {{ ucfirst(strtolower($user->fiance_first_name)) }} 💍
       </h1>
@@ -209,7 +200,10 @@
           <h2 class="vd-card__title">Vendor Status</h2>
         </div>
         <div class="vd-card__body">
-          <div class="vd-meetings-banner">Booked! <strong>{{ $bookedVendors->count() }}</strong></div>
+          <div class="vd-meetings-banner vd-meetings-banner--booked">
+            <span class="vd-meetings-banner__count">{{ $bookedVendors->count() }}</span>
+            <span class="vd-meetings-banner__label">Booked!</span>
+          </div>
           <div class="vd-card__scroll">
             <div class="vd-status-list">
               @forelse($requestedVendorTypes as $vendorType)

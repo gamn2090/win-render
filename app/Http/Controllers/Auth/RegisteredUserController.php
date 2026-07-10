@@ -48,11 +48,26 @@ class RegisteredUserController extends Controller
         $user = $request->user();
         $first_login = $request->session()->pull('first-login', false);
 
+        $pairings = collect($user->vendorsWithStatus());
+        $requestedVendorTypes = $user->requestedVendorTypes()->get();
+
+        // A couple can have a real pairing (booked/searching) for a vendor type they
+        // never formally "requested" via an Inquiry — make sure those still show up
+        // in the Vendor Status list instead of being silently dropped.
+        $pairedVendorTypeIds = $pairings->filter(fn ($p) => $p->vendor)->pluck('vendor.type')->unique();
+        $missingVendorTypeIds = $pairedVendorTypeIds->diff($requestedVendorTypes->pluck('id'));
+        if ($missingVendorTypeIds->isNotEmpty()) {
+            $requestedVendorTypes = $requestedVendorTypes
+                ->concat(VendorTypes::whereIn('id', $missingVendorTypeIds)->get())
+                ->sortBy('priority')
+                ->values();
+        }
+
         $data = [
-            'pairings' => collect($user->vendorsWithStatus()),
+            'pairings' => $pairings,
             'page' => 'dashboard',
             'recentConversations' => $user->recentConversations(3),
-            'requestedVendorTypes' => $user->requestedVendorTypes()->get(),
+            'requestedVendorTypes' => $requestedVendorTypes,
             'favoritedVendors' => $user->favoritedVendors()->get(),
             'upcomingMeetings' => $user->upcomingMeetings()->take(5)->get(),
             'first_login' => $first_login,

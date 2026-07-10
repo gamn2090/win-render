@@ -6,20 +6,14 @@
   <meta name="csrf-token" content="{{ csrf_token() }}" />
   <title>WIN: Current Clients</title>
   <script src="https://unpkg.com/@popperjs/core@2"></script>
-  @vite(['resources/css/app.css', 'resources/css/vendor-current-clients.css', 'resources/js/app.js'])
+  @vite(['resources/css/app.css', 'resources/css/vendor-current-clients.css', 'resources/css/vendor-dashboard.css', 'resources/js/app.js'])
   @include('components.fonts')
 </head>
 <body class="cc-page m-0 antialiased overflow-x-hidden">
 @include('layouts.vendor_navigation')
 
 <main class="relative transition-all duration-200 ease-in-out">
-  <div class="fc-toolbar" aria-label="Page tools">
-    <div class="fc-toolbar__icons">
-      <button type="button" class="fc-toolbar__icon" aria-label="Search">🔍</button>
-      <button type="button" class="fc-toolbar__icon" aria-label="Notifications">🔔</button>
-      <a href="{{ url('/vendor/profile') }}" class="fc-toolbar__icon" aria-label="Settings">⚙️</a>
-    </div>
-  </div>
+  @include('layouts.dashboard_topbar', ['role' => 'vendor'])
 
   <header class="cc-hero">
     <div class="cc-hero__inner">
@@ -60,6 +54,8 @@
       />
     </div>
   </div>
+
+  <p class="vd-copyright">&copy; {{ date('Y') }} Wedding Insiders Network.</p>
 
   {{-- Site footer disabled per client request — uncomment to restore --}}
   {{-- @include('layouts.footer') --}}

@@ -73,6 +73,12 @@
           </a>
         </li>
         <li>
+          <a href="{{ route('vendor.search.vendors') }}" class="{{ $navLinkClasses('search_vendors') }}">
+            <span class="dashboard-sidebar__emoji dashboard-sidebar__emoji--find" aria-hidden="true">🔍</span>
+            <span class="dashboard-sidebar__label">Find Vendors</span>
+          </a>
+        </li>
+        <li>
           <a href="{{ url('/vendor/couples') }}" class="{{ $navLinkClasses('find_couples') }}">
             <span class="dashboard-sidebar__emoji dashboard-sidebar__emoji--find" aria-hidden="true">⚡</span>
             <span class="dashboard-sidebar__label">Find Couples</span>

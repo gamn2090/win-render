@@ -205,7 +205,7 @@ class UserController extends Controller
     public function message(Request $request){
         $recip = Vendor::where('id', $request->id)->first();
         $conversationID = $request->user()->initiateDirectMessage($recip);
-        return $conversationID;
+        return redirect()->route('get.client.conversation', $conversationID);
     }
 
     public function getMessages(Request $request){

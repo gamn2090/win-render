@@ -45,6 +45,7 @@
   }
 
   $favorited = $user->hasFavorite($vendor->id);
+  $hasPairing = $user->pairingWith($vendor->id) !== null;
 @endphp
 
 @include('layouts.couple_sidebar', ['page' => 'find_vendors'])
@@ -52,11 +53,7 @@
 <main class="relative transition-all duration-200 ease-in-out">
   <div class="vd-main">
 
-    <div class="vd-topbar">
-      <a href="{{ route('search.vendors') }}" class="vd-topbar__btn" aria-label="Search vendors">🔍</a>
-      <a href="{{ route('client.inbox') }}" class="vd-topbar__btn" aria-label="Notifications">🔔</a>
-      <a href="{{ route('user.account.settings') }}" class="vd-topbar__btn" aria-label="Settings">⚙️</a>
-    </div>
+    @include('layouts.dashboard_topbar', ['role' => 'couple'])
 
     <section class="vd-storefront-header">
       <img class="vd-storefront-avatar" src="{{ \App\Support\ProfileImageStorage::url($vendor->image) }}" alt="{{ $vendor->business_name }}" />
@@ -95,6 +92,9 @@
             data-favorited="{{ $favorited ? '1' : '0' }}"
             aria-label="Toggle favorite"
           >{{ $favorited ? '♥' : '♡' }}</button>
+          @unless($hasPairing)
+            <button type="button" id="send-inquiry-btn" class="vd-storefront-btn vd-storefront-btn--inquiry" data-vendor-id="{{ $vendor->id }}">Send Inquiry</button>
+          @endunless
           <a href="{{ route('user.vendor.message', $vendor->id) }}" class="vd-storefront-btn vd-storefront-btn--message">Message Vendor</a>
           <button type="button" class="vd-storefront-btn vd-storefront-btn--consultation open-schedule-modal" data-vendor-id="{{ $vendor->id }}">★ Request Consultation</button>
         </div>
@@ -293,6 +293,31 @@
           headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': csrf },
           body: JSON.stringify({ vendor_uuid: favBtn.dataset.vendorId, active: next }),
         }).finally(function () { favBtn.disabled = false; });
+        return;
+      }
+
+      var inquiryBtn = e.target.closest('#send-inquiry-btn');
+      if (inquiryBtn) {
+        inquiryBtn.disabled = true;
+        inquiryBtn.textContent = 'Sending…';
+        fetch('{{ route('user.send.inquiry') }}', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': csrf },
+          body: JSON.stringify({ vendor_id: inquiryBtn.dataset.vendorId }),
+        })
+          .then(function (r) { return r.json(); })
+          .then(function (data) {
+            if (data.status) {
+              inquiryBtn.textContent = 'Inquiry Sent ✓';
+            } else {
+              inquiryBtn.textContent = 'Send Inquiry';
+              inquiryBtn.disabled = false;
+            }
+          })
+          .catch(function () {
+            inquiryBtn.textContent = 'Send Inquiry';
+            inquiryBtn.disabled = false;
+          });
         return;
       }
 

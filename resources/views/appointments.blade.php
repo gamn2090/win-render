@@ -7,6 +7,7 @@
     <!-- Popper -->
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     @vite('resources/css/app.css')
+    @vite('resources/css/vendor-dashboard.css')
     @vite('resources/js/app.js')
     @include('components.fonts')
   </head>
@@ -20,6 +21,9 @@
 
     <div class="bg-[#EDE9F5] lg:mx-8 rounded-t-3xl py-4">
       <main class="h-full rounded-xl min-h-[75vh]">
+        @if(Auth::guard('vendor')->check())
+          @include('layouts.dashboard_topbar', ['role' => 'vendor'])
+        @endif
         <div class="bg-white rounded-xl overflow-hidden mx-4 md:mx-6 lg:mx-8 mt-4 lg:mt-8">
           <!-- Header -->
           <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200">
@@ -120,8 +124,12 @@
         </div>
       </main>
     </div>
-    <div class="mt-auto">
-    @include('layouts.footer')
-    </div>
+    @if(Auth::guard('vendor')->check())
+      <p class="vd-copyright">&copy; {{ date('Y') }} Wedding Insiders Network.</p>
+    @else
+      <div class="mt-auto">
+        @include('layouts.footer')
+      </div>
+    @endif
   </body>
 </html>

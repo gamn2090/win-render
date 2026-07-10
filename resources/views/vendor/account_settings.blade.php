@@ -19,16 +19,7 @@
 <main class="relative transition-all duration-200 ease-in-out">
   <div class="vd-main">
 
-    <div class="vd-topbar">
-      <a href="{{ route('vendor.search.vendors') }}" class="vd-topbar__btn" aria-label="Search vendors">🔍</a>
-      <a href="{{ route('vendor.inbox') }}" class="vd-topbar__btn" aria-label="Notifications">
-        🔔
-        @if($vendor->unreadMessagesCount() > 0)
-          <span class="vd-topbar__dot"></span>
-        @endif
-      </a>
-      <a href="{{ route('vendor.account.settings') }}" class="vd-topbar__btn" aria-label="Settings">⚙️</a>
-    </div>
+    @include('layouts.dashboard_topbar', ['role' => 'vendor', 'unreadCount' => $vendor->unreadMessagesCount()])
 
     <header class="vd-page-header">
       <h1 class="vd-page-header__title">Account Settings</h1>

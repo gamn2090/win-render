@@ -10,6 +10,7 @@
     <!-- Popper -->
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     @vite('resources/css/app.css')
+    @vite('resources/css/vendor-dashboard.css')
     @vite('resources/js/app.js')
     @include('components.fonts')
   </head>
@@ -17,6 +18,7 @@
   <body class="m-0 font-sans text-base antialiased font-normal leading-default bg-dark-grey-win text-slate-500 overflow-x-hidden">
     @include('layouts.vendor_navigation')
     <main class="relative h-full max-h-screen transition-all duration-200 ease-in-out rounded-xl">
+      @include('layouts.dashboard_topbar', ['role' => 'vendor'])
       <!-- Table Section -->
       <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto min-h-[75vh]">
         <!-- Card -->
@@ -121,7 +123,9 @@
         <!-- End Card -->
       </div>
       <!-- End Table Section -->
-      @include('layouts.footer')
+      <p class="vd-copyright">&copy; {{ date('Y') }} Wedding Insiders Network.</p>
+      {{-- Site footer disabled per client request — uncomment to restore --}}
+      {{-- @include('layouts.footer') --}}
       <!-- end cards -->
     </main>
   </body>

@@ -7,7 +7,7 @@
   <title>WIN: Vendor Dashboard</title>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
   <script>window.userID = {{ Auth::guard('vendor')->id() }};</script>
-  @vite(['resources/css/app.css', 'resources/css/vendor-dashboard.css', 'resources/css/vendor-sidebar.css'])
+  @vite(['resources/css/app.css', 'resources/css/vendor-dashboard.css'])
   @vite(['resources/js/app.js', 'resources/js/chat.js'])
   @include('components.fonts')
   @if(!empty($data['first_login']))
@@ -76,16 +76,7 @@
 <main class="relative transition-all duration-200 ease-in-out">
   <div class="vd-main">
 
-    <div class="vd-topbar">
-      <a href="{{ url('/vendor/couples') }}" class="vd-topbar__btn" aria-label="Find couples">🔍</a>
-      <a href="{{ url('/vendor/inbox') }}" class="vd-topbar__btn" aria-label="Notifications">
-        🔔
-        @if($vendor->unreadMessagesCount() > 0)
-          <span class="vd-topbar__dot"></span>
-        @endif
-      </a>
-      <a href="{{ route('vendor.account.settings') }}" class="vd-topbar__btn" aria-label="Settings">⚙️</a>
-    </div>
+    @include('layouts.dashboard_topbar', ['role' => 'vendor', 'unreadCount' => $vendor->unreadMessagesCount()])
 
     <div class="vd-announcement" id="vd-announcement" role="region" aria-label="Announcement">
       <p>

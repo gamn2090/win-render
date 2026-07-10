@@ -10,6 +10,7 @@
     'resources/css/app.css',
     'resources/css/vendor-messages.css',
     'resources/css/vendor-storefront.css',
+    'resources/css/vendor-dashboard.css',
     'resources/js/app.js',
     'resources/js/vendor-storefront.js',
   ])
@@ -78,13 +79,7 @@
 
 <main class="relative transition-all duration-200 ease-in-out">
   @if($authVendor)
-    <div class="fc-toolbar" aria-label="Page tools">
-      <div class="fc-toolbar__icons">
-        <button type="button" class="fc-toolbar__icon" aria-label="Search">🔍</button>
-        <button type="button" class="fc-toolbar__icon" aria-label="Notifications">🔔</button>
-        <a href="{{ url('/vendor/profile') }}" class="fc-toolbar__icon" aria-label="Settings">⚙️</a>
-      </div>
-    </div>
+    @include('layouts.dashboard_topbar', ['role' => 'vendor'])
   @endif
 
   <div class="@if($authVendor) vm-content @endif vsf-content">
@@ -443,9 +438,11 @@
     @endif
   </div>
 
-  @unless($authVendor)
+  @if($authVendor)
+    <p class="vd-copyright">&copy; {{ date('Y') }} Wedding Insiders Network.</p>
+  @else
     @include('layouts.footer')
-  @endunless
+  @endif
 </main>
 
 <div id="vsf-lightbox" class="vsf-lightbox" aria-hidden="true">

@@ -12,7 +12,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    @vite(['resources/css/app.css', 'resources/css/vendor-messages.css', 'resources/css/vendor-edit-profile.css', 'resources/js/app.js', 'resources/js/vendor-edit-profile.js'])
+    @vite(['resources/css/app.css', 'resources/css/vendor-messages.css', 'resources/css/vendor-edit-profile.css', 'resources/css/vendor-dashboard.css', 'resources/js/app.js', 'resources/js/vendor-edit-profile.js'])
     @include('components.fonts')
     <style>
       :target {
@@ -48,13 +48,7 @@
     @include('layouts.vendor_navigation')
 
     <main class="relative transition-all duration-200 ease-in-out">
-      <div class="fc-toolbar" aria-label="Page tools">
-        <div class="fc-toolbar__icons">
-          <button type="button" class="fc-toolbar__icon" aria-label="Search">🔍</button>
-          <button type="button" class="fc-toolbar__icon" aria-label="Notifications">🔔</button>
-          <a href="{{ url('/vendor/profile') }}" class="fc-toolbar__icon" aria-label="Settings">⚙️</a>
-        </div>
-      </div>
+      @include('layouts.dashboard_topbar', ['role' => 'vendor'])
 
       <header class="vm-hero">
         <div class="vm-hero__content">
@@ -319,7 +313,9 @@
         </div>
       </div>
 
-      @include('layouts.footer')
+      <p class="vd-copyright">&copy; {{ date('Y') }} Wedding Insiders Network.</p>
+      {{-- Site footer disabled per client request — uncomment to restore --}}
+      {{-- @include('layouts.footer') --}}
     </main>
     <!-- Modal -->
     <div id="imageModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">

@@ -612,7 +612,7 @@
   justify-content: center;
   padding: 6px 12px;
   border-radius: 26px;
-  background: #5a7eff;
+  background: #6432c8;
   color: #fcf6f3;
   font-size: 8px;
   font-weight: 700;
@@ -651,6 +651,24 @@
 
 .vd-meetings-banner strong {
   font-weight: 900;
+}
+
+.vd-meetings-banner--booked .vd-meetings-banner__count {
+  color: #6432c8;
+  font-family: "Poppins", sans-serif;
+  font-size: 34.715px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: 34.715px;
+}
+
+.vd-meetings-banner--booked .vd-meetings-banner__label {
+  color: #6432c8;
+  font-size: 12.684px;
+  font-weight: 800;
+  letter-spacing: 1.2684px;
+  text-transform: uppercase;
+  opacity: 0.75;
 }
 
 .vd-list-row__meta {
@@ -1192,7 +1210,7 @@
 
 .vd-vendor-card__btn--message {
   border: none;
-  background: #5a7eff;
+  background: #6432c8;
   color: #fff;
 }
 
@@ -1258,29 +1276,36 @@
   }
 }
 
-/* Centered greeting variant + savings banner (couple dashboard) */
-.vd-greeting--centered {
+/* Greeting header — title/subtitle left-aligned, savings banner centered between them (couple dashboard) */
+.vd-greeting {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
-  padding: 8px 0;
-  text-align: center;
+  padding: 8px 0 22px;
 }
 
-.vd-greeting--centered .vd-greeting__title,
-.vd-greeting--centered .vd-greeting__sub {
-  width: 100%;
-  text-align: center;
+.vd-greeting .vd-greeting__title,
+.vd-greeting .vd-greeting__sub {
+  align-self: flex-start;
+  text-align: left;
+}
+
+.vd-greeting .vd-greeting__title {
+  margin: 0;
+}
+
+.vd-greeting .vd-greeting__sub {
+  margin: 0;
 }
 
 .vd-savings-banner {
   display: flex;
   align-items: center;
   justify-content: center;
+  align-self: center;
   width: 100%;
   max-width: 699px;
-  margin: 0 auto;
   padding: 12px 32px;
   border: 1px solid #f5dba8;
   border-radius: 8px;
@@ -1384,7 +1409,7 @@
   justify-content: center;
   padding: 6px 16px;
   border-radius: 40px;
-  background: #5a7eff;
+  background: #6432c8;
   color: #fcf6f3;
   font-size: 12px;
   font-weight: 700;
@@ -1705,8 +1730,33 @@
   gap: 12px;
 }
 
-.vd-search-grid .vd-vendor-card__btn--message {
+.vd-search-grid .vd-vendor-card__location,
+.vd-connect-grid .vd-vendor-card__location {
+  color: #7a7a7a;
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.vd-search-grid .vd-vendor-card__btn--message,
+.vd-connect-grid .vd-vendor-card__btn--message {
   background: #6432c8;
+}
+
+.vd-vendor-card__type-icon--solid {
+  display: inline-block;
+  background-color: #6432c8;
+  -webkit-mask-image: var(--icon-url);
+  mask-image: var(--icon-url);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
 }
 
 .vd-vendor-card__discount {
@@ -1731,6 +1781,7 @@
   justify-content: center;
   gap: 8px;
   margin-top: 8px;
+  margin-bottom: 15px;
 }
 
 .vd-vendor-card__badge {
@@ -1738,16 +1789,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 38.965px;
+  height: 38.965px;
+  flex-shrink: 0;
   border-radius: 10px;
-  background: #f0ebf9;
+  background: #fff5db;
+  border: 2.165px solid #fde68a;
 }
 
 .vd-vendor-card__badge img {
   width: 16px;
   height: 16px;
-  filter: invert(21%) sepia(79%) saturate(2450%) hue-rotate(250deg) brightness(88%) contrast(99%);
 }
 
 .vd-vendor-card__badge:hover .vd-vendor-card__badge-tip {
@@ -2262,39 +2314,81 @@
   color: #fff;
 }
 
-/* Pairing status ribbon on vendor cards (favorites page) */
-.vd-vendor-card__status {
+/* Pairing status track — connected steps on vendor cards (favorites page) */
+.vd-vendor-card__status-track {
   position: absolute;
   left: 12px;
   bottom: 12px;
   z-index: 2;
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  padding: 4px 14px;
+  gap: 1px;
+  padding: 3px;
+  background: #fff;
   border-radius: 20px;
-  color: #fcf6f3;
-  font-size: 12px;
-  font-weight: 600;
 }
 
-.vd-vendor-card__status--booked {
+.vd-vendor-card__status-step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 22px;
+  padding: 0 14px 0 16px;
+  color: #fcf6f3;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 50%, calc(100% - 7px) 100%, 0 100%, 7px 50%);
+}
+
+.vd-vendor-card__status-step:first-child {
+  padding-left: 14px;
+  border-radius: 16px 0 0 16px;
+  clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 50%, calc(100% - 7px) 100%, 0 100%);
+}
+
+.vd-vendor-card__status-step:last-child {
+  padding-right: 14px;
+  border-radius: 0 16px 16px 0;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 7px 50%);
+}
+
+.vd-vendor-card__status-step:first-child:last-child {
+  padding-left: 14px;
+  padding-right: 14px;
+  border-radius: 16px;
+  clip-path: none;
+}
+
+.vd-vendor-card__status-step--booked {
   background: #f85705;
 }
 
-.vd-vendor-card__status--consultation,
-.vd-vendor-card__status--inquiry {
+.vd-vendor-card__status-step--consultation,
+.vd-vendor-card__status-step--inquiry {
   background: #fb962f;
 }
 
 /* Favorites — header + filter + infinite scroll grid */
 .vd-favorites-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 24px;
 }
 
 .vd-favorites-grid .vd-vendor-card__image {
   height: 180px;
+}
+
+.vd-favorites-grid .vd-vendor-card__meta {
+  justify-content: center;
+  gap: 12px;
+}
+
+@media (max-width: 1439px) {
+  .vd-favorites-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 1199px) {
@@ -2323,6 +2417,15 @@
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 40px;
+}
+
+.vd-myvendors-grid .vd-vendor-card__meta {
+  justify-content: center;
+  gap: 12px;
+}
+
+.vd-myvendors-grid .vd-vendor-card__location {
+  text-align: center;
 }
 
 @media (max-width: 1439px) {
@@ -2469,7 +2572,7 @@
 }
 
 .vd-modal__btn--confirm {
-  background: #5a7eff;
+  background: #6432c8;
   color: #fff;
 }
 
@@ -3302,6 +3405,17 @@
   color: #fff;
 }
 
+.vd-storefront-btn--inquiry {
+  background: #fff;
+  color: #6432c8;
+  border: 1px solid #6432c8;
+}
+
+.vd-storefront-btn--inquiry:disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+
 .vd-storefront-nav {
   display: flex;
   flex-wrap: wrap;
@@ -3352,7 +3466,7 @@
   display: inline-flex;
   align-items: center;
   padding: 8px 24px;
-  background: #5a7eff;
+  background: #6432c8;
   border-radius: 40px;
   color: #fff;
   font-size: 13px;
@@ -3399,7 +3513,7 @@
 .vd-gallery__view-all {
   margin-top: 16px;
   padding: 8px 24px;
-  background: #5a7eff;
+  background: #6432c8;
   border: none;
   border-radius: 40px;
   color: #fff;
@@ -3660,4 +3774,206 @@
   .vd-gallery__hero {
     grid-column: span 1;
   }
+}
+
+/* Expandable topbar search widget (shared couple + vendor) */
+.vd-search-widget {
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
+.vd-search-toggle {
+  flex-shrink: 0;
+}
+
+.vd-search-widget__input {
+  width: 0;
+  min-width: 0;
+  padding: 0;
+  margin-left: 0;
+  border: 1px solid transparent;
+  border-radius: 20px;
+  background: #f6f4fa;
+  font-size: 13px;
+  font-family: "Poppins", sans-serif;
+  color: #231f20;
+  opacity: 0;
+  overflow: hidden;
+  transition: width 0.2s ease, opacity 0.15s ease, padding 0.2s ease, margin-left 0.2s ease;
+}
+
+.vd-search-widget.is-open .vd-search-widget__input {
+  width: 220px;
+  padding: 7px 14px;
+  margin-left: 8px;
+  border-color: #d5c6e7;
+  opacity: 1;
+}
+
+.vd-search-widget__input:focus {
+  outline: none;
+  border-color: #6432c8;
+}
+
+@media (max-width: 640px) {
+  .vd-search-widget.is-open .vd-search-widget__input {
+    width: 140px;
+  }
+}
+
+/* Search results page */
+.vd-search-results {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.vd-search-result {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px 20px;
+  background: #fff;
+  border: 1px solid #eae7f0;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.vd-search-result:hover {
+  border-color: #6432c8;
+  box-shadow: 0 4px 16px rgba(100, 50, 200, 0.08);
+}
+
+.vd-search-result__source {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #6432c8;
+}
+
+.vd-search-result__title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #231f20;
+}
+
+.vd-search-result__snippet {
+  margin: 0;
+  font-size: 14px;
+  color: #7a7a7a;
+}
+
+/* Find Vendors (vendor-to-vendor) — 4-up grid matching Figma sizing */
+.vd-connect-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 40px;
+  width: 100%;
+}
+
+.vd-connect-grid .vd-vendor-card__image {
+  height: 230px;
+}
+
+.vd-connect-grid .vd-vendor-card__name {
+  font-size: 20px;
+}
+
+.vd-connect-grid .vd-vendor-card__btn {
+  height: 44px;
+  font-size: 15px;
+}
+
+@media (max-width: 1439px) {
+  .vd-connect-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 639px) {
+  .vd-connect-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.vd-vendor-card__preferred {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 2px solid #6432c8;
+  border-radius: 16px;
+  background: #6432c8;
+  color: #fff;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.vd-vendor-card__preferred:hover {
+  opacity: 0.88;
+}
+
+.vd-vendor-card__preferred-icon {
+  width: 19px;
+  height: 21px;
+  filter: brightness(0) invert(1);
+}
+
+.vd-vendor-card__preferred-check {
+  display: none;
+  color: #fff;
+}
+
+.vd-vendor-card__preferred[data-connected="1"] .vd-vendor-card__preferred-icon {
+  display: none;
+}
+
+.vd-vendor-card__preferred[data-connected="1"] .vd-vendor-card__preferred-check {
+  display: block;
+}
+
+.vd-filter-bar__search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border: 1px solid #d5c6e7;
+  border-radius: 40px;
+  background: #fff;
+  flex: 1 1 240px;
+  min-width: 200px;
+}
+
+.vd-filter-bar__search-icon {
+  flex-shrink: 0;
+  font-size: 14px;
+  line-height: 1;
+  color: #9ca3af;
+}
+
+.vd-filter-bar__search input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  color: #231f20;
+  background: transparent;
+}
+
+.vd-filter-bar__search input::placeholder {
+  color: #b0abbc;
 }

@@ -5,7 +5,6 @@
   $vendorType = $vendor->getType();
   $favorited = $user->hasFavorite($vendor->id);
   $pairing = $user->pairingWith($vendor->id);
-  $statusModifier = $pairing ? ($pairing->status == 3 ? 'booked' : ($pairing->status == 2 ? 'consultation' : 'inquiry')) : null;
 @endphp
 
 <article class="vd-vendor-card">
@@ -19,7 +18,17 @@
     >{{ $favorited ? '♥' : '♡' }}</button>
 
     @if($showStatus && $pairing)
-      <span class="vd-vendor-card__status vd-vendor-card__status--{{ $statusModifier }}">{{ $pairing->statusText() }}</span>
+      <div class="vd-vendor-card__status-track">
+        @if($pairing->status >= 1)
+          <span class="vd-vendor-card__status-step vd-vendor-card__status-step--inquiry">Inquiry</span>
+        @endif
+        @if($pairing->status >= 2)
+          <span class="vd-vendor-card__status-step vd-vendor-card__status-step--consultation">Consultation</span>
+        @endif
+        @if($pairing->status >= 3)
+          <span class="vd-vendor-card__status-step vd-vendor-card__status-step--booked">Booked</span>
+        @endif
+      </div>
     @endif
 
     <a href="{{ route('profile.vendor', $vendor->uuid) }}" class="vd-vendor-card__image-link" tabindex="-1" aria-hidden="true">
