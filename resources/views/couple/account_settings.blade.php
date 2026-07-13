@@ -23,7 +23,7 @@
       <p class="vd-page-header__sub">Manage your password and account.</p>
     </header>
 
-    <section class="vd-edit-card vd-settings-section">
+    <section id="vd-password-section" class="vd-edit-card vd-settings-section">
       <h2 class="vd-settings-section__title">Update Password</h2>
       <p class="vd-settings-section__desc">Ensure your account is using a long, random password to stay secure.</p>
 

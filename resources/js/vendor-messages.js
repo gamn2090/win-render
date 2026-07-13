@@ -84,6 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const heart = document.getElementById('vm-view-heart');
     const infoHeading = document.getElementById('vm-view-info-heading');
     const infoPrimary = document.getElementById('vm-view-info-primary');
+    const infoPrimaryRow = document.getElementById('vm-view-info-primary-row');
     const infoSecondary = document.getElementById('vm-view-info-secondary');
     const moreOne = document.getElementById('vm-view-more-one');
     const moreTwo = document.getElementById('vm-view-more-two');
@@ -109,6 +110,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (infoPrimary) {
       infoPrimary.textContent = meta.info_primary || '';
+    }
+    if (infoPrimaryRow) {
+      infoPrimaryRow.hidden = !meta.info_primary;
     }
     if (infoSecondary) {
       infoSecondary.textContent = meta.info_secondary || '';
@@ -167,21 +171,17 @@ document.addEventListener('DOMContentLoaded', () => {
       const name = message.data?.attachment_name || 'document.pdf';
       const url = message.data?.download_url || '#';
       const isSender = message.is_sender == 1;
-      const rowClass = isSender ? 'vm-message-view__row vm-message-view__row--out' : 'vm-message-view__row vm-message-view__row--in';
+      const rowClass = isSender ? 'vd-chat__row vd-chat__row--mine' : 'vd-chat__row vd-chat__row--vendor';
       const initials = isSender ? vendorMeta.initials : (activeMeta?.other_initials || '?');
       const time = formatTime(message.created_at);
-      const attachMetaHtml = `<div class="vm-message-view__meta">
-          <span class="vm-message-view__time">${escapeHtml(time)}</span>
-          <span class="vm-message-view__initials">${escapeHtml(initials)}</span>
-        </div>`;
-      const attachBubbleHtml = `<div class="vm-message-view__bubble">
+      const attachBubbleHtml = `<div class="vd-chat__bubble">
           ${message.body ? `<p>${escapeHtml(message.body)}</p>` : ''}
           <a href="${escapeHtml(url)}" target="_blank" rel="noopener" style="color:inherit;font-weight:600;">${escapeHtml(name)}</a>
         </div>`;
-
-      if (isSender) {
-        return `<div class="${rowClass}">${attachMetaHtml}${attachBubbleHtml}</div>`;
-      }
+      const attachMetaHtml = `<div class="vd-chat__meta">
+          <span class="vd-chat__avatar-sm">${escapeHtml(initials)}</span>
+          <span class="vd-chat__time">${escapeHtml(time)}</span>
+        </div>`;
 
       return `<div class="${rowClass}">${attachBubbleHtml}${attachMetaHtml}</div>`;
     }
@@ -191,18 +191,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderTextBubble(message) {
     const isSender = message.is_sender == 1;
-    const rowClass = isSender ? 'vm-message-view__row vm-message-view__row--out' : 'vm-message-view__row vm-message-view__row--in';
+    const rowClass = isSender ? 'vd-chat__row vd-chat__row--mine' : 'vd-chat__row vd-chat__row--vendor';
     const initials = isSender ? vendorMeta.initials : (activeMeta?.other_initials || '?');
     const time = formatTime(message.created_at);
-    const metaHtml = `<div class="vm-message-view__meta">
-        <span class="vm-message-view__time">${escapeHtml(time)}</span>
-        <span class="vm-message-view__initials">${escapeHtml(initials)}</span>
+    const bubbleHtml = `<div class="vd-chat__bubble">${escapeHtml(message.body || '')}</div>`;
+    const metaHtml = `<div class="vd-chat__meta">
+        <span class="vd-chat__avatar-sm">${escapeHtml(initials)}</span>
+        <span class="vd-chat__time">${escapeHtml(time)}</span>
       </div>`;
-    const bubbleHtml = `<div class="vm-message-view__bubble">${escapeHtml(message.body || '')}</div>`;
-
-    if (isSender) {
-      return `<div class="${rowClass}">${metaHtml}${bubbleHtml}</div>`;
-    }
 
     return `<div class="${rowClass}">${bubbleHtml}${metaHtml}</div>`;
   }
@@ -213,7 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (!messages || messages.length === 0) {
-      messagesEl.innerHTML = '<p class="vm-message-view__empty">No messages yet. Say hello!</p>';
+      messagesEl.innerHTML = '<p class="vd-chat__empty">No messages yet. Say hello!</p>';
       return;
     }
 
@@ -223,7 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
     messages.forEach((message) => {
       const day = message.created_at ? formatDayLabel(message.created_at) : '';
       if (day && day !== lastDay) {
-        html += `<p class="vm-message-view__date">${escapeHtml(day)}</p>`;
+        html += `<div class="vd-chat__date-divider"><span>${escapeHtml(day)}</span></div>`;
         lastDay = day;
       }
 
@@ -243,7 +239,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    messagesEl.innerHTML = '<p class="vm-message-view__loading">Loading messages…</p>';
+    messagesEl.innerHTML = '<p class="vd-chat__empty">Loading messages…</p>';
 
     try {
       const response = await fetch(`/vendor/messages/${convoId}`, {
@@ -259,7 +255,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const items = payload?.messages?.data || [];
       renderMessages(items);
     } catch {
-      messagesEl.innerHTML = '<p class="vm-message-view__empty">Could not load messages. Please try again.</p>';
+      messagesEl.innerHTML = '<p class="vd-chat__empty">Could not load messages. Please try again.</p>';
     }
   }
 
@@ -342,7 +338,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    const sendBtn = composerEl.querySelector('.vm-message-view__send');
+    const sendBtn = composerEl.querySelector('.vd-chat__send');
     if (sendBtn) {
       sendBtn.disabled = true;
     }
@@ -378,4 +374,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   });
+
+  const openConversation = window.vmOpenConversation;
+  if (openConversation && openConversation.conversation_id && openConversation.view_meta) {
+    openView(openConversation.conversation_id, openConversation.view_meta);
+  }
 });

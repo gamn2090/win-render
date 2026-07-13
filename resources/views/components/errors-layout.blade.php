@@ -24,6 +24,8 @@
                 {{ $slot }}
             </div>
         </div>
-        @include('layouts.footer')
+        {{-- Site footer disabled per client request — uncomment to restore --}}
+        {{-- @include('layouts.footer') --}}
+        <p class="text-center text-xs text-gray-400 pb-4">&copy; {{ date('Y') }} Wedding Insiders Network.</p>
     </body>
 </html>

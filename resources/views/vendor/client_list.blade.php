@@ -40,18 +40,35 @@
     <div class="cc-stack">
       <div class="cc-list-toolbar">
         <p class="cc-list-toolbar__count">
-          <span class="cc-list-toolbar__count-num">{{ count($clients) }}</span>
-          {{ count($clients) === 1 ? 'client' : 'clients' }}
+          <span id="cc-count-active" class="cc-list-toolbar__count-num">{{ count($activeClients) }}</span>
+          <span id="cc-count-archived" class="cc-list-toolbar__count-num" hidden>{{ count($archivedClients) }}</span>
+          <span id="cc-count-label">{{ count($activeClients) === 1 ? 'client' : 'clients' }}</span>
         </p>
+
+        <label class="vd-edit-toggle">
+          <span>Active</span>
+          <input type="checkbox" id="cc-archived-toggle" class="vd-edit-toggle__input" />
+          <span class="vd-edit-toggle__track"><span class="vd-edit-toggle__thumb"></span></span>
+          <span>Archived</span>
+        </label>
+
         <a href="{{ route('vendor.client.export') }}" class="cc-export-btn">
           Export CSV
         </a>
       </div>
 
-      <x-vendor-clients-table
-        :rows="$clients"
-        empty-message="No current clients yet. Use Add Client to invite your first couple."
-      />
+      <div id="cc-table-active">
+        <x-vendor-clients-table
+          :rows="$activeClients"
+          empty-message="No current clients yet. Use Add Client to invite your first couple."
+        />
+      </div>
+      <div id="cc-table-archived" hidden>
+        <x-vendor-clients-table
+          :rows="$archivedClients"
+          empty-message="No archived clients."
+        />
+      </div>
     </div>
   </div>
 
@@ -59,6 +76,28 @@
 
   {{-- Site footer disabled per client request — uncomment to restore --}}
   {{-- @include('layouts.footer') --}}
+  <script>
+    (function () {
+      var toggle = document.getElementById('cc-archived-toggle');
+      var tableActive = document.getElementById('cc-table-active');
+      var tableArchived = document.getElementById('cc-table-archived');
+      var countActive = document.getElementById('cc-count-active');
+      var countArchived = document.getElementById('cc-count-archived');
+      var countLabel = document.getElementById('cc-count-label');
+      var activeCount = {{ count($activeClients) }};
+      var archivedCount = {{ count($archivedClients) }};
+
+      toggle.addEventListener('change', function () {
+        var showArchived = toggle.checked;
+        tableActive.hidden = showArchived;
+        tableArchived.hidden = !showArchived;
+        countActive.hidden = showArchived;
+        countArchived.hidden = !showArchived;
+        var count = showArchived ? archivedCount : activeCount;
+        countLabel.textContent = count === 1 ? 'client' : 'clients';
+      });
+    })();
+  </script>
 </main>
 </body>
 </html>

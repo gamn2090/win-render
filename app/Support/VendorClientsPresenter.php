@@ -59,6 +59,7 @@ class VendorClientsPresenter
             return null;
         }
 
+        $isActive = $pairing->active === null || (bool) $pairing->active;
         $fianceName = trim((string) ($client->fiance_first_name ?? ''));
 
         return [
@@ -70,11 +71,12 @@ class VendorClientsPresenter
             'avatar' => ProfileImageStorage::url($client->image),
             'wedding_location' => $client->wedding_location ?: '—',
             'wedding_date' => self::formatWeddingDate($client->wedding_date),
-            'status_label' => 'Active',
-            'archive_url' => route('vendor.archive.client', [
-                'id' => $client->id,
-                'ven_id' => $vendor->id,
-            ]),
+            'is_active' => $isActive,
+            'status_label' => $isActive ? 'Active' : 'Archived',
+            'action_url' => $isActive
+                ? route('vendor.archive.client', ['id' => $client->id, 'ven_id' => $vendor->id])
+                : route('vendor.unarchive.client', ['id' => $client->id, 'ven_id' => $vendor->id]),
+            'action_label' => $isActive ? 'Archive' : 'Unarchive',
             'view_url' => route('vendor.couple.profile', ['id' => $client->uuid]),
         ];
     }

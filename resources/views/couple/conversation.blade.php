@@ -61,6 +61,9 @@
       </aside>
 
       <section class="vd-chat">
+        <a href="{{ route('client.inbox') }}" class="vd-chat__back">
+          <span aria-hidden="true">&larr;</span> Back
+        </a>
         <div id="vd-chat-messages" class="vd-chat__messages">
           <p class="vd-chat__empty">Loading messages…</p>
         </div>

@@ -647,9 +647,7 @@ class Vendor extends Authenticatable
     }
 
     public function badges(){
-        $badges = Cache::remember('badges', 14400, function () {
-            return Badge::all();
-        });
+        $badges = Badge::all();
         $earnedBadges = json_decode($this->badges ?? '[]', true);
         $earnedBadges = is_array($earnedBadges) ? $earnedBadges : [];
         $earnedBadgeModels = $badges->whereIn('id', $earnedBadges);

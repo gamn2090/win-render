@@ -29,13 +29,13 @@
 
       <div class="vm-message-view__block">
         <h3 id="vm-view-info-heading" class="vm-message-view__label">Wedding Information:</h3>
-        <p class="vm-message-view__detail">
+        <p id="vm-view-info-primary-row" class="vm-message-view__detail">
           <svg class="vm-message-view__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M8 2v3M16 2v3M3.5 9.09h17M21 8.5V17a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8.5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
           <span id="vm-view-info-primary"></span>
         </p>
-        <p class="vm-message-view__detail">
+        <p id="vm-view-info-secondary-row" class="vm-message-view__detail">
           <svg class="vm-message-view__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M12 21s7-4.35 7-10a7 7 0 1 0-14 0c0 5.65 7 10 7 10Z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
             <circle cx="12" cy="11" r="2.5" stroke="currentColor" stroke-width="1.75"/>
@@ -43,7 +43,7 @@
           <span id="vm-view-info-secondary"></span>
         </p>
       </div>
-
+      <hr class="vm-message-view__divider"/>
       <div class="vm-message-view__block">
         <h3 class="vm-message-view__label">More Info</h3>
         <p class="vm-message-view__detail">
@@ -70,18 +70,18 @@
         <span aria-hidden="true">&larr;</span> Back
       </button>
 
-      <div id="vm-view-messages" class="vm-message-view__messages" role="log" aria-live="polite"></div>
+      <div id="vm-view-messages" class="vd-chat__messages" role="log" aria-live="polite"></div>
 
-      <form id="vm-view-composer" class="vm-message-view__composer" autocomplete="off">
+      <form id="vm-view-composer" class="vd-chat__composer" autocomplete="off">
         <input
           type="text"
           id="vm-view-input"
-          class="vm-message-view__input"
+          class="vd-chat__input"
           placeholder="Write a message…"
           maxlength="5000"
         />
-        <button type="submit" class="vm-message-view__send" aria-label="Send message">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <button type="submit" class="vd-chat__send" aria-label="Send message">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="m22 2-7 20-4-9-9-4 20-7Z" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/>
             <path d="M22 2 11 13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
           </svg>

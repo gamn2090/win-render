@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
+use App\Models\Inquiry;
 use App\Models\Pairing;
 use App\Models\User;
 use App\Models\Vendor;
+use App\Models\VendorTypes;
 use Chat;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -35,7 +37,27 @@ class SiteSearchService
             ['title' => 'Budget Planner', 'url' => route('couple.investment_planner'), 'keywords' => ['budget', 'planner', 'investment', 'money']],
         ];
 
+        $actions = [
+            [
+                'title' => 'Change Password',
+                'url' => route('user.account.settings') . '#vd-password-section',
+                'keywords' => ['password', 'change password', 'reset password', 'update password'],
+                'description' => 'Update your account password',
+                'button_label' => 'Save Password',
+            ],
+            [
+                'title' => 'Delete Account',
+                'url' => route('user.account.settings') . '#vd-open-delete-account',
+                'keywords' => ['delete', 'delete account', 'remove account', 'close account', 'deactivate account'],
+                'description' => 'Permanently delete your account',
+                'button_label' => 'Delete Account',
+                'variant' => 'danger',
+            ],
+        ];
+
         $this->matchPages($pages, $needle, $results);
+        $this->matchActions($actions, $needle, $results);
+        $this->matchVendorTypesAndDirectory($needle, $results);
         $this->matchFavorites($user, $needle, $results);
         $this->matchBookedVendors($user, $needle, $results);
         $this->matchCoupleProfile($user, $needle, $results);
@@ -71,8 +93,28 @@ class SiteSearchService
             ['title' => 'Planning Tools', 'url' => route('vendor.planning_tools'), 'keywords' => ['planning', 'timeline', 'budget', 'tools']],
         ];
 
+        $actions = [
+            [
+                'title' => 'Change Password',
+                'url' => route('vendor.account.settings') . '#vd-password-section',
+                'keywords' => ['password', 'change password', 'reset password', 'update password'],
+                'description' => 'Update your account password',
+                'button_label' => 'Save Password',
+            ],
+            [
+                'title' => 'Delete Account',
+                'url' => route('vendor.account.settings') . '#vd-open-delete-account',
+                'keywords' => ['delete', 'delete account', 'remove account', 'close account', 'deactivate account'],
+                'description' => 'Permanently delete your account',
+                'button_label' => 'Delete Account',
+                'variant' => 'danger',
+            ],
+        ];
+
         $this->matchPages($pages, $needle, $results);
+        $this->matchActions($actions, $needle, $results);
         $this->matchClients($vendor, $needle, $results);
+        $this->matchCoupleDirectory($vendor, $needle, $results);
         $this->matchConnections($vendor, $needle, $results);
         $this->matchConversations($vendor, $needle, $results, 'get.vendor.conversation', function ($user) {
             return trim(($user->first_name ?? '') . ' ' . ($user->fiance_first_name ?? ''));
@@ -93,6 +135,110 @@ class SiteSearchService
                     'source' => 'Page',
                 ]);
             }
+        }
+    }
+
+    /**
+     * @param array<int, array{title: string, url: string, keywords: array<int, string>, description?: string, button_label?: string, variant?: string}> $actions
+     */
+    private function matchActions(array $actions, string $needle, Collection $results): void
+    {
+        foreach ($actions as $action) {
+            $haystack = $action['title'] . ' ' . implode(' ', $action['keywords']);
+            if (Str::contains(Str::lower($haystack), Str::lower($needle))) {
+                $results->push([
+                    'title' => $action['title'],
+                    'url' => $action['url'],
+                    'snippet' => $action['description'] ?? null,
+                    'source' => 'Action',
+                    'is_action' => true,
+                    'button_label' => $action['button_label'] ?? $action['title'],
+                    'variant' => $action['variant'] ?? 'default',
+                ]);
+            }
+        }
+    }
+
+    /**
+     * Matches vendor categories (e.g. "photographer") and, when the query also carries
+     * extra text (e.g. "photographer in MA"), narrows a vendor-directory search by that
+     * remainder against business name / owner name / location.
+     */
+    private function matchVendorTypesAndDirectory(string $needle, Collection $results): void
+    {
+        $types = VendorTypes::all();
+        $matchedType = $types->first(function ($type) use ($needle) {
+            $typeLower = Str::lower($type->type);
+            $needleLower = Str::lower($needle);
+            return Str::contains($needleLower, $typeLower) || Str::contains($typeLower, $needleLower);
+        });
+
+        $remainder = $needle;
+        if ($matchedType) {
+            $results->push([
+                'title' => $matchedType->type,
+                'url' => route('search.vendors', ['type' => $matchedType->id]),
+                'snippet' => 'Vendor Category',
+                'source' => 'Vendor Type',
+            ]);
+
+            $remainder = trim(str_ireplace($matchedType->type, '', $needle));
+            $remainder = trim(preg_replace('/\s+/', ' ', preg_replace('/\bin\b/i', ' ', $remainder)));
+        }
+
+        $vendorsQuery = Vendor::where('visible', 1);
+        if ($matchedType) {
+            $vendorsQuery->where('type', $matchedType->id);
+        }
+        if ($remainder !== '') {
+            $vendorsQuery->where(function ($q) use ($remainder) {
+                $q->where('business_name', 'like', "%{$remainder}%")
+                    ->orWhere('first_name', 'like', "%{$remainder}%")
+                    ->orWhere('last_name', 'like', "%{$remainder}%")
+                    ->orWhere('location', 'like', "%{$remainder}%");
+            });
+        } elseif (!$matchedType) {
+            $vendorsQuery->where(function ($q) use ($needle) {
+                $q->where('business_name', 'like', "%{$needle}%")
+                    ->orWhere('first_name', 'like', "%{$needle}%")
+                    ->orWhere('last_name', 'like', "%{$needle}%")
+                    ->orWhere('location', 'like', "%{$needle}%");
+            });
+        }
+
+        foreach ($vendorsQuery->limit(6)->get() as $matchedVendor) {
+            $type = $matchedVendor->getType();
+            $results->push([
+                'title' => $matchedVendor->business_name,
+                'url' => route('profile.vendor', $matchedVendor->uuid),
+                'snippet' => collect([$type->type ?? null, $matchedVendor->location])->filter()->implode(' · ') ?: null,
+                'source' => 'Vendors',
+            ]);
+        }
+    }
+
+    private function matchCoupleDirectory(Vendor $vendor, string $needle, Collection $results): void
+    {
+        $inquiryUserIds = Inquiry::where('vendor_type', $vendor->type)->where('requestable', 1)->pluck('user_id');
+
+        $matches = User::whereIn('id', $inquiryUserIds)
+            ->where(function ($q) use ($needle) {
+                $q->where('first_name', 'like', "%{$needle}%")
+                    ->orWhere('last_name', 'like', "%{$needle}%")
+                    ->orWhere('fiance_first_name', 'like', "%{$needle}%")
+                    ->orWhere('fiance_last_name', 'like', "%{$needle}%");
+            })
+            ->limit(6)
+            ->get();
+
+        foreach ($matches as $client) {
+            $label = trim(($client->first_name ?? '') . ' & ' . ($client->fiance_first_name ?? ''), " &");
+            $results->push([
+                'title' => $label !== '' ? $label : 'Couple',
+                'url' => route('vendor.couple.profile', $client->uuid),
+                'snippet' => $client->wedding_location ?: 'Prospective couple',
+                'source' => 'Couples',
+            ]);
         }
     }
 

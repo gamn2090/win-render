@@ -51,6 +51,39 @@ class VendorMessagesPresenter
     }
 
     /**
+     * Builds a single row for a specific conversation, regardless of whether
+     * it has any messages yet — used to deep-link straight into a
+     * conversation (e.g. from Find Couples) instead of only listing ones
+     * that already have activity.
+     *
+     * @return array<string, mixed>|null
+     */
+    public static function forConversation(Vendor $vendor, int $conversationId): ?array
+    {
+        try {
+            $conversation = Chat::conversations()->getById($conversationId);
+        } catch (\Throwable $e) {
+            return null;
+        }
+
+        $isParticipant = collect($conversation->getParticipants())->contains(
+            fn ($participant) => $participant->getMorphClass() === Vendor::class
+                && (int) $participant->id === (int) $vendor->id
+        );
+
+        if (! $isParticipant) {
+            return null;
+        }
+
+        $other = self::resolveOtherParticipant($conversation, $vendor);
+        if ($other === null) {
+            return null;
+        }
+
+        return self::buildRow($vendor, $conversation, $other);
+    }
+
+    /**
      * @return array{role: string, model: User|Vendor}|null
      */
     private static function resolveOtherParticipant(object $conversation, Vendor $vendor): ?array
@@ -166,10 +199,10 @@ class VendorMessagesPresenter
             'partner_one' => $displayName,
             'partner_two' => '',
             'partner_one_full' => trim($participant->first_name . ' ' . ($participant->last_name ?? '')),
-            'partner_two_full' => $participant->type ?? '',
+            'partner_two_full' => '',
             'info_heading' => 'Vendor Information:',
-            'info_primary' => $location !== '' ? $location : 'Location not specified.',
-            'info_secondary' => $participant->type ?? 'Vendor type not specified.',
+            'info_primary' => '',
+            'info_secondary' => $location !== '' ? $location : 'Location not specified.',
             'avatar' => ProfileImageStorage::url($participant->image),
             'profile_url' => filled($participant->uuid)
                 ? url('/vendor/profile/' . $participant->uuid)

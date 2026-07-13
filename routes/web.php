@@ -122,6 +122,7 @@ Route::middleware('auth:vendor')->group(function () {
     Route::get('/vendor/booked', [VendorController::class, 'booked'])->name('vendor.booked');
     Route::get('/vendor/archive', [VendorController::class, 'archive'])->name('vendor.archive');
     Route::get('/vendor/archive/{id}/{ven_id}', [VendorController::class, 'archiveClient'])->name('vendor.archive.client');
+    Route::get('/vendor/unarchive/{id}/{ven_id}', [VendorController::class, 'unarchiveClient'])->name('vendor.unarchive.client');
 
     Route::get('/vendor/inbox', [VendorController::class, 'inbox'])->name('vendor.inbox');
     Route::get('/vendor/notifications/unread-count', [VendorController::class, 'unreadNotificationsCount'])

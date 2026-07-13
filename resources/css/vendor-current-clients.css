@@ -260,6 +260,15 @@
   flex-shrink: 0;
 }
 
+.cc-status--archived {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+.cc-status--archived .cc-status__dot {
+  background: #9ca3af;
+}
+
 /* Person */
 .cc-person {
   display: flex;

@@ -18,7 +18,7 @@
       @forelse($rows as $row)
         <tr class="cc-table__row">
           <td class="cc-table__cell cc-table__cell--status">
-            <span class="cc-status" role="status">
+            <span class="cc-status {{ ($row['is_active'] ?? true) ? '' : 'cc-status--archived' }}" role="status">
               <span class="cc-status__dot" aria-hidden="true"></span>
               {{ $row['status_label'] ?? 'Active' }}
             </span>
@@ -49,7 +49,7 @@
           </td>
           <td class="cc-table__cell cc-table__cell--action">
             <div class="cc-actions">
-              <a href="{{ $row['archive_url'] }}" class="cc-btn">Archive</a>
+              <a href="{{ $row['action_url'] }}" class="cc-btn">{{ $row['action_label'] ?? 'Archive' }}</a>
               <a href="{{ $row['view_url'] }}" class="cc-btn">View</a>
             </div>
           </td>

@@ -315,10 +315,10 @@ class VendorController extends Controller
     public function clientList(Request $request){
         $vendor = $request->user();
         VendorDemoClients::ensureFor($vendor);
-        $clients = VendorClientsPresenter::forVendor($vendor);
 
         return view('vendor.client_list', [
-            'clients' => $clients,
+            'activeClients' => VendorClientsPresenter::forVendor($vendor, true),
+            'archivedClients' => VendorClientsPresenter::forVendor($vendor, false),
             'page' => 'client_list',
         ]);
     }
@@ -359,6 +359,15 @@ class VendorController extends Controller
             $pairs->save();
         }
         return redirect('/vendor/client/list');
+    }
+
+    public function unarchiveClient($id, $ven_id){
+        $pairs = Pairing::where('vendor_id', $ven_id)->where('active', 0)->where('client_id', $id)->first();
+        if($pairs){
+            $pairs->active = 1;
+            $pairs->save();
+        }
+        return redirect()->route('vendor.client.list');
     }
 
     public function getInquiries(Request $request){

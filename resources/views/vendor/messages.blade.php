@@ -20,6 +20,7 @@
 
 <script>
   window.vmVendorMeta = @json($vmVendorMeta);
+  window.vmOpenConversation = @json($openConversation ?? null);
 </script>
 
 @include('layouts.vendor_navigation')
