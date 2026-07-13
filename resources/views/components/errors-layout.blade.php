@@ -8,24 +8,36 @@
         <title>Wedding Insiders Network</title>
 
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @vite(['resources/css/app.css', 'resources/css/vendor-dashboard.css', 'resources/js/app.js'])
         @include('components.fonts')
     </head>
-    <body class="font-sans antialiased">
+    <body class="vd-page m-0 antialiased overflow-x-hidden">
         @if(Auth::guard('vendor')->check())
-        @include('layouts.vendor_navigation')
+            @include('layouts.vendor_navigation')
+            <main class="relative transition-all duration-200 ease-in-out">
+                @include('layouts.dashboard_topbar', ['role' => 'vendor'])
+                <div class="min-h-[60vh] flex flex-col justify-center items-center">
+                    {{ $slot }}
+                </div>
+                <p class="vd-copyright">&copy; {{ date('Y') }} Wedding Insiders Network.</p>
+            </main>
         @elseif(Auth::guard('web')->check())
-        @include('layouts.navigation')
+            @include('layouts.couple_sidebar')
+            <main class="relative transition-all duration-200 ease-in-out">
+                @include('layouts.dashboard_topbar', ['role' => 'couple'])
+                <div class="min-h-[60vh] flex flex-col justify-center items-center">
+                    {{ $slot }}
+                </div>
+                <p class="vd-copyright">&copy; {{ date('Y') }} Wedding Insiders Network.</p>
+            </main>
         @else
-        @include('layouts.guest_navigation')
-        @endif
-        <div class="min-h-[75vh] flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
-            <div class="w-full mt-6 px-6 py-4 bg-white overflow-hidden">
-                {{ $slot }}
+            @include('layouts.guest_navigation')
+            <div class="min-h-[75vh] flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
+                <div class="w-full mt-6 px-6 py-4 bg-white overflow-hidden">
+                    {{ $slot }}
+                </div>
             </div>
-        </div>
-        {{-- Site footer disabled per client request — uncomment to restore --}}
-        {{-- @include('layouts.footer') --}}
-        <p class="text-center text-xs text-gray-400 pb-4">&copy; {{ date('Y') }} Wedding Insiders Network.</p>
+            <p class="text-center text-xs text-gray-400 pb-4">&copy; {{ date('Y') }} Wedding Insiders Network.</p>
+        @endif
     </body>
 </html>
