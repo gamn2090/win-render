@@ -9,7 +9,6 @@
       $brandCaption = 'Vendor Dashboard';
       $profileEditUrl = url('/vendor/profile');
       $logoutRoute = route('logout.vendor');
-      $isTimelineActive = request()->routeIs('vendor.timeline') || $currentPage === 'planning_tools';
   } else {
       $account = Auth::guard('web')->user();
       $displayName = trim(($account->first_name ?? '') . ' & ' . ($account->fiance_first_name ?? ''));
@@ -109,30 +108,6 @@
         </li>
       </ul>
     </div>
-
-    <div class="dashboard-sidebar__section">
-      <p class="dashboard-sidebar__section-label">VENDOR TOOLS</p>
-      <ul class="dashboard-sidebar__nav">
-        <li>
-          <a href="{{ route('vendor.timeline') }}" class="dashboard-sidebar__link @if($isTimelineActive) dashboard-sidebar__link--active @endif">
-            <span class="dashboard-sidebar__emoji dashboard-sidebar__emoji--timeline" aria-hidden="true">🗓️</span>
-            <span class="dashboard-sidebar__label">Timeline Planner</span>
-          </a>
-        </li>
-      </ul>
-    </div>
-
-    <div class="dashboard-sidebar__section">
-      <p class="dashboard-sidebar__section-label">Couple Tools</p>
-      <ul class="dashboard-sidebar__nav">
-        <li>
-          <a href="{{ url('/vendor/planning-tools') }}" class="dashboard-sidebar__link @if($currentPage === 'planning_tools' && !request()->routeIs('vendor.timeline')) dashboard-sidebar__link--active @endif">
-            <span class="dashboard-sidebar__emoji dashboard-sidebar__emoji--budget" aria-hidden="true">💰</span>
-            <span class="dashboard-sidebar__label">Budget Planner</span>
-          </a>
-        </li>
-      </ul>
-    </div>
   @else
     <div class="dashboard-sidebar__section">
       <p class="dashboard-sidebar__section-label">MAIN</p>
@@ -180,7 +155,7 @@
     </div>
 
     <div class="dashboard-sidebar__section">
-      <p class="dashboard-sidebar__section-label">Couple Tools</p>
+      <p class="dashboard-sidebar__section-label">COUPLE TOOLS</p>
       <ul class="dashboard-sidebar__nav">
         <li>
           <a href="{{ route('couple.timeline') }}" class="{{ $navLinkClasses('couple_timeline') }}">

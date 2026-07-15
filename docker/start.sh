@@ -1,6 +1,9 @@
 #!/bin/sh
 set -e
 
+echo "Linking storage..."
+php artisan storage:link || true
+
 echo "Caching config..."
 php artisan config:cache
 php artisan route:cache

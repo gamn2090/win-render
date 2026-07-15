@@ -14,13 +14,27 @@ class CoupleInvestmentPlannerController extends Controller
 
     public function show(Request $request): View
     {
-        $sourcePath = base_path('proyecto_bodas_material_extra/WIN Wedding Investment Planner 3-19-26.html');
+        $sourcePath = base_path('html_templates/WIN Wedding Investment Planner 3-19-26.html');
         abort_unless(file_exists($sourcePath), 404, 'Investment planner template file not found.');
+
+        if (! $request->boolean('frame')) {
+            return view('tools.embedded_tool_page', [
+                'role' => 'couple',
+                'page' => 'planning_tools',
+                'title' => 'Budget Planner',
+                'iframeSrc' => route('couple.investment_planner', ['frame' => 1]),
+            ]);
+        }
 
         $draft = CoupleInvestmentPlannerDraft::where('user_id', $request->user()->id)->first();
         $draftPayload = $draft?->payload;
 
-        $plannerHtml = WinInvestmentPlannerHtmlPatcher::apply(file_get_contents($sourcePath));
+        $user = $request->user();
+        $partnerOne = trim($user->first_name . ' ' . ($user->last_name ?? ''));
+        $partnerTwo = trim(($user->fiance_first_name ?? '') . ' ' . ($user->fiance_last_name ?? ''));
+        $coupleName = $partnerTwo !== '' ? $partnerOne . ' ♥ ' . $partnerTwo : $partnerOne;
+
+        $plannerHtml = WinInvestmentPlannerHtmlPatcher::apply(file_get_contents($sourcePath), $coupleName);
 
         $runtimeConfig = [
             'csrfToken' => csrf_token(),
@@ -30,7 +44,7 @@ class CoupleInvestmentPlannerController extends Controller
             'clearUrl' => route('couple.investment_planner.draft.clear'),
         ];
 
-        $bridgeScript = '<script>window.__WIN_PLANNER_BRIDGE__ = ' . json_encode($runtimeConfig, JSON_UNESCAPED_SLASHES) . ';(function(){const cfg=window.__WIN_PLANNER_BRIDGE__||{};const key=cfg.storageKey||"win_budget_builder_v99";const saveUrl=cfg.saveUrl;const clearUrl=cfg.clearUrl;const csrf=cfg.csrfToken;const draft=cfg.draftPayload;if(draft&&typeof draft==="string"){try{window.localStorage.setItem(key,draft);}catch(e){}}const nativeGet=window.localStorage.getItem.bind(window.localStorage);const nativeSet=window.localStorage.setItem.bind(window.localStorage);const nativeRemove=window.localStorage.removeItem.bind(window.localStorage);window.localStorage.getItem=function(k){return nativeGet(k)};window.localStorage.setItem=function(k,v){nativeSet(k,v);if(k!==key||!saveUrl){return;}fetch(saveUrl,{method:"POST",headers:{"Content-Type":"application/json","X-CSRF-TOKEN":csrf,"X-Requested-With":"XMLHttpRequest"},credentials:"same-origin",body:JSON.stringify({payload:v})}).catch(function(){});};window.localStorage.removeItem=function(k){nativeRemove(k);if(k!==key||!clearUrl){return;}fetch(clearUrl,{method:"POST",headers:{"Content-Type":"application/json","X-CSRF-TOKEN":csrf,"X-Requested-With":"XMLHttpRequest"},credentials:"same-origin"}).catch(function(){});};})();</script>';
+        $bridgeScript = '<script>window.__WIN_PLANNER_BRIDGE__ = ' . json_encode($runtimeConfig, JSON_UNESCAPED_SLASHES) . ';(function(){const cfg=window.__WIN_PLANNER_BRIDGE__||{};const key=cfg.storageKey||"win_budget_builder_v99";const saveUrl=cfg.saveUrl;const clearUrl=cfg.clearUrl;const csrf=cfg.csrfToken;const draft=cfg.draftPayload;if(draft&&typeof draft==="string"){try{window.localStorage.setItem(key,draft);}catch(e){}}else{try{window.localStorage.removeItem(key);}catch(e){}}const nativeGet=window.localStorage.getItem.bind(window.localStorage);const nativeSet=window.localStorage.setItem.bind(window.localStorage);const nativeRemove=window.localStorage.removeItem.bind(window.localStorage);window.localStorage.getItem=function(k){return nativeGet(k)};window.localStorage.setItem=function(k,v){nativeSet(k,v);if(k!==key||!saveUrl){return;}fetch(saveUrl,{method:"POST",headers:{"Content-Type":"application/json","X-CSRF-TOKEN":csrf,"X-Requested-With":"XMLHttpRequest"},credentials:"same-origin",body:JSON.stringify({payload:v})}).catch(function(){});};window.localStorage.removeItem=function(k){nativeRemove(k);if(k!==key||!clearUrl){return;}fetch(clearUrl,{method:"POST",headers:{"Content-Type":"application/json","X-CSRF-TOKEN":csrf,"X-Requested-With":"XMLHttpRequest"},credentials:"same-origin"}).catch(function(){});};})();</script>';
 
         $plannerHtml = preg_replace('/<script>/', $bridgeScript . '<script>', $plannerHtml, 1);
 

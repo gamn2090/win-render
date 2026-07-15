@@ -1997,6 +1997,27 @@
   pointer-events: none;
 }
 
+/* Embedded planning tools (Timeline Planner, Budget Planner) — the tool
+   itself is a large standalone HTML document with its own CSS/JS, so it's
+   loaded in a same-origin iframe rather than merged into this page's DOM,
+   to avoid class-name collisions (.card, .btn, .layout, etc. are far too
+   generic to risk mixing with this page's own styles). */
+.vd-embedded-tool {
+  margin-top: 24px;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid #eae7f0;
+  background: #fff;
+}
+
+.vd-embedded-tool__frame {
+  display: block;
+  width: 100%;
+  height: 85vh;
+  min-height: 640px;
+  border: none;
+}
+
 /* Page header — gradient banner used by Messages/Inbox pages */
 .vd-page-header {
   margin-left: -30px;

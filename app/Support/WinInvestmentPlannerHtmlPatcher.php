@@ -4,9 +4,10 @@ namespace App\Support;
 
 class WinInvestmentPlannerHtmlPatcher
 {
-    public static function apply(string $html): string
+    public static function apply(string $html, ?string $coupleName = null): string
     {
         $html = str_replace(["\r\n", "\r"], "\n", $html);
+        $html = self::applyHeaderPatch($html, $coupleName);
 
         $replacements = [
             'const amt = Number(b.amount||0);' => 'const amt = parseMoney(b.amount);',
@@ -501,5 +502,98 @@ JS,
         );
 
         return WinPlanningToolEnglishUi::appendInvestmentPlannerOverrides($html);
+    }
+
+    /**
+     * The couple name here was a manually click-to-edit placeholder, and the
+     * "My Profile" link + photo widget next to it duplicated what's already
+     * in the app's own sidebar. Inject the real account name (read-only) and
+     * drop the redundant link/photo — including the JS that made the name
+     * editable and the photo uploadable, since neither DOM target remains.
+     */
+    private static function applyHeaderPatch(string $html, ?string $coupleName): string
+    {
+        $safeName = ($coupleName !== null && $coupleName !== '') ? e($coupleName) : 'Your Names Here';
+
+        $html = str_replace(
+            '<div class="coupleName" id="coupleNameDisplay" title="Click to edit your names">Your Names Here</div>',
+            '<div class="coupleName" id="coupleNameDisplay">' . $safeName . '</div>',
+            $html
+        );
+
+        $html = str_replace(
+            '<div class="headerRight">
+      <a class="myProfileLink" href="https://weddinginsidersnetwork.com" target="_blank" rel="noopener">— My Profile</a>
+      <div class="couplePhoto" id="couplePhotoWrap" title="Add your couple photo">
+        <img id="couplePhotoImg" class="couplePhotoImg" style="display:none" alt="Couple photo"/>
+        <span class="couplePhotoIcon" id="couplePhotoIcon">PHOTO</span>
+        <input type="file" id="couplePhotoInput" accept="image/*" style="display:none"/>
+      </div>
+    </div>',
+            '',
+            $html
+        );
+
+        $html = str_replace(
+            '  // ── Couple photo ─────────────────────────────────────────
+  (function(){
+    const wrap  = document.getElementById("couplePhotoWrap");
+    const img   = document.getElementById("couplePhotoImg");
+    const icon  = document.getElementById("couplePhotoIcon");
+    const input = document.getElementById("couplePhotoInput");
+    const PHOTO_KEY = "win_couple_photo";
+
+    function applyPhoto(dataUrl){
+      img.src = dataUrl;
+      img.style.display = "block";
+      icon.style.display = "none";
+      try{ localStorage.setItem(PHOTO_KEY, dataUrl); }catch(e){}
+    }
+
+    // Restore saved photo on load
+    try{
+      const saved = localStorage.getItem(PHOTO_KEY);
+      if(saved) applyPhoto(saved);
+    }catch(e){}
+
+    wrap.addEventListener("click", ()=>input.click());
+
+    input.addEventListener("change", e=>{
+      const file = e.target.files[0];
+      if(!file) return;
+      const reader = new FileReader();
+      reader.onload = ev => applyPhoto(ev.target.result);
+      reader.readAsDataURL(file);
+    });
+  })();
+
+  // ── Couple name editing ──────────────────────────────────
+  (function(){
+    const el = document.getElementById("coupleNameDisplay"); if(!el) return;
+    const KNAME = "win_couple_name";
+    const saved = localStorage.getItem(KNAME);
+    if(saved) el.textContent = saved;
+    el.addEventListener("click", ()=>{
+      el.contentEditable = "plaintext-only";
+      el.focus();
+      const r = document.createRange(); r.selectNodeContents(el);
+      const s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+    });
+    el.addEventListener("blur", ()=>{
+      el.contentEditable = "false";
+      const name = el.textContent.trim() || "Your Names Here";
+      el.textContent = name;
+      localStorage.setItem(KNAME, name);
+    });
+    el.addEventListener("keydown", e=>{
+      if(e.key==="Enter"){ e.preventDefault(); el.blur(); }
+      if(e.key==="Escape"){ el.textContent = localStorage.getItem(KNAME)||"Your Names Here"; el.blur(); }
+    });
+  })();',
+            '',
+            $html
+        );
+
+        return $html;
     }
 }

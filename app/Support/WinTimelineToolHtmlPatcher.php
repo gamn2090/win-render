@@ -4,9 +4,11 @@ namespace App\Support;
 
 class WinTimelineToolHtmlPatcher
 {
-    public static function apply(string $html): string
+    public static function apply(string $html, ?string $displayName = null): string
     {
         $html = str_replace(["\r\n", "\r"], "\n", $html);
+        $html = self::applyHeaderPatch($html, $displayName);
+        $html = self::applyBlankDefaultStatePatch($html);
 
         $html = str_replace(
             '        opt.textContent = "Add: " + cat',
@@ -699,6 +701,102 @@ JS,
         $html = self::applyDownloadPdfPatch($html);
 
         return WinPlanningToolEnglishUi::finalizeTimeline($html);
+    }
+
+    /**
+     * The couple/vendor name in the header and the "My Profile" link + photo
+     * placeholder next to it were static placeholders from the design
+     * export — the real name/photo already live in the app's own sidebar,
+     * so we inject the actual account name here and drop the redundant
+     * link + photo widget entirely.
+     */
+    private static function applyHeaderPatch(string $html, ?string $displayName): string
+    {
+        $safeName = ($displayName !== null && $displayName !== '') ? e($displayName) : 'Josh and Theresa';
+
+        $html = str_replace(
+            '<a class="coupleNameLink" href="/couples/josh-and-theresa" rel="noreferrer" target="_blank">Josh and Theresa</a>',
+            '<span class="coupleNameLink">' . $safeName . '</span>',
+            $html
+        );
+
+        $html = str_replace(
+            '<div class="headerRight">
+        <!-- TODO (developers): replace href with dynamic couple profile URL -->
+        <a class="btn" href="/couples/josh-and-theresa" id="profileLink" rel="noreferrer" target="_blank">← My Profile</a>
+<div aria-label="Couple profile photo placeholder" class="couplePhoto"><span>Photo</span></div>
+</div>',
+            '',
+            $html
+        );
+
+        if ($displayName !== null && $displayName !== '') {
+            $html = str_replace(
+                '        name: "Josh and Theresa",',
+                '        name: ' . json_encode($displayName) . ',',
+                $html
+            );
+        }
+
+        return $html;
+    }
+
+    /**
+     * The tool's own JS ships a hardcoded demo timeline (fictional couple
+     * "Josh and Theresa", 5 demo vendors, 5 vendor blocks + 3 key events)
+     * as the literal default `state` object — this is not conditional on
+     * whether a saved draft exists, so a brand new user with no draft would
+     * otherwise see this demo wedding instead of a blank timeline. Real
+     * saved data is restored separately via the localStorage bridge script,
+     * so it's safe to always start from empty vendors/blocks here.
+     */
+    private static function applyBlankDefaultStatePatch(string $html): string
+    {
+        $html = str_replace(
+            <<<'JS'
+      vendors: [
+        { id: "v1", name: "Cedar and Pine Photography", category: "Photographer" },
+        { id: "v2", name: "Coastal Catering Co.", category: "Catering" },
+        { id: "v3", name: "Sound Society", category: "DJ" },
+        { id: "v4", name: "Evergreen Florals", category: "Florist" },
+        { id: "v5", name: "Harbor Hair Studio", category: "Hair" }
+      ],
+
+      blocks: [
+        { id: "b1", vendorId: "v5", startMin: 10*60, endMin: 12*60, notes: "", tasks: [
+          { id:"t1", title:"Bride start", atMin: 10*60+15 },
+          { id:"t2", title:"Final touch ups", atMin: 11*60+45 }
+        ]},
+        { id: "b2", vendorId: "v1", startMin: 11*60, endMin: 15*60, notes: "", tasks: [
+          { id:"t3", title:"Details", atMin: 11*60+20 },
+          { id:"t4", title:"Family formals", atMin: 14*60+40 }
+        ]},
+        { id: "b3", vendorId: "v4", startMin: 12*60, endMin: 14*60, notes: "", tasks: [
+          { id:"t5", title:"Install ceremony florals", atMin: 12*60+20 },
+          { id:"t6", title:"Reception centerpieces", atMin: 13*60+10 }
+        ]},
+        { id: "b4", vendorId: "v2", startMin: 14*60, endMin: 18*60, notes: "", tasks: [
+          { id:"t7", title:"Serve cocktail hour", atMin: 16*60 },
+          { id:"t8", title:"Dinner service start", atMin: 17*60+15 }
+        ]},
+        { id: "b5", vendorId: "v3", startMin: 15*60, endMin: 22*60, notes: "", tasks: [
+          { id:"t9", title:"Sound check", atMin: 15*60+15 },
+          { id:"t10", title:"Dance floor open", atMin: 19*60+30 }
+        ]},
+        { id: "k1", vendorId: KEY_VENDOR_ID, icon:"💍", eventName:"Ceremony", startMin: 16*60+30, endMin: 17*60, notes:"", tasks:[] },
+        { id: "k2", vendorId: KEY_VENDOR_ID, icon:"🎤", eventName:"Speeches", startMin: 18*60+15, endMin: 18*60+35, notes:"", tasks:[] },
+        { id: "k3", vendorId: KEY_VENDOR_ID, icon:"🍰", eventName:"Cake cutting", startMin: 19*60+45, endMin: 20*60, notes:"", tasks:[] }
+      ],
+JS,
+            <<<'JS'
+      vendors: [],
+
+      blocks: [],
+JS,
+            $html
+        );
+
+        return $html;
     }
 
     private static function applyDownloadPdfPatch(string $html): string

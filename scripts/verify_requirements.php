@@ -3,10 +3,10 @@
 require __DIR__ . '/../vendor/autoload.php';
 
 $planner = App\Support\WinInvestmentPlannerHtmlPatcher::apply(file_get_contents(
-    dirname(__DIR__) . '/proyecto_bodas_material_extra/WIN Wedding Investment Planner 3-19-26.html'
+    dirname(__DIR__) . '/html_templates/WIN Wedding Investment Planner 3-19-26.html'
 ));
 $timeline = App\Support\WinTimelineToolHtmlPatcher::apply(file_get_contents(
-    dirname(__DIR__) . '/proyecto_bodas_material_extra/WIN Timeline Tool 3-18-26.html'
+    dirname(__DIR__) . '/html_templates/WIN Timeline Tool 3-18-26.html'
 ));
 
 $checks = [
