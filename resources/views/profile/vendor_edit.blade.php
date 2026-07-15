@@ -322,51 +322,45 @@
       <div class="flex items-center justify-center min-h-screen">
         <!-- Modal overlay -->
         <div class="fixed inset-0 bg-black opacity-25 z-10"></div>
-    
+
         <!-- Modal content -->
-        <div class="bg-white rounded-lg p-8 mx-4 md:max-w-md w-full text-left z-20">
-          <div class="flex justify-between items-center mb-4">
-            <h1 class="text-2xl font-bold">Image Uploader</h1>
-            <button type="button" id="closeModalButton" class="closeModalButton text-gray-500 hover:text-gray-700">
-              <svg class="h-6 w-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M11.414 10l4.293-4.293a1 1 0 1 0-1.414-1.414L10 8.586l-4.293-4.293a1 1 0 0 0-1.414 1.414L8.586 10l-4.293 4.293a1 1 0 1 0 1.414 1.414L10 11.414l4.293 4.293a1 1 0 1 0 1.414-1.414L11.414 10z" clip-rule="evenodd"/>
-              </svg>
-            </button>
+        <div class="piu-modal z-20">
+          <button type="button" id="closeModalButton" class="closeModalButton piu-close" aria-label="Close">
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+              <path d="M5 5l10 10M15 5L5 15" />
+            </svg>
+          </button>
+
+          <div class="piu-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5">
+              <rect x="6" y="6" width="36" height="36" rx="9" />
+              <circle cx="18" cy="18" r="3.5" />
+              <path d="M42 31l-10.5-10.5-9 9-5-5L6 36" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
           </div>
-          <div class="mt-2 sm:mt-auto sm:mb-2 flex justify-center sm:justify-start gap-2">
-            <button id="uploadPortfolioImageButton" type="button"
-              class="py-2 px-3 inline-flex items-center gap-x-2 text-sm text-win-purple font-medium rounded-lg border border-gray-200 bg-white shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">
-              <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          <h1 class="piu-title" id="modal-title">Image Uploader</h1>
+
+          <div class="piu-upload-row">
+            <button id="uploadPortfolioImageButton" type="button" class="piu-upload-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                 <polyline points="17 8 12 3 7 8" />
                 <line x1="12" x2="12" y1="3" y2="15" />
               </svg>
-              Upload Picture <i id="imageUploadSpinner" class="fas fa-circle-notch animate-spin text-lg hidden"></i>
+              Upload Pictures <i id="imageUploadSpinner" class="fas fa-circle-notch animate-spin text-lg hidden"></i>
             </button>
             <input id="portfolioImageUpload" type="file" accept="image/*" hidden multiple/>
           </div>
-    
+
           <!-- Image display and sorting section -->
-          <h3 class="text-xl font-bold mb-2">Uploaded Images:</h3>
-          <div id="imageContainer" class="grid grid-cols-3 gap-4">
-            @foreach($user->profile->portfolioImages() as $image)
-            <div id="rm{{ str_replace('.', '', $image) }}" class="group relative block rounded-xl overflow-hidden">
-              <div class="overflow-hidden">
-                <img class="w-32 md:w-56 h-auto rounded-xl group-hover:scale-105 transition-transform duration-500 ease-in-out rounded-xl w-full" src="{{asset('/storage/images/'.$image)}}" alt="Portfolio Image">
-              </div>
-              <div class="absolute top-0 end-0 p-1">
-                <button type="button" value="{{ $image }}" class="rm-image font-semibold text-red rounded-lg bg-white p-1 px-2">
-                  X
-                </button>
-              </div>
-            </div>
-            @endforeach
+          <h3 class="piu-label">Upload Images:</h3>
+          <div id="imageContainer" class="piu-grid"></div>
+
+          <div class="piu-actions">
+            <button type="button" class="closeModalButton piu-btn piu-btn--cancel">Cancel</button>
+            <button type="button" class="closeModalButton piu-btn piu-btn--save">Save Changes</button>
           </div>
-            <button type="button" class="closeModalButton rounded-lg bg-win-purple font-semibold text-white px-4 py-1 mt-4 text-white">
-              Save Changes
-            </button>
         </div>
       </div>
     </div>
@@ -487,31 +481,6 @@
 
     </script>
     <script>
-      $(document).on('click','.rm-image', (el) => {
-        console.log("removed image: " + $(el.target).val());
-        let userData = {
-          "image_name": $(el.target).val()
-        }
-        $.ajax({
-            type: "POST",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            url: "/vendor/remove/portfolio",
-            data: userData,
-            success: function (data) {
-              Swal.fire({
-                title: 'Success!',
-                text: `You have removed this image from your portfolio.`,
-                icon: 'success',
-                confirmButtonText: 'Continue',
-                confirmButtonColor: '#6432C8'
-              });
-              console.log(('#rm' + $(el.target).val()).replaceAll(".", ""));
-              $(('#rm' + $(el.target).val()).replaceAll(".", "")).remove();
-            }
-          });
-      });
       $("#uploadImageButton").on("click", () => {
         $("#imageUpload").trigger("click");
       });
@@ -572,13 +541,55 @@
       }
     </script>
     <script>
+      let portfolioImages = @json($user->profile->portfolioImages());
+      const portfolioCsrfToken = $('meta[name="csrf-token"]').attr('content');
+
+      function renderPortfolioGrid() {
+        const container = document.getElementById('imageContainer');
+        container.innerHTML = '';
+        portfolioImages.forEach((im) => {
+          const item = document.createElement('div');
+          item.id = 'rm' + im.replaceAll('.', '');
+          item.className = 'piu-item';
+          item.innerHTML = `
+            <img class="piu-item__img" src="/storage/images/${im}" alt="Portfolio Image">
+            <button type="button" value="${im}" class="rm-image piu-item__remove" aria-label="Remove image">&times;</button>
+          `;
+          container.appendChild(item);
+        });
+      }
+
+      renderPortfolioGrid();
+
+      $(document).on('click', '.rm-image', (el) => {
+        const imageName = $(el.target).val();
+        $.ajax({
+            type: "POST",
+            headers: {
+                'X-CSRF-TOKEN': portfolioCsrfToken
+            },
+            url: "/vendor/remove/portfolio",
+            data: { image_name: imageName },
+            success: function (data) {
+              Swal.fire({
+                title: 'Success!',
+                text: `You have removed this image from your portfolio.`,
+                icon: 'success',
+                confirmButtonText: 'Continue',
+                confirmButtonColor: '#6432C8'
+              });
+              portfolioImages = portfolioImages.filter((im) => im !== imageName);
+              renderPortfolioGrid();
+            }
+          });
+      });
+
       $("#uploadPortfolioImageButton").on("click", () => {
         $("#portfolioImageUpload").trigger("click");
       });
       const openModalButton = document.getElementById('openModalButton');
       const imageModal = document.getElementById('imageModal');
       const imageUpload = document.getElementById('portfolioImageUpload');
-      const imageContainer = document.getElementById('imageContainer');
 
       openModalButton.addEventListener('click', () => {
         imageModal.classList.remove('hidden');
@@ -641,7 +652,7 @@
             $.ajax({
                 type: "POST",
                 headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    'X-CSRF-TOKEN': portfolioCsrfToken
                 },
                 url: "/vendor/upload/portfolio",
                 enctype: 'multipart/form-data',
@@ -649,7 +660,6 @@
                 data: userData,
                 processData: false,
                 success: function (data) {
-                  
                   Swal.fire({
                     title: 'Success!',
                     text: `You have uploaded ${data.length} image(s) to your portfolio.`,
@@ -658,20 +668,8 @@
                     confirmButtonColor: '#6432C8'
                   });
                   $("#imageUploadSpinner").css("display", "none");
-                  data.forEach((im) => {
-                  $('#imageContainer').append(`
-                    <div id="rm` + im.replaceAll(".", "") + `" class="group relative block rounded-xl overflow-hidden">
-                      <div class="overflow-hidden">
-                        <img class="w-32 md:w-56 h-auto rounded-xl group-hover:scale-105 transition-transform duration-500 ease-in-out rounded-xl w-full" src="` + '/storage/images/' + im + `" alt="Portfolio Image">
-                      </div>
-                      <div class="absolute top-0 end-0 p-1">
-                        <button type="button" value="` + im + `" class="rm-image font-semibold text-red rounded-lg bg-white p-1 px-2">
-                          X
-                        </button>
-                      </div>
-                    </div>
-                  `);
-                  });
+                  portfolioImages = portfolioImages.concat(data);
+                  renderPortfolioGrid();
                 }
               });
             });

@@ -25,13 +25,7 @@
           </td>
           <td class="cc-table__cell">
             <div class="cc-person">
-              <img
-                class="cc-person__avatar"
-                src="{{ $row['avatar'] }}"
-                alt=""
-                width="48"
-                height="48"
-              />
+              <x-avatar :model="$row['model']" class="cc-person__avatar" />
               <span class="cc-person__name">
                 {{ $row['first_name'] }}
                 @if(!empty($row['fiance_name']))

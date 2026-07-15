@@ -1,6 +1,6 @@
 <div>
     <div class="px-4 pb-8 text-center">
-        <img alt="..." src="{{asset('/storage/images/'. $vendor->image)}}" class="rounded-full h-auto align-middle border-none w-16 md:w-32 mx-auto relative z-10">
+        <x-avatar :model="$vendor" class="rounded-full border-none w-16 h-16 md:w-32 md:h-32 mx-auto relative z-10 endorsement-modal-avatar" />
         <p class="text-center mb-2">What do you like about working with:</p>
         <p class="subheading text-center mb-4">{{ $vendor->business_name }}</p>
         @php($endorsements = Auth::guard('vendor')->user()->endorsementsFor($vendor)->get())

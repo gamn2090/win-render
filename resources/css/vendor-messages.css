@@ -1,7 +1,7 @@
 /* Vendor Messages — messages.png */
 .vm-page {
   font-family: "Poppins", sans-serif;
-  background: #f3f1f8;
+  background: linear-gradient(0deg, #F6F4FA 0%, #F6F4FA 100%), #FFF;
   min-height: 100vh;
   overflow-x: hidden;
 }
@@ -216,6 +216,7 @@
   object-fit: cover;
   flex-shrink: 0;
   background: #eae7f0;
+  font-size: 16px;
 }
 
 .vm-person__text {
@@ -387,6 +388,18 @@
   margin: 0 auto 18px;
   display: block;
   background: #eae7f0;
+  font-size: 44px;
+}
+
+.vm-message-view__avatar.win-avatar-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.vm-message-view__avatar[hidden] {
+  display: none;
 }
 
 .vm-message-view__names {

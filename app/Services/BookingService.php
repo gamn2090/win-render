@@ -45,7 +45,7 @@ class BookingService {
         $conversation = $client->directMessageWith($vendor);
         $message = Chat::message('Consultation request')
             ->type('consultation-request')
-            ->data(['first_name' => $client->first_name, 'fiance_first_name' => $client->fiance_first_name, 'meeting_date' => $meetingDate])
+            ->data(['first_name' => $client->first_name, 'fiance_first_name' => $client->fiance_first_name, 'meeting_date' => $meetingDate, 'meeting_uuid' => $meeting->uuid])
             ->from($client)
             ->to($conversation)
             ->send();

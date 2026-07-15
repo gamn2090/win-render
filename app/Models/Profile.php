@@ -53,6 +53,18 @@ class Profile extends Model
         return;
     }
 
+    public function setCoverImage($img){
+        $portfolioImages = $this->portfolioImages();
+        if (($key = array_search($img, $portfolioImages)) === false) {
+            return;
+        }
+        array_splice($portfolioImages, $key, 1);
+        array_unshift($portfolioImages, $img);
+        $this->portfolio_images = json_encode($portfolioImages);
+        $this->save();
+        return;
+    }
+
     public function getLink($name){
         switch ($name) {
             case 'facebook':

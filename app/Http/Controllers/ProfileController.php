@@ -263,7 +263,9 @@ class ProfileController extends Controller
         $request->user()->questions = $answers;
         $request->user()->save();
 
-        return Redirect::route('client.my_profile')->with('status', 'profile-updated');
+        return Redirect::route('client.my_profile')
+            ->with('status', 'profile-updated')
+            ->with('toast', ['message' => 'Changes saved successfully', 'type' => 'success']);
     }
 
     //update client's our wedding day notes
@@ -391,6 +393,16 @@ class ProfileController extends Controller
         }
         $request->user()->profile->removeImage($image_name);
         return 200;
+    }
+
+    public function setPortfolioCoverImage(Request $request){
+        $image_name = $request->image_name;
+        $user = $request->user();
+        if(!$user){
+            return 'unauthenticated';
+        }
+        $request->user()->profile->setCoverImage($image_name);
+        return ["status" => true];
     }
 
     public function findGooglePlace(Request $request){

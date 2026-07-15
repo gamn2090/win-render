@@ -2,6 +2,43 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --Gradient: linear-gradient(111deg, #F0EBF9 0%, #FEF0E6 100%);
+}
+
+.win-cover-placeholder {
+    background: var(--Gradient, linear-gradient(111deg, #F0EBF9 0%, #FEF0E6 100%));
+}
+
+/* Initials fallback for profile pictures — used by <x-avatar> everywhere in
+   the app (kept here, not in a page-specific bundle, since some legacy
+   pages only load app.css). Each avatar context sets its own font-size
+   since the circle size comes from that context's own class. */
+.win-avatar-fallback {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+.win-avatar-img {
+    object-fit: cover;
+}
+
+.pc-client-avatar.win-avatar-fallback {
+    font-size: 40px;
+}
+
+@media (min-width: 1024px) {
+    .pc-client-avatar.win-avatar-fallback {
+        font-size: 72px;
+    }
+}
+
 /* width */
 ::-webkit-scrollbar {
     width: 10px;

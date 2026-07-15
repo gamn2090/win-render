@@ -48,7 +48,7 @@ integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="ano
       <div class="hs-dropdown [--strategy:static] md:[--strategy:fixed] [--adaptive:none] md:[--trigger:hover] md:py-1">
         <button id="profile-hover" type="button" class="flex items-center w-full text-gray-500 hover:text-gray-400 font-medium">
           <div class="bg-grey-100 size-8 lg:size-14 rounded-full">
-            <img class="inline-block h-full w-full rounded-full object-cover" src="{{ \App\Support\ProfileImageStorage::url(Auth::guard('web')->user()->image) }}" alt="Profile Picture">
+            <x-avatar :model="Auth::guard('web')->user()" class="inline-block h-full w-full rounded-full object-cover win-nav-avatar" />
           </div>
           <svg class="ms-2 size-4 text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
         </button>

@@ -81,7 +81,7 @@
                       <td class="size-px whitespace-nowrap align-top">
                         <a class="block p-6">
                           <div class="flex items-center gap-x-3">
-                            <img class="inline-block size-[38px] rounded-full" src="{{asset('/storage/images/'. $participant->messageable->image)}}" alt="Image Description">
+                            <x-avatar :model="$participant->messageable" class="inline-flex size-[38px] rounded-full pi-inquiry-avatar" />
                             <div class="grow">
                               <span class="block text-sm text-gray-500">{{ $participant->messageable->first_name }}</span>
                             </div>

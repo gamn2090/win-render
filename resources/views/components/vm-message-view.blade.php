@@ -12,7 +12,14 @@
         alt=""
         width="120"
         height="120"
+        hidden
       />
+      <span
+        id="vm-view-avatar-fallback"
+        class="vm-message-view__avatar win-avatar-fallback"
+        aria-hidden="true"
+        hidden
+      ></span>
 
       <h2 id="vm-view-names" class="vm-message-view__names">
         <span id="vm-view-partner-one"></span>

@@ -1,16 +1,22 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const listEl = document.getElementById('vm-messages-list');
-  const viewEl = document.getElementById('vm-message-view');
-  const messagesEl = document.getElementById('vm-view-messages');
-  const composerEl = document.getElementById('vm-view-composer');
-  const inputEl = document.getElementById('vm-view-input');
-  const backBtn = document.getElementById('vm-view-back');
-  const vendorMeta = window.vmVendorMeta || { initials: 'ME', first_name: '' };
+  const modalEl = document.getElementById('win-chat-modal');
+  if (!modalEl) {
+    return;
+  }
 
-  let activeConvoId = null;
-  let activeMeta = null;
+  const messagesEl = document.getElementById('win-chat-modal-messages');
+  const composerEl = document.getElementById('win-chat-modal-composer');
+  const inputEl = document.getElementById('win-chat-modal-input');
+  const closeBtn = document.getElementById('win-chat-modal-close');
+  const nameEl = document.getElementById('win-chat-modal-title');
+  const avatarEl = document.getElementById('win-chat-modal-avatar');
+  const myMeta = window.winChatModalMeta || { initials: 'ME' };
 
   const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
+
+  let activeConvoId = null;
+  let activeRole = null;
+  let activeOtherInitials = '?';
 
   function escapeHtml(value) {
     return String(value ?? '')
@@ -21,27 +27,12 @@ document.addEventListener('DOMContentLoaded', () => {
       .replace(/'/g, '&#39;');
   }
 
-  function parseMeta(raw) {
-    if (!raw) {
-      return null;
-    }
-    try {
-      return typeof raw === 'string' ? JSON.parse(raw) : raw;
-    } catch {
-      return null;
-    }
-  }
-
   function formatTime(iso) {
     const date = new Date(iso);
     if (Number.isNaN(date.getTime())) {
       return '';
     }
-    return date.toLocaleTimeString('en-US', {
-      hour: 'numeric',
-      minute: '2-digit',
-      hour12: true,
-    });
+    return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
   }
 
   function formatDayLabel(iso) {
@@ -54,7 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
       date.getFullYear() === today.getFullYear() &&
       date.getMonth() === today.getMonth() &&
       date.getDate() === today.getDate();
-
     if (sameDay) {
       return `Today, ${date.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}`;
     }
@@ -65,16 +55,11 @@ document.addEventListener('DOMContentLoaded', () => {
       date.getFullYear() === yesterday.getFullYear() &&
       date.getMonth() === yesterday.getMonth() &&
       date.getDate() === yesterday.getDate();
-
     if (isYesterday) {
       return `Yesterday, ${date.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}`;
     }
 
-    return date.toLocaleDateString('en-US', {
-      weekday: 'long',
-      month: 'long',
-      day: 'numeric',
-    });
+    return date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
   }
 
   function formatMeetingDate(value) {
@@ -95,86 +80,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  function populateSidebar(meta) {
-    const avatar = document.getElementById('vm-view-avatar');
-    const avatarFallback = document.getElementById('vm-view-avatar-fallback');
-    const partnerOne = document.getElementById('vm-view-partner-one');
-    const partnerTwo = document.getElementById('vm-view-partner-two');
-    const heart = document.getElementById('vm-view-heart');
-    const infoHeading = document.getElementById('vm-view-info-heading');
-    const infoPrimary = document.getElementById('vm-view-info-primary');
-    const infoPrimaryRow = document.getElementById('vm-view-info-primary-row');
-    const infoSecondary = document.getElementById('vm-view-info-secondary');
-    const moreOne = document.getElementById('vm-view-more-one');
-    const moreTwo = document.getElementById('vm-view-more-two');
-    const moreTwoRow = document.getElementById('vm-view-more-two-row');
-    const profileLink = document.getElementById('vm-view-profile-link');
+  function renderBubble(message) {
+    const isSender = message.is_sender == 1;
+    const rowClass = isSender ? 'vd-chat__row vd-chat__row--mine' : 'vd-chat__row vd-chat__row--vendor';
+    const initials = isSender ? (myMeta.initials || 'ME') : activeOtherInitials;
+    const time = formatTime(message.created_at);
+    const bubbleHtml = `<div class="vd-chat__bubble">${escapeHtml(message.body || '')}</div>`;
+    const metaHtml = `<div class="vd-chat__meta">
+        <span class="vd-chat__avatar-sm">${escapeHtml(initials)}</span>
+        <span class="vd-chat__time">${escapeHtml(time)}</span>
+      </div>`;
 
-    if (avatar && avatarFallback) {
-      const label = `${meta.partner_one || ''} ${meta.partner_two || ''}`.trim();
-      if (meta.avatar_has_photo) {
-        avatar.src = meta.avatar || '';
-        avatar.alt = label;
-        avatar.hidden = false;
-        avatarFallback.hidden = true;
-      } else {
-        avatar.hidden = true;
-        avatarFallback.hidden = false;
-        avatarFallback.textContent = meta.avatar_initials || '?';
-        const colors = meta.avatar_colors || ['#6432C8', '#FFFFFF'];
-        avatarFallback.style.background = colors[0];
-        avatarFallback.style.color = colors[1];
-      }
-    }
-
-    if (partnerOne) {
-      partnerOne.textContent = meta.partner_one || '';
-    }
-    if (partnerTwo) {
-      partnerTwo.textContent = meta.partner_two || '';
-    }
-    if (heart) {
-      heart.hidden = meta.role !== 'client' || !meta.partner_two;
-    }
-    if (infoHeading) {
-      infoHeading.textContent = meta.info_heading || 'Wedding Information:';
-    }
-    if (infoPrimary) {
-      infoPrimary.textContent = meta.info_primary || '';
-    }
-    if (infoPrimaryRow) {
-      infoPrimaryRow.hidden = !meta.info_primary;
-    }
-    if (infoSecondary) {
-      infoSecondary.textContent = meta.info_secondary || '';
-    }
-    if (moreOne) {
-      moreOne.textContent = meta.partner_one_full || meta.partner_one || '';
-    }
-    if (moreTwo) {
-      moreTwo.textContent = meta.partner_two_full || meta.partner_two || '';
-    }
-    if (moreTwoRow) {
-      moreTwoRow.hidden = !(meta.partner_two_full || meta.partner_two);
-    }
-    if (profileLink) {
-      if (meta.profile_url) {
-        profileLink.href = meta.profile_url;
-        profileLink.textContent = meta.profile_label || 'Visit Profile';
-        profileLink.hidden = false;
-      } else {
-        profileLink.hidden = true;
-      }
-    }
-    if (inputEl) {
-      inputEl.placeholder = meta.composer_placeholder || 'Write a message…';
-    }
+    return `<div class="${rowClass}">${bubbleHtml}${metaHtml}</div>`;
   }
 
   function renderSystemMessage(message, resolvedMeetings) {
     if (message.type === 'inquiry' && message.data) {
       const data = message.data;
-      return `<div class="vm-message-view__system">
+      return `<div class="vd-chat__system">
         <strong>${escapeHtml(data.first_name)} ♥ ${escapeHtml(data.fiance_first_name)}</strong>
         are interested in your services for their wedding on:
         <strong>${escapeHtml(data.wedding_date || '')}</strong>
@@ -184,13 +107,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (message.type === 'consultation-request' && message.data) {
       const data = message.data;
       const resolution = data.meeting_uuid ? resolvedMeetings?.[data.meeting_uuid] : undefined;
+      const canAnswer = activeRole === 'vendor';
 
       let actionsHtml;
       if (resolution === true) {
         actionsHtml = '<div class="vd-chat__consult-status vd-chat__consult-status--accepted">You accepted this consultation.</div>';
       } else if (resolution === false) {
         actionsHtml = '<div class="vd-chat__consult-status vd-chat__consult-status--declined">You declined this consultation.</div>';
-      } else if (data.meeting_uuid) {
+      } else if (canAnswer && data.meeting_uuid) {
         actionsHtml = `<div class="vd-chat__consult-actions">
           <button type="button" class="vd-chat__consult-btn vd-chat__consult-btn--reject" data-consult-answer="-1" data-consult-meeting="${escapeHtml(data.meeting_uuid)}">Reject</button>
           <button type="button" class="vd-chat__consult-btn vd-chat__consult-btn--accept" data-consult-answer="1" data-consult-meeting="${escapeHtml(data.meeting_uuid)}">Accept</button>
@@ -201,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const when = formatMeetingDate(data.meeting_date);
 
-      return `<div class="vm-message-view__system">
+      return `<div class="vd-chat__system">
         The client <strong>${escapeHtml(data.first_name)} ♥ ${escapeHtml(data.fiance_first_name)}</strong> is requesting a consultation${when ? ` on <strong>${escapeHtml(when)}</strong>` : ''}, would you accept?
         ${actionsHtml}
       </div>`;
@@ -210,8 +134,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (message.type === 'consultation-response' && message.data) {
       const data = message.data;
       const statusClass = data.accepted ? 'vd-chat__consult-status--accepted' : 'vd-chat__consult-status--declined';
-      const statusText = data.accepted ? 'You accepted this consultation.' : 'You declined this consultation.';
-      return `<div class="vm-message-view__system">
+      const isVendorView = activeRole === 'vendor';
+      const statusText = data.accepted
+        ? (isVendorView ? 'You accepted this consultation.' : 'The vendor accepted your consultation request! 🎉')
+        : (isVendorView ? 'You declined this consultation.' : 'The vendor declined your consultation request.');
+      return `<div class="vd-chat__system">
         <div class="vd-chat__consult-status ${statusClass}">${statusText}</div>
       </div>`;
     }
@@ -221,35 +148,21 @@ document.addEventListener('DOMContentLoaded', () => {
       const url = message.data?.download_url || '#';
       const isSender = message.is_sender == 1;
       const rowClass = isSender ? 'vd-chat__row vd-chat__row--mine' : 'vd-chat__row vd-chat__row--vendor';
-      const initials = isSender ? vendorMeta.initials : (activeMeta?.other_initials || '?');
+      const initials = isSender ? (myMeta.initials || 'ME') : activeOtherInitials;
       const time = formatTime(message.created_at);
-      const attachBubbleHtml = `<div class="vd-chat__bubble">
+      const bubbleHtml = `<div class="vd-chat__bubble">
           ${message.body ? `<p>${escapeHtml(message.body)}</p>` : ''}
           <a href="${escapeHtml(url)}" target="_blank" rel="noopener" style="color:inherit;font-weight:600;">${escapeHtml(name)}</a>
         </div>`;
-      const attachMetaHtml = `<div class="vd-chat__meta">
+      const metaHtml = `<div class="vd-chat__meta">
           <span class="vd-chat__avatar-sm">${escapeHtml(initials)}</span>
           <span class="vd-chat__time">${escapeHtml(time)}</span>
         </div>`;
 
-      return `<div class="${rowClass}">${attachBubbleHtml}${attachMetaHtml}</div>`;
+      return `<div class="${rowClass}">${bubbleHtml}${metaHtml}</div>`;
     }
 
     return '';
-  }
-
-  function renderTextBubble(message) {
-    const isSender = message.is_sender == 1;
-    const rowClass = isSender ? 'vd-chat__row vd-chat__row--mine' : 'vd-chat__row vd-chat__row--vendor';
-    const initials = isSender ? vendorMeta.initials : (activeMeta?.other_initials || '?');
-    const time = formatTime(message.created_at);
-    const bubbleHtml = `<div class="vd-chat__bubble">${escapeHtml(message.body || '')}</div>`;
-    const metaHtml = `<div class="vd-chat__meta">
-        <span class="vd-chat__avatar-sm">${escapeHtml(initials)}</span>
-        <span class="vd-chat__time">${escapeHtml(time)}</span>
-      </div>`;
-
-    return `<div class="${rowClass}">${bubbleHtml}${metaHtml}</div>`;
   }
 
   function renderMessages(messages) {
@@ -279,8 +192,8 @@ document.addEventListener('DOMContentLoaded', () => {
         lastDay = day;
       }
 
-      if (message.type === 'text') {
-        html += renderTextBubble(message);
+      if (message.type === 'text' || !message.type) {
+        html += renderBubble(message);
       } else {
         html += renderSystemMessage(message, resolvedMeetings);
       }
@@ -315,8 +228,8 @@ document.addEventListener('DOMContentLoaded', () => {
         throw new Error('Failed to answer consultation');
       }
 
-      if (activeConvoId) {
-        await loadMessages(activeConvoId);
+      if (activeConvoId && activeRole) {
+        await loadMessages(activeConvoId, activeRole);
       }
     } catch {
       actionsRow?.querySelectorAll('button').forEach((btn) => { btn.disabled = false; });
@@ -335,15 +248,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  async function loadMessages(convoId) {
+  async function loadMessages(convoId, role) {
     if (!messagesEl) {
       return;
     }
 
     messagesEl.innerHTML = '<p class="vd-chat__empty">Loading messages…</p>';
 
+    const base = role === 'vendor' ? '/vendor/messages/' : '/client/messages/';
+
     try {
-      const response = await fetch(`/vendor/messages/${convoId}`, {
+      const response = await fetch(`${base}${convoId}`, {
         headers: { Accept: 'application/json' },
         credentials: 'same-origin',
       });
@@ -360,77 +275,81 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function openView(convoId, meta) {
-    if (!viewEl || !listEl) {
+  function openModal(trigger) {
+    const convoId = trigger.getAttribute('data-chat-modal-convo');
+    const role = trigger.getAttribute('data-chat-modal-role');
+    const name = trigger.getAttribute('data-chat-modal-name') || '';
+    const otherInitials = trigger.getAttribute('data-chat-modal-other-initials') || '?';
+    const avatarPhoto = trigger.getAttribute('data-chat-modal-avatar-photo') || '';
+    const avatarBg = trigger.getAttribute('data-chat-modal-avatar-bg') || '#6432C8';
+    const avatarFg = trigger.getAttribute('data-chat-modal-avatar-fg') || '#FFFFFF';
+
+    if (!convoId || !role) {
       return;
     }
 
     activeConvoId = convoId;
-    activeMeta = meta;
-    populateSidebar(meta);
-    listEl.hidden = true;
-    viewEl.hidden = false;
-    viewEl.setAttribute('aria-hidden', 'false');
-    loadMessages(convoId);
+    activeRole = role;
+    activeOtherInitials = otherInitials;
+
+    if (nameEl) {
+      nameEl.textContent = name;
+    }
+
+    if (avatarEl) {
+      if (avatarPhoto) {
+        avatarEl.innerHTML = `<img src="${escapeHtml(avatarPhoto)}" alt="" class="win-avatar-img" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" />`;
+      } else {
+        avatarEl.innerHTML = '';
+        avatarEl.textContent = otherInitials;
+        avatarEl.classList.add('win-avatar-fallback');
+        avatarEl.style.background = avatarBg;
+        avatarEl.style.color = avatarFg;
+        avatarEl.style.display = 'flex';
+        avatarEl.style.alignItems = 'center';
+        avatarEl.style.justifyContent = 'center';
+      }
+    }
+
+    modalEl.classList.add('is-open');
+    loadMessages(convoId, role);
     inputEl?.focus();
   }
 
-  function closeView() {
-    if (!viewEl || !listEl) {
-      return;
-    }
-
+  function closeModal() {
     activeConvoId = null;
-    activeMeta = null;
-    viewEl.hidden = true;
-    viewEl.setAttribute('aria-hidden', 'true');
-    listEl.hidden = false;
+    activeRole = null;
+    modalEl.classList.remove('is-open');
     if (inputEl) {
       inputEl.value = '';
     }
   }
 
-  function openFromRow(row) {
-    const convoId = row.getAttribute('data-vm-convo');
-    const meta = parseMeta(row.getAttribute('data-vm-meta'));
-    if (convoId && meta) {
-      openView(convoId, meta);
-    }
-  }
-
-  document.querySelectorAll('[data-vm-view-btn]').forEach((btn) => {
-    btn.addEventListener('click', (event) => {
+  document.querySelectorAll('[data-chat-modal-trigger]').forEach((trigger) => {
+    trigger.addEventListener('click', (event) => {
       event.preventDefault();
       event.stopPropagation();
-      const convoId = btn.getAttribute('data-vm-convo');
-      const meta = parseMeta(btn.getAttribute('data-vm-meta'));
-      if (convoId && meta) {
-        openView(convoId, meta);
-      }
+      openModal(trigger);
     });
   });
 
-  document.querySelectorAll('.vm-table__row[data-vm-convo]').forEach((row) => {
-    row.addEventListener('click', (event) => {
-      if (event.target.closest('button, a')) {
-        return;
-      }
-      openFromRow(row);
-    });
+  closeBtn?.addEventListener('click', closeModal);
 
-    row.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        openFromRow(row);
-      }
-    });
+  modalEl.addEventListener('click', (event) => {
+    if (event.target === modalEl) {
+      closeModal();
+    }
   });
 
-  backBtn?.addEventListener('click', closeView);
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && modalEl.classList.contains('is-open')) {
+      closeModal();
+    }
+  });
 
   composerEl?.addEventListener('submit', async (event) => {
     event.preventDefault();
-    if (!activeConvoId || !inputEl) {
+    if (!activeConvoId || !activeRole || !inputEl) {
       return;
     }
 
@@ -444,13 +363,15 @@ document.addEventListener('DOMContentLoaded', () => {
       sendBtn.disabled = true;
     }
 
+    const endpoint = activeRole === 'vendor' ? '/vendor/send/message' : '/client/send/message';
+
     try {
       const body = new URLSearchParams({
         message,
         conversation: activeConvoId,
       });
 
-      const response = await fetch('/vendor/send/message', {
+      const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -466,7 +387,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       inputEl.value = '';
-      await loadMessages(activeConvoId);
+      await loadMessages(activeConvoId, activeRole);
     } catch {
       inputEl.focus();
     } finally {
@@ -475,9 +396,4 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   });
-
-  const openConversation = window.vmOpenConversation;
-  if (openConversation && openConversation.conversation_id && openConversation.view_meta) {
-    openView(openConversation.conversation_id, openConversation.view_meta);
-  }
 });

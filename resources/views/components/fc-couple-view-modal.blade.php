@@ -75,11 +75,7 @@
       </button>
 
       <div class="fc-view-modal__body">
-        <img
-          class="fc-view-modal__avatar"
-          src="{{ asset('/storage/images/'.$couple->image) }}"
-          alt="{{ $couple->first_name }} and {{ $couple->fiance_first_name }}"
-        />
+        <x-avatar :model="$couple" class="fc-view-modal__avatar" />
 
         <h2 id="fc-view-modal-title-{{ $couple->id }}" class="fc-view-modal__names">
           <span>{{ $couple->first_name }}</span>

@@ -33,7 +33,7 @@
 
     <div class="vd-chat-layout" style="margin-top:24px;">
       <aside class="vd-chat-profile">
-        <img class="vd-chat-profile__avatar" src="{{ \App\Support\ProfileImageStorage::url($vendor->image) }}" alt="" />
+        <x-avatar :model="$vendor" class="vd-chat-profile__avatar" />
         <div>
           <h2 class="vd-chat-profile__name">{{ $vendorName }}</h2>
           <div class="vd-chat-profile__meta">
@@ -122,6 +122,34 @@
       return (name || '').split(' ').filter(Boolean).map(function (p) { return p[0]; }).join('').slice(0, 2).toUpperCase();
     }
 
+    function formatMeetingDate(value) {
+      if (!value) return '';
+      var d = new Date(value.indexOf('T') !== -1 ? value : value.replace(' ', 'T'));
+      if (isNaN(d.getTime())) return value;
+      return d.toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true });
+    }
+
+    function renderSystemMessage(m) {
+      var wrap = document.createElement('div');
+      wrap.className = 'vd-chat__system';
+
+      if (m.type === 'consultation-request' && m.data) {
+        wrap.innerHTML = 'You requested a consultation on <strong>' + escapeHtml(formatMeetingDate(m.data.meeting_date)) + '</strong>. We\'ll let you know as soon as the vendor responds.';
+        return wrap;
+      }
+
+      if (m.type === 'consultation-response' && m.data) {
+        var statusClass = m.data.accepted ? 'vd-chat__consult-status--accepted' : 'vd-chat__consult-status--declined';
+        var statusText = m.data.accepted
+          ? 'The vendor accepted your consultation request! 🎉'
+          : 'The vendor declined your consultation request.';
+        wrap.innerHTML = '<div class="vd-chat__consult-status ' + statusClass + '">' + statusText + '</div>';
+        return wrap;
+      }
+
+      return null;
+    }
+
     function render(messages) {
       messagesEl.innerHTML = '';
       if (!messages.length) {
@@ -138,6 +166,13 @@
           messagesEl.appendChild(divider);
           lastDay = day;
         }
+
+        var systemEl = (m.type === 'consultation-request' || m.type === 'consultation-response') ? renderSystemMessage(m) : null;
+        if (systemEl) {
+          messagesEl.appendChild(systemEl);
+          return;
+        }
+
         var isMine = !!m.is_sender;
         var row = document.createElement('div');
         row.className = 'vd-chat__row ' + (isMine ? 'vd-chat__row--mine' : 'vd-chat__row--vendor');
@@ -178,6 +213,7 @@
     });
 
     var favBtn = document.getElementById('vd-favorite-btn');
+    var favVendorName = @json($vendor->business_name ?: $vendorName);
     favBtn.addEventListener('click', function () {
       var active = favBtn.dataset.favorited === '1';
       var next = !active;
@@ -191,6 +227,12 @@
           'X-CSRF-TOKEN': csrf,
         },
         body: JSON.stringify({ vendor_uuid: favBtn.dataset.vendorId, active: next }),
+      }).then(function (r) { return r.json(); }).then(function (data) {
+        if (data.status) {
+          WinToast.show('Vendor ' + favVendorName + (next ? ' added to your favorites.' : ' removed from your favorites.'), 'success');
+        } else {
+          WinToast.show(data.message || 'Something went wrong, please try again.', 'error');
+        }
       }).finally(function () {
         favBtn.disabled = false;
       });

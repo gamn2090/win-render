@@ -38,11 +38,10 @@
   </div>
 
   <div class="dashboard-sidebar__profile">
-    <img
+    <x-avatar
       id="dashboard-sidebar-avatar"
+      :model="$account"
       class="dashboard-sidebar__avatar"
-      src="{{ \App\Support\ProfileImageStorage::url($account->image) }}"
-      alt=""
     />
     <div class="dashboard-sidebar__profile-text">
       <p class="dashboard-sidebar__profile-name" title="{{ $displayName }}">{{ $displayName }}</p>

@@ -53,7 +53,7 @@
           @endphp
           <a href="{{ route('get.client.conversation', $convo->conversation->id) }}" class="vd-msg-row {{ $isUnread ? 'vd-msg-row--unread' : '' }}">
             <div class="vd-msg-row__who">
-              <img class="vd-msg-row__avatar" src="{{ \App\Support\ProfileImageStorage::url($vendor->image) }}" alt="" />
+              <x-avatar :model="$vendor" class="vd-msg-row__avatar" />
               <div class="vd-msg-row__who-text">
                 <p class="vd-msg-row__name">{{ trim($vendor->first_name . ' ' . $vendor->last_name) }}</p>
                 <p class="vd-msg-row__business">{{ $vendor->business_name }}</p>

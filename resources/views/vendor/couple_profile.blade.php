@@ -73,13 +73,7 @@
   <div class="vm-content vcp-content">
     <section class="vcp-banner" aria-label="Couple summary">
       <div class="vcp-banner__inner">
-        <img
-          class="vcp-banner__avatar"
-          src="{{ asset('/storage/images/'.$client->image) }}"
-          alt="{{ $client->first_name }} and {{ $client->fiance_first_name }}"
-          width="120"
-          height="120"
-        />
+        <x-avatar :model="$client" class="vcp-banner__avatar" />
         <div class="vcp-banner__main">
           <h2 class="vcp-banner__names">
             <span>{{ $client->first_name }}</span>
@@ -214,11 +208,11 @@
               <article class="vcp-booked__card">
                 <div class="vcp-booked__image-wrap">
                   <span class="vcp-booked__heart" aria-hidden="true">♥</span>
-                  <img
-                    class="vcp-booked__image"
-                    src="{{ asset('/storage/images/'.$vendor->image) }}"
-                    alt=""
-                  />
+                  @if($vendor->coverImageUrl())
+                    <img class="vcp-booked__image" src="{{ $vendor->coverImageUrl() }}" alt="" />
+                  @else
+                    <div class="vcp-booked__image win-cover-placeholder"></div>
+                  @endif
                 </div>
                 <div class="vcp-booked__body">
                   <h4 class="vcp-booked__name">{{ $vendor->business_name }}</h4>

@@ -1,7 +1,7 @@
 /* Vendor dashboard — dashboard_vendor.png */
 .vd-page {
   font-family: "Poppins", sans-serif;
-  background: #fff7e7;
+  background: linear-gradient(0deg, #F6F4FA 0%, #F6F4FA 100%), #FFF;
   min-height: 100vh;
 }
 
@@ -10,6 +10,145 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+/* Initials fallback for profile pictures — used by <x-avatar>. Base
+   .win-avatar-fallback / .win-avatar-img rules live in app.css (loaded on
+   every page); each avatar context below just sets its own font-size,
+   matched to that class's own circle size. */
+.dashboard-sidebar__avatar.win-avatar-fallback {
+  font-size: 16px;
+}
+
+.vd-profile-banner__avatar.win-avatar-fallback {
+  font-size: 40px;
+}
+
+.vsf-profile__avatar.win-avatar-fallback {
+  font-size: 44px;
+}
+
+.vd-storefront-avatar.win-avatar-fallback {
+  font-size: 72px;
+}
+
+.vd-chat-profile__avatar.win-avatar-fallback {
+  font-size: 34px;
+}
+
+.vd-msg-row__avatar.win-avatar-fallback {
+  font-size: 24px;
+}
+
+.vd-list-row__avatar.win-avatar-fallback {
+  font-size: 14px;
+}
+
+.vsf-endorsement__avatar.win-avatar-fallback,
+.vd-endorsement__avatar.win-avatar-fallback {
+  font-size: 12px;
+}
+
+.win-nav-avatar.win-avatar-fallback {
+  font-size: 14px;
+}
+
+.vcp-banner__avatar.win-avatar-fallback {
+  font-size: 40px;
+}
+
+.pi-inquiry-avatar.win-avatar-fallback {
+  font-size: 14px;
+}
+
+.endorsement-modal-avatar.win-avatar-fallback {
+  font-size: 24px;
+}
+
+@media (min-width: 768px) {
+  .endorsement-modal-avatar.win-avatar-fallback {
+    font-size: 44px;
+  }
+}
+
+/* Shared "open chat in a modal" popup — reuses the .vd-chat__* bubble/composer
+   styles from vendor-messages.css / couple conversation styling so it looks
+   identical to the full chat page, just without the sidebar or Back link. */
+.win-chat-modal {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 460px;
+  height: min(640px, 85vh);
+  background: #fff;
+  border-radius: 18px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.win-chat-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 20px;
+  border-bottom: 1px solid #eae7f0;
+  flex-shrink: 0;
+}
+
+.win-chat-modal__who {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.win-chat-modal__avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  object-fit: cover;
+  font-size: 14px;
+}
+
+.win-chat-modal__name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #181818;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.win-chat-modal__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: #6432c8;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.win-chat-modal__close:hover {
+  background: #f6f4fa;
+}
+
+.win-chat-modal .vd-chat__messages {
+  flex: 1;
+  min-height: 0;
+  margin: 16px;
+}
+
+.win-chat-modal .vd-chat__composer {
+  margin: 0 16px 16px;
 }
 
 .vd-announcement {
@@ -886,16 +1025,19 @@
   display: flex;
 }
 
-.vd-network-summary__avatars img {
+.vd-network-summary__avatars img,
+.vd-network-summary__avatar-item {
   width: 36px;
   height: 36px;
   border-radius: 50%;
   border: 2px solid #fff;
   margin-left: -10px;
   object-fit: cover;
+  font-size: 14px;
 }
 
-.vd-network-summary__avatars img:first-child {
+.vd-network-summary__avatars img:first-child,
+.vd-network-summary__avatar-item:first-child {
   margin-left: 0;
 }
 
@@ -2257,6 +2399,68 @@
   padding: 24px 0;
 }
 
+.vd-chat__system {
+  margin: 12px auto 20px;
+  max-width: 92%;
+  padding: 14px 18px;
+  border-radius: 14px;
+  background: #f3f1f8;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.45;
+  color: #231f20;
+}
+
+.vd-chat__consult-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.vd-chat__consult-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 14px;
+  border-radius: 40px;
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.vd-chat__consult-btn--accept {
+  border: none;
+  background: #6432c8;
+  color: #fff;
+}
+
+.vd-chat__consult-btn--reject {
+  background: #fff;
+  color: #231f20;
+  border: 1px solid #9ca3af;
+}
+
+.vd-chat__consult-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.vd-chat__consult-status {
+  margin-top: 10px;
+  font-weight: 700;
+}
+
+.vd-chat__consult-status--accepted {
+  color: #22c55e;
+}
+
+.vd-chat__consult-status--declined {
+  color: #f85705;
+}
+
 .vd-chat-profile {
   display: flex;
   flex-direction: column;
@@ -3507,28 +3711,55 @@
 }
 
 /* Gallery */
+.vd-gallery__label {
+  margin: -8px 0 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #9ca3af;
+}
+
 .vd-gallery {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: minmax(180px, 696.462px) repeat(3, minmax(100px, 226.67px));
+  grid-template-rows: repeat(2, minmax(120px, 340.005px));
   gap: 12px;
   width: 100%;
 }
 
 .vd-gallery__hero {
-  grid-column: span 3;
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  width: 100%;
+  max-width: 696.462px;
+  max-height: 696.462px;
+}
+
+.vd-gallery__hero--cover img {
+  border: 8px solid #6432c8;
+  box-sizing: border-box;
 }
 
 .vd-gallery img {
+  display: block;
   width: 100%;
-  height: 220px;
+  height: 100%;
   object-fit: cover;
   border-radius: 8px;
   cursor: pointer;
 }
 
-.vd-gallery__hero img {
-  height: 340px;
+.vd-gallery__thumb {
+  position: relative;
+  width: 100%;
+  max-width: 226.67px;
+  max-height: 340.005px;
 }
+
+.vd-gallery__thumb--1 { grid-column: 2; grid-row: 1; }
+.vd-gallery__thumb--2 { grid-column: 3; grid-row: 1; }
+.vd-gallery__thumb--3 { grid-column: 4; grid-row: 1; }
+.vd-gallery__thumb--4 { grid-column: 2; grid-row: 2; }
+.vd-gallery__thumb--5 { grid-column: 3; grid-row: 2; }
 
 .vd-gallery__view-all {
   margin-top: 16px;
@@ -3773,11 +4004,23 @@
   }
 
   .vd-gallery {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    min-height: 0;
   }
 
   .vd-gallery__hero {
-    grid-column: span 2;
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+
+  .vd-gallery__thumb--1,
+  .vd-gallery__thumb--2,
+  .vd-gallery__thumb--3,
+  .vd-gallery__thumb--4,
+  .vd-gallery__thumb--5 {
+    grid-column: auto;
+    grid-row: auto;
   }
 }
 

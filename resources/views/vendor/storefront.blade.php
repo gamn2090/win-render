@@ -15,7 +15,10 @@
     'resources/js/vendor-storefront.js',
   ])
   @include('components.fonts')
-  <script>window.vendorID = {{ $vendor->id }};</script>
+  <script>
+    window.vendorID = {{ $vendor->id }};
+    window.vendorName = @json($vendor->business_name ?: trim($vendor->first_name . ' ' . $vendor->last_name));
+  </script>
 </head>
 <body class="vsf-page m-0 antialiased overflow-x-hidden">
 @php
@@ -85,13 +88,7 @@
   <div class="@if($authVendor) vm-content @endif vsf-content">
     <section class="vsf-profile" aria-label="Vendor profile">
       <div class="vsf-profile__top">
-        <img
-          class="vsf-profile__avatar"
-          src="{{ \App\Support\ProfileImageStorage::url($vendor->image) }}"
-          alt="{{ $vendor->business_name }}"
-          width="120"
-          height="120"
-        />
+        <x-avatar :model="$vendor" class="vsf-profile__avatar" />
         <div class="vsf-profile__info">
           <h2 class="vsf-profile__business">{{ $vendor->business_name }}</h2>
           <p class="vsf-profile__name">{{ $vendor->first_name }} {{ $vendor->last_name }}</p>
@@ -123,7 +120,10 @@
           <a href="{{ url('/vendor/profile') }}" class="vsf-profile__cta vsf-profile__cta--message">Edit Profile</a>
         @elseif($isOtherVendor)
           @if($authVendor->isPendingWith($vendor->id))
-            <button type="button" class="vsf-profile__cta vsf-profile__cta--connect" disabled>Pending</button>
+            <button type="button" class="vsf-profile__cta vsf-profile__cta--connect" disabled>
+              <span class="vsf-profile__cta-icon" aria-hidden="true">✓</span>
+              Connected
+            </button>
           @else
             <button type="button" id="connectBtn" class="vsf-profile__cta vsf-profile__cta--connect">
               <span class="vsf-profile__cta-icon" aria-hidden="true">♥</span>
@@ -244,7 +244,7 @@
         <h3 class="vsf-card__title">See My Work:</h3>
         <p class="vsf-gallery__label">*Cover Photo</p>
         <div class="vsf-gallery">
-          <div class="vsf-gallery__hero">
+          <div class="vsf-gallery__hero vsf-gallery__hero--cover">
             <img
               class="vsf-lightbox-trigger"
               src="{{ \App\Support\ProfileImageStorage::url($coverImage) }}"
@@ -260,6 +260,7 @@
                 alt=""
                 loading="lazy"
               />
+              <button type="button" class="vsf-gallery__cover-btn set-cover-btn" value="{{ $image }}">Set as Cover</button>
             </div>
           @endforeach
         </div>
@@ -307,7 +308,11 @@
                 <article class="vsf-vendor-card">
                   <div class="vsf-vendor-card__image-wrap">
                     <span class="vsf-vendor-card__heart" aria-hidden="true">♥</span>
-                    <img class="vsf-vendor-card__image" src="{{ \App\Support\ProfileImageStorage::url($affVendor->image) }}" alt="" />
+                    @if($affVendor->coverImageUrl())
+                      <img class="vsf-vendor-card__image" src="{{ $affVendor->coverImageUrl() }}" alt="" />
+                    @else
+                      <div class="vsf-vendor-card__image win-cover-placeholder"></div>
+                    @endif
                   </div>
                   <div class="vsf-vendor-card__body">
                     <h4 class="vsf-vendor-card__name">{{ $affVendor->business_name }}</h4>
@@ -378,11 +383,12 @@
               <span class="vsf-endorsement__label">{{ $endorsement->type }}</span>
               <div class="vsf-endorsement__avatars">
                 @forelse($vendor->endorsements()->where('type', $endorsement->typeNum)->select('endorser')->distinct()->take(4)->get() as $endorserRow)
-                  <img
-                    class="vsf-endorsement__avatar"
-                    src="{{ \App\Support\ProfileImageStorage::url($endorserRow->endorserPicture()[0]->image ?? null) }}"
-                    alt=""
-                  />
+                  @php $endorserVendor = $endorserRow->endorserPicture()[0] ?? null; @endphp
+                  @if($endorserVendor)
+                    <x-avatar :model="$endorserVendor" class="vsf-endorsement__avatar" />
+                  @else
+                    <img class="vsf-endorsement__avatar" src="{{ \App\Support\ProfileImageStorage::url(null) }}" alt="" />
+                  @endif
                 @empty
                   <img class="vsf-endorsement__avatar" src="{{ \App\Support\ProfileImageStorage::url(null) }}" alt="" />
                 @endforelse

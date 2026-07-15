@@ -149,6 +149,8 @@ Route::middleware('auth:vendor')->group(function () {
         ->name('vendor.upload.portfolio');
     Route::post('vendor/remove/portfolio', [ProfileController::class, 'deletePortfolioImage'])
         ->name('vendor.remove.portfolio');
+    Route::post('vendor/portfolio/cover', [ProfileController::class, 'setPortfolioCoverImage'])
+        ->name('vendor.portfolio.cover');
     Route::post('/vendor/request/connection', [VendorController::class, 'createConnectionRequest'])->name('create.connect.request');
     Route::post('/vendor/pairing/answer', [VendorController::class, 'answerPairingRequest'])->name('pairing.request.answer');
 

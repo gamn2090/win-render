@@ -1,7 +1,7 @@
 /* Vendor Insights — mockup_insights.png */
 .vi-page {
   font-family: "Poppins", sans-serif;
-  background: #f3f1f8;
+  background: linear-gradient(0deg, #F6F4FA 0%, #F6F4FA 100%), #FFF;
   min-height: 100vh;
   overflow-x: hidden;
 }

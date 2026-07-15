@@ -8,11 +8,12 @@
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
   <script>window.userID = {{ Auth::guard('vendor')->id() }};</script>
   @vite(['resources/css/app.css', 'resources/css/vendor-dashboard.css'])
-  @vite(['resources/js/app.js', 'resources/js/chat.js'])
+  @vite(['resources/js/app.js', 'resources/js/chat.js', 'resources/js/chat-modal.js'])
   @include('components.fonts')
   @if(!empty($data['first_login']))
   <script>window.newUser = true;</script>
   @endif
+  <script>window.winChatModalMeta = { initials: {!! json_encode(\App\Support\AvatarPalette::initialsFor(Auth::guard('vendor')->user())) !!} };</script>
 </head>
 <body class="vd-page m-0 antialiased overflow-x-hidden">
 @php
@@ -220,7 +221,7 @@
     <article class="vd-card vd-card--feed">
       <div class="vd-card__head">
         <h2 class="vd-card__title">Messages</h2>
-        <button type="button" class="vd-card__link vd-card__link--btn" data-vd-coming-soon="The full messages view">View all →</button>
+        <a href="{{ route('vendor.inbox') }}" class="vd-card__link">View all →</a>
       </div>
       <div class="vd-card__body">
         <div class="vd-card__scroll">
@@ -235,20 +236,29 @@
             }
           @endphp
           @if($other)
+          @php
+            $otherInitials = \App\Support\AvatarPalette::initialsFor($other);
+            [$otherBg, $otherFg] = \App\Support\AvatarPalette::colorFor(get_class($other) . ':' . $other->id);
+            $otherHasPhoto = \App\Support\ProfileImageStorage::hasCustomImage($other->image ?? null);
+          @endphp
           <div class="vd-list-row">
-            <img class="vd-list-row__avatar" src="{{ asset('/storage/images/' . ($other->image ?: 'user.jpg')) }}" alt="" width="36" height="36" />
+            <x-avatar :model="$other" class="vd-list-row__avatar" />
             <div class="vd-list-row__text">
               <p class="vd-list-row__name">{{ $other->first_name }} {{ $other->last_name }}</p>
               <p class="vd-list-row__preview">{{ Str::limit($convo->conversation->last_message->body ?? 'Start a conversation!', 48) }}</p>
             </div>
             <div class="vd-list-row__actions">
-              <button type="button" class="vd-btn-view vd-btn-view--coming-soon" data-vd-coming-soon="Opening a conversation from here">VIEW</button>
-              <button type="button" class="vd-btn-chat chat-window-btn"
-                data-picture-url="{{ asset('/storage/images/' . ($other->image ?: 'user.jpg')) }}"
-                data-name="{{ $other->first_name }} {{ $other->last_name }}"
-                data-uuid="{{ $other->uuid ?? '' }}"
-                data-user-type="{{ method_exists($other, 'userType') ? $other->userType() : 'user' }}"
-                aria-label="Chat">💬</button>
+              <a href="{{ route('get.vendor.conversation', ['id' => $convo->conversation->id]) }}" class="vd-btn-view">VIEW</a>
+              <button type="button" class="vd-btn-chat"
+                data-chat-modal-trigger
+                data-chat-modal-convo="{{ $convo->conversation->id }}"
+                data-chat-modal-role="vendor"
+                data-chat-modal-name="{{ $other->first_name }} {{ $other->last_name }}"
+                data-chat-modal-other-initials="{{ $otherInitials }}"
+                data-chat-modal-avatar-photo="{{ $otherHasPhoto ? \App\Support\ProfileImageStorage::url($other->image) : '' }}"
+                data-chat-modal-avatar-bg="{{ $otherBg }}"
+                data-chat-modal-avatar-fg="{{ $otherFg }}"
+                aria-label="Open chat">💬</button>
             </div>
           </div>
           @endif
@@ -257,7 +267,7 @@
         @endforelse
         </div>
         <div class="vd-card__footer">
-          <button type="button" class="vd-btn-pill vd-btn-pill--orange" data-vd-coming-soon="The full messages view">View All Messages</button>
+          <a href="{{ route('vendor.inbox') }}" class="vd-btn-pill vd-btn-pill--orange">View All Messages</a>
         </div>
       </div>
     </article>
@@ -267,9 +277,9 @@
       <div class="vd-card__head">
         <h2 class="vd-card__title">My Wedding Appointments</h2>
         @if($upcomingCount > 0)
-        <button type="button" class="vd-card__link vd-card__link--calendar vd-card__link--btn" aria-label="View appointments calendar" data-vd-coming-soon="The full appointments view">
+        <a href="{{ route('profile.vendoredit') }}#edit-calendar" class="vd-card__link vd-card__link--calendar vd-card__link--btn" aria-label="Change availability">
           <i class="fa-regular fa-calendar" aria-hidden="true"></i>
-        </button>
+        </a>
         @endif
       </div>
       <div class="vd-card__body">
@@ -281,19 +291,16 @@
           @php $meetingClient = $meeting->client()->first(); @endphp
           @if($meetingClient)
           <div class="vd-list-row vd-list-row--appointment">
-            <img class="vd-list-row__avatar" src="{{ asset('/storage/images/' . ($meetingClient->image ?: 'user.jpg')) }}" alt="" width="36" height="36" />
+            <x-avatar :model="$meetingClient" class="vd-list-row__avatar" />
             <div class="vd-list-row__text">
-              <p class="vd-list-row__name">{{ $meetingClient->first_name }}{{ $meetingClient->last_name ? ' & ' . $meetingClient->last_name : '' }}</p>
+              <p class="vd-list-row__name">{{ trim($meetingClient->first_name . ' & ' . ($meetingClient->fiance_first_name ?? '')) }}</p>
               <p class="vd-list-row__preview">{{ ucfirst($meeting->type) }}</p>
             </div>
             <p class="vd-list-row__meta">
               {{ $meeting->date ? \Carbon\Carbon::parse($meeting->date)->format('M j') : '' }}
               <span>at</span>
               {{ method_exists($meeting, 'readableTime') ? $meeting->readableTime() : '' }}
-            </p>
-            <div class="vd-list-row__actions">
-              <button type="button" class="vd-btn-view vd-btn-view--coming-soon" data-vd-coming-soon="Opening an appointment from here">VIEW</button>
-            </div>
+            </p>            
           </div>
           @endif
         @empty
@@ -301,7 +308,7 @@
         @endforelse
         </div>
         <div class="vd-card__footer">
-          <button type="button" class="vd-btn-pill vd-btn-pill--purple" data-vd-coming-soon="The full appointments view">View All Appointments</button>
+          <a href="{{ route('appointments.list') }}" class="vd-btn-pill vd-btn-pill--purple">View All Appointments</a>
         </div>
       </div>
     </article>
@@ -337,28 +344,31 @@
         <a href="{{ url('/vendor/client/list') }}" class="vd-card__link">View all →</a>
       </div>
       <div class="vd-card__body">
+        @forelse($data['clients'] as $client)
         @php
-          $clientIcons = [
-            asset('assets/img/vendor-home/new_icons/melissa&luis_1.png'),
-            asset('assets/img/vendor-home/new_icons/lindsay_3.png'),
-            asset('assets/img/vendor-home/new_icons/amour_2.png'),
-          ];
+          $clientInitials = \App\Support\AvatarPalette::initialsFor($client);
+          [$clientBg, $clientFg] = \App\Support\AvatarPalette::colorFor(get_class($client) . ':' . $client->id);
+          $clientPhoto = \App\Support\ProfileImageStorage::hasCustomImage($client->image ?? null) ? \App\Support\ProfileImageStorage::url($client->image) : '';
+          $clientConvoId = $vendor->initiateDirectMessage($client);
         @endphp
-        @forelse($data['clients'] as $index => $client)
         <div class="vd-list-row">
-          <img class="vd-list-row__avatar" src="{{ $clientIcons[$index % count($clientIcons)] }}" alt="" />
+          <x-avatar :model="$client" class="vd-list-row__avatar" />
           <div class="vd-list-row__text">
             <p class="vd-list-row__name">{{ $client->first_name }} {{ $client->last_name }}</p>
             <p class="vd-list-row__preview">Active client</p>
           </div>
           <div class="vd-list-row__actions">
-            <a href="{{ url('/vendor/profile/'.$client->uuid) }}" class="vd-btn-view">VIEW</a>
-            <button type="button" class="vd-btn-chat chat-window-btn"
-              data-picture-url="{{ asset('/storage/images/'.$client->image) }}"
-              data-name="{{ $client->first_name }} {{ $client->last_name }}"
-              data-uuid="{{ $client->uuid }}"
-              data-user-type="{{ $client->userType() }}"
-              aria-label="Chat">💬</button>
+            <a href="{{ route('get.vendor.conversation', ['id' => $clientConvoId]) }}" class="vd-btn-view">VIEW</a>
+            <button type="button" class="vd-btn-chat"
+              data-chat-modal-trigger
+              data-chat-modal-convo="{{ $clientConvoId }}"
+              data-chat-modal-role="vendor"
+              data-chat-modal-name="{{ $client->first_name }} {{ $client->last_name }}"
+              data-chat-modal-other-initials="{{ $clientInitials }}"
+              data-chat-modal-avatar-photo="{{ $clientPhoto }}"
+              data-chat-modal-avatar-bg="{{ $clientBg }}"
+              data-chat-modal-avatar-fg="{{ $clientFg }}"
+              aria-label="Open chat">💬</button>
           </div>
         </div>
         @empty
@@ -381,30 +391,39 @@
       <div class="vd-card__body">
         <div class="vd-network-summary">
           <div class="vd-network-summary__avatars">
-            @php $netIcons = ['vendor_network_1.png', 'vendor_network_2.png', 'vendor_network_3.png']; @endphp
             @foreach($data['connections'] as $i => $connection)
               @if($i < 3)
-              <img src="{{ $icons }}/{{ $netIcons[$i % 3] }}" alt="{{ $connection->first_name }}" />
+              <x-avatar :model="$connection" class="vd-network-summary__avatar-item" />
               @endif
             @endforeach
           </div>
           <p class="vd-network-summary__text">{{ $vendor->connections()->count() }} Vendor Connections</p>
         </div>
         @foreach($data['connections'] as $connection)
+        @php
+          $connInitials = \App\Support\AvatarPalette::initialsFor($connection);
+          [$connBg, $connFg] = \App\Support\AvatarPalette::colorFor(get_class($connection) . ':' . $connection->id);
+          $connPhoto = \App\Support\ProfileImageStorage::hasCustomImage($connection->image ?? null) ? \App\Support\ProfileImageStorage::url($connection->image) : '';
+          $connConvoId = $vendor->initiateDirectMessage($connection);
+        @endphp
         <div class="vd-list-row">
-          <img class="vd-list-row__avatar" src="{{ $icons }}/{{ $netIcons[($loop->index) % 3] }}" alt="" />
+          <x-avatar :model="$connection" class="vd-list-row__avatar" />
           <div class="vd-list-row__text">
             <p class="vd-list-row__name">{{ $connection->first_name }} {{ $connection->last_name }}</p>
-            <p class="vd-list-row__preview">{{ ucfirst($connection->type ?? 'Vendor') }}</p>
+            <p class="vd-list-row__preview">{{ $connection->getType()?->type ?? 'Vendor' }}</p>
           </div>
           <div class="vd-list-row__actions">
-            <a href="{{ url('/vendor/profile/'.$connection->uuid) }}" class="vd-btn-view">VIEW</a>
-            <button type="button" class="vd-btn-chat chat-window-btn"
-              data-picture-url="{{ asset('/storage/images/'.$connection->image) }}"
-              data-name="{{ $connection->first_name }} {{ $connection->last_name }}"
-              data-uuid="{{ $connection->uuid }}"
-              data-user-type="{{ $connection->userType() }}"
-              aria-label="Chat">💬</button>
+            <a href="{{ route('get.vendor.conversation', ['id' => $connConvoId]) }}" class="vd-btn-view">VIEW</a>
+            <button type="button" class="vd-btn-chat"
+              data-chat-modal-trigger
+              data-chat-modal-convo="{{ $connConvoId }}"
+              data-chat-modal-role="vendor"
+              data-chat-modal-name="{{ $connection->first_name }} {{ $connection->last_name }}"
+              data-chat-modal-other-initials="{{ $connInitials }}"
+              data-chat-modal-avatar-photo="{{ $connPhoto }}"
+              data-chat-modal-avatar-bg="{{ $connBg }}"
+              data-chat-modal-avatar-fg="{{ $connFg }}"
+              aria-label="Open chat">💬</button>
           </div>
         </div>
         @endforeach
@@ -469,6 +488,8 @@
   {{-- Site footer disabled per client request — uncomment to restore --}}
   {{-- @include('layouts.footer') --}}
 </main>
+
+<x-chat-modal />
 
 <div id="vd-toast" class="vd-toast" role="status" aria-live="polite" hidden></div>
 

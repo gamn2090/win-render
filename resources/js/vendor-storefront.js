@@ -58,24 +58,38 @@ $(document).ready(function () {
       data: { aff_id: window.vendorID },
       success: function (data) {
         if (data.status === false) {
-          Swal.fire({
-            title: 'Oops!',
-            text: data.msg,
-            icon: 'error',
-            confirmButtonText: 'Ok',
-            confirmButtonColor: '#6432C8',
-          });
+          window.WinToast && window.WinToast.show(data.msg || 'Something went wrong, please try again.', 'error');
           $('#connectBtn').attr('disabled', false);
         } else {
-          Swal.fire({
-            title: 'Nice!',
-            text: data.msg,
-            icon: 'success',
-            confirmButtonText: 'Ok',
-            confirmButtonColor: '#6432C8',
-          });
-          $('#connectBtn').text('Pending');
+          window.WinToast && window.WinToast.show('Vendor ' + (window.vendorName || '') + ' added to your preferred.', 'success');
+          $('#connectBtn').html('<span class="vsf-profile__cta-icon" aria-hidden="true">✓</span> Connected');
         }
+      },
+      error: function () {
+        window.WinToast && window.WinToast.show('Something went wrong, please try again.', 'error');
+        $('#connectBtn').attr('disabled', false);
+      },
+    });
+  });
+
+  $('.set-cover-btn').on('click', function (event) {
+    event.stopPropagation();
+    const $btn = $(this);
+    const imageName = $btn.val();
+    $btn.prop('disabled', true);
+    $.ajax({
+      type: 'POST',
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+      },
+      url: '/vendor/portfolio/cover',
+      data: { image_name: imageName },
+      success: function () {
+        window.location.reload();
+      },
+      error: function () {
+        window.WinToast && window.WinToast.show('Something went wrong, please try again.', 'error');
+        $btn.prop('disabled', false);
       },
     });
   });

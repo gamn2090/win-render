@@ -26,6 +26,11 @@ class ProfileImageStorage
         return asset('storage/' . self::RELATIVE_DIR . '/' . $name);
     }
 
+    public static function hasCustomImage(?string $filename): bool
+    {
+        return filled($filename) && $filename !== self::DEFAULT_FILENAME;
+    }
+
     public static function store(UploadedFile $file): string
     {
         $filename = $file->hashName();

@@ -259,6 +259,21 @@ class Vendor extends Authenticatable
         return $this->hasOne(Profile::class, 'belongs_to')->where('type', 'vendor');
     }
 
+    /**
+     * Vendor cards show the first portfolio image as the cover photo, not
+     * the profile headshot. Null means "no portfolio photos yet" — callers
+     * should fall back to the gradient placeholder.
+     */
+    public function coverImageUrl(): ?string
+    {
+        $images = $this->profile?->portfolioImages(1);
+        if (empty($images)) {
+            return null;
+        }
+
+        return \App\Support\ProfileImageStorage::url($images[0]);
+    }
+
     public function numberOfClients(){
         return Pairing::where('vendor_id', $this->id)->where('status', 3)->count();
     }
@@ -395,8 +410,14 @@ class Vendor extends Authenticatable
     }
 
     public function clients($max = 3){
-        $data = [];        
-        $pairs = Pairing::where('vendor_id', $this->id)->where('status', 3)->limit($max)->get();
+        $data = [];
+        $pairs = Pairing::where('vendor_id', $this->id)
+            ->where(function ($q) {
+                $q->where('active', true)->orWhereNull('active');
+            })
+            ->orderBy('id', 'desc')
+            ->limit($max)
+            ->get();
         foreach($pairs as $pair){
             $user = User::where('id', $pair->client_id)->first();
             if($user){

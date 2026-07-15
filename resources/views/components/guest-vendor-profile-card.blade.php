@@ -12,7 +12,11 @@
             @endif
         </div>
         @endauth
-        <img alt="..." src="{{asset('/storage/images/'. $vendor->image)}}" class="rounded-full h-auto align-middle border-none w-16 md:w-32 mx-auto relative z-10">
+        @if($vendor->coverImageUrl())
+          <img alt="..." src="{{ $vendor->coverImageUrl() }}" class="rounded-full h-16 w-16 md:h-32 md:w-32 object-cover align-middle border-none mx-auto relative z-10">
+        @else
+          <div class="rounded-full h-16 w-16 md:h-32 md:w-32 mx-auto relative z-10 win-cover-placeholder"></div>
+        @endif
     </div>
     <div class="bg-win-light rounded-t-2xl mt-[-15%] pt-[15%] relative z-0 text-center px-4 flex-grow">
         <div class="text-center mt-2">

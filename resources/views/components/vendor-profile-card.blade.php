@@ -13,7 +13,11 @@
         </div>
         @endauth
         <div class="relative -mx-4">
-            <img alt="..." src="{{asset('/storage/images/'. $vendor->image)}}" class="rounded-full h-auto align-middle border-none w-16 md:w-32 mx-auto relative z-10">
+            @if($vendor->coverImageUrl())
+              <img alt="..." src="{{ $vendor->coverImageUrl() }}" class="rounded-full h-16 w-16 md:h-32 md:w-32 object-cover align-middle border-none mx-auto relative z-10">
+            @else
+              <div class="rounded-full h-16 w-16 md:h-32 md:w-32 mx-auto relative z-10 win-cover-placeholder"></div>
+            @endif
             @if($vendor->events->whereIn('value', [2, 3])->count() > 0) 
             <img alt="..." src="{{ asset('/assets/img/logos/HappilyEverExpo_Logo_FINAL.png') }}" class="h-auto align-right border-none w-32 mx-auto absolute right-[0.25rem] top-[0.25rem] md:top-0 z-[50]">
             @endif

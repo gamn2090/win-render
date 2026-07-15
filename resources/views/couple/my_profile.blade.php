@@ -31,7 +31,7 @@
     @endif
 
     <section class="vd-profile-banner">
-      <img class="vd-profile-banner__avatar" src="{{ \App\Support\ProfileImageStorage::url($user->image) }}" alt="" />
+      <x-avatar :model="$user" class="vd-profile-banner__avatar" />
       <div class="vd-profile-banner__main">
         <h2 class="vd-profile-banner__names">
           <span>{{ $user->first_name }}</span>
@@ -147,6 +147,13 @@
         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
       },
       body: JSON.stringify({ vendor_uuid: btn.dataset.vendorId, active: next }),
+    }).then(function (r) { return r.json(); }).then(function (data) {
+      var name = btn.dataset.vendorName || 'Vendor';
+      if (data.status) {
+        WinToast.show('Vendor ' + name + (next ? ' added to your favorites.' : ' removed from your favorites.'), 'success');
+      } else {
+        WinToast.show(data.message || 'Something went wrong, please try again.', 'error');
+      }
     }).finally(function () {
       btn.disabled = false;
     });

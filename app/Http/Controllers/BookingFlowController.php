@@ -51,14 +51,24 @@ class BookingFlowController extends Controller
             'meeting_id' => 'required',
         ]);
         $answer = $request->answer;
+        $accepted = $answer == 1;
         $vendor = $request->user();
         $meeting = Meeting::where(['uuid' => $request->meeting_id, 'vendor' => $vendor->id])->first();
         if(!$meeting){
             return ["status" => false];
         }
-        $meeting->update(['approved' => $answer]);
+        $meeting->update(['approved' => $accepted]);
         $client = $meeting->client()->first();
-        if($answer == 1){
+
+        $conversation = $vendor->getDirectMessagesWith($client) ?: $vendor->createDirectMessageWith($client);
+        Chat::message($accepted ? 'Consultation accepted' : 'Consultation declined')
+            ->type('consultation-response')
+            ->data(['accepted' => $accepted, 'meeting_uuid' => $meeting->uuid, 'meeting_date' => $meeting->date])
+            ->from($vendor)
+            ->to($conversation)
+            ->send();
+
+        if($accepted){
             SendEmail::dispatch(\Config::get('hubspot.emails.consultation_scheduled'), $vendor->email, [
                 'vendor_name' => $vendor->business_name,
                 'couple_name' => $client->first_name,
@@ -73,6 +83,8 @@ class BookingFlowController extends Controller
                 'couple_name' => $client->first_name . ' & ' . $client->fiance_first_name
             ]);
         }
+
+        return ["status" => true, "accepted" => $accepted];
     }
 
     public function markVendorBooked(Request $request){

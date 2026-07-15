@@ -28,7 +28,7 @@
             <div class="px-6">
               <div class="flex flex-wrap justify-center pt-4 md:pt-8 min-h-16 md:min-h-32 lg:min-h-64">
                 <div class="w-full lg:w-5/12 px-4 lg:order-2 flex justify-center">
-                  <img alt="..." src="{{asset('/storage/images/'. $client->image)}}" class="rounded-full h-auto align-middle border-none absolute w-32 lg:w-64">
+                  <x-avatar :model="$client" class="rounded-full border-none absolute w-32 h-32 lg:w-64 lg:h-64 pc-client-avatar" />
                 </div>
                 @php
                   $mainVendor = false;

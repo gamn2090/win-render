@@ -56,7 +56,7 @@
     @include('layouts.dashboard_topbar', ['role' => 'couple'])
 
     <section class="vd-storefront-header">
-      <img class="vd-storefront-avatar" src="{{ \App\Support\ProfileImageStorage::url($vendor->image) }}" alt="{{ $vendor->business_name }}" />
+      <x-avatar :model="$vendor" class="vd-storefront-avatar" />
       <div class="vd-storefront-info">
         <div>
           <h1 class="vd-storefront-business">{{ $vendor->business_name }}</h1>
@@ -155,12 +155,15 @@
       @if($coverImage)
         <article id="vd-sf-photos" class="vd-profile-info__card">
           <h3 class="vd-profile-info__title">See my work:</h3>
+          <p class="vd-gallery__label">*Cover Photo</p>
           <div class="vd-gallery">
-            <div class="vd-gallery__hero">
+            <div class="vd-gallery__hero vd-gallery__hero--cover">
               <img class="vd-lightbox-trigger" src="{{ \App\Support\ProfileImageStorage::url($coverImage) }}" alt="" loading="lazy" />
             </div>
-            @foreach($galleryThumbs as $image)
-              <img class="vd-lightbox-trigger" src="{{ \App\Support\ProfileImageStorage::url($image) }}" alt="" loading="lazy" />
+            @foreach($galleryThumbs as $index => $image)
+              <div class="vd-gallery__thumb vd-gallery__thumb--{{ $index + 1 }}">
+                <img class="vd-lightbox-trigger" src="{{ \App\Support\ProfileImageStorage::url($image) }}" alt="" loading="lazy" />
+              </div>
             @endforeach
           </div>
           @if(count($portfolioImages) > 0)
@@ -207,7 +210,10 @@
               <span class="vd-endorsement__label"><span class="vd-endorsement__star">★</span> {{ $endorsement->type }}</span>
               <div class="vd-endorsement__avatars">
                 @forelse($vendor->endorsements()->where('type', $endorsement->typeNum)->select('endorser')->distinct()->take(4)->get() as $endorserRow)
-                  <img class="vd-endorsement__avatar" src="{{ \App\Support\ProfileImageStorage::url($endorserRow->endorserPicture()[0]->image ?? null) }}" alt="" />
+                  @php $endorserVendor = $endorserRow->endorserPicture()[0] ?? null; @endphp
+                  @if($endorserVendor)
+                    <x-avatar :model="$endorserVendor" class="vd-endorsement__avatar" />
+                  @endif
                 @empty
                 @endforelse
               </div>
@@ -292,6 +298,13 @@
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': csrf },
           body: JSON.stringify({ vendor_uuid: favBtn.dataset.vendorId, active: next }),
+        }).then(function (r) { return r.json(); }).then(function (data) {
+          var name = favBtn.dataset.vendorName || 'Vendor';
+          if (data.status) {
+            WinToast.show('Vendor ' + name + (next ? ' added to your favorites.' : ' removed from your favorites.'), 'success');
+          } else {
+            WinToast.show(data.message || 'Something went wrong, please try again.', 'error');
+          }
         }).finally(function () { favBtn.disabled = false; });
         return;
       }

@@ -18,6 +18,7 @@ export default defineConfig({
                 'resources/css/vendor-current-clients.css',
                 'resources/css/vendor-vendor-network.css',
                 'resources/js/app.js',
+                'resources/js/win-toast.js',
                 'resources/js/message-page.js',
                 'resources/js/chat.js',
                 'resources/js/insights.js',
@@ -35,7 +36,8 @@ export default defineConfig({
                 'resources/js/vendor-storefront.js',
                 'resources/js/vendor-insights.js',
                 'resources/js/vendor-refer-client.js',
-                'resources/js/vendor-invite-vendor.js'
+                'resources/js/vendor-invite-vendor.js',
+                'resources/js/chat-modal.js'
             ],
             refresh: true,
         }),

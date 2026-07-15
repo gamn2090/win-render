@@ -13,6 +13,7 @@
       type="button"
       class="vd-vendor-card__favorite favorite-toggle-btn"
       data-vendor-id="{{ $vendor->uuid }}"
+      data-vendor-name="{{ $vendor->business_name }}"
       data-favorited="{{ $favorited ? '1' : '0' }}"
       aria-label="Toggle favorite"
     >{{ $favorited ? '♥' : '♡' }}</button>
@@ -32,7 +33,11 @@
     @endif
 
     <a href="{{ route('profile.vendor', $vendor->uuid) }}" class="vd-vendor-card__image-link" tabindex="-1" aria-hidden="true">
-      <img class="vd-vendor-card__image" src="{{ \App\Support\ProfileImageStorage::url($vendor->image) }}" alt="" />
+      @if($vendor->coverImageUrl())
+        <img class="vd-vendor-card__image" src="{{ $vendor->coverImageUrl() }}" alt="" />
+      @else
+        <div class="vd-vendor-card__image win-cover-placeholder"></div>
+      @endif
     </a>
   </div>
 
@@ -67,6 +72,8 @@
     <div class="vd-vendor-card__actions">
       @if($showStatus && $pairing && $pairing->status < 3)
         <button type="button" class="vd-vendor-card__btn vd-vendor-card__btn--message mark-booked-btn" data-vendor-uuid="{{ $vendor->uuid }}">Mark as Booked</button>
+      @elseif($showStatus && !$pairing)
+        <button type="button" class="vd-vendor-card__btn vd-vendor-card__btn--message send-inquiry-btn" data-vendor-id="{{ $vendor->id }}">Send Inquiry</button>
       @endif
       <a href="{{ route('user.vendor.message', $vendor->id) }}" class="vd-vendor-card__btn vd-vendor-card__btn--message">Message</a>
     </div>

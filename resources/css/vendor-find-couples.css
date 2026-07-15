@@ -1,7 +1,7 @@
 /* Find Couples — find_couple.png */
 .fc-page {
   font-family: "Poppins", sans-serif;
-  background: #f3f1f8;
+  background: linear-gradient(0deg, #F6F4FA 0%, #F6F4FA 100%), #FFF;
   min-height: 100vh;
   overflow-x: hidden;
 }
@@ -340,6 +340,15 @@
   display: block;
 }
 
+.fc-card__media-avatar {
+  width: 100%;
+  height: 100%;
+}
+
+.fc-card__media-avatar.win-avatar-fallback {
+  font-size: 48px;
+}
+
 .fc-card__body {
   display: flex;
   flex-direction: column;
@@ -562,6 +571,14 @@
   object-fit: cover;
   object-position: center;
   display: block;
+  font-size: 40px;
+}
+
+.fc-view-modal__avatar.win-avatar-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
 .fc-view-modal__names {

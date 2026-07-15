@@ -97,10 +97,7 @@
 
       <article class="fc-card">
         <div class="fc-card__media">
-          <img
-            src="{{ asset('/storage/images/'.$inquiry->image) }}"
-            alt="{{ $inquiry->first_name }} and {{ $inquiry->fiance_first_name }}"
-          />
+          <x-avatar :model="$inquiry" class="fc-card__media-avatar" />
         </div>
         <div class="fc-card__body">
           <p class="fc-card__progress-label">{{ $booked }} of {{ $total }} Booked Vendors</p>

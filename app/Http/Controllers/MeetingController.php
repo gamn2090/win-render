@@ -32,9 +32,16 @@ class MeetingController extends Controller
         if(!$user){
             return redirect('/');
         }
+        $isVendor = $user instanceof Vendor;
         $data = [
             "appointments" => $user->upcomingMeetings()->get(),
         ];
-        return view('appointments', ['data' => $data, 'page' => 'appointments']);
+        return view('appointments', [
+            'data' => $data,
+            'page' => 'appointments',
+            'viewer' => $user,
+            'isVendor' => $isVendor,
+            'unreadCount' => $user->unreadMessagesCount(),
+        ]);
     }
 }

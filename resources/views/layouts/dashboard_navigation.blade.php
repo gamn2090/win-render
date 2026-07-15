@@ -12,11 +12,15 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 @endif
 
-@vite(['resources/css/vendor-sidebar.css', 'resources/css/vendor-layout.css'])
+@vite(['resources/css/vendor-sidebar.css', 'resources/css/vendor-layout.css', 'resources/js/win-toast.js'])
 @if($role === 'vendor')
   @vite(['resources/js/vendor-utils.js', 'resources/js/vendor-sidebar-notifications.js', 'resources/js/vendor-sidebar-mobile.js'])
 @else
   @vite(['resources/js/vendor-sidebar-mobile.js'])
+@endif
+
+@if(session('toast'))
+  <script>window.winToastFlash = @json(session('toast'));</script>
 @endif
 
 <button

@@ -40,10 +40,10 @@ class VendorNetworkPresenter
         $row = [
             'id' => $vendor->id,
             'uuid' => $vendor->uuid,
+            'model' => $vendor,
             'type_label' => $typeLabel,
             'type_icon' => $iconPath ? asset(ltrim($iconPath, '/')) : null,
             'business_name' => $businessName,
-            'avatar' => ProfileImageStorage::url($vendor->image),
             'location' => trim((string) ($vendor->location ?? '')) ?: '—',
             'view_url' => route('profile.vendor', ['id' => $vendor->uuid]),
         ];

@@ -147,7 +147,7 @@ class VendorMessagesPresenter
             'show_role' => $showRole,
             'name' => $name,
             'subtitle' => $subtitle,
-            'avatar' => ProfileImageStorage::url($participant->image),
+            'model' => $participant,
             'preview' => $lastMessage !== null ? $lastMessage->body : 'Start a conversation!',
             'sent_at' => $sentAt,
             'has_unread' => $hasUnread,
@@ -181,6 +181,9 @@ class VendorMessagesPresenter
                 'info_secondary' => $participant->wedding_location
                     ?: 'Venue location is still pending.',
                 'avatar' => ProfileImageStorage::url($participant->image),
+                'avatar_has_photo' => ProfileImageStorage::hasCustomImage($participant->image),
+                'avatar_initials' => AvatarPalette::coupleInitials($participant->first_name, $participant->fiance_first_name ?? ''),
+                'avatar_colors' => AvatarPalette::colorFor(get_class($participant) . ':' . $participant->id),
                 'profile_url' => filled($participant->uuid)
                     ? route('vendor.couple.profile', ['id' => $participant->uuid])
                     : null,
@@ -200,6 +203,9 @@ class VendorMessagesPresenter
             'partner_two' => '',
             'partner_one_full' => trim($participant->first_name . ' ' . ($participant->last_name ?? '')),
             'partner_two_full' => '',
+            'avatar_has_photo' => ProfileImageStorage::hasCustomImage($participant->image),
+            'avatar_initials' => AvatarPalette::initials(trim($participant->first_name . ' ' . ($participant->last_name ?? ''))),
+            'avatar_colors' => AvatarPalette::colorFor(get_class($participant) . ':' . $participant->id),
             'info_heading' => 'Vendor Information:',
             'info_primary' => '',
             'info_secondary' => $location !== '' ? $location : 'Location not specified.',

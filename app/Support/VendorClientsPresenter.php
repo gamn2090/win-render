@@ -65,10 +65,10 @@ class VendorClientsPresenter
         return [
             'id' => $client->id,
             'uuid' => $client->uuid,
+            'model' => $client,
             'first_name' => trim((string) ($client->first_name ?? '')),
             'fiance_name' => $fianceName,
             'email' => trim((string) ($client->email ?? '')),
-            'avatar' => ProfileImageStorage::url($client->image),
             'wedding_location' => $client->wedding_location ?: '—',
             'wedding_date' => self::formatWeddingDate($client->wedding_date),
             'is_active' => $isActive,

@@ -209,6 +209,7 @@ class VendorController extends Controller
             'newLeadsToday' => Pairing::where('vendor_id', $vendor->id)->whereDate('created_at', today())->count(),
             'newLeadsCount' => Pairing::where('vendor_id', $vendor->id)->whereIn('status', [1, 2])->count(),
         ];
+        
         $placement = Vendor::where('type', $vendor->type)->where('score', '>', $vendor->score)->count();
         $data["placement"] = $placement;
         $data["sameTypeVendors"] = Vendor::where('type', $vendor->type)->count();
@@ -358,7 +359,8 @@ class VendorController extends Controller
             $pairs->active = 0;
             $pairs->save();
         }
-        return redirect('/vendor/client/list');
+        return redirect('/vendor/client/list')
+            ->with('toast', ['message' => 'Client Archived.', 'type' => 'success']);
     }
 
     public function unarchiveClient($id, $ven_id){
@@ -367,7 +369,8 @@ class VendorController extends Controller
             $pairs->active = 1;
             $pairs->save();
         }
-        return redirect()->route('vendor.client.list');
+        return redirect()->route('vendor.client.list')
+            ->with('toast', ['message' => 'Client Unarchived.', 'type' => 'success']);
     }
 
     public function getInquiries(Request $request){

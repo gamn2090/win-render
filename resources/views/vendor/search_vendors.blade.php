@@ -71,6 +71,7 @@
               type="button"
               class="vd-vendor-card__preferred preferred-toggle-btn"
               data-vendor-id="{{ $card->id }}"
+              data-vendor-name="{{ $card->business_name }}"
               data-connected="{{ $isConnected ? '1' : '0' }}"
               aria-label="Toggle preferred vendor"
               title="Add to my preferred vendors"
@@ -80,7 +81,11 @@
             </button>
 
             <a href="{{ route('profile.vendor', $card->uuid) }}" class="vd-vendor-card__image-link" tabindex="-1" aria-hidden="true">
-              <img class="vd-vendor-card__image" src="{{ \App\Support\ProfileImageStorage::url($card->image) }}" alt="" />
+              @if($card->coverImageUrl())
+                <img class="vd-vendor-card__image" src="{{ $card->coverImageUrl() }}" alt="" />
+              @else
+                <div class="vd-vendor-card__image win-cover-placeholder"></div>
+              @endif
             </a>
           </div>
 
@@ -149,6 +154,8 @@
     var csrf = document.querySelector('meta[name="csrf-token"]').content;
     btn.disabled = true;
 
+    var name = btn.dataset.vendorName || 'Vendor';
+
     if (connected) {
       fetch('{{ route('vendor.connection.remove') }}', {
         method: 'POST',
@@ -159,6 +166,7 @@
         body: JSON.stringify({ aff_vendor: btn.dataset.vendorId }),
       }).then(function () {
         btn.dataset.connected = '0';
+        WinToast.show('Vendor ' + name + ' removed from your preferred.', 'success');
       }).finally(function () {
         btn.disabled = false;
       });
@@ -177,6 +185,9 @@
       .then(function (data) {
         if (data.status) {
           btn.dataset.connected = '1';
+          WinToast.show('Vendor ' + name + ' added to your preferred.', 'success');
+        } else {
+          WinToast.show(data.msg || 'Something went wrong, please try again.', 'error');
         }
       })
       .finally(function () {

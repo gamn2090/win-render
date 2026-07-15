@@ -6,8 +6,9 @@
   <meta name="csrf-token" content="{{ csrf_token() }}" />
   <title>WIN: Dashboard</title>
   @vite(['resources/css/app.css', 'resources/css/vendor-dashboard.css'])
-  @vite(['resources/js/app.js'])
+  @vite(['resources/js/app.js', 'resources/js/chat-modal.js'])
   @include('components.fonts')
+  <script>window.winChatModalMeta = { initials: {!! json_encode(\App\Support\AvatarPalette::initialsFor(Auth::guard('web')->user())) !!} };</script>
 </head>
 <body class="vd-page m-0 antialiased overflow-x-hidden">
 @php
@@ -109,15 +110,31 @@
                   ->first(fn ($p) => $p->messageable_type === \App\Models\Vendor::class);
               @endphp
               @if($participant)
+                @php
+                  $otherVendor = $participant->messageable;
+                  $otherName = $otherVendor->business_name ?? trim($otherVendor->first_name . ' ' . $otherVendor->last_name);
+                  $otherInitials = \App\Support\AvatarPalette::initialsFor($otherVendor);
+                  [$otherBg, $otherFg] = \App\Support\AvatarPalette::colorFor(get_class($otherVendor) . ':' . $otherVendor->id);
+                  $otherHasPhoto = \App\Support\ProfileImageStorage::hasCustomImage($otherVendor->image ?? null);
+                @endphp
                 <div class="vd-list-row">
-                  <img class="vd-list-row__avatar" src="{{ \App\Support\ProfileImageStorage::url($participant->messageable->image) }}" alt="" width="36" height="36" />
+                  <x-avatar :model="$otherVendor" class="vd-list-row__avatar" />
                   <div class="vd-list-row__text">
-                    <p class="vd-list-row__name">{{ $participant->messageable->business_name ?? trim($participant->messageable->first_name . ' ' . $participant->messageable->last_name) }}</p>
+                    <p class="vd-list-row__name">{{ $otherName }}</p>
                     <p class="vd-list-row__preview">{{ Str::limit($convo->conversation->last_message->body ?? 'Start a conversation!', 48) }}</p>
                   </div>
                   <div class="vd-list-row__actions">
                     <a href="{{ route('get.client.conversation', $convo->conversation->id) }}" class="vd-btn-view">VIEW</a>
-                    <a href="{{ route('get.client.conversation', $convo->conversation->id) }}" class="vd-btn-chat" aria-label="Open chat">💬</a>
+                    <button type="button" class="vd-btn-chat"
+                      data-chat-modal-trigger
+                      data-chat-modal-convo="{{ $convo->conversation->id }}"
+                      data-chat-modal-role="client"
+                      data-chat-modal-name="{{ $otherName }}"
+                      data-chat-modal-other-initials="{{ $otherInitials }}"
+                      data-chat-modal-avatar-photo="{{ $otherHasPhoto ? \App\Support\ProfileImageStorage::url($otherVendor->image) : '' }}"
+                      data-chat-modal-avatar-bg="{{ $otherBg }}"
+                      data-chat-modal-avatar-fg="{{ $otherFg }}"
+                      aria-label="Open chat">💬</button>
                   </div>
                 </div>
               @endif
@@ -133,17 +150,17 @@
 
       <article class="vd-card vd-card--feed">
         <div class="vd-card__head">
-          <h2 class="vd-card__title">My Wedding Appointments</h2>
+          <h2 class="vd-card__title">My Consultations Appointments</h2>
           <a href="{{ route('appointments.list') }}" class="vd-card__link">Set my availability →</a>
         </div>
         <div class="vd-card__body">
           <div class="vd-meetings-banner">Meeting(S) upcoming! <strong>{{ $upcomingMeetings->count() }}</strong></div>
           <div class="vd-card__scroll">
             @forelse($upcomingMeetings as $meeting)
-              @php $meetingVendor = $meeting->vendor; @endphp
+              @php $meetingVendor = $meeting->vendor()->first(); @endphp
               @if($meetingVendor)
                 <div class="vd-list-row vd-list-row--appointment">
-                  <img class="vd-list-row__avatar" src="{{ \App\Support\ProfileImageStorage::url($meetingVendor->image) }}" alt="" width="36" height="36" />
+                  <x-avatar :model="$meetingVendor" class="vd-list-row__avatar" />
                   <div class="vd-list-row__text">
                     <p class="vd-list-row__name">{{ $meetingVendor->business_name }}</p>
                     <p class="vd-list-row__preview">{{ ucfirst($meeting->type) }} &middot; {{ $meeting->readableTime() }}</p>
@@ -246,7 +263,11 @@
           @php $vendor = $pairing->vendor; @endphp
           <article class="vd-vendor-card">
             <a href="{{ route('profile.vendor', $vendor->uuid) }}" class="vd-vendor-card__image-link" tabindex="-1" aria-hidden="true">
-              <img class="vd-vendor-card__image" src="{{ \App\Support\ProfileImageStorage::url($vendor->image) }}" alt="" />
+              @if($vendor->coverImageUrl())
+                <img class="vd-vendor-card__image" src="{{ $vendor->coverImageUrl() }}" alt="" />
+              @else
+                <div class="vd-vendor-card__image win-cover-placeholder"></div>
+              @endif
             </a>
             <div class="vd-vendor-card__body">
               <h3 class="vd-vendor-card__name">{{ $vendor->business_name }}</h3>
@@ -289,7 +310,7 @@
         <div class="vd-network-summary" style="padding:0;">
           <div class="vd-network-summary__avatars">
             @foreach($randomVendors as $vendor)
-              <img src="{{ \App\Support\ProfileImageStorage::url($vendor->image) }}" alt="" />
+              <x-avatar :model="$vendor" class="vd-network-summary__avatar-item" />
             @endforeach
           </div>
         </div>
@@ -306,6 +327,8 @@
   {{-- Site footer disabled per client request — uncomment to restore --}}
   {{-- @include('layouts.footer') --}}
 </main>
+
+<x-chat-modal />
 
 <script>
   document.getElementById('vd-announcement-close')?.addEventListener('click', function () {

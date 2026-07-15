@@ -33,7 +33,7 @@
           @endif
           <td class="vm-table__cell vm-table__cell--name">
             <div class="vm-person">
-              <img class="vm-person__avatar" src="{{ $row['avatar'] }}" alt="" width="48" height="48" />
+              <x-avatar :model="$row['model']" class="vm-person__avatar" />
               <div class="vm-person__text">
                 <span class="vm-person__name">{{ $row['name'] }}</span>
                 @if(!empty($row['subtitle']))

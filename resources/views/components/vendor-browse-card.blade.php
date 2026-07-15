@@ -12,11 +12,11 @@
 
 <article class="vd-vendor-card">
     <a href="{{ url('/vendor/profile/' . $vendor->uuid) }}" class="vd-vendor-card__image-link" tabindex="-1" aria-hidden="true">
-        <img
-            class="vd-vendor-card__image"
-            src="{{ asset('/storage/images/' . $vendor->image) }}"
-            alt=""
-        />
+        @if($vendor->coverImageUrl())
+            <img class="vd-vendor-card__image" src="{{ $vendor->coverImageUrl() }}" alt="" />
+        @else
+            <div class="vd-vendor-card__image win-cover-placeholder"></div>
+        @endif
     </a>
     <div class="vd-vendor-card__body">
         <h3 class="vd-vendor-card__name">{{ $vendor->business_name }}</h3>

@@ -34,6 +34,6 @@ class Endorsement extends Model
     }
 
     public function endorserPicture(){
-        return $this->hasOne(Vendor::class, 'id', 'endorser')->get(['image']);
+        return $this->hasOne(Vendor::class, 'id', 'endorser')->get(['id', 'first_name', 'last_name', 'business_name', 'image']);
     }
 }

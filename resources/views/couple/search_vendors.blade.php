@@ -72,12 +72,17 @@
             type="button"
             class="vd-vendor-card__favorite favorite-toggle-btn"
             data-vendor-id="{{ $vendor->uuid }}"
+            data-vendor-name="{{ $vendor->business_name }}"
             data-favorited="{{ $favorited ? '1' : '0' }}"
             aria-label="Toggle favorite"
           >{{ $favorited ? '♥' : '♡' }}</button>
 
           <a href="{{ route('profile.vendor', $vendor->uuid) }}" class="vd-vendor-card__image-link" tabindex="-1" aria-hidden="true">
-            <img class="vd-vendor-card__image" src="{{ \App\Support\ProfileImageStorage::url($vendor->image) }}" alt="" />
+            @if($vendor->coverImageUrl())
+              <img class="vd-vendor-card__image" src="{{ $vendor->coverImageUrl() }}" alt="" />
+            @else
+              <div class="vd-vendor-card__image win-cover-placeholder"></div>
+            @endif
           </a>
 
           <div class="vd-vendor-card__body">
@@ -153,6 +158,13 @@
         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
       },
       body: JSON.stringify({ vendor_uuid: btn.dataset.vendorId, active: next }),
+    }).then(function (r) { return r.json(); }).then(function (data) {
+      var name = btn.dataset.vendorName || 'Vendor';
+      if (data.status) {
+        WinToast.show('Vendor ' + name + (next ? ' added to your favorites.' : ' removed from your favorites.'), 'success');
+      } else {
+        WinToast.show(data.message || 'Something went wrong, please try again.', 'error');
+      }
     }).finally(function () {
       btn.disabled = false;
     });

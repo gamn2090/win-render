@@ -447,6 +447,24 @@
       font-size: 14px;
     }
   }
+
+  .win-spinner {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    margin-right: 8px;
+    border: 2px solid rgba(255, 255, 255, 0.45);
+    border-top-color: #fff;
+    border-radius: 50%;
+    vertical-align: middle;
+    animation: win-spin 0.6s linear infinite;
+  }
+
+  @keyframes win-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
 </style>
 <div id="modal-signin" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto">
   <div class="login-modal-wrap hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all sm:max-w-xl sm:w-full m-3 sm:mx-auto">
@@ -465,9 +483,6 @@
             <a class="join-button" href="{{ route('register') }}"><span>Sign Up as a Couple</span></a>
             <a class="join-button" href="{{ route('vendor.register.form') }}"><span>Sign Up as a Vendor</span></a>
           </div>
-        </div>
-        <div id="error-alert" class="bg-red-50 border-s-4 border-red-500 p-3 rounded-sm my-2" role="alert" hidden>
-          <p id="error-text" class="text-sm text-gray-700"></p>
         </div>
         <div class="grid gap-y-3">
           <div>
@@ -510,28 +525,6 @@
           </p>
         </div>
         <hr class="mt-2 mb-4">
-        <div id="vendor-error-alert" class="bg-red-50 border-s-4 border-red-500 p-4 rounded-sm my-1" role="alert" hidden>
-          <div class="flex">
-            <div class="flex-shrink-0">
-              <!-- Icon -->
-              <span class="inline-flex justify-center items-center size-8 rounded-full border-4 border-red-100 bg-red-200 text-red-800">
-                <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M18 6 6 18" />
-                  <path d="m6 6 12 12" />
-                </svg>
-              </span>
-              <!-- End Icon -->
-            </div>
-            <div class="ms-3">
-              <h3 class="text-gray-800 font-semibold">
-                Error!
-              </h3>
-              <p id="vendor-error-text" class="text-sm text-gray-700">
-
-              </p>
-            </div>
-          </div>
-        </div>
         <div class="grid gap-y-4">
           <!-- Form Group -->
           <div>
@@ -584,8 +577,41 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@vite(['resources/js/win-toast.js'])
 <script>
-  $("#vendor-login-submit").on("click", () => {
+  function credentialsMismatchMessage(xhr) {
+    const payload = xhr.responseJSON || {};
+    return payload.message
+      || (payload.errors && Object.values(payload.errors).flat()[0])
+      || 'These credentials do not match our records.';
+  }
+
+  function handleLoginError(xhr) {
+    if (xhr.status === 422) {
+      Swal.fire({
+        title: 'Oops!',
+        text: credentialsMismatchMessage(xhr),
+        icon: 'error',
+        confirmButtonText: 'Ok',
+        confirmButtonColor: '#6432C8',
+      });
+    } else {
+      window.WinToast && window.WinToast.show('Something went wrong on our end, please try again.', 'error');
+    }
+  }
+
+  $("#vendor-login-submit").on("click", function () {
+    const $btn = $(this);
+    const originalHtml = $btn.html();
+    const $fields = $("#vendor-email, #vendor-password");
+    $btn.prop('disabled', true).html('<span class="win-spinner"></span> Signing In...');
+    $fields.prop('readonly', true);
+
+    function restore() {
+      $btn.prop('disabled', false).html(originalHtml);
+      $fields.prop('readonly', false);
+    }
+
     let formData = {
       email: $("#vendor-email").val(),
       password: $("#vendor-password").val()
@@ -602,15 +628,29 @@
         const res = typeof data === 'string' ? JSON.parse(data) : data;
         if (res.status) {
           window.location.href = res.role === 'couple' ? '/dashboard' : '/vendor/dashboard';
+          return;
         }
+        restore();
       },
-      error: function(data) {
-        $('#vendor-error-alert').attr('hidden', false);
-        $('#vendor-error-text').html(data['responseJSON']["message"]);
+      error: function(xhr) {
+        restore();
+        handleLoginError(xhr);
       }
     });
   });
-  $("#login-submit").on("click", () => {
+
+  $("#login-submit").on("click", function () {
+    const $btn = $(this);
+    const originalHtml = $btn.html();
+    const $fields = $("#email, #login-password");
+    $btn.prop('disabled', true).html('<span class="win-spinner"></span> Signing In...');
+    $fields.prop('readonly', true);
+
+    function restore() {
+      $btn.prop('disabled', false).html(originalHtml);
+      $fields.prop('readonly', false);
+    }
+
     let formData = {
       email: $("#email").val(),
       password: $("#login-password").val()
@@ -627,15 +667,13 @@
         const res = typeof data === 'string' ? JSON.parse(data) : data;
         if (res.status) {
           window.location.href = res.role === 'vendor' ? '/vendor/dashboard' : '/dashboard';
+          return;
         }
+        restore();
       },
-      error: function(data) {
-        $('#error-alert').attr('hidden', false);
-        const payload = data.responseJSON || {};
-        const msg = payload.message
-          || (payload.errors && Object.values(payload.errors).flat()[0])
-          || 'Sign in failed. Please check your email and password.';
-        $('#error-text').html(msg);
+      error: function(xhr) {
+        restore();
+        handleLoginError(xhr);
       }
     });
   });

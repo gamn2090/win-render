@@ -90,7 +90,13 @@
             'X-CSRF-TOKEN': csrf,
           },
           body: JSON.stringify({ vendor_uuid: favBtn.dataset.vendorId, active: false }),
-        }).then(function () {
+        }).then(function (r) { return r.json(); }).then(function (data) {
+          var name = favBtn.dataset.vendorName || 'Vendor';
+          if (data.status) {
+            WinToast.show('Vendor ' + name + ' removed from your favorites.', 'success');
+          } else {
+            WinToast.show(data.message || 'Something went wrong, please try again.', 'error');
+          }
           if (card) {
             card.style.transition = 'opacity .2s ease';
             card.style.opacity = '0';
@@ -104,6 +110,33 @@
       if (bookBtn) {
         pendingBookVendorUuid = bookBtn.dataset.vendorUuid;
         openModal(markBookedModal);
+        return;
+      }
+
+      var inquiryBtn = e.target.closest('.send-inquiry-btn');
+      if (inquiryBtn) {
+        inquiryBtn.disabled = true;
+        inquiryBtn.textContent = 'Sending…';
+        fetch('{{ route('user.send.inquiry') }}', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': csrf },
+          body: JSON.stringify({ vendor_id: inquiryBtn.dataset.vendorId }),
+        })
+          .then(function (r) { return r.json(); })
+          .then(function (data) {
+            if (data.status) {
+              inquiryBtn.textContent = 'Inquiry Sent ✓';
+              setTimeout(function () { window.location.reload(); }, 600);
+            } else {
+              inquiryBtn.textContent = 'Send Inquiry';
+              inquiryBtn.disabled = false;
+              WinToast.show(data.message || 'Something went wrong, please try again.', 'error');
+            }
+          })
+          .catch(function () {
+            inquiryBtn.textContent = 'Send Inquiry';
+            inquiryBtn.disabled = false;
+          });
         return;
       }
 
