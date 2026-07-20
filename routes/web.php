@@ -15,6 +15,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\CoupleInvestmentPlannerController;
 use App\Http\Controllers\PlanningToolsController;
 use App\Http\Controllers\TimelineToolController;
+use App\Http\Controllers\VendorCalendarController;
 use App\Http\Controllers\MessageAttachmentController;
 use App\Http\Controllers\SearchController;
 use App\Models\Event;
@@ -177,12 +178,40 @@ Route::middleware('auth:vendor')->group(function () {
     Route::get('/vendor/planning-tools', [PlanningToolsController::class, 'vendorIndex'])
         ->name('vendor.planning_tools');
 
-    Route::get('/vendor/timeline', [TimelineToolController::class, 'showVendor'])
-        ->name('vendor.timeline');
+    Route::get('/vendor/timeline', function () {
+        return redirect()->route('vendor.timelines.index');
+    })->name('vendor.timeline');
     Route::post('/vendor/timeline/draft', [TimelineToolController::class, 'saveVendorDraft'])
         ->name('vendor.timeline.draft.save');
     Route::post('/vendor/timeline/draft/clear', [TimelineToolController::class, 'clearVendorDraft'])
         ->name('vendor.timeline.draft.clear');
+
+    Route::get('/vendor/timelines', [TimelineToolController::class, 'indexVendorTimelines'])
+        ->name('vendor.timelines.index');
+    Route::post('/vendor/timelines', [TimelineToolController::class, 'storeVendorTimeline'])
+        ->name('vendor.timelines.store');
+    Route::get('/vendor/timelines/{timeline}', [TimelineToolController::class, 'showVendorTimeline'])
+        ->name('vendor.timelines.show');
+    Route::patch('/vendor/timelines/{timeline}', [TimelineToolController::class, 'renameVendorTimeline'])
+        ->name('vendor.timelines.rename');
+    Route::delete('/vendor/timelines/{timeline}', [TimelineToolController::class, 'destroyVendorTimeline'])
+        ->name('vendor.timelines.destroy');
+    Route::post('/vendor/timelines/{timeline}/draft', [TimelineToolController::class, 'saveVendorTimelineDraft'])
+        ->name('vendor.timelines.draft.save');
+    Route::post('/vendor/timelines/{timeline}/draft/clear', [TimelineToolController::class, 'clearVendorTimelineDraft'])
+        ->name('vendor.timelines.draft.clear');
+
+    Route::get('/vendor/couple/{id}/timeline', [TimelineToolController::class, 'showCoupleTimelineForVendor'])
+        ->name('vendor.couple.timeline');
+
+    Route::get('/vendor/calendar', [VendorCalendarController::class, 'index'])
+        ->name('vendor.calendar');
+    Route::post('/vendor/calendar/events', [VendorCalendarController::class, 'store'])
+        ->name('vendor.calendar.events.store');
+    Route::patch('/vendor/calendar/events/{event}', [VendorCalendarController::class, 'update'])
+        ->name('vendor.calendar.events.update');
+    Route::delete('/vendor/calendar/events/{event}', [VendorCalendarController::class, 'destroy'])
+        ->name('vendor.calendar.events.destroy');
 });
 
 

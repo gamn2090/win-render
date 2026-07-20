@@ -85,7 +85,7 @@
                 <div class="join-us-vendor-field">
                     <label for="location" class="join-us-vendor-label">Location <span class="req">*</span></label>
                     <div class="join-us-vendor-field-control join-us-vendor-field-control--select">
-                        <input id="location" type="text" class="join-us-vendor-input" placeholder="city, state" autocomplete="address-level2">
+                        <input id="location" type="text" class="join-us-vendor-input" placeholder="city, state" autocomplete="off" data-places-autocomplete data-places-types="(cities)">
                     </div>
                 </div>
 

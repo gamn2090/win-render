@@ -8,10 +8,11 @@
         <title>Wedding Advertising For Vendors - Wedding Insider Network</title>
         <meta name="description" content="Wedding Insiders Network is a wedding advertising platform and community for vendors that promotes true community with authentic leads and transparent pricing."/>
 
+        @include('partials.google_places_autocomplete')
         <script async
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJedaphwORrnJVSpwqHuYSzRrGSluQ8Ck&loading=async&callback=initMap">
+            src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_maps.key') }}&loading=async&callback=initMap">
         </script>
-          
+
         @vite('resources/css/app.css')
         @vite('resources/js/app.js')
         @include('components.fonts')
@@ -446,7 +447,7 @@
                                         <div>
                                             <div class="mt-4">
                                                 <x-input-label class="font-semibold" for="location" :value="__('Location')" />
-                                                <input id="location" class="block mt-1 w-full rounded-full bg-win-light text-win-charcoal border-0" type="text" name="location" :value="old('location')" required />
+                                                <input id="location" class="block mt-1 w-full rounded-full bg-win-light text-win-charcoal border-0" type="text" name="location" :value="old('location')" autocomplete="off" data-places-autocomplete data-places-types="(cities)" required />
                                                 <x-input-error :messages="$errors->get('location')" class="mt-2" />
                                             </div>
                                         </div>
@@ -755,6 +756,7 @@
                     zoom: 6,
                     mapId: "6eaab94585b0841a"
                 });
+                initWinPlacesAutocomplete();
             }
             let circleRad = null;
             async function findPlaces(query, serviceRadius = 50) {

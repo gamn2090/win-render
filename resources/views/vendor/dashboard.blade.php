@@ -455,12 +455,12 @@
           <span class="vd-tool-card__eyebrow vd-tool-card__eyebrow--purple">New Tool</span>
           <span class="vd-tool-card__badge">NOW AVAILABLE</span>
         </div>
-        <h3 class="vd-tool-card__title">WIN Wedding Timeline Planner</h3>
+        <h3 class="vd-tool-card__title">My Calendar</h3>
         <p class="vd-tool-card__desc">
-          <span class="vd-tool-card__desc-line">Build, share &amp; collaborate on day-of timelines with your clients and fellow vendors. Save</span>
-          <span class="vd-tool-card__desc-line">progress between sessions.</span>
+          <span class="vd-tool-card__desc-line">Schedule events with your booked couples on a month, week, or day view &mdash;</span>
+          <span class="vd-tool-card__desc-line">just like a real calendar.</span>
         </p>
-        <a href="{{ route('vendor.timeline') }}" class="vd-tool-card__btn">Open Timeline Planner</a>
+        <a href="{{ route('vendor.calendar') }}" class="vd-tool-card__btn">Open My Calendar</a>
       </div>
     </article>
     <article class="vd-tool-card vd-tool-card--investment">

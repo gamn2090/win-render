@@ -106,6 +106,12 @@
             <span class="dashboard-sidebar__label">Insights</span>
           </a>
         </li>
+        <li>
+          <a href="{{ route('vendor.calendar') }}" class="{{ $navLinkClasses('vendor_calendar') }}">
+            <span class="dashboard-sidebar__emoji dashboard-sidebar__emoji--insights" aria-hidden="true">📅</span>
+            <span class="dashboard-sidebar__label">My Calendar</span>
+          </a>
+        </li>
       </ul>
     </div>
   @else

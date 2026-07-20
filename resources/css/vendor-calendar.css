@@ -1,0 +1,443 @@
+.vcal-content {
+  padding: 0 24px 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.vcal-empty-notice {
+  background: #F5F1FF;
+  border: 1px solid #E6DFFF;
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-size: 14px;
+  color: #4b4560;
+  margin-bottom: 16px;
+}
+
+/* Toolbar */
+.vcal-toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin: 20px 0 18px;
+}
+
+.vcal-toolbar__nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.vcal-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  height: 34px;
+  padding: 0 10px;
+  border-radius: 8px;
+  border: 1px solid #E1DCEC;
+  background: #fff;
+  color: #231f20;
+  font-weight: 700;
+  font-size: 16px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.vcal-nav-btn:hover {
+  background: #F5F1FF;
+}
+
+.vcal-nav-btn--today {
+  font-size: 13px;
+  padding: 0 14px;
+}
+
+.vcal-toolbar__label {
+  margin: 0 0 0 6px;
+  font-size: 17px;
+  font-weight: 800;
+  color: #231f20;
+  white-space: nowrap;
+}
+
+.vcal-toolbar__views {
+  display: inline-flex;
+  border: 1px solid #E1DCEC;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.vcal-view-btn {
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #4b4560;
+  text-decoration: none;
+  background: #fff;
+}
+
+.vcal-view-btn:not(:last-child) {
+  border-right: 1px solid #E1DCEC;
+}
+
+.vcal-view-btn--active {
+  background: #6432c8;
+  color: #fff;
+}
+
+.vcal-add-btn {
+  margin-left: auto;
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: none;
+  background: #6432c8;
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.vcal-add-btn:hover {
+  filter: brightness(0.95);
+}
+
+/* Month grid */
+.vcal-month {
+  border: 1px solid #E1DCEC;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.vcal-month__weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background: #F5F1FF;
+}
+
+.vcal-month__weekday {
+  padding: 10px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6432c8;
+  text-align: center;
+}
+
+.vcal-month__row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.vcal-month__cell {
+  min-height: 110px;
+  min-width: 0;
+  padding: 8px;
+  border-top: 1px solid #EDE9F5;
+  border-right: 1px solid #EDE9F5;
+  cursor: pointer;
+}
+
+.vcal-month__cell:hover {
+  background: #FAF8FF;
+}
+
+.vcal-month__cell--muted {
+  background: #FAFAFA;
+  color: #b3aebf;
+}
+
+.vcal-month__cell--muted .vcal-month__daynum {
+  color: #b3aebf;
+}
+
+.vcal-month__cell--today {
+  background: #FFF7EC;
+}
+
+.vcal-month__daynum {
+  display: block;
+  font-size: 13px;
+  font-weight: 800;
+  color: #231f20;
+  margin-bottom: 6px;
+}
+
+.vcal-month__events {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.vcal-event-pill {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  text-align: left;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: none;
+  background: #6432c8;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.3;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vcal-event-pill:hover {
+  filter: brightness(0.95);
+}
+
+/* Week / day grid */
+.vcal-grid {
+  display: grid;
+  border: 1px solid #E1DCEC;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.vcal-grid--week {
+  grid-template-columns: 64px repeat(7, 1fr);
+}
+
+.vcal-grid--day {
+  grid-template-columns: 64px 1fr;
+}
+
+.vcal-grid__hours {
+  border-right: 1px solid #EDE9F5;
+  background: #FAF8FF;
+}
+
+.vcal-grid__corner {
+  height: 44px;
+  border-bottom: 1px solid #EDE9F5;
+}
+
+.vcal-grid__hourlabel {
+  font-size: 11px;
+  color: #8a84a0;
+  text-align: right;
+  padding: 2px 8px 0 0;
+  border-bottom: 1px solid #F3F0FA;
+  box-sizing: border-box;
+}
+
+.vcal-grid__day {
+  border-right: 1px solid #EDE9F5;
+}
+
+.vcal-grid__day:last-child {
+  border-right: none;
+}
+
+.vcal-grid__daylabel {
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 800;
+  color: #231f20;
+  border-bottom: 1px solid #EDE9F5;
+}
+
+.vcal-grid__daylabel--today {
+  color: #6432c8;
+  background: #FFF7EC;
+}
+
+.vcal-grid__body {
+  position: relative;
+}
+
+.vcal-grid__slot {
+  border-bottom: 1px solid #F3F0FA;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.vcal-grid__slot:hover {
+  background: #FAF8FF;
+}
+
+.vcal-event-block {
+  position: absolute;
+  left: 3px;
+  right: 3px;
+  border-radius: 8px;
+  border: none;
+  background: #6432c8;
+  color: #fff;
+  text-align: left;
+  padding: 4px 8px;
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  z-index: 2;
+}
+
+.vcal-event-block:hover {
+  filter: brightness(0.95);
+}
+
+.vcal-event-block__time {
+  font-size: 10.5px;
+  font-weight: 700;
+  opacity: 0.9;
+}
+
+.vcal-event-block__name {
+  font-size: 12px;
+  font-weight: 800;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Modal */
+.vcal-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vcal-modal[hidden] {
+  display: none;
+}
+
+.vcal-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(21, 21, 21, 0.45);
+}
+
+.vcal-modal__panel {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  margin: 20px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+}
+
+.vcal-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.vcal-modal__title {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 800;
+  color: #231f20;
+}
+
+.vcal-modal__close {
+  border: none;
+  background: none;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  color: #8a84a0;
+}
+
+.vcal-field {
+  margin-bottom: 14px;
+  flex: 1;
+}
+
+.vcal-field-row {
+  display: flex;
+  gap: 10px;
+}
+
+.vcal-field__label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: #4b4560;
+  margin-bottom: 6px;
+}
+
+.vcal-field__input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #D8D3E0;
+  font-family: inherit;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.vcal-form-error {
+  color: #c0392b;
+  font-size: 13px;
+  margin: -4px 0 12px;
+}
+
+.vcal-modal__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+.vcal-modal__actions-right {
+  display: flex;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.vcal-btn {
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: none;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.vcal-btn--primary {
+  background: #6432c8;
+  color: #fff;
+}
+
+.vcal-btn--ghost {
+  background: #fff;
+  border: 1px solid #D8D3E0;
+  color: #231f20;
+}
+
+.vcal-btn--danger {
+  background: #fff;
+  border: 1px solid #f1b3ac;
+  color: #c0392b;
+}
+
+@media (max-width: 900px) {
+  .vcal-grid--week {
+    grid-template-columns: 48px repeat(7, minmax(90px, 1fr));
+    overflow-x: auto;
+  }
+}

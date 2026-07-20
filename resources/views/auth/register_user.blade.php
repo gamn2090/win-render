@@ -10,6 +10,9 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css" rel="stylesheet"/>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
 
+  @include('partials.google_places_autocomplete')
+  <script async src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_maps.key') }}&loading=async&callback=initWinPlacesAutocomplete"></script>
+
   @vite('resources/css/app.css')
   @vite('resources/js/app.js')
   @include('components.fonts')

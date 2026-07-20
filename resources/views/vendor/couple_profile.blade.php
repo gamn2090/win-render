@@ -98,6 +98,11 @@
               <span class="vcp-banner__value"> {{ $venueLocation }}</span>
             </p>
           </div>
+          @if($isBookedByCurrentVendor)
+            <a href="{{ route('vendor.couple.timeline', ['id' => $client->uuid]) }}" class="vcp-banner__timeline-btn">
+              View Timeline
+            </a>
+          @endif
         </div>
       </div>
     </section>

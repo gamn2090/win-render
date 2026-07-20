@@ -45,7 +45,7 @@
                     <div class="join-us-couple-form-col">
                         <label for="client-venue" class="join-us-vendor-label join-us-couple-label">Wedding Location</label>
                         <div class="join-us-vendor-field-control join-us-vendor-field-control--select">
-                            <input id="client-venue" type="text" class="join-us-vendor-input" placeholder="City, State" autocomplete="address-level2">
+                            <input id="client-venue" type="text" class="join-us-vendor-input" placeholder="City, State" autocomplete="off" data-places-autocomplete data-places-types="(cities)">
                         </div>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
                     <div class="join-us-couple-form-col">
                         <label for="client-wedding-venue-location" class="join-us-vendor-label join-us-couple-label">Wedding Venue Location</label>
                         <div class="join-us-vendor-field-control join-us-vendor-field-control--select">
-                            <input id="client-wedding-venue-location" type="text" class="join-us-vendor-input" placeholder="City, State" autocomplete="address-level2">
+                            <input id="client-wedding-venue-location" type="text" class="join-us-vendor-input" placeholder="City, State" autocomplete="off" data-places-autocomplete data-places-types="(cities)">
                         </div>
                     </div>
                 </div>

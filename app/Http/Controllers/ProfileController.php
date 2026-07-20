@@ -60,12 +60,18 @@ class ProfileController extends Controller
         $vendor->ensureUuid();
         $vendor->ensureVendorProfile();
 
+        $locationParts = array_map('trim', explode(',', trim((string) $vendor->location), 2));
+        $businessCity = $locationParts[0] ?? '';
+        $businessState = $locationParts[1] ?? '';
+
         return view('profile.vendor_edit', [
             'user' => $vendor,
             'user_type' => VendorTypes::where('id', $request->user()->type)->first(),
             'page' => 'edit_profile',
             'tag_types' => TagType::where('vendor_type_id', $vendor->type)->where('hidden', 0)->get(),
             'profile' => $vendor->profile,
+            'businessCity' => $businessCity,
+            'businessState' => $businessState,
         ]);
     }
 
@@ -301,6 +307,10 @@ class ProfileController extends Controller
         foreach(array_keys($tags) as $tagName){
             $vendor->updateTag($tagName, $tags[$tagName]);
         }
+
+        $businessCity = trim((string) $request->input('business_city'));
+        $businessState = trim((string) $request->input('business_state'));
+        $vendor->location = trim(implode(', ', array_filter([$businessCity, $businessState])));
 
         $vendor->fill($request->only(['first_name', 'last_name', 'business_name', 'service_radius', 'discount', 'avg_price']));
         $vendor->save();

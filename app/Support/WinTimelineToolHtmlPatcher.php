@@ -4,7 +4,7 @@ namespace App\Support;
 
 class WinTimelineToolHtmlPatcher
 {
-    public static function apply(string $html, ?string $displayName = null): string
+    public static function apply(string $html, ?string $displayName = null, bool $readOnly = false): string
     {
         $html = str_replace(["\r\n", "\r"], "\n", $html);
         $html = self::applyHeaderPatch($html, $displayName);
@@ -416,6 +416,10 @@ HTML;
 
         $html = preg_replace('/<\/head>/', $drawerCss . '</head>', $html, 1) ?? $html;
 
+        if ($readOnly) {
+            $html = self::applyReadOnlyPatch($html);
+        }
+
         $html = str_replace(
             <<<'JS'
       const LANE_H   = compact ? 72 : 92   // px per vertical lane (taller for narrow wrapped text)
@@ -693,6 +697,18 @@ JS,
         );
 
         $html = str_replace(
+            '<div class="card">
+<div class="cardHead">
+<div class="cardTitleWrap">
+<p class="cardTitle">Vendor timeline</p>',
+            '<div class="card vendorTimelineCard">
+<div class="cardHead">
+<div class="cardTitleWrap">
+<p class="cardTitle">Vendor timeline</p>',
+            $html
+        );
+
+        $html = str_replace(
             "    loadState()\n    renderAll()",
             $runtimePatch . "\n    loadState()\n    renderAll()",
             $html
@@ -739,6 +755,39 @@ JS,
         }
 
         return $html;
+    }
+
+    /**
+     * Hides every editing affordance (the Setup panel's Add/Save/Delete
+     * controls, the day-window editors, the block editor drawer's Save and
+     * Delete buttons, Clear/Restart) and disables dragging/resizing blocks,
+     * so a vendor viewing a booked couple's real timeline can look but not
+     * touch. PDF export is intentionally left untouched — it's a read of
+     * `state`, not a write. Hiding the Setup card (460px grid column) would
+     * otherwise leave the Vendor Timeline card squeezed into that same
+     * narrow column, since `.layout` is a fixed 460px/1fr grid — so the
+     * layout is collapsed to a single full-width column here too. This is
+     * purely a CSS layer; the bridge script's saveUrl/clearUrl are also null
+     * in this mode so there's no server endpoint to write to even if a
+     * control were reached, and dragging only ever mutates local in-memory
+     * state, never persisted.
+     */
+    private static function applyReadOnlyPatch(string $html): string
+    {
+        $readOnlyCss = <<<'HTML'
+<style>
+  .setupCard{display:none !important}
+  .layout{grid-template-columns:1fr !important}
+  #overallTimeWindowBtn,#vendorTimeWindowBtn,#saveWindowBtn,
+  #addTaskBtn,#saveBlockBtn,#deleteBlockBtn,
+  #clearBtn,#restartBtn,#resetWindowBtn{display:none !important}
+  .block{pointer-events:none !important; cursor:default !important}
+  .block .iconBtn{pointer-events:auto !important}
+  .block .resizeHandle{display:none !important}
+</style>
+HTML;
+
+        return preg_replace('/<\/head>/', $readOnlyCss . '</head>', $html, 1) ?? $html;
     }
 
     /**
@@ -811,6 +860,43 @@ JS,
             '      const maxLines = 26
       const safeLines = lines.slice(0, maxLines)',
             '      const safeLines = lines',
+            $html
+        );
+
+        // A vendor block whose couple never added sub-tasks to it previously
+        // produced NO line in the PDF at all (only its tasks were exported,
+        // never the block's own start/end range) — so a simple "Lighting
+        // 10am-12pm" block with no tasks silently vanished from the export
+        // even though it's clearly visible on-screen. Export the block's own
+        // time range as a line first, then still list its tasks underneath.
+        $html = str_replace(
+            <<<'JS'
+      // Vendor tasks as milestone lines (no duration)
+      blocks.filter(b => b.vendorId !== KEY_VENDOR_ID).forEach(b=>{
+        const v = vendorsById[b.vendorId]
+        const cat = (v?.category || "Vendor").trim()
+        const icon = (state.vendorIcons && state.vendorIcons[cat]) ? state.vendorIcons[cat] : "•"
+        const tasks = (b.tasks || []).slice().sort((x,y)=>x.atMin-y.atMin)
+        tasks.forEach(t=>{
+JS,
+            <<<'JS'
+      // Vendor blocks as primary schedule lines (their own start/end), plus each task as a milestone line
+      blocks.filter(b => b.vendorId !== KEY_VENDOR_ID).forEach(b=>{
+        const v = vendorsById[b.vendorId]
+        const cat = (v?.category || "Vendor").trim()
+        const icon = (state.vendorIcons && state.vendorIcons[cat]) ? state.vendorIcons[cat] : "•"
+        lines.push({
+          startMin: b.startMin,
+          endMin: b.endMin,
+          start: formatTime(b.startMin),
+          end: formatTime(b.endMin),
+          label: `${cat}: ${v?.name || "Vendor"}`,
+          icon,
+          durationMin: Math.max(0, b.endMin - b.startMin)
+        })
+        const tasks = (b.tasks || []).slice().sort((x,y)=>x.atMin-y.atMin)
+        tasks.forEach(t=>{
+JS,
             $html
         );
 

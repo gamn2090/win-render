@@ -41,21 +41,27 @@
                         </section>
                     @endif
 
-                    <section class="rounded-2xl border border-[#E6DFFF] bg-white p-5 shadow-sm">
-                        <p class="subheading mb-2">Wedding Timeline Planner</p>
-                        <p class="body-copy text-win-charcoal mb-4">
-                            Build your day-of timeline with vendors, tasks, and export options.
-                        </p>
-                        @if($role === 'vendor')
-                            <a href="{{ route('vendor.timeline') }}" class="inline-flex items-center rounded-lg bg-win-blue text-white px-4 py-2 font-semibold">
-                                Open Timeline Tool
+                    @if($role === 'vendor')
+                        <section class="rounded-2xl border border-[#E6DFFF] bg-white p-5 shadow-sm">
+                            <p class="subheading mb-2">My Calendar</p>
+                            <p class="body-copy text-win-charcoal mb-4">
+                                Schedule events with your booked couples on a month, week, or day view.
+                            </p>
+                            <a href="{{ route('vendor.calendar') }}" class="inline-flex items-center rounded-lg bg-win-blue text-white px-4 py-2 font-semibold">
+                                Open My Calendar
                             </a>
-                        @else
+                        </section>
+                    @else
+                        <section class="rounded-2xl border border-[#E6DFFF] bg-white p-5 shadow-sm">
+                            <p class="subheading mb-2">Wedding Timeline Planner</p>
+                            <p class="body-copy text-win-charcoal mb-4">
+                                Build your day-of timeline with vendors, tasks, and export options.
+                            </p>
                             <a href="{{ route('couple.timeline') }}" class="inline-flex items-center rounded-lg bg-win-blue text-white px-4 py-2 font-semibold">
                                 Open Timeline Tool
                             </a>
-                        @endif
-                    </section>
+                        </section>
+                    @endif
                 </div>
             </div>
         </div>

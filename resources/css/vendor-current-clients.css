@@ -312,6 +312,22 @@
   align-items: center;
   justify-content: flex-end;
   gap: 10px;
+  flex-wrap: wrap;
+}
+
+.cc-actions__inline-form {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cc-actions__inline-input {
+  width: 140px;
+  padding: 7px 10px;
+  border-radius: 8px;
+  border: 1px solid #d8d3e0;
+  font-family: inherit;
+  font-size: 14px;
 }
 
 .cc-btn {

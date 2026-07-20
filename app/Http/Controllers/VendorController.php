@@ -410,11 +410,17 @@ class VendorController extends Controller
             return view('404');
         }
 
+        $isBookedByCurrentVendor = Pairing::where('vendor_id', $request->user()->id)
+            ->where('client_id', $client->id)
+            ->where('status', 3)
+            ->exists();
+
         return view('vendor.couple_profile', [
             'client' => $client,
             'vendor_types' => VendorTypes::orderBy('priority', 'asc')->get(),
             'searching_for' => $client->getRequestedVendorTypes(),
             'booked_vendors' => $client->bookedVendors()->get(),
+            'isBookedByCurrentVendor' => $isBookedByCurrentVendor,
             'page' => 'find_couples',
         ]);
     }

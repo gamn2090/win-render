@@ -12,6 +12,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    @include('partials.google_places_autocomplete')
+    <script async src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_maps.key') }}&loading=async&callback=initWinPlacesAutocomplete"></script>
+
     @vite(['resources/css/app.css', 'resources/css/vendor-messages.css', 'resources/css/vendor-edit-profile.css', 'resources/css/vendor-dashboard.css', 'resources/js/app.js', 'resources/js/vendor-edit-profile.js'])
     @include('components.fonts')
     <style>
@@ -66,9 +70,6 @@
           @php
             $user = Auth::guard('vendor')->user();
             $locationTagNames = ['state', 'city'];
-            $locationTags = $tag_types->filter(fn ($t) => in_array(strtolower($t->name), $locationTagNames));
-            $stateTag = $tag_types->first(fn ($t) => strcasecmp($t->name, 'State') === 0);
-            $cityTag = $tag_types->first(fn ($t) => strcasecmp($t->name, 'City') === 0);
             $otherTags = $tag_types->filter(fn ($t) => $t->input_type != 'account' && ! in_array(strtolower($t->name), $locationTagNames) && strcasecmp($t->name, 'State') !== 0 && strcasecmp($t->name, 'City') !== 0 && strcasecmp($t->name, 'Location') !== 0);
             $vendorRefUrl = 'https://weddinginsidersnetwork.com/ref/v/' . urlencode($user->business_name);
             $clientRefUrl = 'https://weddinginsidersnetwork.com/ref/c/' . urlencode($user->business_name);
@@ -188,42 +189,32 @@
               <p class="vep-field__label vep-field__label--section">Your Business location</p>
               <div class="vep-grid-2 vep-location-grid">
                 <div class="vep-field vep-field--inline">
-                  <label for="vep-state" class="vep-field__label vep-field__label--upper">State</label>
-                  <div class="vep-select-wrap">
-                    @if ($stateTag && $stateTag->input_type === 'select')
-                      @php $user_state = $user->tags->where('name', $stateTag->name)->first(); @endphp
-                      <select name="tag[{{ $stateTag->name }}]" id="vep-state" class="vep-select vep-select--icon">
-                        <option value="null" @selected($user_state == null)>State</option>
-                        @foreach (json_decode($stateTag->allowed_values, true) as $value)
-                          <option value="{{ $value }}" @selected($user_state != null && $user_state->value == $value)>{{ $value }}</option>
-                        @endforeach
-                      </select>
-                    @else
-                      <select id="vep-state" class="vep-select vep-select--icon" aria-label="State">
-                        <option value="" selected disabled>State</option>
-                      </select>
-                    @endif
-                    <img src="{{ asset('assets/img/vendor-home/profile/abrir.png') }}" alt="" class="vep-select-wrap__icon" width="12" height="12" />
-                  </div>
+                  <label for="vep-city" class="vep-field__label vep-field__label--upper">City</label>
+                  <input
+                    type="text"
+                    id="vep-city"
+                    name="business_city"
+                    class="vep-input"
+                    placeholder="City"
+                    value="{{ $businessCity }}"
+                    autocomplete="off"
+                    data-places-autocomplete
+                    data-places-types="(cities)"
+                    data-places-self="city"
+                    data-places-fill-state="vep-state"
+                  />
                 </div>
                 <div class="vep-field vep-field--inline">
-                  <label for="vep-city" class="vep-field__label vep-field__label--upper">City</label>
-                  <div class="vep-select-wrap">
-                    @if ($cityTag && $cityTag->input_type === 'select')
-                      @php $user_city = $user->tags->where('name', $cityTag->name)->first(); @endphp
-                      <select name="tag[{{ $cityTag->name }}]" id="vep-city" class="vep-select vep-select--icon">
-                        <option value="null" @selected($user_city == null)>City</option>
-                        @foreach (json_decode($cityTag->allowed_values, true) as $value)
-                          <option value="{{ $value }}" @selected($user_city != null && $user_city->value == $value)>{{ $value }}</option>
-                        @endforeach
-                      </select>
-                    @else
-                      <select id="vep-city" class="vep-select vep-select--icon" aria-label="City">
-                        <option value="" selected disabled>City</option>
-                      </select>
-                    @endif
-                    <img src="{{ asset('assets/img/vendor-home/profile/abrir.png') }}" alt="" class="vep-select-wrap__icon" width="12" height="12" />
-                  </div>
+                  <label for="vep-state" class="vep-field__label vep-field__label--upper">State</label>
+                  <input
+                    type="text"
+                    id="vep-state"
+                    name="business_state"
+                    class="vep-input"
+                    placeholder="State"
+                    value="{{ $businessState }}"
+                    readonly
+                  />
                 </div>
               </div>
             </div>

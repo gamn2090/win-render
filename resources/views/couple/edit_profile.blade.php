@@ -9,6 +9,10 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css" rel="stylesheet"/>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+
+  @include('partials.google_places_autocomplete')
+  <script async src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_maps.key') }}&loading=async&callback=initWinPlacesAutocomplete"></script>
+
   @vite(['resources/css/app.css', 'resources/css/vendor-dashboard.css'])
   @vite(['resources/js/app.js'])
   @include('components.fonts')
@@ -70,11 +74,11 @@
         <div class="vd-edit-row">
           <div class="vd-edit-field">
             <label class="vd-edit-field__label">Wedding location — City</label>
-            <input type="text" name="venue_city" value="{{ $venueCity }}" placeholder="City" />
+            <input type="text" id="venue_city" name="venue_city" value="{{ $venueCity }}" placeholder="City" autocomplete="off" data-places-autocomplete data-places-types="(cities)" data-places-self="city" data-places-fill-state="venue_state" />
           </div>
           <div class="vd-edit-field">
             <label class="vd-edit-field__label">Wedding location — State</label>
-            <input type="text" name="venue_state" value="{{ $venueState }}" placeholder="State" />
+            <input type="text" id="venue_state" name="venue_state" value="{{ $venueState }}" placeholder="State" readonly />
           </div>
         </div>
 
