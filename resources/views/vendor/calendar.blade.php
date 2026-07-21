@@ -39,6 +39,7 @@
         <a href="{{ route('vendor.calendar', ['view' => 'week', 'date' => $date->toDateString()]) }}" class="vcal-view-btn {{ $view === 'week' ? 'vcal-view-btn--active' : '' }}">Week</a>
         <a href="{{ route('vendor.calendar', ['view' => 'day', 'date' => $date->toDateString()]) }}" class="vcal-view-btn {{ $view === 'day' ? 'vcal-view-btn--active' : '' }}">Day</a>
       </div>
+      <button type="button" class="vcal-export-btn" id="vcal-export-btn">Export PDF</button>
       <button type="button" class="vcal-add-btn" id="vcal-add-btn">+ Add Event</button>
     </div>
 
@@ -181,6 +182,10 @@
           <input type="time" id="vcal-end-time" class="vcal-field__input" required />
         </div>
       </div>
+      <div class="vcal-field">
+        <label for="vcal-notes" class="vcal-field__label">Notes</label>
+        <textarea id="vcal-notes" class="vcal-field__input vcal-field__textarea" rows="3" placeholder="Any additional details for this event&hellip;" maxlength="5000"></textarea>
+      </div>
       <p class="vcal-form-error" id="vcal-form-error" hidden></p>
       <div class="vcal-modal__actions">
         <button type="button" class="vcal-btn vcal-btn--danger" id="vcal-delete-btn" hidden>Delete</button>
@@ -193,6 +198,15 @@
   </div>
 </div>
 
+@php
+  $vendorAccount = \Illuminate\Support\Facades\Auth::guard('vendor')->user();
+  $vendorDisplayName = trim($vendorAccount->business_name ?: trim($vendorAccount->first_name . ' ' . $vendorAccount->last_name));
+  $rangeLabel = match($view) {
+    'month' => $date->format('F Y'),
+    'week' => $rangeStart->format('M j') . ' – ' . $rangeEnd->format('M j, Y'),
+    default => $date->format('l, F j, Y'),
+  };
+@endphp
 <script>
   window.__WIN_VENDOR_CALENDAR__ = {
     storeUrl: @json(route('vendor.calendar.events.store')),
@@ -200,6 +214,8 @@
     destroyUrlBase: @json(route('vendor.calendar.events.destroy', ['event' => '__ID__'])),
     csrfToken: @json(csrf_token()),
     reloadUrl: @json(route('vendor.calendar', ['view' => $view, 'date' => $date->toDateString()])),
+    vendorName: @json($vendorDisplayName),
+    rangeLabel: @json($rangeLabel),
   };
 </script>
 </body>

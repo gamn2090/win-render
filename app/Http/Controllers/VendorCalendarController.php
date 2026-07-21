@@ -69,6 +69,7 @@ class VendorCalendarController extends Controller
             'client_id' => ['required', 'integer'],
             'starts_at' => ['required', 'date'],
             'ends_at' => ['required', 'date', 'after:starts_at'],
+            'notes' => ['nullable', 'string', 'max:5000'],
         ]);
 
         $vendor = $request->user();
@@ -79,6 +80,7 @@ class VendorCalendarController extends Controller
             'client_id' => $validated['client_id'],
             'starts_at' => $validated['starts_at'],
             'ends_at' => $validated['ends_at'],
+            'notes' => $validated['notes'] ?? null,
         ]);
         $event->load('client');
 
@@ -91,6 +93,7 @@ class VendorCalendarController extends Controller
             'client_id' => ['required', 'integer'],
             'starts_at' => ['required', 'date'],
             'ends_at' => ['required', 'date', 'after:starts_at'],
+            'notes' => ['nullable', 'string', 'max:5000'],
         ]);
 
         $vendor = $request->user();
@@ -145,6 +148,7 @@ class VendorCalendarController extends Controller
             // the wrong hour whenever server and browser timezones differ.
             'startsAt' => $event->starts_at->format('Y-m-d\TH:i:s'),
             'endsAt' => $event->ends_at->format('Y-m-d\TH:i:s'),
+            'notes' => $event->notes,
         ];
     }
 }

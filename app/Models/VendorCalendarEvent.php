@@ -12,6 +12,7 @@ class VendorCalendarEvent extends Model
         'client_id',
         'starts_at',
         'ends_at',
+        'notes',
     ];
 
     protected $casts = [

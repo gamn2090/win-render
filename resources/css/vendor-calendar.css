@@ -1,7 +1,5 @@
 .vcal-content {
   padding: 0 24px 40px;
-  max-width: 1400px;
-  margin: 0 auto;
 }
 
 .vcal-empty-notice {
@@ -88,8 +86,23 @@
   color: #fff;
 }
 
-.vcal-add-btn {
+.vcal-export-btn {
   margin-left: auto;
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: 1px solid #D8D3E0;
+  background: #fff;
+  color: #231f20;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.vcal-export-btn:hover {
+  background: #F5F1FF;
+}
+
+.vcal-add-btn {
   padding: 10px 18px;
   border-radius: 10px;
   border: none;
@@ -388,6 +401,11 @@
   font-family: inherit;
   font-size: 14px;
   box-sizing: border-box;
+}
+
+.vcal-field__textarea {
+  resize: vertical;
+  min-height: 60px;
 }
 
 .vcal-form-error {
