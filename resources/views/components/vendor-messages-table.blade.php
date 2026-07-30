@@ -9,7 +9,7 @@
     <thead>
       <tr>
         @if($showRoleColumn)
-          <th scope="col" class="vm-table__th vm-table__th--role">ROLE</th>
+          <th scope="col" class="vm-table__th vm-table__th--role">Role</th>
         @endif
         <th scope="col" class="vm-table__th vm-table__th--name">Name</th>
         <th scope="col" class="vm-table__th vm-table__th--message">Latest Message</th>

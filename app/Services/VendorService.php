@@ -76,19 +76,21 @@ class VendorService {
         }
         //remove old reviews so duplicates are not added
         Review::where('vendor_id', $vendor->id)->delete();
-        
+
         $parsed_reviews = [];
         foreach($reviews as $review){
             $parsed_review = [
                 'vendor_id' => $vendor->id,
                 'rating' => $review['rating'],
-                'body' => $review['originalText']['text'],
-                'author' => $review['authorAttribution']['displayName'],
-                'author_photo' => $review['authorAttribution']['photoUri'],
-                'date' => $review['publishTime']
+                'body' => $review['originalText']['text'] ?? '',
+                'author' => $review['authorAttribution']['displayName'] ?? '',
+                'author_photo' => $review['authorAttribution']['photoUri'] ?? null,
+                'date' => $review['publishTime'] ?? null
             ];
             array_push($parsed_reviews, $parsed_review);
         }
-        Review::upsert($parsed_reviews, uniqueBy: ['id', 'destination'], update: []);
+        if(count($parsed_reviews) > 0){
+            Review::insert($parsed_reviews);
+        }
     }
 }

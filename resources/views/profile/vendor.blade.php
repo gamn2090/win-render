@@ -149,7 +149,7 @@
                 
                 @if(Auth::guard('vendor')->check())
                 <div class="mt-4">
-                  <h3 class="subheading text-left">Social Brands:</h3>
+                  <h3 class="subheading text-left">Social Media:</h3>
                   <div class="mt-2 space-x-2 text-left">
                     <a target="_blank" class="inline-flex justify-center items-center align-middle size-10 text-center font-semibold bg-win-lavender text-win-red hover:bg-gray-100 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white transition" href="{{ $profile->getLink('instagram') }}">
                       <svg class="flex-shrink-0 size-6" fill="currentColor" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -233,7 +233,7 @@
                     <img src="/assets/img/shapes/confetti-small-transparent.png" class="w-full mt-[10vh]">
                 </div>
                 <div class="mt-4 text-left border-b border-blueGray-200 mb-4 pb-4">
-                  <h3 class="headline-small">See my work:</h3>
+                  <h3 class="headline-small">See My Work:</h3>
                 </div>
                 <div class="grid grid-cols-2 gap-4 lg:gap-8">
                   <div class="flex justify-center">

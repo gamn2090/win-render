@@ -229,9 +229,25 @@ class Vendor extends Authenticatable
             Vendor::class,
             VendorConnection::class,
             'host_vendor', // Foreign key
-            'id', // Foreign key 
-            'id', // Local key 
-            'aff_vendor' // Local key 
+            'id', // Foreign key
+            'id', // Local key
+            'aff_vendor' // Local key
+        )->where('approved', true)->limit($lim);
+    }
+
+    // Inverse of connections(): vendors who have added ME as their preferred
+    // vendor (I'm the affiliate). Preferred-vendor adds are instant/no-approval
+    // by design, so this is how an affiliate finds out who listed them and
+    // removes themselves if they don't want to be listed.
+    public function preferredByVendors($lim = 100): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            Vendor::class,
+            VendorConnection::class,
+            'aff_vendor', // Foreign key
+            'id', // Foreign key
+            'id', // Local key
+            'host_vendor' // Local key
         )->where('approved', true)->limit($lim);
     }
 
@@ -865,6 +881,22 @@ class Vendor extends Authenticatable
         return $query->orderBy('score', 'desc');
     }
 
+    // Full name => USPS abbreviation, for the states offered by the "Location"
+    // filter (see TagTypesSeeder). A vendor's `location` column is a free-text
+    // "City, State" string filled in via Google Places autocomplete, which stores
+    // the state as its short name (e.g. "MA") — not the full name the filter
+    // checkboxes display — so matching must account for both forms.
+    public const LOCATION_STATE_ABBREVIATIONS = [
+        'Connecticut' => 'CT',
+        'Massachusetts' => 'MA',
+        'Rhode Island' => 'RI',
+        'New Hampshire' => 'NH',
+        'Vermont' => 'VT',
+        'Maine' => 'ME',
+        'New York' => 'NY',
+        'New Jersey' => 'NJ',
+    ];
+
     public function scopeWithTags(Builder $query, $filters){
         if(!$filters || !is_array($filters) || count($filters) == 0){
             return $query;
@@ -875,6 +907,15 @@ class Vendor extends Authenticatable
                     $value[$budgetValue] = $this->preferredPricingEnum($budgetValue); // This will convert the array of values to a simple array for whereIn
                 }
                 return $query->whereIn('avg_price', $value);
+            }
+            if($key == "Location"){
+                $states = array_keys($value);
+                return $query->where(function (Builder $query) use ($states) {
+                    foreach ($states as $state) {
+                        $query->orWhere('location', 'like', '%'.$state)
+                            ->orWhere('location', 'like', '%'.(self::LOCATION_STATE_ABBREVIATIONS[$state] ?? $state));
+                    }
+                });
             }
             $allowedValue = TagType::where('name', $key)->first();
             if(!$allowedValue){

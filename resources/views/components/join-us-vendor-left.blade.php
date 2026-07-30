@@ -3,6 +3,8 @@
 @php
     $assetBase = '/images/new_view_Join_Us';
     $innerVariant = in_array($variant, ['business', 'couple', 'couple-step2'], true) ? 'business' : $variant;
+    $coupleCountDisplay = \App\Support\PlatformStats::coupleCountDisplay();
+    $vendorCountDisplay = \App\Support\PlatformStats::vendorCountDisplay();
 @endphp
 <aside class="join-us-vendor-left join-us-vendor-left--{{ $variant }}">
     <div class="join-us-vendor-left-inner join-us-vendor-left-inner--{{ $innerVariant }}">
@@ -54,7 +56,7 @@
                 </div>
                 <div class="join-us-vendor-community">
                     <img src="{{ $assetBase }}/vsb.png" alt="" class="join-us-vendor-community-icons">
-                    <p class="join-us-vendor-community-text">Join a growing community of<br>3,400+ couples on <strong>WIN</strong>, with<br>1,500+ vendors ready to make<br>every wedding vision happen.</p>
+                    <p class="join-us-vendor-community-text">Join a growing community of<br>{{ $coupleCountDisplay }}+ couples on <strong>WIN</strong>, with<br>{{ $vendorCountDisplay }}+ vendors ready to make<br>every wedding vision happen.</p>
                 </div>
             @elseif ($variant === 'couple-step2')
                 <div class="join-us-vendor-badge join-us-vendor-badge--mockup-tilt">Free Every Step of the Way</div>
@@ -74,7 +76,7 @@
                         <li>
                             <img src="{{ $assetBase }}/doble.png" alt="" class="join-us-vendor-feature-icon">
                             <div>
-                                <p class="join-us-vendor-feature-title">Unlock exclusive vendor discounts</p>
+                                <p class="join-us-vendor-feature-title">Unlock Exclusive Vendor Discounts</p>
                                 <p class="join-us-vendor-feature-desc">and start connecting instantly.</p>
                             </div>
                         </li>
@@ -98,7 +100,7 @@
                 </div>
                 <div class="join-us-vendor-community">
                     <img src="{{ $assetBase }}/vsb.png" alt="" class="join-us-vendor-community-icons">
-                    <p class="join-us-vendor-community-text">200+ vetted and local wedding vendors you can connect with</p>
+                    <p class="join-us-vendor-community-text">{{ $vendorCountDisplay }}+ vetted and local wedding vendors you can connect with</p>
                 </div>
             @elseif ($variant === 'couple')
                 <div class="join-us-vendor-badge join-us-vendor-badge--mockup-tilt">Plan Your Wedding for Free</div>
@@ -117,14 +119,14 @@
                         <li>
                             <img src="{{ $assetBase }}/doble.png" alt="" class="join-us-vendor-feature-icon">
                             <div>
-                                <p class="join-us-vendor-feature-title">Exclusive discounts</p>
+                                <p class="join-us-vendor-feature-title">Exclusive Discounts</p>
                                 <p class="join-us-vendor-feature-desc">for WIN couples only</p>
                             </div>
                         </li>
                         <li>
                             <img src="{{ $assetBase }}/persons.png" alt="" class="join-us-vendor-feature-icon">
                             <div>
-                                <p class="join-us-vendor-feature-title">2-minute signup</p>
+                                <p class="join-us-vendor-feature-title">2-Minute Signup</p>
                                 <p class="join-us-vendor-feature-desc">Start finding vendors instantly</p>
                             </div>
                         </li>
@@ -132,7 +134,7 @@
                 </div>
                 <div class="join-us-vendor-community">
                     <img src="{{ $assetBase }}/vsb.png" alt="" class="join-us-vendor-community-icons">
-                    <p class="join-us-vendor-community-text">200+ vetted and local wedding vendors you can connect with</p>
+                    <p class="join-us-vendor-community-text">{{ $vendorCountDisplay }}+ vetted and local wedding vendors you can connect with</p>
                 </div>
             @else
                 <div class="join-us-vendor-badge join-us-vendor-badge--mockup-tilt">Turn Leads into Bookings</div>
@@ -164,7 +166,7 @@
                 </div>
                 <div class="join-us-vendor-community">
                     <img src="{{ $assetBase }}/vsb.png" alt="" class="join-us-vendor-community-icons">
-                    <p class="join-us-vendor-community-text">1,500+ vendors on <span class="join-us-vendor-win-mark">WIN</span> helps<br>couple to have their dream<br>wedding</p>
+                    <p class="join-us-vendor-community-text">{{ $vendorCountDisplay }}+ vendors on <span class="join-us-vendor-win-mark">WIN</span> helps<br>couple to have their dream<br>wedding</p>
                 </div>
             @endif
         </div>

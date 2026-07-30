@@ -14,7 +14,6 @@
 @php
   $user = Auth::guard('web')->user();
   $bookedVendors = $pairings->filter(fn ($p) => $p->status == 3 && $p->vendor);
-  $vendorMatchesCount = $requestedVendorTypes->count();
   $unreadCount = $user->unreadMessagesCount();
   $hour = (int) now()->format('G');
   $greeting = $hour < 12 ? 'Good morning' : ($hour < 17 ? 'Good afternoon' : 'Good evening');
@@ -27,15 +26,6 @@
   <div class="vd-main">
 
     @include('layouts.dashboard_topbar', ['role' => 'couple', 'unreadCount' => $unreadCount])
-
-    <div class="vd-announcement" id="vd-announcement" role="region" aria-label="Announcement">
-      <p>
-        🎉 <strong>New:</strong>
-        Filter features added for venues, hair &amp; makeup, photographers, and videographers. Go to
-        <a href="{{ route('search.vendors') }}">Find Vendors</a> to search by your preferred style.
-      </p>
-      <button type="button" class="vd-announcement__close" id="vd-announcement-close" aria-label="Dismiss">&times;</button>
-    </div>
 
     <header class="vd-greeting">
       <h1 class="vd-greeting__title">
@@ -50,7 +40,7 @@
         <a href="{{ route('search.vendors') }}" class="vd-savings-banner">Start Saving by Booking Vendors</a>
       @endif
 
-      <p class="vd-greeting__sub">Here's what's happening with your Wedding Day Planner</p>
+      <p class="vd-greeting__sub">Here's what's happening with your Wedding Day Plan</p>
     </header>
 
     <section class="vd-stats" aria-label="Key metrics">
@@ -151,7 +141,7 @@
       <article class="vd-card vd-card--feed">
         <div class="vd-card__head">
           <h2 class="vd-card__title">My Consultations Appointments</h2>
-          <a href="{{ route('appointments.list') }}" class="vd-card__link">Set my availability →</a>
+          <a href="{{ route('appointments.list') }}" class="vd-card__link">View all →</a>
         </div>
         <div class="vd-card__body">
           <div class="vd-meetings-banner">Meeting(S) upcoming! <strong>{{ $upcomingMeetings->count() }}</strong></div>
@@ -301,22 +291,15 @@
     <section class="vd-promo-row" aria-label="Vendor CTA">
       <div class="vd-promo vd-promo--refer">
         <h3 class="vd-promo__title">Connect with top vendors tailored to your needs</h3>
-        <div class="vd-promo__actions">
-          <a href="{{ route('search.vendors') }}" class="vd-promo__btn vd-promo__btn--white">Get Matched with Vendors</a>
-        </div>
-      </div>
-
-      <div class="vd-promo" style="background:#fff;border:1px solid #eae7f0;">
-        <div class="vd-network-summary" style="padding:0;">
+        <div class="vd-network-summary" style="padding:0;margin:12px 0;">
           <div class="vd-network-summary__avatars">
             @foreach($randomVendors as $vendor)
               <x-avatar :model="$vendor" class="vd-network-summary__avatar-item" />
             @endforeach
           </div>
         </div>
-        <div>
-          <p class="vd-network-summary__text" style="font-weight:400;margin-bottom:10px;">Find trusted vendors for your wedding</p>
-          <a href="{{ route('search.vendors') }}" class="vd-vendor-card__btn vd-vendor-card__btn--storefront" style="display:inline-flex;padding-left:24px;padding-right:24px;">Explore Vendors</a>
+        <div class="vd-promo__actions">
+          <a href="{{ route('search.vendors') }}" class="vd-promo__btn vd-promo__btn--white">Get Matched with Vendors</a>
         </div>
       </div>
     </section>
@@ -329,11 +312,5 @@
 </main>
 
 <x-chat-modal />
-
-<script>
-  document.getElementById('vd-announcement-close')?.addEventListener('click', function () {
-    document.getElementById('vd-announcement')?.remove();
-  });
-</script>
 </body>
 </html>

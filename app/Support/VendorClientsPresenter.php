@@ -60,7 +60,19 @@ class VendorClientsPresenter
         }
 
         $isActive = $pairing->active === null || (bool) $pairing->active;
+        $isBooked = (int) $pairing->status === 3;
         $fianceName = trim((string) ($client->fiance_first_name ?? ''));
+
+        if (!$isActive) {
+            $statusLabel = 'Archived';
+            $statusVariant = 'archived';
+        } elseif ($isBooked) {
+            $statusLabel = 'Booked';
+            $statusVariant = 'booked';
+        } else {
+            $statusLabel = 'Pending';
+            $statusVariant = 'pending';
+        }
 
         return [
             'id' => $client->id,
@@ -72,7 +84,9 @@ class VendorClientsPresenter
             'wedding_location' => $client->wedding_location ?: '—',
             'wedding_date' => self::formatWeddingDate($client->wedding_date),
             'is_active' => $isActive,
-            'status_label' => $isActive ? 'Active' : 'Archived',
+            'is_booked' => $isBooked,
+            'status_label' => $statusLabel,
+            'status_variant' => $statusVariant,
             'action_url' => $isActive
                 ? route('vendor.archive.client', ['id' => $client->id, 'ven_id' => $vendor->id])
                 : route('vendor.unarchive.client', ['id' => $client->id, 'ven_id' => $vendor->id]),

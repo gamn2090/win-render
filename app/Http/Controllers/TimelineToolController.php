@@ -178,7 +178,7 @@ class TimelineToolController extends Controller
             return view('tools.embedded_tool_page', [
                 'role' => 'vendor',
                 'page' => 'vendor_timeline',
-                'title' => 'Timeline Planner (Read-only)',
+                'title' => 'Timeline Planner (Read-Only)',
                 'iframeSrc' => route('vendor.couple.timeline', ['id' => $id, 'frame' => 1]),
             ]);
         }

@@ -46,7 +46,7 @@
       <p class="dashboard-sidebar__profile-name" title="{{ $displayName }}">{{ $displayName }}</p>
       <a href="{{ $profileEditUrl }}" class="dashboard-sidebar__profile-photo">
         <span class="dashboard-sidebar__profile-camera" aria-hidden="true">📷</span>
-        Update photo
+        Update profile
       </a>
     </div>
   </div>

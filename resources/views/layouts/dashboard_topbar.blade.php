@@ -16,7 +16,7 @@
   <a href="{{ $inboxUrl }}" class="vd-topbar__btn" aria-label="Notifications">
     🔔
     @if($unread)
-      <span class="vd-topbar__dot"></span>
+      <span class="vd-topbar__badge" aria-label="{{ $unread }} unread">{{ $unread > 99 ? '99+' : $unread }}</span>
     @endif
   </a>
 

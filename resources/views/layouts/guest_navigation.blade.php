@@ -568,7 +568,7 @@
             </div>
           </div>
           <!-- End Checkbox -->
-          <button id="vendor-login-submit" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg bg-win-purple text-white disabled:opacity-50 disabled:pointer-events-none">Sign in</button>
+          <button id="vendor-login-submit" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg bg-win-purple text-white disabled:opacity-50 disabled:pointer-events-none">Sign In</button>
         </div>
         <!-- End Form -->
       </div>

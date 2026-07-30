@@ -18,7 +18,7 @@
       @forelse($rows as $row)
         <tr class="cc-table__row">
           <td class="cc-table__cell cc-table__cell--status">
-            <span class="cc-status {{ ($row['is_active'] ?? true) ? '' : 'cc-status--archived' }}" role="status">
+            <span class="cc-status cc-status--{{ $row['status_variant'] ?? 'booked' }}" role="status">
               <span class="cc-status__dot" aria-hidden="true"></span>
               {{ $row['status_label'] ?? 'Active' }}
             </span>

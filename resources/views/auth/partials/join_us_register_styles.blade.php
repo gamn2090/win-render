@@ -80,7 +80,7 @@
       .join-us-vendor-left-copy {
         flex: 1;
         width: auto;
-        max-width: none;
+        /* max-width: none; */
         min-width: 0;
       }
 
@@ -100,6 +100,15 @@
 
     /* Mobile */
     @media (max-width: 767px) {
+      /* .join-us-vendor-left declares overflow:visible (desktop needs it for
+         the rotated/tilted badge effect) — on mobile that also lets any
+         inner min-content overflow bleed past the screen edge instead of
+         being contained. Clip horizontally only; vertical bleed (badge tilt)
+         is unaffected. */
+      .join-us-vendor-left {
+        overflow-x: hidden;
+      }
+
       .join-us-vendor-register {
         --ju-badge: 15px;
         --ju-headline: 22px;
@@ -157,6 +166,7 @@
       .join-us-vendor-left-copy {
         width: 100%;
         max-width: 100%;
+        min-width: 0;
       }
 
       .join-us-vendor-headline--step2 {
@@ -217,6 +227,10 @@
 
     /* Mobile pequeño */
     @media (max-width: 479px) {
+
+      .join-us-vendor-community {
+        max-width: 450px;
+      }
       .join-us-vendor-register {
         --ju-headline: 20px;
         --ju-form-title: 18px;
@@ -259,6 +273,9 @@
     @media (max-width: 359px) {
       .join-us-vendor-pricing-grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      .join-us-vendor-community {
+        max-width: 350px;
       }
     }
 
@@ -367,7 +384,7 @@
     .join-us-vendor-left-copy {
       flex: 1 1 421px;
       width: 421px;
-      max-width: 421px;
+      /* max-width: 421px; */
       min-width: 0;
       box-sizing: border-box;
       overflow-wrap: break-word;
@@ -377,6 +394,9 @@
     @media (max-width: 767px) {
       .join-us-vendor-features-gutter {
         display: none;
+      }
+      .join-us-vendor-community {
+        max-width: 700px;
       }
     }
 
@@ -503,6 +523,9 @@
       padding: 14px 16px;
       background: rgba(241, 211, 211, 0.4);
       border-radius: 24px;
+      width: 100%;
+      box-sizing: border-box;
+      min-width: 0;
     }
 
     .join-us-vendor-community-icons {
@@ -519,6 +542,10 @@
       font-size: var(--ju-community);
       font-weight: 400;
       line-height: 1.45;
+      min-width: 0;
+      flex: 1 1 auto;
+      overflow-wrap: break-word;
+      word-break: break-word;
     }
 
     .join-us-vendor-form-col {

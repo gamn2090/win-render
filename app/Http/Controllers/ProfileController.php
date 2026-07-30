@@ -84,20 +84,20 @@ class ProfileController extends Controller
         }
         $user->questions = array_pad(array_values($decoded), 4, '');
 
+        // "Wedding Location" (the couple's own city/state, set at registration)
+        // and "Wedding Venue" (just the venue's name, if they have one) are two
+        // separate concepts — Wedding Location always comes straight from the
+        // user's own wedding_location column, never from bio-parsing, so it
+        // can't get blanked out just because no venue name was ever entered.
         $venueName = '';
-        $venueCity = '';
-        $venueState = '';
         $bioText = $user->bio ?? '';
 
-        if (preg_match('/Wedding venue:\s*([^,\n]+)(?:,\s*([^\n]+))?/i', $bioText, $venueMatch)) {
+        if (preg_match('/Wedding venue:\s*([^\n]+)/i', $bioText, $venueMatch)) {
             $venueName = trim($venueMatch[1]);
-            $venueLocation = trim($venueMatch[2] ?? '');
             $bioText = trim(preg_replace('/Wedding venue:.*$/im', '', $bioText));
-        } else {
-            $venueLocation = trim((string) $user->wedding_location);
         }
 
-        $locationParts = array_map('trim', explode(',', $venueLocation, 2));
+        $locationParts = array_map('trim', explode(',', trim((string) $user->wedding_location), 2));
         $venueCity = $locationParts[0] ?? '';
         $venueState = $locationParts[1] ?? '';
 
@@ -247,20 +247,22 @@ class ProfileController extends Controller
         }
         $answers = [$request->q1,$request->q2,$request->q3,$request->q4];
 
+        // Wedding Location (the couple's own city/state) and Wedding Venue
+        // (just a name) are independent — saving one must never blank out or
+        // overwrite the other.
         $venueName = trim((string) $request->input('venue_name'));
         $venueCity = trim((string) $request->input('venue_city'));
         $venueState = trim((string) $request->input('venue_state'));
         $bioText = trim((string) $request->input('bio'));
-        $venueLocation = trim(implode(', ', array_filter([$venueCity, $venueState])));
+        $weddingLocation = trim(implode(', ', array_filter([$venueCity, $venueState])));
 
         $bio = $bioText;
-        if ($venueName !== '' || $venueLocation !== '') {
-            $venueLine = 'Wedding venue: ' . $venueName . ($venueLocation !== '' ? ', ' . $venueLocation : '');
-            $bio = trim($venueLine . ($bioText !== '' ? "\n" . $bioText : ''));
+        if ($venueName !== '') {
+            $bio = trim('Wedding venue: ' . $venueName . ($bioText !== '' ? "\n" . $bioText : ''));
         }
 
         $request->user()->fill($request->except(['vt', 'q1', 'q2', 'q3', 'q4', 'venue_name', 'venue_city', 'venue_state', 'bio']));
-        $request->user()->wedding_location = $venueLocation;
+        $request->user()->wedding_location = $weddingLocation;
         $request->user()->bio = $bio;
         $request->user()->allow_vendor_contact = $request->boolean('allow_vendor_contact');
         if ($request->user()->isDirty('email')) {

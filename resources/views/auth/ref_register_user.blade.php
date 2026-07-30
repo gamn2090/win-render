@@ -941,18 +941,18 @@
                         class="mx-auto max-w-2xl sm:flex sm:space-x-3 p-3 bg-white border rounded-lg shadow-lg shadow-gray-100 dark:bg-slate-900 dark:border-gray-700 dark:shadow-gray-900/[.2] col-span-5">
                         <div class="pb-2 sm:pb-0 sm:flex-[1_0_0%]">
                           <label for="hs-first-name" class="block text-sm font-medium dark:text-white"><span
-                              class="sr-only">First name</span></label>
+                              class="sr-only">First Name</span></label>
                           <input type="text" id="hs-first-name"
                             class="py-3 px-4 block w-full border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-transparent dark:text-gray-400 dark:focus:ring-gray-600"
-                            placeholder="First name">
+                            placeholder="First Name">
                         </div>
                         <div
                           class="pt-2 sm:pt-0 sm:ps-3 border-t border-gray-200 sm:border-t-0 sm:border-s sm:flex-[1_0_0%] dark:border-gray-700">
                           <label for="hs-last-name" class="block text-sm font-medium dark:text-white"><span
-                              class="sr-only">Last name</span></label>
+                              class="sr-only">Last Name</span></label>
                           <input type="text" id="hs-last-name"
                             class="py-3 px-4 block w-full border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-transparent dark:text-gray-400 dark:focus:ring-gray-600"
-                            placeholder="Last name">
+                            placeholder="Last Name">
                         </div>
                       </div>
                     </div>
@@ -968,18 +968,18 @@
                         class="mx-auto max-w-2xl sm:flex sm:space-x-3 p-3 bg-white border rounded-lg shadow-lg shadow-gray-100 dark:bg-slate-900 dark:border-gray-700 dark:shadow-gray-900/[.2] col-span-5">
                         <div class="pb-2 sm:pb-0 sm:flex-[1_0_0%]">
                           <label for="hs-fiance-first-name" class="block text-sm font-medium dark:text-white"><span
-                              class="sr-only">First name</span></label>
+                              class="sr-only">First Name</span></label>
                           <input type="text" id="hs-fiance-first-name"
                             class="py-3 px-4 block w-full border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-transparent dark:text-gray-400 dark:focus:ring-gray-600"
-                            placeholder="First name">
+                            placeholder="First Name">
                         </div>
                         <div
                           class="pt-2 sm:pt-0 sm:ps-3 border-t border-gray-200 sm:border-t-0 sm:border-s sm:flex-[1_0_0%] dark:border-gray-700">
                           <label for="hs-fiance-last-name" class="block text-sm font-medium dark:text-white"><span
-                              class="sr-only">Last name</span></label>
+                              class="sr-only">Last Name</span></label>
                           <input type="text" id="hs-fiance-last-name"
                             class="py-3 px-4 block w-full border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-transparent dark:text-gray-400 dark:focus:ring-gray-600"
-                            placeholder="Last name">
+                            placeholder="Last Name">
                         </div>
                       </div>
                     </div>

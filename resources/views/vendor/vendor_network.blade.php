@@ -41,6 +41,21 @@
         empty-message="No connected vendors yet. Use Add Vendor to invite your first peer."
       />
     </div>
+
+    <div class="cc-stack" style="margin-top:32px;">
+      <h2 class="cc-hero__title vn-hero__title" style="font-size:20px;">You're a Preferred Vendor For</h2>
+      <p class="cc-hero__subtitle" style="margin-bottom:12px;">
+        These vendors have added you as one of their preferred vendors — you now show up on their storefront. Adding is instant, so if you'd rather not be listed, you can remove yourself below.
+      </p>
+      <x-vendor-vendors-table
+        :rows="$preferredByVendors"
+        empty-message="No vendors have added you as their preferred vendor yet."
+        remove-field-name="host_vendor"
+        remove-field-key="host_vendor_id"
+        remove-button-label="Remove Myself"
+        remove-confirm="Remove yourself from this vendor's preferred list?"
+      />
+    </div>
   </div>
 
   <p class="vd-copyright">&copy; {{ date('Y') }} Wedding Insiders Network.</p>

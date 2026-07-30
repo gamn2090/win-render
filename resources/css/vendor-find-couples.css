@@ -1007,6 +1007,13 @@
   font-weight: 700;
 }
 
+.fc-dialog-modal__hint {
+  margin: 0 0 18px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #6b6a6d;
+}
+
 .fc-dialog-modal__input {
   display: block;
   width: 100%;

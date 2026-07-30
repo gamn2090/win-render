@@ -193,7 +193,12 @@ document.addEventListener('DOMContentLoaded', () => {
       } else if (data.meeting_uuid) {
         actionsHtml = `<div class="vd-chat__consult-actions">
           <button type="button" class="vd-chat__consult-btn vd-chat__consult-btn--reject" data-consult-answer="-1" data-consult-meeting="${escapeHtml(data.meeting_uuid)}">Reject</button>
+          <button type="button" class="vd-chat__consult-btn vd-chat__consult-btn--suggest" data-consult-suggest-meeting="${escapeHtml(data.meeting_uuid)}">Suggest New Time</button>
           <button type="button" class="vd-chat__consult-btn vd-chat__consult-btn--accept" data-consult-answer="1" data-consult-meeting="${escapeHtml(data.meeting_uuid)}">Accept</button>
+        </div>
+        <div class="vd-chat__consult-suggest-form" data-consult-suggest-form="${escapeHtml(data.meeting_uuid)}" hidden>
+          <input type="datetime-local" class="vd-chat__consult-suggest-input" />
+          <button type="button" class="vd-chat__consult-btn vd-chat__consult-btn--accept" data-consult-suggest-send="${escapeHtml(data.meeting_uuid)}">Send</button>
         </div>`;
       } else {
         actionsHtml = '';
@@ -213,6 +218,24 @@ document.addEventListener('DOMContentLoaded', () => {
       const statusText = data.accepted ? 'You accepted this consultation.' : 'You declined this consultation.';
       return `<div class="vm-message-view__system">
         <div class="vd-chat__consult-status ${statusClass}">${statusText}</div>
+      </div>`;
+    }
+
+    if (message.type === 'consultation-suggestion' && message.data) {
+      const data = message.data;
+      const resolution = data.meeting_uuid ? resolvedMeetings?.[data.meeting_uuid] : undefined;
+      const when = formatMeetingDate(data.meeting_date);
+      let statusHtml;
+      if (resolution === true) {
+        statusHtml = '<div class="vd-chat__consult-status vd-chat__consult-status--accepted">The couple accepted this time! 🎉</div>';
+      } else if (resolution === false) {
+        statusHtml = '<div class="vd-chat__consult-status vd-chat__consult-status--declined">The couple declined this time.</div>';
+      } else {
+        statusHtml = '<div class="vd-chat__consult-status">Waiting on the couple to respond…</div>';
+      }
+      return `<div class="vm-message-view__system">
+        You suggested a new consultation time${when ? `: <strong>${escapeHtml(when)}</strong>` : ''}.
+        ${statusHtml}
       </div>`;
     }
 
@@ -264,7 +287,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const resolvedMeetings = {};
     messages.forEach((message) => {
-      if (message.type === 'consultation-response' && message.data?.meeting_uuid) {
+      if (
+        (message.type === 'consultation-response' || message.type === 'consultation-suggestion-response')
+        && message.data?.meeting_uuid
+      ) {
         resolvedMeetings[message.data.meeting_uuid] = !!message.data.accepted;
       }
     });
@@ -332,6 +358,53 @@ document.addEventListener('DOMContentLoaded', () => {
     const answer = button.getAttribute('data-consult-answer');
     if (meetingUuid && answer) {
       answerConsultation(meetingUuid, answer, button);
+    }
+  });
+
+  async function suggestNewTime(meetingUuid, newDate, button) {
+    const form = button.closest('.vd-chat__consult-suggest-form');
+    form?.querySelectorAll('button, input').forEach((el) => { el.disabled = true; });
+
+    try {
+      const body = new URLSearchParams({ meeting_id: meetingUuid, new_date: newDate });
+      const response = await fetch('/meeting/suggest-new-time', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'X-CSRF-TOKEN': csrfToken,
+          Accept: 'application/json',
+        },
+        credentials: 'same-origin',
+        body: body.toString(),
+      });
+      if (!response.ok) {
+        throw new Error('Failed to suggest new time');
+      }
+      if (activeConvoId) {
+        await loadMessages(activeConvoId);
+      }
+    } catch {
+      form?.querySelectorAll('button, input').forEach((el) => { el.disabled = false; });
+    }
+  }
+
+  messagesEl?.addEventListener('click', (event) => {
+    const toggleBtn = event.target.closest('[data-consult-suggest-meeting]');
+    if (toggleBtn) {
+      const meetingUuid = toggleBtn.getAttribute('data-consult-suggest-meeting');
+      const form = messagesEl.querySelector(`[data-consult-suggest-form="${meetingUuid}"]`);
+      if (form) form.hidden = !form.hidden;
+      return;
+    }
+
+    const sendBtn = event.target.closest('[data-consult-suggest-send]');
+    if (sendBtn) {
+      const meetingUuid = sendBtn.getAttribute('data-consult-suggest-send');
+      const form = sendBtn.closest('.vd-chat__consult-suggest-form');
+      const input = form?.querySelector('.vd-chat__consult-suggest-input');
+      if (meetingUuid && input?.value) {
+        suggestNewTime(meetingUuid, input.value, sendBtn);
+      }
     }
   });
 

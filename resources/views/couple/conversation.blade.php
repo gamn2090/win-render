@@ -129,7 +129,7 @@
       return d.toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true });
     }
 
-    function renderSystemMessage(m) {
+    function renderSystemMessage(m, resolvedSuggestions) {
       var wrap = document.createElement('div');
       wrap.className = 'vd-chat__system';
 
@@ -147,6 +147,24 @@
         return wrap;
       }
 
+      if (m.type === 'consultation-suggestion' && m.data) {
+        var resolution = m.data.meeting_uuid ? resolvedSuggestions[m.data.meeting_uuid] : undefined;
+        var when = escapeHtml(formatMeetingDate(m.data.meeting_date));
+        var actionsHtml;
+        if (resolution === true) {
+          actionsHtml = '<div class="vd-chat__consult-status vd-chat__consult-status--accepted">You accepted this time.</div>';
+        } else if (resolution === false) {
+          actionsHtml = '<div class="vd-chat__consult-status vd-chat__consult-status--declined">You declined this time.</div>';
+        } else {
+          actionsHtml = '<div class="vd-chat__consult-actions">' +
+            '<button type="button" class="vd-chat__consult-btn vd-chat__consult-btn--reject" data-suggestion-answer="0" data-suggestion-meeting="' + escapeHtml(m.data.meeting_uuid) + '">Decline</button>' +
+            '<button type="button" class="vd-chat__consult-btn vd-chat__consult-btn--accept" data-suggestion-answer="1" data-suggestion-meeting="' + escapeHtml(m.data.meeting_uuid) + '">Accept</button>' +
+            '</div>';
+        }
+        wrap.innerHTML = 'The vendor couldn\'t make the original time and suggested <strong>' + when + '</strong> instead.' + actionsHtml;
+        return wrap;
+      }
+
       return null;
     }
 
@@ -156,6 +174,14 @@
         messagesEl.innerHTML = '<p class="vd-chat__empty">Start the conversation!</p>';
         return;
       }
+
+      var resolvedSuggestions = {};
+      messages.forEach(function (m) {
+        if (m.type === 'consultation-suggestion-response' && m.data && m.data.meeting_uuid) {
+          resolvedSuggestions[m.data.meeting_uuid] = !!m.data.accepted;
+        }
+      });
+
       var lastDay = null;
       messages.forEach(function (m) {
         var day = formatDayLabel(m.created_at);
@@ -167,7 +193,8 @@
           lastDay = day;
         }
 
-        var systemEl = (m.type === 'consultation-request' || m.type === 'consultation-response') ? renderSystemMessage(m) : null;
+        var isSystemType = m.type === 'consultation-request' || m.type === 'consultation-response' || m.type === 'consultation-suggestion';
+        var systemEl = isSystemType ? renderSystemMessage(m, resolvedSuggestions) : null;
         if (systemEl) {
           messagesEl.appendChild(systemEl);
           return;
@@ -195,6 +222,29 @@
           messagesEl.innerHTML = '<p class="vd-chat__empty">Could not load messages.</p>';
         });
     }
+
+    messagesEl.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-suggestion-answer]');
+      if (!btn) return;
+      var meetingUuid = btn.getAttribute('data-suggestion-meeting');
+      var answer = btn.getAttribute('data-suggestion-answer');
+      var row = btn.closest('.vd-chat__consult-actions');
+      if (row) row.querySelectorAll('button').forEach(function (b) { b.disabled = true; });
+
+      fetch('/client/meeting/suggestion/answer', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'X-CSRF-TOKEN': csrf,
+          'X-Requested-With': 'XMLHttpRequest',
+        },
+        body: new URLSearchParams({ meeting_id: meetingUuid, answer: answer }),
+      })
+        .then(load)
+        .catch(function () {
+          if (row) row.querySelectorAll('button').forEach(function (b) { b.disabled = false; });
+        });
+    });
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();

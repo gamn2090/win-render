@@ -80,7 +80,7 @@
                 <div class="vcal-month__events">
                   @foreach($dayEvents as $ev)
                     @php $pillText = \Carbon\Carbon::parse($ev['startsAt'])->format('g:ia') . ' · ' . $ev['coupleName']; @endphp
-                    <button type="button" class="vcal-event-pill" data-vcal-event='@json($ev)' title="{{ $pillText }}">
+                    <button type="button" class="vcal-event-pill {{ $ev['source'] === 'meeting' ? 'vcal-event-pill--meeting' : '' }}" data-vcal-event='@json($ev)' title="{{ $pillText }}">
                       {{ $pillText }}
                     </button>
                   @endforeach
@@ -130,7 +130,7 @@
                   $top = ($startMin - $gridStartMin) / 60 * $hourHeight;
                   $height = max(($endMin - $startMin) / 60 * $hourHeight, 18);
                 @endphp
-                <button type="button" class="vcal-event-block" data-vcal-event='@json($ev)' style="top:{{ $top }}px; height:{{ $height }}px">
+                <button type="button" class="vcal-event-block {{ $ev['source'] === 'meeting' ? 'vcal-event-block--meeting' : '' }}" data-vcal-event='@json($ev)' style="top:{{ $top }}px; height:{{ $height }}px">
                   <span class="vcal-event-block__time">{{ $start->format('g:ia') }} &ndash; {{ $end->format('g:ia') }}</span>
                   <span class="vcal-event-block__name">{{ $ev['coupleName'] }}</span>
                 </button>

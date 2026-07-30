@@ -1,5 +1,5 @@
 <div> 
-    <div class="mt-1 hs-dropdown [--auto-close:inside] relative sm:inline-flex z-[100]">
+    <div class="mt-1 hs-dropdown [--auto-close:inside] relative sm:inline-flex z-10">
     <button id="hs-dropdown-auto-close-inside" type="button" class="hs-dropdown-toggle py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border bg-white hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
       {{ $filter->name }}
       <svg class="hs-dropdown-open:rotate-180 size-2.5" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -9,6 +9,11 @@
 
     <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden bg-white shadow-md rounded-lg mt-2" role="menu" aria-orientation="vertical" aria-labelledby="hs-dropdown-auto-close-inside">
       <div class="p-1 space-y-0.5">
+        @php($hasSelection = request()->filter && array_key_exists($filter->name, request()->filter) && count((array) request()->filter[$filter->name]) > 0)
+        <div class="flex items-center gap-x-2 py-2 px-3 rounded-lg text-gray-400">
+          <input type="checkbox" disabled {{ !$hasSelection ? 'checked' : '' }} class="shrink-0 rounded-sm disabled:opacity-50 disabled:pointer-events-none">
+          <label class="grow"><span class="block text-sm italic">Select a value</span></label>
+        </div>
         @foreach(json_decode($filter->searchValues()) as $option)
         <div class="flex items-center gap-x-2 py-2 px-3 rounded-lg hover:bg-gray-100 hover:cursor-pointer">
           <input id="filter[{{ $option }}]" name="filter[{{ $filter->name }}][{{ $option }}]" type="checkbox" {{ request()->filter && array_key_exists($filter->name, request()->filter) && array_key_exists($option, request()->filter[$filter->name]) ? 'checked' : '' }} class="shrink-0 rounded-sm text-win-purple focus:ring-win-purple checked:border-win-purple disabled:opacity-50 disabled:pointer-events-none">

@@ -21,6 +21,26 @@ class VendorNetworkPresenter
     }
 
     /**
+     * Vendors who've added $affiliate as THEIR preferred vendor — i.e. the
+     * reverse direction of forVendor(). Rows carry a self-remove URL instead
+     * of a remove-them URL, since $affiliate can only remove themselves.
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    public static function preferredByForVendor(Vendor $affiliate): array
+    {
+        return $affiliate->preferredByVendors()
+            ->get()
+            ->map(fn (Vendor $host) => array_merge(self::rowFromVendor($host, false) ?? [], [
+                'remove_url' => route('vendor.connection.remove_self'),
+                'host_vendor_id' => $host->id,
+            ]))
+            ->filter()
+            ->values()
+            ->all();
+    }
+
+    /**
      * @return array<string, mixed>|null
      */
     private static function rowFromVendor(Vendor $vendor, bool $includeRemove): ?array

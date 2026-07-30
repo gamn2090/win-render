@@ -8,6 +8,9 @@
   @vite(['resources/css/app.css', 'resources/css/vendor-dashboard.css'])
   @vite(['resources/js/app.js'])
   @include('components.fonts')
+  <script>
+    if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+  </script>
 </head>
 <body class="vd-page m-0 antialiased overflow-x-hidden">
 @if($role === 'vendor')
@@ -32,5 +35,16 @@
     <p class="vd-copyright">&copy; {{ date('Y') }} Wedding Insiders Network.</p>
   </div>
 </main>
+<script>
+  // Same reasoning as the tool iframe's own scroll-top fix: one early
+  // scrollTo can lose to browser scroll-restoration (bfcache/back-forward
+  // nav), so reassert it across the load lifecycle instead of once.
+  function forceScrollTop(){ window.scrollTo(0, 0); }
+  forceScrollTop();
+  requestAnimationFrame(forceScrollTop);
+  window.addEventListener("load", forceScrollTop);
+  window.addEventListener("pageshow", forceScrollTop);
+  setTimeout(forceScrollTop, 150);
+</script>
 </body>
 </html>

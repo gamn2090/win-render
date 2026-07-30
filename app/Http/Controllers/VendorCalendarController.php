@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Meeting;
 use App\Models\Pairing;
 use App\Models\VendorCalendarEvent;
 use Carbon\Carbon;
@@ -29,11 +30,27 @@ class VendorCalendarController extends Controller
             default => [$date->copy()->startOfDay(), $date->copy()->endOfDay()],
         };
 
-        $events = VendorCalendarEvent::where('vendor_id', $vendor->id)
+        $manualEvents = VendorCalendarEvent::where('vendor_id', $vendor->id)
             ->whereBetween('starts_at', [$rangeStart, $rangeEnd->copy()->endOfDay()])
             ->with('client')
             ->orderBy('starts_at')
-            ->get();
+            ->get()
+            ->map(fn (VendorCalendarEvent $event) => $this->formatEvent($event));
+
+        // Booked appointments (consultations, weddings, etc. booked through WIN)
+        // auto-populate onto the calendar alongside anything the vendor adds by
+        // hand — vendors shouldn't have to re-enter what WIN already knows about.
+        $meetingEvents = Meeting::where('vendor', $vendor->id)
+            ->where('type', '!=', 'manual')
+            ->where('approved', 1)
+            ->whereBetween('date', [$rangeStart, $rangeEnd->copy()->endOfDay()])
+            ->with('client')
+            ->orderBy('date')
+            ->get()
+            ->filter(fn (Meeting $meeting) => $meeting->getRelation('client'))
+            ->map(fn (Meeting $meeting) => $this->formatMeetingEvent($meeting));
+
+        $events = $manualEvents->concat($meetingEvents)->sortBy('startsAt')->values();
 
         $bookedCouples = Pairing::where('vendor_id', $vendor->id)
             ->where('status', 3)
@@ -57,7 +74,7 @@ class VendorCalendarController extends Controller
             'prevDate' => $prevDate->toDateString(),
             'nextDate' => $nextDate->toDateString(),
             'todayDate' => now()->toDateString(),
-            'events' => $events->map(fn (VendorCalendarEvent $event) => $this->formatEvent($event)),
+            'events' => $events,
             'bookedCouples' => $bookedCouples,
             'page' => 'vendor_calendar',
         ]);
@@ -149,6 +166,35 @@ class VendorCalendarController extends Controller
             'startsAt' => $event->starts_at->format('Y-m-d\TH:i:s'),
             'endsAt' => $event->ends_at->format('Y-m-d\TH:i:s'),
             'notes' => $event->notes,
+            'source' => 'manual',
+        ];
+    }
+
+    // Meetings (consultations, weddings, etc. booked through WIN) only carry a
+    // single point-in-time `date`, so they get a synthetic 1-hour block here
+    // purely for calendar display — they aren't editable/deletable through the
+    // manual event CRUD endpoints since no VendorCalendarEvent row backs them.
+    private function formatMeetingEvent(Meeting $meeting): array
+    {
+        // Meeting's FK column is literally named "client" (not "client_id"),
+        // which collides with the client() relation method — Eloquent always
+        // resolves the raw int column for ->client, never the relation. Pull
+        // the eager-loaded relation explicitly instead.
+        $client = $meeting->getRelation('client');
+        $partnerOne = trim($client->first_name . ' ' . ($client->last_name ?? ''));
+        $partnerTwo = trim(($client->fiance_first_name ?? '') . ' ' . ($client->fiance_last_name ?? ''));
+        $coupleName = $partnerTwo !== '' ? $partnerOne . ' ♥ ' . $partnerTwo : $partnerOne;
+
+        $start = Carbon::parse($meeting->date);
+
+        return [
+            'id' => 'meeting-' . $meeting->id,
+            'client_id' => $meeting->client,
+            'coupleName' => $coupleName,
+            'startsAt' => $start->format('Y-m-d\TH:i:s'),
+            'endsAt' => $start->copy()->addHour()->format('Y-m-d\TH:i:s'),
+            'notes' => ucfirst($meeting->type) . ' booked through WIN',
+            'source' => 'meeting',
         ];
     }
 }

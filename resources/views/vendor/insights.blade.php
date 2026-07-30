@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="csrf-token" content="{{ csrf_token() }}" />
   <title>WIN: Vendor Insights</title>
-  @vite(['resources/css/app.css', 'resources/css/vendor-insights.css', 'resources/css/vendor-dashboard.css', 'resources/js/app.js', 'resources/js/vendor-insights.js'])
+  @vite(['resources/css/app.css', 'resources/css/vendor-insights.css', 'resources/css/vendor-dashboard.css', 'resources/js/app.js', 'resources/js/vendor-insights.js', 'resources/js/vendor-edit-profile.js'])
   @include('components.fonts')
 </head>
 <body class="vi-page m-0 antialiased overflow-x-hidden">
@@ -72,9 +72,12 @@
     ],
   ];
 
+  $vendorRefUrl = 'https://weddinginsidersnetwork.com/ref/v/' . urlencode($vendor->business_name);
+  $clientRefUrl = 'https://weddinginsidersnetwork.com/ref/c/' . urlencode($vendor->business_name);
+
   $stats = [
-    ['label' => 'Vendors Referred', 'value' => $data['vendorsReferred'] ?? $vendor->vendorReferrals()],
-    ['label' => 'Clients Referred', 'value' => $data['clientsReferred'] ?? $vendor->clientReferrals()],
+    ['label' => 'Vendors Referred', 'value' => $data['vendorsReferred'] ?? $vendor->vendorReferrals(), 'cta_label' => 'Refer a Vendor', 'cta_ref' => $vendorRefUrl],
+    ['label' => 'Clients Referred', 'value' => $data['clientsReferred'] ?? $vendor->clientReferrals(), 'cta_label' => 'Refer a Client', 'cta_ref' => $clientRefUrl],
     ['label' => 'Storefront Views', 'value' => $data['storefrontViews'] ?? ($vendor->storefront_views ?? 0)],
     ['label' => 'Times Favorited', 'value' => $data['timesFavorited'] ?? $vendor->timesFavorited()],
   ];
@@ -191,6 +194,9 @@
         <article class="vi-stat-card">
           <p class="vi-stat-card__label">{{ $stat['label'] }}</p>
           <p class="vi-stat-card__value">{{ $stat['value'] }}</p>
+          @if(!empty($stat['cta_ref']))
+            <button type="button" class="vi-stat-card__cta" data-copy-ref="{{ $stat['cta_ref'] }}">{{ $stat['cta_label'] }}</button>
+          @endif
         </article>
         @endforeach
       </section>

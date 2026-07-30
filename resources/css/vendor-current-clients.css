@@ -269,6 +269,15 @@
   background: #9ca3af;
 }
 
+.cc-status--pending {
+  background: #fdf6e3;
+  color: #c9930a;
+}
+
+.cc-status--pending .cc-status__dot {
+  background: #eab308;
+}
+
 /* Person */
 .cc-person {
   display: flex;

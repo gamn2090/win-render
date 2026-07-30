@@ -199,8 +199,8 @@
       @endif
     </nav>
 
-    <section class="vsf-card" aria-label="Social brands">
-      <h3 class="vsf-card__title">Social Brands:</h3>
+    <section class="vsf-card" aria-label="Social Media">
+      <h3 class="vsf-card__title">Social Media:</h3>
       <div class="vsf-social">
         @if($profile->instagram_link)
           <a href="{{ $profile->getLink('instagram') }}" target="_blank" rel="noopener" class="vsf-social__link" aria-label="Instagram">

@@ -103,6 +103,7 @@ Route::middleware('auth:vendor')->group(function () {
     Route::get('/vendor/client/export', [VendorController::class, 'exportClientList'])->name('vendor.client.export');
     Route::get('/vendor/list', [VendorController::class, 'vendorList'])->name('vendor.list');
     Route::post('/vendor/connection/remove', [VendorController::class, 'removeConnection'])->name('vendor.connection.remove');
+    Route::post('/vendor/connection/remove-self', [VendorController::class, 'removeSelfFromPreferred'])->name('vendor.connection.remove_self');
     Route::get('/vendor/google/auth', [VendorController::class, 'googleAuth']);
     Route::get('/vendor/google/auth/callback', [VendorController::class, 'googleCallback']);
     Route::get('/billing-portal', function (Request $request) {
@@ -167,6 +168,7 @@ Route::middleware('auth:vendor')->group(function () {
     //chat
     Route::get('/inbox/conversation/{id}', [ChatController::class, 'vendorViewConversation'])->name('get.vendor.conversation');
     Route::post('/meeting/answer', [BookingFlowController::class, 'answerMeetingRequest'])->name('meeting.answer');
+    Route::post('/meeting/suggest-new-time', [BookingFlowController::class, 'suggestNewMeetingTime'])->name('meeting.suggest_new_time');
 
     //endorse
     Route::post('/vendor/endorse', [VendorController::class, 'endorse'])->name('vendor.endorse');
@@ -236,6 +238,7 @@ Route::middleware('auth:web')->group(function () {
     Route::get('/client/conversation/{id}', [ChatController::class, 'clientViewConversation'])->name('get.client.conversation');
     Route::get('/client/messages/{convoID}', [UserController::class, 'getMessages'])->name('client.get.messages');
     Route::post('/client/send/message', [UserController::class, 'sendMessage'])->name('user.send.message');
+    Route::post('/client/meeting/suggestion/answer', [BookingFlowController::class, 'answerConsultationSuggestion'])->name('client.meeting.suggestion.answer');
     Route::post('/client/messages/attachment', [MessageAttachmentController::class, 'upload'])->name('client.message.attachment.upload');
     //meetings
     Route::post('/client/meeting/request', [BookingFlowController::class, 'requestMeeting'])->name('user.request.meeting');

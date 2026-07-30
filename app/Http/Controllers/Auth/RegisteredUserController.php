@@ -63,11 +63,16 @@ class RegisteredUserController extends Controller
                 ->values();
         }
 
+        $vendorMatchesCount = Vendor::whereIn('type', $requestedVendorTypes->pluck('id'))
+            ->where('visible', 1)
+            ->count();
+
         $data = [
             'pairings' => $pairings,
             'page' => 'dashboard',
             'recentConversations' => $user->recentConversations(3),
             'requestedVendorTypes' => $requestedVendorTypes,
+            'vendorMatchesCount' => $vendorMatchesCount,
             'favoritedVendors' => $user->favoritedVendors()->get(),
             'upcomingMeetings' => $user->upcomingMeetings()->take(5)->get(),
             'first_login' => $first_login,
@@ -112,15 +117,6 @@ class RegisteredUserController extends Controller
             $request->event = $event->id;
         } else {
             $request->event = null;
-        }
-
-        $bio = $request->bio;
-        if ($request->filled('wedding_venue')) {
-            $venueLine = 'Wedding venue: '.$request->wedding_venue;
-            if ($request->filled('wedding_venue_location')) {
-                $venueLine .= ', '.$request->wedding_venue_location;
-            }
-            $bio = $bio ? $bio."\n".$venueLine : $venueLine;
         }
 
         $user = User::create([

@@ -525,35 +525,11 @@
   border-bottom: 1px solid #eae7f0;
 }
 
-.vd-metric {
-  text-align: center;
+.vd-winfluence__metrics .vi-gauge {
   flex: 1;
 }
 
-.vd-metric__ring {
-  width: 52px;
-  height: 52px;
-  margin: 0 auto 6px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  font-weight: 700;
-  color: #2e2640;
-  background: transparent;
-  box-sizing: border-box;
-}
-
-.vd-metric__ring--solid {
-  border: 7px solid var(--vd-ring-color, #8b6fbe);
-}
-
-.vd-metric__ring--dashed {
-  border: 7px dashed var(--vd-ring-color, #2da771);
-}
-
-.vd-metric__label {
+.vd-winfluence__metrics .vi-gauge__label {
   margin: 0;
   font-size: 10px;
   font-weight: 600;
@@ -949,6 +925,31 @@
   border: 1.34px solid rgba(255, 255, 255, 0.5);
   background: transparent;
   color: #fff;
+}
+
+/* Mobile: title stacks above the actions, but the two buttons stay side by
+   side in one row instead of wrapping and stacking on top of each other. */
+@media (max-width: 639px) {
+  .vd-promo--refer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .vd-promo--refer .vd-promo__title {
+    max-width: 100%;
+  }
+
+  .vd-promo--refer .vd-promo__actions {
+    flex-wrap: nowrap;
+    width: 100%;
+  }
+
+  .vd-promo--refer .vd-promo__btn {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 10px 12px;
+    font-size: 14px;
+  }
 }
 
 /* Find couples card — gradient only; #FEF0E6 predominates */
@@ -1418,6 +1419,86 @@
   }
 }
 
+/* Narrow phones (<480px) — Messages / My Wedding Appointments / WINfluence
+   cards were overflowing the viewport instead of staying boxed. Desktop and
+   the ≥480px mobile layout above are untouched. */
+@media (max-width: 479px) {
+  /* Safety net: whatever the exact overflow source, don't let it bleed the
+     card past its own rounded border. */
+  .vd-card {
+    overflow-x: hidden;
+  }
+
+  .vd-card__head {
+    flex-wrap: wrap;
+    row-gap: 4px;
+  }
+
+  .vd-card__title {
+    min-width: 0;
+  }
+
+  .vd-card--feed .vd-card__scroll {
+    overflow-x: hidden;
+  }
+
+  .vd-card--feed .vd-list-row {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 8px;
+  }
+
+  .vd-card--feed .vd-list-row__avatar {
+    flex-shrink: 0;
+  }
+
+  .vd-card--feed .vd-list-row__text {
+    flex-shrink: 0;
+    min-width: 150px;
+  }
+
+  .vd-card--feed .vd-list-row__preview {
+    white-space: nowrap;
+  }
+
+  .vd-card--feed .vd-list-row__actions,
+  .vd-card--feed .vd-list-row__meta {
+    flex-shrink: 0;
+  }
+
+  .vd-card--feed .vd-list-row--appointment .vd-list-row__meta {
+    margin-left: 0;
+    white-space: nowrap;
+  }
+
+  /* WINfluence rings: stack vertically (ring + label side by side per row)
+     instead of 4-across, which is what was forcing the card to overflow. */
+  .vd-winfluence__metrics.vi-gauges {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+
+  .vd-winfluence__metrics .vi-gauge {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    text-align: left;
+  }
+
+  .vd-winfluence__metrics .vi-gauge__ring {
+    margin: 0;
+    flex-shrink: 0;
+  }
+
+  .vd-winfluence__metrics .vi-gauge__label {
+    margin: 0;
+  }
+}
+
 /* Greeting header — title/subtitle left-aligned, savings banner centered between them (couple dashboard) */
 .vd-greeting {
   display: flex;
@@ -1624,6 +1705,25 @@
   border-radius: 50%;
   background: #f85705;
   border: 1px solid #fff;
+}
+
+.vd-topbar__badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: #f85705;
+  border: 1px solid #fff;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
 }
 
 /* White-filled pill button (used on dark .vd-promo--refer background) */
@@ -2402,7 +2502,7 @@
   height: 36px;
   border: none;
   border-radius: 18px;
-  background: #4f46e5;
+  background: #6432c8;
   color: #fff;
   font-size: 14px;
   cursor: pointer;
@@ -2464,9 +2564,30 @@
   border: 1px solid #9ca3af;
 }
 
+.vd-chat__consult-btn--suggest {
+  background: #fff;
+  color: #6432c8;
+  border: 1px solid #6432c8;
+}
+
 .vd-chat__consult-btn:disabled {
   opacity: 0.6;
   cursor: default;
+}
+
+.vd-chat__consult-suggest-form {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.vd-chat__consult-suggest-input {
+  flex: 1;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #d8d3e6;
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
 }
 
 .vd-chat__consult-status {

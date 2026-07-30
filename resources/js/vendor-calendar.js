@@ -94,6 +94,10 @@ document.addEventListener('DOMContentLoaded', function () {
     el.addEventListener('click', (e) => {
       e.stopPropagation();
       const ev = JSON.parse(el.dataset.vcalEvent);
+      if (ev.source === 'meeting') {
+        window.WinToast?.show(ev.coupleName + ' — ' + ev.notes + '. Manage this booking from Messages or Appointments.');
+        return;
+      }
       openForEdit(ev);
     });
   });

@@ -43,7 +43,16 @@
       @method('patch')
 
       <div class="vd-edit-avatar-row">
-        <img id="profileImagePreview" class="vd-edit-avatar" src="{{ \App\Support\ProfileImageStorage::url($user->image) }}" alt="Profile Picture" />
+        @php
+          $hasCustomPhoto = \App\Support\ProfileImageStorage::hasCustomImage($user->image);
+          $profilePhotoSrc = $hasCustomPhoto
+            ? \App\Support\ProfileImageStorage::url($user->image)
+            : \App\Support\AvatarPalette::placeholderImageDataUri(
+                \App\Models\User::class . ':' . $user->id,
+                \App\Support\AvatarPalette::coupleInitials($user->first_name ?? '', $user->fiance_first_name ?? '')
+              );
+        @endphp
+        <img id="profileImagePreview" class="vd-edit-avatar" src="{{ $profilePhotoSrc }}" alt="Profile Picture" />
         <button id="uploadImageButton" type="button" class="vd-edit-upload-btn">⬆️ Upload Profile Photo</button>
         <input id="imageUpload" type="file" accept=".png,.jpg,.jpeg" hidden />
       </div>
@@ -51,14 +60,14 @@
       <div class="vd-edit-form">
         <div class="vd-edit-row">
           <div class="vd-edit-field">
-            <label class="vd-edit-field__label">Full name <span class="vd-edit-field__required">*</span></label>
+            <label class="vd-edit-field__label">Full Name <span class="vd-edit-field__required">*</span></label>
             <div class="vd-edit-row">
               <input type="text" name="first_name" value="{{ $user->first_name }}" placeholder="First Name" required />
               <input type="text" name="last_name" value="{{ $user->last_name }}" placeholder="Last Name" required />
             </div>
           </div>
           <div class="vd-edit-field">
-            <label class="vd-edit-field__label">Fiance name <span class="vd-edit-field__required">*</span></label>
+            <label class="vd-edit-field__label">Fiance Name <span class="vd-edit-field__required">*</span></label>
             <div class="vd-edit-row">
               <input type="text" name="fiance_first_name" value="{{ $user->fiance_first_name }}" placeholder="First Name" />
               <input type="text" name="fiance_last_name" value="{{ $user->fiance_last_name }}" placeholder="Last Name" />
@@ -73,22 +82,22 @@
 
         <div class="vd-edit-row">
           <div class="vd-edit-field">
-            <label class="vd-edit-field__label">Wedding location — City</label>
+            <label class="vd-edit-field__label">Wedding Location — City</label>
             <input type="text" id="venue_city" name="venue_city" value="{{ $venueCity }}" placeholder="City" autocomplete="off" data-places-autocomplete data-places-types="(cities)" data-places-self="city" data-places-fill-state="venue_state" />
           </div>
           <div class="vd-edit-field">
-            <label class="vd-edit-field__label">Wedding location — State</label>
+            <label class="vd-edit-field__label">Wedding Location — State</label>
             <input type="text" id="venue_state" name="venue_state" value="{{ $venueState }}" placeholder="State" readonly />
           </div>
         </div>
 
         <div class="vd-edit-row">
           <div class="vd-edit-field">
-            <label class="vd-edit-field__label">Name of wedding venue</label>
+            <label class="vd-edit-field__label">Name of Wedding Venue</label>
             <input type="text" name="venue_name" value="{{ $venueName }}" placeholder="E.G. Evergreen Hall" />
           </div>
           <div class="vd-edit-field">
-            <label class="vd-edit-field__label">Wedding date</label>
+            <label class="vd-edit-field__label">Wedding Date</label>
             <input type="text" id="wedding_date" name="wedding_date" value="{{ $user->wedding_date }}" placeholder="MM/DD/YYYY" />
           </div>
         </div>
@@ -146,7 +155,7 @@
           </label>
         </div>
 
-        <button type="submit" class="vd-edit-save-btn">Save changes</button>
+        <button type="submit" class="vd-edit-save-btn">Save Changes</button>
       </div>
     </form>
 

@@ -7,7 +7,7 @@
   <title>WIN: Vendor Dashboard</title>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
   <script>window.userID = {{ Auth::guard('vendor')->id() }};</script>
-  @vite(['resources/css/app.css', 'resources/css/vendor-dashboard.css'])
+  @vite(['resources/css/app.css', 'resources/css/vendor-insights.css', 'resources/css/vendor-dashboard.css'])
   @vite(['resources/js/app.js', 'resources/js/chat.js', 'resources/js/chat-modal.js'])
   @include('components.fonts')
   @if(!empty($data['first_login']))
@@ -51,13 +51,18 @@
   };
   $rankingModel = $data['ranking'] ?? $vendor->vendor_ranking();
   $ranking = is_object($rankingModel) ? $rankingModel->toArray() : (array) $rankingModel;
-  $vendorCommunityPts = (int) ($vendor->vendorCommunityRankValue()['value'] ?? 0);
-  /* Mockup dashboard_vendor.png: 4 anillos (no Client Community en UI; sí entra al score total en backend). */
+  $vendorCommunityRank = $vendor->vendorCommunityRankValue();
+  $vendorCommunityPts = (int) ($vendorCommunityRank['value'] ?? 0);
+  $vendorCommunityMax = (int) ($vendorCommunityRank['max'] ?? 0);
+  $vendorCommunityPct = $vendorCommunityMax > 0 ? round(($vendorCommunityPts / $vendorCommunityMax) * 100) : 0;
+  /* Mockup dashboard_vendor.png: 4 anillos (no Client Community en UI; sí entra al score total en backend).
+     Rendered with the same SVG ring gauge as the Insights page (see vendor/insights.blade.php)
+     so the two pages share one visual language instead of two different ring styles. */
   $metricRings = [
-    ['label' => 'Badges', 'key' => 'badges', 'color' => '#8B6FBE', 'style' => 'solid', 'display' => 'percent'],
-    ['label' => 'Endorse.', 'key' => 'endorsements', 'color' => '#F26B1D', 'style' => 'solid', 'display' => 'percent'],
-    ['label' => 'Reviews', 'key' => 'reviews', 'color' => '#2DA771', 'style' => 'dashed', 'display' => 'percent'],
-    ['label' => 'Vendor Community', 'key' => 'vendor_community', 'color' => '#C9930A', 'style' => 'dashed', 'display' => 'points', 'points' => $vendorCommunityPts],
+    ['label' => 'Badges', 'key' => 'badges', 'color' => '#8B6FBE', 'display' => 'percent', 'value' => round($ranking['badges'] ?? 0)],
+    ['label' => 'Endorse.', 'key' => 'endorsements', 'color' => '#F26B1D', 'display' => 'percent', 'value' => round($ranking['endorsements'] ?? 0)],
+    ['label' => 'Reviews', 'key' => 'reviews', 'color' => '#2DA771', 'display' => 'percent', 'value' => round($ranking['reviews'] ?? 0)],
+    ['label' => 'Vendor Community', 'key' => 'vendor_community', 'color' => '#C9930A', 'display' => 'points', 'points' => $vendorCommunityPts, 'value' => $vendorCommunityPct],
   ];
   /* Mismos 4 badges del dashboard antiguo (PNG en /images + helpers del modelo). */
   $dashboardBadgeSlots = [
@@ -98,7 +103,6 @@
     <article class="vd-stat-card" style="--vd-stat-accent: #6432c8;">
       <div class="vd-stat-card__top">
         <span class="vd-stat-card__icon-wrap" style="background:#f0ebf9;">👁️</span>
-        <span class="vd-stat-card__badge vd-stat-card__badge--up">↑ +12%</span>
       </div>
       <p class="vd-stat-card__value">{{ $vendor->storefront_views ?? 0 }}</p>
       <p class="vd-stat-card__label">Storefront Views</p>
@@ -163,20 +167,29 @@
           </div>
         </div>
 
-        <div class="vd-winfluence__metrics">
+        <div class="vi-gauges vd-winfluence__metrics">
           @foreach($metricRings as $metric)
-          <div class="vd-metric">
-            <div
-              class="vd-metric__ring vd-metric__ring--{{ $metric['style'] }}"
-              style="--vd-ring-color: {{ $metric['color'] }};"
-            >
-              @if(($metric['display'] ?? 'percent') === 'points')
-                {{ $metric['points'] }}pts
-              @else
-                {{ round($ranking[$metric['key']] ?? 0) }}%
-              @endif
+          <div class="vi-gauge">
+            <p class="vi-gauge__label">{{ $metric['label'] }}</p>
+            <div class="vi-gauge__ring" aria-label="{{ $metric['label'] }}: {{ $metric['value'] }} percent">
+              <svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle class="vi-gauge__ring-track" cx="18" cy="18" r="16"></circle>
+                <circle
+                  class="vi-gauge__ring-fill"
+                  cx="18"
+                  cy="18"
+                  r="16"
+                  style="stroke: {{ $metric['color'] }}; stroke-dashoffset: {{ max(0, 100 - $metric['value']) }};"
+                ></circle>
+              </svg>
+              <span class="vi-gauge__value">
+                @if(($metric['display'] ?? 'percent') === 'points')
+                  {{ $metric['points'] }}pts
+                @else
+                  {{ $metric['value'] }}%
+                @endif
+              </span>
             </div>
-            <p class="vd-metric__label">{{ $metric['label'] }}</p>
           </div>
           @endforeach
         </div>
@@ -211,7 +224,7 @@
           </span>
           <div class="vd-action-box__content">
             <p class="vd-action-box__title">Top Action to Level Up</p>
-            <p class="vd-action-box__text">Build Client Community — reach out to 3 past clients to join WIN</p>
+            <p class="vd-action-box__text">Build Client Community — reach out to 3 clients to join WIN</p>
           </div>
         </div>
       </div>
@@ -277,7 +290,7 @@
       <div class="vd-card__head">
         <h2 class="vd-card__title">My Wedding Appointments</h2>
         @if($upcomingCount > 0)
-        <a href="{{ route('profile.vendoredit') }}#edit-calendar" class="vd-card__link vd-card__link--calendar vd-card__link--btn" aria-label="Change availability">
+        <a href="{{ route('vendor.calendar') }}" class="vd-card__link vd-card__link--calendar vd-card__link--btn" aria-label="View calendar">
           <i class="fa-regular fa-calendar" aria-hidden="true"></i>
         </a>
         @endif

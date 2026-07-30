@@ -81,7 +81,16 @@
             @method('patch')
 
             <div class="vep-photo-row">
-              <img id="profileImagePreview" class="vep-photo-row__avatar" src="{{ \App\Support\ProfileImageStorage::url($user->image) }}" alt="Profile Picture" width="80" height="80" />
+              @php
+                $hasCustomPhoto = \App\Support\ProfileImageStorage::hasCustomImage($user->image);
+                $profilePhotoSrc = $hasCustomPhoto
+                  ? \App\Support\ProfileImageStorage::url($user->image)
+                  : \App\Support\AvatarPalette::placeholderImageDataUri(
+                      \App\Models\Vendor::class . ':' . $user->id,
+                      \App\Support\AvatarPalette::initials(trim($user->first_name . ' ' . $user->last_name))
+                    );
+              @endphp
+              <img id="profileImagePreview" class="vep-photo-row__avatar" src="{{ $profilePhotoSrc }}" alt="Profile Picture" width="80" height="80" />
               <button id="uploadImageButton" type="button" class="vep-btn-upload">
                 <img src="{{ asset('assets/img/vendor-home/profile/upload.png') }}" alt="" class="vep-btn-upload__icon" width="18" height="18" />
                 Upload Profile Photo
@@ -109,15 +118,15 @@
 
             <div class="vep-name-row">
               <div class="vep-field vep-field--inline">
-                <label class="vep-field__label vep-field__label--required" for="af-account-first-name">Full name</label>
+                <label class="vep-field__label vep-field__label--required" for="af-account-first-name">Full Name</label>
                 <input value="{{ $user->first_name }}" name="first_name" id="af-account-first-name" type="text" class="vep-input" placeholder="First Name" />
               </div>
               <div class="vep-field vep-field--inline">
-                <label class="vep-field__label" for="af-account-last-name">Last name</label>
+                <label class="vep-field__label" for="af-account-last-name">Last Name</label>
                 <input value="{{ $user->last_name }}" name="last_name" id="af-account-last-name" type="text" class="vep-input" placeholder="Last Name" />
               </div>
               <div class="vep-field vep-field--inline">
-                <label class="vep-field__label vep-field__label--required" for="af-business-name">Business name</label>
+                <label class="vep-field__label vep-field__label--required" for="af-business-name">Business Name</label>
                 <input value="{{ $user->business_name }}" name="business_name" id="af-business-name" type="text" class="vep-input" placeholder="Business Name" />
               </div>
             </div>
@@ -135,7 +144,7 @@
             <div class="vep-pricing-group">
               <div class="vep-field vep-field--pricing">
                 <label class="vep-field__label">
-                  Preferred pricing
+                  Preferred Pricing
                   <img src="{{ asset('assets/img/vendor-home/profile/interrogacion.png') }}" alt="" class="vep-field__hint-icon" width="18" height="18" title="Select your preferred pricing discount" />
                 </label>
                 <div class="vep-pricing" data-vep-pricing>
@@ -171,14 +180,15 @@
 
             <div class="vep-field" id="edit-calendar">
               <label class="vep-field__label" for="availability">Calendar</label>
+              <p class="vep-field__caption">Select the dates you're <strong>unavailable</strong> (already booked or blocked off). Dates you don't select stay open for couples to request.</p>
               <div class="vep-select-wrap vep-select-wrap--input vep-select-wrap--calendar">
-                <input id="availability" name="availability" class="vep-input vep-input--icon" placeholder="Change Availability" />
+                <input id="availability" name="availability" class="vep-input vep-input--icon" placeholder="Block off unavailable dates" />
                 <img src="{{ asset('assets/img/vendor-home/profile/abrir.png') }}" alt="" class="vep-select-wrap__icon" width="12" height="12" />
               </div>
             </div>
 
             <div class="vep-field">
-              <label class="vep-field__label">Referral links</label>
+              <label class="vep-field__label">Referral Links</label>
               <div class="vep-referral-row">
                 <button type="button" class="vep-btn-orange" data-copy-ref="{{ $vendorRefUrl }}">Copy Vendor Referral Link</button>
                 <button type="button" class="vep-btn-orange" data-copy-ref="{{ $clientRefUrl }}">Copy Client Referral Link</button>
@@ -186,7 +196,7 @@
             </div>
 
             <div class="vep-field vep-field--location">
-              <p class="vep-field__label vep-field__label--section">Your Business location</p>
+              <p class="vep-field__label vep-field__label--section">Your Business Location</p>
               <div class="vep-grid-2 vep-location-grid">
                 <div class="vep-field vep-field--inline">
                   <label for="vep-city" class="vep-field__label vep-field__label--upper">City</label>
@@ -222,26 +232,26 @@
             <div class="vep-field">
               <div class="vep-grid-2 vep-input-row--social">
                 <div class="vep-field--social">
-                  <label for="af-business-website" class="vep-field__label">Business website</label>
-                  <input value="{{ filled($user->profile->business_link) ? $user->profile->business_link : '' }}" name="business_link" id="af-business-website" type="text" class="vep-input" placeholder="your Business website Link" />
+                  <label for="af-business-website" class="vep-field__label">Business Website</label>
+                  <input value="{{ filled($user->profile->business_link) ? $user->profile->business_link : '' }}" name="business_link" id="af-business-website" type="text" class="vep-input" placeholder="Your Business Website Link" />
                 </div>
                 <div class="vep-field--social">
-                  <label for="af-business-facebook" class="vep-field__label">Facebook link</label>
-                  <input value="{{ filled($user->profile->facebook_link) ? $user->profile->getLink('facebook') : '' }}" name="facebook_link" id="af-business-facebook" type="text" class="vep-input" placeholder="your business facebook Link" />
+                  <label for="af-business-facebook" class="vep-field__label">Facebook Link</label>
+                  <input value="{{ filled($user->profile->facebook_link) ? $user->profile->getLink('facebook') : '' }}" name="facebook_link" id="af-business-facebook" type="text" class="vep-input" placeholder="Your Business Facebook Link" />
                 </div>
                 <div class="vep-field--social">
-                  <label for="af-business-linkedin" class="vep-field__label">LinkedIn link</label>
-                  <input value="{{ filled($user->profile->linkedin_link) ? $user->profile->getLink('linkedin') : '' }}" name="linkedin_link" id="af-business-linkedin" type="text" class="vep-input" placeholder="your business linkedin Link" />
+                  <label for="af-business-linkedin" class="vep-field__label">LinkedIn Link</label>
+                  <input value="{{ filled($user->profile->linkedin_link) ? $user->profile->getLink('linkedin') : '' }}" name="linkedin_link" id="af-business-linkedin" type="text" class="vep-input" placeholder="Your Business LinkedIn Link" />
                 </div>
                 <div class="vep-field--social">
-                  <label for="af-business-instagram" class="vep-field__label">Instagram link</label>
-                  <input value="{{ filled($user->profile->instagram_link) ? $user->profile->getLink('instagram') : '' }}" name="instagram_link" id="af-business-instagram" type="text" class="vep-input" placeholder="your business instagram Link" />
+                  <label for="af-business-instagram" class="vep-field__label">Instagram Link</label>
+                  <input value="{{ filled($user->profile->instagram_link) ? $user->profile->getLink('instagram') : '' }}" name="instagram_link" id="af-business-instagram" type="text" class="vep-input" placeholder="Your Business Instagram Link" />
                 </div>
               </div>
             </div>
 
             <div class="vep-field">
-              <label class="vep-field__label">Google reviews</label>
+              <label class="vep-field__label">Google Reviews</label>
               @if ($user->google_place_id == null)
                 <button class="vep-btn-orange" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="link-google-place-modal" data-hs-overlay="#link-google-place-modal">
                   Link Business
@@ -257,7 +267,7 @@
             </div>
 
             <div class="vep-field">
-              <label for="af-service-radius" class="vep-field__label">Service radius (miles)</label>
+              <label for="af-service-radius" class="vep-field__label">Service Radius (Miles)</label>
               <input value="{{ $user->service_radius }}" name="service_radius" id="af-service-radius" type="text" class="vep-input" placeholder="Add Miles Here" />
             </div>
 
@@ -298,7 +308,7 @@
             @endforeach
 
             <div class="vep-save-wrap">
-              <button type="submit" class="vep-btn-save">Save changes</button>
+              <button type="submit" class="vep-btn-save">Save Changes</button>
             </div>
           </form>
         </div>
@@ -346,6 +356,7 @@
 
           <!-- Image display and sorting section -->
           <h3 class="piu-label">Upload Images:</h3>
+          <p class="piu-hint">The first image you upload becomes your storefront cover photo.</p>
           <div id="imageContainer" class="piu-grid"></div>
 
           <div class="piu-actions">
@@ -538,11 +549,12 @@
       function renderPortfolioGrid() {
         const container = document.getElementById('imageContainer');
         container.innerHTML = '';
-        portfolioImages.forEach((im) => {
+        portfolioImages.forEach((im, idx) => {
           const item = document.createElement('div');
           item.id = 'rm' + im.replaceAll('.', '');
           item.className = 'piu-item';
           item.innerHTML = `
+            ${idx === 0 ? '<span class="piu-item__cover-badge">Cover photo</span>' : ''}
             <img class="piu-item__img" src="/storage/images/${im}" alt="Portfolio Image">
             <button type="button" value="${im}" class="rm-image piu-item__remove" aria-label="Remove image">&times;</button>
           `;

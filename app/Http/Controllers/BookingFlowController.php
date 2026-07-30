@@ -87,6 +87,77 @@ class BookingFlowController extends Controller
         return ["status" => true, "accepted" => $accepted];
     }
 
+    // Vendor declines the requested time but proposes a different one, instead
+    // of leaving the couple with just a bare "declined" and no next step.
+    public function suggestNewMeetingTime(Request $request){
+        $validated = $request->validate([
+            'meeting_id' => 'required',
+            'new_date' => 'required|date',
+        ]);
+        $vendor = $request->user();
+        $meeting = Meeting::where(['uuid' => $validated['meeting_id'], 'vendor' => $vendor->id])->first();
+        if(!$meeting){
+            return ["status" => false];
+        }
+        $meeting->update(['approved' => false]);
+        $client = $meeting->client()->first();
+        $conversation = $vendor->getDirectMessagesWith($client) ?: $vendor->createDirectMessageWith($client);
+
+        Chat::message('Consultation declined')
+            ->type('consultation-response')
+            ->data(['accepted' => false, 'meeting_uuid' => $meeting->uuid, 'meeting_date' => $meeting->date])
+            ->from($vendor)
+            ->to($conversation)
+            ->send();
+
+        $newMeeting = Meeting::create([
+            'client' => $client->id,
+            'vendor' => $vendor->id,
+            'date' => Carbon::parse($validated['new_date'])->format('Y-m-d H:i'),
+            'type' => 'consultation',
+            'approved' => 0,
+        ]);
+
+        Chat::message('Suggested a new consultation time')
+            ->type('consultation-suggestion')
+            ->data([
+                'vendor_name' => $vendor->business_name,
+                'meeting_date' => $newMeeting->date,
+                'meeting_uuid' => $newMeeting->uuid,
+            ])
+            ->from($vendor)
+            ->to($conversation)
+            ->send();
+
+        return ["status" => true];
+    }
+
+    // Couple accepts/declines a new time the vendor suggested (see suggestNewMeetingTime()).
+    public function answerConsultationSuggestion(Request $request){
+        $validated = $request->validate([
+            'meeting_id' => 'required',
+            'answer' => 'required|integer|between:0,1',
+        ]);
+        $accepted = (bool) $validated['answer'];
+        $client = Auth::user();
+        $meeting = Meeting::where(['uuid' => $validated['meeting_id'], 'client' => $client->id])->first();
+        if(!$meeting){
+            return ["status" => false];
+        }
+        $meeting->update(['approved' => $accepted]);
+        $vendor = $meeting->vendor()->first();
+
+        $conversation = $client->getDirectMessagesWith($vendor) ?: $client->createDirectMessageWith($vendor);
+        Chat::message($accepted ? 'Accepted the suggested time' : 'Declined the suggested time')
+            ->type('consultation-suggestion-response')
+            ->data(['accepted' => $accepted, 'meeting_uuid' => $meeting->uuid, 'meeting_date' => $meeting->date])
+            ->from($client)
+            ->to($conversation)
+            ->send();
+
+        return ["status" => true, "accepted" => $accepted];
+    }
+
     public function markVendorBooked(Request $request){
         $validated = $request->validate([
             'vendor_uuid' => 'required',

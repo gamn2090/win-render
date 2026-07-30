@@ -211,6 +211,10 @@
   filter: brightness(0.95);
 }
 
+.vcal-event-pill--meeting {
+  background: #fb962f;
+}
+
 /* Week / day grid */
 .vcal-grid {
   display: grid;
@@ -301,6 +305,10 @@
   flex-direction: column;
   gap: 1px;
   z-index: 2;
+}
+
+.vcal-event-block--meeting {
+  background: #fb962f;
 }
 
 .vcal-event-block:hover {

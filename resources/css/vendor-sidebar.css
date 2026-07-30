@@ -363,7 +363,7 @@
     position: fixed;
     inset: 0;
     z-index: 45;
-    background: rgba(35, 31, 32, 0.45);
+    background: rgba(20, 17, 20, 0.7);
     opacity: 0;
     visibility: hidden;
     pointer-events: none;

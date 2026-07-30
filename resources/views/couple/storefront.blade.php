@@ -115,7 +115,7 @@
 
     <div class="vd-profile-info">
       <article class="vd-profile-info__card">
-        <h3 class="vd-profile-info__title">Social Brands:</h3>
+        <h3 class="vd-profile-info__title">Social Media:</h3>
         <div class="vd-storefront-social">
           @if($profile->instagram_link)
             <a href="{{ $profile->getLink('instagram') }}" target="_blank" rel="noopener" class="vd-storefront-social__icon" aria-label="Instagram">
@@ -154,7 +154,7 @@
 
       @if($coverImage)
         <article id="vd-sf-photos" class="vd-profile-info__card">
-          <h3 class="vd-profile-info__title">See my work:</h3>
+          <h3 class="vd-profile-info__title">See My Work:</h3>
           <p class="vd-gallery__label">*Cover Photo</p>
           <div class="vd-gallery">
             <div class="vd-gallery__hero vd-gallery__hero--cover">

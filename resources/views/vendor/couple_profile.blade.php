@@ -110,7 +110,7 @@
     <div class="vcp-cards">
       <article class="vcp-card">
         <h3 class="vcp-card__title">
-          A Little Bit About <strong>{{ $client->first_name }} &amp; {{ $client->fiance_first_name }}</strong>
+          A little bit about <strong>{{ $client->first_name }} &amp; {{ $client->fiance_first_name }}</strong>
         </h3>
         <p class="vcp-card__body">
           @if($client->bio && ! preg_match('/^Wedding venue:/im', trim($client->bio)))
@@ -132,7 +132,7 @@
       </article>
 
       <article class="vcp-card">
-        <h3 class="vcp-card__title">Describe Your Dream Wedding In Three Words.</h3>
+        <h3 class="vcp-card__title">Describe your dream wedding in three words.</h3>
         @if($answers[0] != null)
           <p class="vcp-card__body">{{ $answers[0] }}</p>
         @else
@@ -141,7 +141,7 @@
       </article>
 
       <article class="vcp-card">
-        <h3 class="vcp-card__title">What Are You Most Looking Forward To About Your Wedding?</h3>
+        <h3 class="vcp-card__title">What are you most looking forward to about your wedding?</h3>
         <p class="vcp-card__body">
           @if($answers[1] != null)
             {{ $answers[1] }}
@@ -152,7 +152,7 @@
       </article>
 
       <article class="vcp-card">
-        <h3 class="vcp-card__title">Are There Any Specific Traditions That Are Important For You To Include, Or Avoid?</h3>
+        <h3 class="vcp-card__title">Are there any specific traditions that are important for you to include, or avoid?</h3>
         <p class="vcp-card__body">
           @if($answers[2] != null)
             {{ $answers[2] }}
@@ -163,7 +163,7 @@
       </article>
 
       <article class="vcp-card">
-        <h3 class="vcp-card__title">Is There Anything Else You'd Like Your Wedding Vendors To Know Before Working Together?</h3>
+        <h3 class="vcp-card__title">Is there anything else you'd like your wedding vendors to know before working together?</h3>
         <p class="vcp-card__body">
           @if($answers[3] != null)
             {{ $answers[3] }}
@@ -176,7 +176,7 @@
 
     <section class="vcp-dark" aria-label="Vendor preferences and bookings">
       <div class="vcp-dark__section">
-        <h3 class="vcp-dark__title">We Are Looking To Connect With:</h3>
+        <h3 class="vcp-dark__title">We are looking to connect with:</h3>
         <div class="vcp-pills">
           @php $hasSearchingFor = false; @endphp
           @foreach($vendor_types as $vendorType)
@@ -197,7 +197,7 @@
       </div>
 
       <div class="vcp-dark__section">
-        <h3 class="vcp-dark__title">Booked Vendors:</h3>
+        <h3 class="vcp-dark__title">Booked vendors:</h3>
         @if($booked_vendors->count() > 0)
           <div class="vcp-booked__grid">
             @foreach($booked_vendors as $vendor)

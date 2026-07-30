@@ -64,3 +64,16 @@
 
 .heart.is-active {
 }
+
+/* Tailwind's button reset (background-color: transparent) otherwise fights
+   SweetAlert2's inline confirmButtonColor, leaving the confirm/continue
+   button looking blank until :hover repaints it. Force real contrast. */
+.swal2-styled.swal2-confirm,
+.swal2-styled.swal2-deny,
+.swal2-styled.swal2-cancel {
+    color: #fff !important;
+}
+
+.swal2-styled.swal2-confirm {
+    background-color: #6432c8 !important;
+}

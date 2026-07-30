@@ -145,6 +145,22 @@ class WinInvestmentPlannerHtmlPatcher
 
     applyManualAllocOverrides(o, active, spent);
 
+    // Pin booked categories at exact spent/total pct — a real contract amount
+    // always wins over any generic estimate or manual drag adjustment.
+    const pinned = new Set();
+    Object.keys(spent).forEach(k=>{
+      if(!active.has(k)) return;
+      o[k] = Math.min(99.9, Math.max(0.001, (spent[k]/total)*100));
+      pinned.add(k);
+    });
+
+    Object.keys(state.locked||{}).forEach(k=>{
+      if(state.locked[k] && active.has(k) && !pinned.has(k)){
+        pinned.add(k);
+      }
+    });
+
+    _rebalance(o, active, pinned);
     VENDOR_TYPES.forEach(vt=>{ if(!active.has(vt.key)) o[vt.key] = 0; });
     return o;
   }
@@ -167,12 +183,24 @@ class WinInvestmentPlannerHtmlPatcher
     _rebalance(o, active, pinned);
     state.allocPct = o;
     state._allocManual = null; // clear manual adjustments after skew
-  }' => '    // Auto-lock booked vendor keys (amount comes from real contract, not estimation)
+  }' => '    if(added > 0){
+      const donors = [...active].filter(k=>
+        k!=="other" && !pinned.has(k) && !imp.has(k) && !spl.has(k)
+      );
+      const dSum = donors.reduce((s,k)=>s+(o[k]||0), 0) || added;
+      donors.forEach(k=>{
+        o[k] = Math.max(0.5, (o[k]||0) - added*((o[k]||0)/dSum));
+      });
+    }
+
+    // Auto-lock booked vendor keys (amount comes from real contract, not estimation)
     state.locked = state.locked || {};
     Object.keys(spent).forEach(k=>{ if(active.has(k)) state.locked[k] = true; });
 
     applyManualAllocOverrides(o, active, spent);
+    _rebalance(o, active, pinned);
     state.allocPct = o;
+    state._allocManual = null;
   }',
             'if(!state.allocPct) state.allocPct=freshBaseAlloc();' => 'syncBookedVendorsForChart();
     state.allocPct=buildAlloc();',

@@ -18,6 +18,7 @@ $( document ).ready(function() {
       url: "/vendor/endorse",
       data: formData,
       success: function (data) {
+        $("#endorse-vendor-modal-close-btn").trigger("click");
         Swal.fire({
           title: 'Success!',
           text: "You have submitted an endorsement for this vendor!",

@@ -39,6 +39,9 @@
         <p class="fc-dialog-modal__lead">
           Input An Event Code Below To Unlock Couples Who Attended That Event:
         </p>
+        <p class="fc-dialog-modal__hint">
+          If you exhibited at or sponsored a WIN wedding event, WIN will have given you an event code — enter it here to unlock the couples who attended.
+        </p>
 
         <label for="event-code" class="sr-only">Event code</label>
         <input

@@ -1,6 +1,10 @@
 @props([
   'rows' => [],
   'emptyMessage' => 'No connected vendors yet. Use Add Vendor to invite your first peer.',
+  'removeFieldName' => 'aff_vendor',
+  'removeFieldKey' => 'aff_vendor_id',
+  'removeButtonLabel' => 'Remove Connection',
+  'removeConfirm' => 'Remove this vendor connection?',
 ])
 
 <div class="cc-table-wrap">
@@ -45,11 +49,11 @@
                 method="POST"
                 action="{{ $row['remove_url'] }}"
                 class="vn-actions__form"
-                onsubmit="return confirm('Remove this vendor connection?');"
+                onsubmit="return confirm('{{ $removeConfirm }}');"
               >
                 @csrf
-                <input type="hidden" name="aff_vendor" value="{{ $row['aff_vendor_id'] }}" />
-                <button type="submit" class="cc-btn cc-btn--remove">Remove Connection</button>
+                <input type="hidden" name="{{ $removeFieldName }}" value="{{ $row[$removeFieldKey] }}" />
+                <button type="submit" class="cc-btn cc-btn--remove">{{ $removeButtonLabel }}</button>
               </form>
               <a href="{{ $row['view_url'] }}" class="cc-btn cc-btn--view">View</a>
             </div>

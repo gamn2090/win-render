@@ -58,11 +58,23 @@ class VendorController extends Controller
             });
         }
 
-        $filterVendorTypeId = VendorTypes::where('type', 'Venue')->value('id');
-        $allowedFilters = TagType::where('hidden', 0)
-            ->where('vendor_type_id', $filterVendorTypeId)
-            ->whereIn('name', ['Venue Type', 'Max Guest Capacity', 'Location', 'Budget'])
-            ->get();
+        // Every category gets Location + Budget by default; a category only shows
+        // additional filters (Venue Type/Max Guest Capacity for Venue, Style/Services
+        // for Photographer/Videographer/Hair & Makeup, etc.) if TagType rows exist
+        // for that specific vendor type — see database/seeders/TagTypesSeeder.php.
+        if ($primaryTypeId) {
+            $allowedFilters = TagType::where('hidden', 0)->where('vendor_type_id', $primaryTypeId)->get();
+        } else {
+            // "All Types" (no category picked yet, e.g. the default Find Vendors
+            // entry point) has no single vendor_type_id to key off of, but every
+            // type shares the same Location/Budget filter values — show those
+            // instead of leaving the filter bar empty.
+            $allowedFilters = TagType::where('hidden', 0)
+                ->whereIn('name', ['Location', 'Budget'])
+                ->get()
+                ->unique('name')
+                ->values();
+        }
 
         $data = [
             'vendor_types' => $requestedVendorTypes,
@@ -290,9 +302,11 @@ class VendorController extends Controller
         $vendor = $request->user();
         VendorDemoConnections::ensureFor($vendor);
         $vendors = VendorNetworkPresenter::forVendor($vendor);
+        $preferredByVendors = VendorNetworkPresenter::preferredByForVendor($vendor);
 
         return view('vendor.vendor_network', [
             'vendors' => $vendors,
+            'preferredByVendors' => $preferredByVendors,
             'page' => 'vendor_list',
         ]);
     }
@@ -306,6 +320,24 @@ class VendorController extends Controller
         VendorConnection::query()
             ->where('host_vendor', $host->id)
             ->where('aff_vendor', $validated['aff_vendor'])
+            ->delete();
+
+        return redirect()
+            ->route('vendor.list')
+            ->with('vendor_network_removed', true);
+    }
+
+    // Lets a vendor remove themselves from someone else's preferred-vendor
+    // list (adds are instant/no-approval — see createConnectionRequest()).
+    public function removeSelfFromPreferred(Request $request){
+        $validated = $request->validate([
+            'host_vendor' => ['required', 'integer'],
+        ]);
+
+        $affiliate = $request->user();
+        VendorConnection::query()
+            ->where('host_vendor', $validated['host_vendor'])
+            ->where('aff_vendor', $affiliate->id)
             ->delete();
 
         return redirect()
@@ -535,26 +567,21 @@ class VendorController extends Controller
     }
 
     public function message(Request $request){
-        //$data = [
-        //    "conversations" => null,
-        //    "activeConversation" => null
-        //];
-        //$data["conversations"] = $request->user()->getAllConversations();
         $recip = Vendor::where('id', $request->id)->first();
         $conversationID = $request->user()->initiateDirectMessage($recip);
-        return $conversationID;
+        return redirect()->route('get.vendor.conversation', ['id' => $conversationID]);
     }
 
     public function showVendorChat(Request $request){
         $recip = Vendor::where('id', $request->id)->first();
         $conversationID = $request->user()->initiateDirectMessage($recip);
-        return redirect()->route('get.conversation', ['id' => $conversationID]);
+        return redirect()->route('get.vendor.conversation', ['id' => $conversationID]);
     }
 
     public function messageClient(Request $request){
         $recip = User::where('id', $request->id)->first();
         $conversationID = $request->user()->initiateDirectMessage($recip);
-        return redirect()->route('get.conversation', ['id' => $conversationID]);
+        return redirect()->route('get.vendor.conversation', ['id' => $conversationID]);
     }
 
     public function messageVendor(Request $request){

@@ -366,6 +366,23 @@
   color: #231f20;
 }
 
+.vi-stat-card__cta {
+  display: inline-flex;
+  margin-top: 12px;
+  padding: 7px 14px;
+  border: none;
+  border-radius: 999px;
+  background: #f0ebf9;
+  color: #6432c8;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.vi-stat-card__cta:hover {
+  background: #e3d9f5;
+}
+
 @media (max-width: 1023px) {
   .vi-hero {
     margin-left: -16px;

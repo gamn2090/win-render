@@ -79,4 +79,24 @@ class AvatarPalette
 
         return mb_strtoupper(mb_substr($first, 0, 1)) . '&' . mb_strtoupper(mb_substr($fiance, 0, 1));
     }
+
+    /**
+     * A same-look-as-<x-avatar> fallback, but as a real image data URI —
+     * for the rare spots (e.g. the profile-edit upload preview) that need
+     * an actual <img src> element because JS swaps its .src after upload,
+     * so it can't be a <span> like the normal fallback markup.
+     */
+    public static function placeholderImageDataUri(string $seed, string $initials): string
+    {
+        [$bg, $fg] = self::colorFor($seed);
+        $initials = htmlspecialchars($initials, ENT_QUOTES | ENT_XML1);
+        $svg = <<<SVG
+        <svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160">
+          <circle cx="80" cy="80" r="80" fill="{$bg}"/>
+          <text x="50%" y="52%" dominant-baseline="middle" text-anchor="middle" fill="{$fg}" font-family="Outfit, Poppins, sans-serif" font-size="56" font-weight="600">{$initials}</text>
+        </svg>
+        SVG;
+
+        return 'data:image/svg+xml;base64,' . base64_encode($svg);
+    }
 }
