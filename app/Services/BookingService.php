@@ -29,6 +29,11 @@ class BookingService {
     }
 
     public function requestMeeting(User $client, Vendor $vendor, $meetingDate) {
+        // Check BEFORE creating the new meeting, so it's not comparing the
+        // requested date against itself — a real pre-existing conflict.
+        $requestedDay = Carbon::parse($meetingDate)->format('Y-m-d');
+        $hasConflict = in_array($requestedDay, $vendor->busyDates(), true);
+
         $meeting = Meeting::create([
             'client' => $client->id,
             'vendor' => $vendor->id,
@@ -45,7 +50,7 @@ class BookingService {
         $conversation = $client->directMessageWith($vendor);
         $message = Chat::message('Consultation request')
             ->type('consultation-request')
-            ->data(['first_name' => $client->first_name, 'fiance_first_name' => $client->fiance_first_name, 'meeting_date' => $meetingDate, 'meeting_uuid' => $meeting->uuid])
+            ->data(['first_name' => $client->first_name, 'fiance_first_name' => $client->fiance_first_name, 'meeting_date' => $meetingDate, 'meeting_uuid' => $meeting->uuid, 'has_conflict' => $hasConflict])
             ->from($client)
             ->to($conversation)
             ->send();

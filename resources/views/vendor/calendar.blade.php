@@ -45,7 +45,7 @@
 
     @if($bookedCouples->isEmpty())
       <div class="vcal-empty-notice">
-        You don't have any booked couples yet — once a couple books you, they'll show up here so you can schedule events with them.
+        You don't have any booked couples yet — once a couple books you, they'll show up here so you can schedule events with them. You can still use "+ Add Event" for anything else, like a day off.
       </div>
     @endif
 
@@ -155,9 +155,9 @@
     <form id="vcal-form">
       <input type="hidden" id="vcal-event-id" value="" />
       <div class="vcal-field">
-        <label for="vcal-client-select" class="vcal-field__label">Couple</label>
+        <label for="vcal-client-select" class="vcal-field__label">Couple / Event</label>
         <select id="vcal-client-select" class="vcal-field__input" required>
-          <option value="" disabled selected>Select a booked couple&hellip;</option>
+          <option value="" disabled selected>Select an option&hellip;</option>
           @foreach($bookedCouples as $couple)
             @php
               $partnerOne = trim($couple->first_name . ' ' . ($couple->last_name ?? ''));
@@ -166,7 +166,12 @@
             @endphp
             <option value="{{ $couple->id }}">{{ $label }}</option>
           @endforeach
+          <option value="custom">+ Custom event (not a WIN booking)</option>
         </select>
+      </div>
+      <div class="vcal-field" id="vcal-title-field" hidden>
+        <label for="vcal-title" class="vcal-field__label">Event Title</label>
+        <input type="text" id="vcal-title" class="vcal-field__input" maxlength="255" placeholder="e.g. Day off, another client's wedding" />
       </div>
       <div class="vcal-field-row">
         <div class="vcal-field">

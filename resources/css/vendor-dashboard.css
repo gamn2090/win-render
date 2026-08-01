@@ -1561,6 +1561,20 @@
   margin-top: 0;
 }
 
+/* Longer CTA text ("Add Wedding Date to Profile") doesn't fit next to the
+   label in the same space-between row without wrapping awkwardly inside the
+   pill — stack label above CTA and let the CTA take the full card width. */
+.vd-stat-card__footer--stack {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+}
+
+.vd-stat-card__footer--stack .vd-stat-card__cta {
+  width: 100%;
+  text-align: center;
+}
+
 /* Vendor status checklist (couple dashboard) */
 .vd-status-list {
   display: flex;
@@ -2603,6 +2617,18 @@
   color: #f85705;
 }
 
+.vd-chat__consult-conflict {
+  margin-top: 10px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(220, 38, 38, 0.08);
+  border: 1px solid rgba(220, 38, 38, 0.25);
+  color: #991b1b;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
 .vd-chat-profile {
   display: flex;
   flex-direction: column;
@@ -3051,6 +3077,58 @@
   color: #d1d5db;
   cursor: not-allowed;
   pointer-events: none;
+}
+
+/* Busy = vendor already has a booking/event that day. Still selectable
+   (this isn't a hard block, just a heads-up) — a small dot under the
+   number, distinct from the solid "selected" fill. */
+.vd-calendar__day--busy {
+  position: relative;
+}
+
+.vd-calendar__day--busy::after {
+  content: "";
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #dc2626;
+}
+
+.vd-calendar__day--busy.vd-calendar__day--selected::after {
+  background: #fff;
+}
+
+.vd-calendar__legend {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 6px 16px 0;
+  font-size: 12px;
+  color: #7a7a7a;
+}
+
+.vd-calendar__legend-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #dc2626;
+  flex-shrink: 0;
+}
+
+.vd-calendar__busy-warning {
+  margin: 10px 16px 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(220, 38, 38, 0.08);
+  border: 1px solid rgba(220, 38, 38, 0.25);
+  color: #991b1b;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
 }
 
 .vd-calendar__time {
@@ -4074,6 +4152,36 @@
   font-size: 40px;
   font-weight: 500;
   color: #231f20;
+}
+
+.vd-price-card__value-suffix {
+  font-size: 18px;
+  font-weight: 500;
+  color: #7a7a7a;
+}
+
+.vd-price-card__value--range {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* At narrow widths "$5,000-$8,000" overflows the card at 40px font — stack
+   the two amounts with the dash between them instead of side by side. */
+@media (max-width: 479px) {
+  .vd-price-card__value--range {
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    text-align: center;
+    width: 100%;
+  }
+
+  .vd-price-card__value-dash {
+    font-size: 24px;
+    line-height: 1.2;
+  }
 }
 
 /* Reviews */

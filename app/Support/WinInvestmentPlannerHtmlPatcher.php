@@ -217,7 +217,9 @@ class WinInvestmentPlannerHtmlPatcher
       }
       refreshBudgetPanelAfterBookedChange();',
             '      if(k==="amount") state.booked[idx].amount=parseMoney(el.value);
+      renderBookedSummary();
       applyPrioritySkew(); renderResults();' => '      if(k==="amount") state.booked[idx].amount=parseMoney(el.value);
+      renderBookedSummary();
       refreshBudgetPanelAfterBookedChange();',
             '      if(Number.isFinite(idx)){ state.booked.splice(idx,1); applyPrioritySkew(); render(); }' => '      if(Number.isFinite(idx)){ state.booked.splice(idx,1); render(); refreshBudgetPanelAfterBookedChange(); }',
             '    $("#addBookedBtn")?.addEventListener("click",()=>{

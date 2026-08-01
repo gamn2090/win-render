@@ -48,8 +48,15 @@
         <div class="vd-stat-card__top">
           <span class="vd-stat-card__icon-wrap" style="background:#f0ebf9;">📅</span>
         </div>
-        <p class="vd-stat-card__value">{{ $user->daysUntilWedding() }}</p>
-        <p class="vd-stat-card__label">Days Until Wedding</p>
+        <p class="vd-stat-card__value">{{ $user->wedding_date ? $user->daysUntilWedding() : '—' }}</p>
+        <div class="vd-stat-card__footer @if(! $user->wedding_date) vd-stat-card__footer--stack @endif">
+          <p class="vd-stat-card__label">Days Until Wedding</p>
+          @if($user->wedding_date)
+            <a href="{{ route('couple.timeline') }}" class="vd-stat-card__cta">View Timeline</a>
+          @else
+            <a href="{{ route('user.profile.edit') }}" class="vd-stat-card__cta">Add Wedding Date to Profile</a>
+          @endif
+        </div>
       </article>
 
       <article class="vd-stat-card" style="--vd-stat-accent: #fb962f;">

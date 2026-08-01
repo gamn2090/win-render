@@ -83,18 +83,27 @@ class VendorCalendarController extends Controller
     public function store(Request $request): JsonResponse
     {
         $validated = $request->validate([
-            'client_id' => ['required', 'integer'],
+            // A calendar event either links to a couple the vendor is
+            // actually booked with, or — for anything else (a day off,
+            // a non-WIN client's wedding, etc.) — carries its own free-text
+            // title. Exactly one of the two is required.
+            'client_id' => ['nullable', 'integer'],
+            'title' => ['nullable', 'string', 'max:255', 'required_without:client_id'],
             'starts_at' => ['required', 'date'],
             'ends_at' => ['required', 'date', 'after:starts_at'],
             'notes' => ['nullable', 'string', 'max:5000'],
         ]);
 
         $vendor = $request->user();
-        $this->authorizeBookedCouple($vendor->id, $validated['client_id']);
+        $clientId = $validated['client_id'] ?? null;
+        if ($clientId !== null) {
+            $this->authorizeBookedCouple($vendor->id, $clientId);
+        }
 
         $event = VendorCalendarEvent::create([
             'vendor_id' => $vendor->id,
-            'client_id' => $validated['client_id'],
+            'client_id' => $clientId,
+            'title' => $clientId !== null ? null : $validated['title'],
             'starts_at' => $validated['starts_at'],
             'ends_at' => $validated['ends_at'],
             'notes' => $validated['notes'] ?? null,
@@ -107,19 +116,29 @@ class VendorCalendarController extends Controller
     public function update(Request $request, int $event): JsonResponse
     {
         $validated = $request->validate([
-            'client_id' => ['required', 'integer'],
+            'client_id' => ['nullable', 'integer'],
+            'title' => ['nullable', 'string', 'max:255', 'required_without:client_id'],
             'starts_at' => ['required', 'date'],
             'ends_at' => ['required', 'date', 'after:starts_at'],
             'notes' => ['nullable', 'string', 'max:5000'],
         ]);
 
         $vendor = $request->user();
-        $this->authorizeBookedCouple($vendor->id, $validated['client_id']);
+        $clientId = $validated['client_id'] ?? null;
+        if ($clientId !== null) {
+            $this->authorizeBookedCouple($vendor->id, $clientId);
+        }
 
         $row = VendorCalendarEvent::where('id', $event)->where('vendor_id', $vendor->id)->first();
         abort_unless($row, 404);
 
-        $row->update($validated);
+        $row->update([
+            'client_id' => $clientId,
+            'title' => $clientId !== null ? null : $validated['title'],
+            'starts_at' => $validated['starts_at'],
+            'ends_at' => $validated['ends_at'],
+            'notes' => $validated['notes'] ?? null,
+        ]);
         $row->load('client');
 
         return response()->json(['event' => $this->formatEvent($row)]);
@@ -148,13 +167,18 @@ class VendorCalendarController extends Controller
     private function formatEvent(VendorCalendarEvent $event): array
     {
         $client = $event->client;
-        $partnerOne = trim($client->first_name . ' ' . ($client->last_name ?? ''));
-        $partnerTwo = trim(($client->fiance_first_name ?? '') . ' ' . ($client->fiance_last_name ?? ''));
-        $coupleName = $partnerTwo !== '' ? $partnerOne . ' ♥ ' . $partnerTwo : $partnerOne;
+        if ($client) {
+            $partnerOne = trim($client->first_name . ' ' . ($client->last_name ?? ''));
+            $partnerTwo = trim(($client->fiance_first_name ?? '') . ' ' . ($client->fiance_last_name ?? ''));
+            $coupleName = $partnerTwo !== '' ? $partnerOne . ' ♥ ' . $partnerTwo : $partnerOne;
+        } else {
+            $coupleName = $event->title ?? 'Event';
+        }
 
         return [
             'id' => $event->id,
             'client_id' => $event->client_id,
+            'title' => $event->title,
             'coupleName' => $coupleName,
             // Naive (no timezone offset) on purpose — these are wall-clock
             // times with no real timezone meaning, matching the plain

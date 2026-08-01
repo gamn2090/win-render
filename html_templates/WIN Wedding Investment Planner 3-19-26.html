@@ -344,11 +344,13 @@ body{font-family:var(--font);color:var(--ink);background:var(--bg);font-size:14p
 
 /* ── Booked table ── */
 .tableWrap{border:1.5px solid rgba(100,50,200,.12);border-radius:var(--radius3);overflow:hidden;}
+.tableWrap{max-height:320px;overflow-y:auto;}
 table{width:100%;border-collapse:collapse;font-size:13px;}
 thead th{
   text-align:left;padding:8px 11px;background:rgba(100,50,200,.04);
   border-bottom:1px solid rgba(100,50,200,.10);
   color:var(--winPurple);font-weight:800;font-size:11px;letter-spacing:.5px;text-transform:uppercase;
+  position:sticky;top:0;z-index:1;
 }
 tbody td{padding:8px 10px;border-bottom:1px solid rgba(100,50,200,.06);vertical-align:middle;}
 tbody tr:last-child td{border-bottom:none;}
@@ -1289,7 +1291,15 @@ body[data-mode="done"] .cardBody{background:rgba(100,50,200,.04) !important;}
     const target   = 100 - pSum;
     const unlocked = [...active].filter(k=>!p.has(k));
 
-    if(unlocked.length === 0){ _exactSum(o, active); return; }
+    if(unlocked.length === 0){
+      // Nothing left to absorb the remaining budget share. Only nudge for
+      // genuine floating-point drift (target ~0) — a real shortfall (e.g. all
+      // active vendors are booked but haven't spent the full budget yet) must
+      // stay unallocated rather than being dumped onto whichever pinned
+      // category happens to have the largest amount.
+      if(Math.abs(target) < 0.01) _exactSum(o, active);
+      return;
+    }
 
     const MIN      = 0.5;
     // "other" catch-all vendor has no minimum floor; all real vendor types get MIN.
@@ -1562,6 +1572,23 @@ body[data-mode="done"] .cardBody{background:rgba(100,50,200,.04) !important;}
     </tr>`;
   }
 
+  // renderBookedSummary: refreshes the "Committed so far" badge in place, without
+  // rebuilding #bookedBody — keeps focus/cursor position in the amount input
+  // the user is actively typing in.
+  function renderBookedSummary(){
+    const el=document.getElementById("bookedSummary"); if(!el) return;
+    const spentTotal=state.booked.reduce((s,b)=>s+Number(b.amount||0),0);
+    const total=parseMoney(state.totalBudget);
+    const pctSpent=total>0?Math.round((spentTotal/total)*100):0;
+    if(spentTotal>0){
+      el.style.display="";
+      el.innerHTML=`<span>Committed so far: <strong>${fmtMoney(spentTotal)}</strong></span><span style="color:var(--purple);font-weight:700">${pctSpent}% of budget</span>`;
+    } else {
+      el.style.display="none";
+      el.innerHTML="";
+    }
+  }
+
   // ── Step 2 of 4: Booked Vendors ────────────────────────────────────────────
   // renderStep2: editable table of already-booked vendors and their costs
   // state.booked[] = [{vendor, label, cost}] — drives KPI "Spent" total
@@ -1576,7 +1603,7 @@ body[data-mode="done"] .cardBody{background:rgba(100,50,200,.04) !important;}
 
     wizardBody.innerHTML=`
       <div class="note">Add costs you've already committed to. Leave the amount blank if you don't know it yet.</div>
-      ${spentTotal>0?`<div class="selectionSummary"><span>Committed so far: <strong>${fmtMoney(spentTotal)}</strong></span><span style="color:var(--purple);font-weight:700">${pctSpent}% of budget</span></div>`:""}
+      <div class="selectionSummary" id="bookedSummary" style="${spentTotal>0?"":"display:none"}">${spentTotal>0?`<span>Committed so far: <strong>${fmtMoney(spentTotal)}</strong></span><span style="color:var(--purple);font-weight:700">${pctSpent}% of budget</span>`:""}</div>
       <div class="tableWrap">
         <table>
           <thead><tr><th>Vendor type</th><th class="num">Amount</th><th></th></tr></thead>
@@ -1609,6 +1636,7 @@ body[data-mode="done"] .cardBody{background:rgba(100,50,200,.04) !important;}
       const el=e.target; const idx=Number(el.dataset.idx); const k=el.dataset.k;
       if(!Number.isFinite(idx)||!k) return;
       if(k==="amount") state.booked[idx].amount=parseMoney(el.value);
+      renderBookedSummary();
       applyPrioritySkew(); renderResults();
     });
     tbody.addEventListener("click",e=>{

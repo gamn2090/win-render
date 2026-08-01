@@ -10,6 +10,7 @@ class VendorCalendarEvent extends Model
     protected $fillable = [
         'vendor_id',
         'client_id',
+        'title',
         'starts_at',
         'ends_at',
         'notes',

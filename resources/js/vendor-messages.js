@@ -205,9 +205,13 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const when = formatMeetingDate(data.meeting_date);
+      const conflictHtml = data.has_conflict
+        ? '<div class="vd-chat__consult-conflict">⚠️ You already have something on your calendar that day.</div>'
+        : '';
 
       return `<div class="vm-message-view__system">
         The client <strong>${escapeHtml(data.first_name)} ♥ ${escapeHtml(data.fiance_first_name)}</strong> is requesting a consultation${when ? ` on <strong>${escapeHtml(when)}</strong>` : ''}, would you accept?
+        ${conflictHtml}
         ${actionsHtml}
       </div>`;
     }

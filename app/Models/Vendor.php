@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Profile;
 use App\Models\Pairing;
+use App\Models\VendorCalendarEvent;
 use App\Models\User;
 use App\Models\Payment;
 use App\Models\Meeting;
@@ -848,6 +849,33 @@ class Vendor extends Authenticatable
 
     public function unavailableDates() {
         return $this->hasMany(Meeting::class, 'vendor')->where('date', '>=', Carbon::now())->orderBy('date');
+    }
+
+    /**
+     * Dates (Y-m-d, deduped) this vendor already has something on the
+     * calendar for — real bookings, manually-blocked days, and freeform
+     * calendar events alike. Deliberately returns dates only, never client
+     * names/ids, so it's safe to expose to other couples browsing this
+     * vendor's public storefront.
+     *
+     * @return list<string>
+     */
+    public function busyDates(int $daysAhead = 180): array
+    {
+        $rangeEnd = Carbon::now()->addDays($daysAhead);
+
+        $meetingDates = $this->meetings()
+            ->where('approved', 1)
+            ->whereBetween('date', [Carbon::now()->startOfDay(), $rangeEnd])
+            ->pluck('date')
+            ->map(fn ($date) => Carbon::parse($date)->format('Y-m-d'));
+
+        $calendarEventDates = VendorCalendarEvent::where('vendor_id', $this->id)
+            ->whereBetween('starts_at', [Carbon::now()->startOfDay(), $rangeEnd])
+            ->pluck('starts_at')
+            ->map(fn ($date) => Carbon::parse($date)->format('Y-m-d'));
+
+        return $meetingDates->concat($calendarEventDates)->unique()->values()->all();
     }
 
     public function profileURL() {

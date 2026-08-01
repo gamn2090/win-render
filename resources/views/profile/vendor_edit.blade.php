@@ -181,9 +181,8 @@
             <div class="vep-field" id="edit-calendar">
               <label class="vep-field__label" for="availability">Calendar</label>
               <p class="vep-field__caption">Select the dates you're <strong>unavailable</strong> (already booked or blocked off). Dates you don't select stay open for couples to request.</p>
-              <div class="vep-select-wrap vep-select-wrap--input vep-select-wrap--calendar">
-                <input id="availability" name="availability" class="vep-input vep-input--icon" placeholder="Block off unavailable dates" />
-                <img src="{{ asset('assets/img/vendor-home/profile/abrir.png') }}" alt="" class="vep-select-wrap__icon" width="12" height="12" />
+              <div class="vep-select-wrap vep-select-wrap--calendar-inline">
+                <input id="availability" name="availability" class="vep-input vep-input--calendar-source" placeholder="Block off unavailable dates" />
               </div>
             </div>
 
@@ -292,7 +291,7 @@
                         <path d="M2 5L8.16086 10.6869C8.35239 10.8637 8.64761 10.8637 8.83914 10.6869L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                       </svg>
                     </button>
-                    <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden bg-white shadow-md rounded-lg mt-2 w-full" role="menu">
+                    <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden absolute bg-white shadow-md rounded-lg mt-2 w-full" role="menu">
                       <div class="p-1 space-y-0.5">
                         @foreach (json_decode($tag_type->allowed_values, true) as $option)
                           <div class="flex items-center gap-x-2 py-2 px-3 rounded-lg hover:bg-gray-100 hover:cursor-pointer">
@@ -679,12 +678,37 @@
         });
     </script>
     <script>
+      @php
+        // Meeting.date is stored as a full datetime ("Y-m-d H:i:s"), but
+        // flatpickr's dateFormat here is strict "Y-m-d" — feeding it the raw
+        // datetime string makes it fail to parse these as valid selectable
+        // dates, so they're never marked "selected" (or matched against
+        // `disable`) on load even though the value is logically correct.
+        //
+        // upcomingMeetings() already hardcodes `type != 'manual'` at the
+        // relation level, so chaining ->where('type', 'manual') on it (as
+        // this used to do) ANDs in a contradictory `type = 'manual'`
+        // condition — that query can never return a row, which is why
+        // manually-blocked dates never painted as selected on reload.
+        $bookedThroughWin = Auth::user()->upcomingMeetings()->pluck('date')
+          ->map(fn ($date) => \Carbon\Carbon::parse($date)->format('Y-m-d'))->values();
+        $manuallyBlocked = Auth::user()->meetings()->where('type', 'manual')->where('date', '>=', \Carbon\Carbon::now())->pluck('date')
+          ->map(fn ($date) => \Carbon\Carbon::parse($date)->format('Y-m-d'))->values();
+      @endphp
       const fp = flatpickr("#availability", {
         minDate: "today",
-        disable: {!! json_encode(Auth::user()->upcomingMeetings()->where('type', "!=", 'manual')->pluck('date'),true) !!},
+        disable: {!! json_encode($bookedThroughWin, true) !!},
         mode: "multiple",
         dateFormat: "Y-m-d",
-        defaultDate: {!! json_encode(Auth::user()->upcomingMeetings()->where('type', 'manual')->pluck('date'),true) !!}
+        defaultDate: {!! json_encode($manuallyBlocked, true) !!},
+        inline: true,
+        // Booked-through-WIN dates come in via `disable` above, so they render
+        // already greyed out/unclickable — this label is just to explain why.
+        onDayCreate: function(dObj, dStr, fpInstance, dayElem) {
+          if (dayElem.classList.contains("flatpickr-disabled")) {
+            dayElem.title = "Already booked through WIN";
+          }
+        }
       });
     </script>
   </body>

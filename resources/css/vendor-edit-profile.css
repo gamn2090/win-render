@@ -181,18 +181,24 @@
   --vep-abrir-size: 12px;
 }
 
-.vep-select-wrap--input .vep-input--icon {
-  padding-right: calc(var(--vep-abrir-size) + 5px + 16px);
-  cursor: pointer;
-}
-
-.vep-select-wrap--calendar {
-  width: 232px;
-  max-width: 100%;
-}
-
-.vep-select-wrap--calendar .vep-input--icon {
+/* Inline flatpickr calendar — the source input just feeds flatpickr the
+   selected-dates value for form submission; the calendar grid itself (which
+   flatpickr injects right after it) is the only thing actually shown. */
+.vep-select-wrap--calendar-inline {
   width: 100%;
+  max-width: 320px;
+}
+
+.vep-input--calendar-source {
+  display: none;
+}
+
+.vep-select-wrap--calendar-inline .flatpickr-calendar.inline {
+  width: 100%;
+  max-width: 100%;
+  box-shadow: none;
+  border: 1px solid #e8ddd4;
+  border-radius: 10px;
 }
 
 .vep-select--icon {
@@ -434,9 +440,40 @@
   color: #231f20;
 }
 
+/* Preline positions this via Floating UI at runtime, setting inline
+   position/transform styles that anchor it to the wrong place (or to the
+   viewport) once JS takes over. !important forces it back to a simple
+   CSS-anchored overlay under the toggle button, which is all this needs. */
+.vep-tags-dropdown {
+  position: relative !important;
+}
+
+/* Every .vep-tags-dropdown shares the same base z-20, so two sibling fields
+   (e.g. Style above Services) tie on stacking order and the later one in the
+   DOM always paints on top — even over an open menu earlier on the page.
+   Bump whichever one is currently open above all its siblings. */
+.vep-tags-dropdown:has(> .hs-dropdown-menu:not(.hidden)) {
+  z-index: 40 !important;
+}
+
 .vep-tags-dropdown .hs-dropdown-menu {
-  width: 100%;
+  position: absolute !important;
+  inset: auto !important;
+  top: 100% !important;
+  left: 0 !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+  width: 100% !important;
   min-width: 0;
+  max-height: 260px;
+  overflow-y: auto;
+  z-index: 30;
+  background: #fff;
+}
+
+.vep-tags-dropdown .hs-dropdown-menu label {
+  color: #231f20;
 }
 
 /* Save button */
@@ -569,8 +606,8 @@
     width: 100%;
   }
 
-  .vep-select-wrap--calendar {
-    width: 100%;
+  .vep-select-wrap--calendar-inline {
+    max-width: 100%;
   }
 
   .vep-btn-save {

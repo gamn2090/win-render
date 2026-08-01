@@ -226,14 +226,28 @@
     </section>
 
     <section id="vd-sf-pricing" style="margin-top:40px;width:100%;">
+      @php
+        $priceRangeParts = null;
+        if (preg_match('/^(\$[\d,]+)-(\$[\d,]+\+?)$/', $vendor->preferredPricing(), $priceMatch)) {
+          $priceRangeParts = [$priceMatch[1], $priceMatch[2]];
+        }
+      @endphp
       <div class="vd-price-cards">
         <article class="vd-profile-info__card vd-price-card">
           <h3 class="vd-profile-info__title">Average Price</h3>
-          <p class="vd-price-card__value">{{ $vendor->preferredPricing() }}</p>
+          @if($priceRangeParts)
+            <p class="vd-price-card__value vd-price-card__value--range">
+              <span class="vd-price-card__value-part">{{ $priceRangeParts[0] }}</span>
+              <span class="vd-price-card__value-dash">&ndash;</span>
+              <span class="vd-price-card__value-part">{{ $priceRangeParts[1] }}</span>
+            </p>
+          @else
+            <p class="vd-price-card__value">{{ $vendor->preferredPricing() }}</p>
+          @endif
         </article>
         <article class="vd-profile-info__card vd-price-card">
-          <h3 class="vd-profile-info__title">Preferred Pricing Offer:</h3>
-          <p class="vd-price-card__value">${{ $vendor->discount }}</p>
+          <h3 class="vd-profile-info__title">WIN Member Discount:</h3>
+          <p class="vd-price-card__value">${{ $vendor->discount }} <span class="vd-price-card__value-suffix">off</span></p>
         </article>
       </div>
     </section>
@@ -282,6 +296,7 @@
 <script>
   (function () {
     var csrf = document.querySelector('meta[name="csrf-token"]').content;
+    var vendorBusyDates = @json($vendorBusyDates ?? []);
 
     function openModal(modal) { modal.classList.add('is-open'); }
     function closeModal(modal) { if (modal) modal.classList.remove('is-open'); }
@@ -367,6 +382,8 @@
         selectedDate = null;
         calendarViewDate = new Date();
         scheduleConfirmBtn.disabled = true;
+        var busyWarningEl = document.getElementById('vd-calendar-busy-warning');
+        if (busyWarningEl) busyWarningEl.hidden = true;
         renderCalendar();
         openModal(scheduleModal);
         return;
@@ -404,6 +421,7 @@
     var calendarViewDate = new Date();
     var selectedDate = null;
     var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    function pad2(n) { return String(n).padStart(2, '0'); }
 
     function renderCalendar() {
       var year = calendarViewDate.getFullYear();
@@ -420,11 +438,15 @@
         calendarGrid.appendChild(document.createElement('span'));
       }
 
+      var busyWarning = document.getElementById('vd-calendar-busy-warning');
+
       var _loop = function (d) {
         var dayDate = new Date(year, month, d);
+        var dateKey = dayDate.getFullYear() + '-' + pad2(dayDate.getMonth() + 1) + '-' + pad2(dayDate.getDate());
+        var isBusy = vendorBusyDates.indexOf(dateKey) !== -1;
         var btn = document.createElement('button');
         btn.type = 'button';
-        btn.className = 'vd-calendar__day';
+        btn.className = 'vd-calendar__day' + (isBusy ? ' vd-calendar__day--busy' : '');
         btn.textContent = d;
 
         if (dayDate < today) {
@@ -436,11 +458,13 @@
             btn.classList.add('vd-calendar__day--selected');
             selectedDate = dayDate;
             scheduleConfirmBtn.disabled = false;
+            if (busyWarning) busyWarning.hidden = !isBusy;
           });
         }
 
         if (selectedDate && dayDate.getTime() === selectedDate.getTime()) {
           btn.classList.add('vd-calendar__day--selected');
+          if (busyWarning) busyWarning.hidden = !isBusy;
         }
 
         calendarGrid.appendChild(btn);

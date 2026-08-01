@@ -16,6 +16,8 @@
           <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
         </div>
         <div class="vd-calendar__grid" id="vd-calendar-grid"></div>
+        <p class="vd-calendar__legend"><span class="vd-calendar__legend-dot"></span> Vendor already has something booked that day</p>
+        <p class="vd-calendar__busy-warning" id="vd-calendar-busy-warning" hidden>&#9888; The vendor already has an event on this day. You can still request this time, but it may not be available — we'll flag it for the vendor too.</p>
         <div class="vd-calendar__time">
           <span class="vd-calendar__time-label">Time</span>
           <div class="vd-calendar__time-selects">

@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', function () {
   const titleEl = document.getElementById('vcal-modal-title');
   const eventIdInput = document.getElementById('vcal-event-id');
   const clientSelect = document.getElementById('vcal-client-select');
+  const titleField = document.getElementById('vcal-title-field');
+  const titleInput = document.getElementById('vcal-title');
   const dateInput = document.getElementById('vcal-date');
   const startInput = document.getElementById('vcal-start-time');
   const endInput = document.getElementById('vcal-end-time');
@@ -37,6 +39,14 @@ document.addEventListener('DOMContentLoaded', function () {
     return String(n).padStart(2, '0');
   }
 
+  function updateTitleFieldVisibility() {
+    const isCustom = clientSelect.value === 'custom';
+    titleField.hidden = !isCustom;
+    titleInput.required = isCustom;
+  }
+
+  clientSelect.addEventListener('change', updateTitleFieldVisibility);
+
   function openForCreate(dateStr, hour) {
     form.reset();
     eventIdInput.value = '';
@@ -46,6 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const startHour = typeof hour === 'number' ? hour : 10;
     startInput.value = pad(startHour) + ':00';
     endInput.value = pad(Math.min(startHour + 1, 23)) + ':00';
+    updateTitleFieldVisibility();
     clearError();
     openModal();
   }
@@ -55,7 +66,9 @@ document.addEventListener('DOMContentLoaded', function () {
     eventIdInput.value = ev.id;
     titleEl.textContent = 'Edit Event';
     deleteBtn.hidden = false;
-    clientSelect.value = ev.client_id;
+    clientSelect.value = ev.client_id || 'custom';
+    titleInput.value = ev.title || '';
+    updateTitleFieldVisibility();
     const start = new Date(ev.startsAt);
     const end = new Date(ev.endsAt);
     dateInput.value = start.getFullYear() + '-' + pad(start.getMonth() + 1) + '-' + pad(start.getDate());
@@ -107,10 +120,11 @@ document.addEventListener('DOMContentLoaded', function () {
     clearError();
 
     const clientId = clientSelect.value;
+    const isCustom = clientId === 'custom';
     const date = dateInput.value;
     const start = startInput.value;
     const end = endInput.value;
-    if (!clientId || !date || !start || !end) {
+    if (!clientId || !date || !start || !end || (isCustom && !titleInput.value.trim())) {
       showError('Please fill out every field.');
       return;
     }
@@ -120,7 +134,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     const payload = {
-      client_id: clientId,
+      client_id: isCustom ? null : clientId,
+      title: isCustom ? titleInput.value.trim() : null,
       starts_at: date + ' ' + start + ':00',
       ends_at: date + ' ' + end + ':00',
       notes: notesInput.value,

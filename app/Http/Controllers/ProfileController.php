@@ -175,6 +175,7 @@ class ProfileController extends Controller
             'wedding_date_available' => null,
             'endorsements' => $endorsements,
             'rank' => Vendor::where('type', $vendor->type)->where('score', '>', $vendor->score ?? 0)->count() + 1,
+            'vendorBusyDates' => $vendor->busyDates(),
         ];
 
         if(Auth::guard('web')->check()){
@@ -453,29 +454,13 @@ class ProfileController extends Controller
             return 'Too many attempts!';
         }
 
-        $fields = ["reviews","rating","userRatingCount","googleMapsUri"];
-        
-        $placeID = $request->place_id;
+        $user->google_place_id = $request->place_id;
+        $user->save();
 
-        $response = GooglePlaces::make()->placeDetails($placeID, $fields);
-
-        try{
-            $response = $response->array();
-            
-            $user->google_place_id = $request->place_id;
-            $user->save();
-            
-            $profile = $user->profile;
-            $profile->google_review_score = $response["rating"];
-            $profile->google_reviews_count = $response["userRatingCount"];
-            $profile->google_place_link = $response["googleMapsUri"];
-            $profile->save();
-        } catch(\Exception $e){
+        if (! $this->vendorService->syncGooglePlaceData($user)) {
             return "Unable to link place";
         }
-        
-        $this->vendorService->refreshReviews($user, $response["reviews"]);
-        
+
         RateLimiter::increment('link-place:'.$user->id);
 
         return;
@@ -518,13 +503,15 @@ class ProfileController extends Controller
     {
         $unavailableDates = $this->parseAvailabilityDates($availabilityRaw);
 
-        if ($unavailableDates === []) {
-            $vendor->meetings()->where('type', 'manual')->delete();
+        // Only ever touch this vendor's own manually-blocked ("unavailable")
+        // entries here — real client meetings (consultations, weddings) live
+        // in the same table under other `type` values and must never be
+        // deleted just because they don't appear in this save's date list.
+        $vendor->meetings()->where('type', 'manual')->delete();
 
+        if ($unavailableDates === []) {
             return;
         }
-
-        $vendor->meetings()->whereNotIn('date', $unavailableDates)->delete();
 
         $newDates = array_map(static fn (string $date) => [
             'vendor' => $vendor->id,
@@ -533,6 +520,6 @@ class ProfileController extends Controller
             'approved' => 1,
         ], $unavailableDates);
 
-        Meeting::upsert($newDates, uniqueBy: ['id']);
+        Meeting::insert($newDates);
     }
 }

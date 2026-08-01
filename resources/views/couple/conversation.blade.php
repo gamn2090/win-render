@@ -134,7 +134,10 @@
       wrap.className = 'vd-chat__system';
 
       if (m.type === 'consultation-request' && m.data) {
-        wrap.innerHTML = 'You requested a consultation on <strong>' + escapeHtml(formatMeetingDate(m.data.meeting_date)) + '</strong>. We\'ll let you know as soon as the vendor responds.';
+        var conflictHtml = m.data.has_conflict
+          ? '<div class="vd-chat__consult-conflict">⚠️ Heads up — the vendor already has something on their calendar that day. We\'ve flagged it for them too, but this date may not end up being available.</div>'
+          : '';
+        wrap.innerHTML = 'You requested a consultation on <strong>' + escapeHtml(formatMeetingDate(m.data.meeting_date)) + '</strong>. We\'ll let you know as soon as the vendor responds.' + conflictHtml;
         return wrap;
       }
 
