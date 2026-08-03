@@ -128,7 +128,7 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
             'wedding_date' => $request->wedding_date,
             'wedding_location' => $request->wedding_location,
-            'bio' => $bio,
+            'bio' => $request->bio,
             'questions' => $request->questions,
             'booking_date' => $request->booking_date,
             'ref_source' => 99,
