@@ -150,6 +150,19 @@
         return wrap;
       }
 
+      if (m.type === 'inquiry' && m.data) {
+        var inquiryConflictHtml = m.data.has_conflict
+          ? '<div class="vd-chat__consult-conflict">⚠️ Heads up — the vendor already has something on their calendar on your wedding date. We\'ve flagged it for them too, but they may not end up being available.</div>'
+          : '';
+        wrap.innerHTML = 'You sent an inquiry for your wedding on <strong>' + escapeHtml(formatMeetingDate(m.data.wedding_date)) + '</strong>.' + inquiryConflictHtml;
+        return wrap;
+      }
+
+      if (m.type === 'booked' && m.data) {
+        wrap.innerHTML = '🎉 You marked this vendor as booked for your wedding on <strong>' + escapeHtml(formatMeetingDate(m.data.wedding_date)) + '</strong>!';
+        return wrap;
+      }
+
       if (m.type === 'consultation-suggestion' && m.data) {
         var resolution = m.data.meeting_uuid ? resolvedSuggestions[m.data.meeting_uuid] : undefined;
         var when = escapeHtml(formatMeetingDate(m.data.meeting_date));
@@ -196,7 +209,7 @@
           lastDay = day;
         }
 
-        var isSystemType = m.type === 'consultation-request' || m.type === 'consultation-response' || m.type === 'consultation-suggestion';
+        var isSystemType = m.type === 'consultation-request' || m.type === 'consultation-response' || m.type === 'consultation-suggestion' || m.type === 'inquiry' || m.type === 'booked';
         var systemEl = isSystemType ? renderSystemMessage(m, resolvedSuggestions) : null;
         if (systemEl) {
           messagesEl.appendChild(systemEl);

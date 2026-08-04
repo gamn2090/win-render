@@ -174,10 +174,22 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderSystemMessage(message, resolvedMeetings) {
     if (message.type === 'inquiry' && message.data) {
       const data = message.data;
+      const inquiryConflictHtml = data.has_conflict
+        ? '<div class="vd-chat__consult-conflict">⚠️ You already have something on your calendar that day.</div>'
+        : '';
       return `<div class="vm-message-view__system">
         <strong>${escapeHtml(data.first_name)} ♥ ${escapeHtml(data.fiance_first_name)}</strong>
         are interested in your services for their wedding on:
         <strong>${escapeHtml(data.wedding_date || '')}</strong>
+        ${inquiryConflictHtml}
+      </div>`;
+    }
+
+    if (message.type === 'booked' && message.data) {
+      const data = message.data;
+      return `<div class="vm-message-view__system">
+        🎉 <strong>${escapeHtml(data.first_name)} ♥ ${escapeHtml(data.fiance_first_name)}</strong>
+        marked you as booked for their wedding on <strong>${escapeHtml(formatMeetingDate(data.wedding_date) || data.wedding_date || '')}</strong>!
       </div>`;
     }
 

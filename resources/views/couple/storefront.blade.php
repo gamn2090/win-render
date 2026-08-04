@@ -45,7 +45,13 @@
   }
 
   $favorited = $user->hasFavorite($vendor->id);
-  $hasPairing = $user->pairingWith($vendor->id) !== null;
+  $pairing = $user->pairingWith($vendor->id);
+  $hasPairing = $pairing !== null;
+  // Both an inquiry and a consultation request have happened by the time
+  // status reaches 2 (requestMeeting() sets it there) — at that point the
+  // couple is clearly serious about this vendor, so let them mark as booked
+  // straight from the storefront instead of only from Favorites.
+  $canMarkBooked = $pairing && $pairing->status >= 2 && $pairing->status < 3;
 @endphp
 
 @include('layouts.couple_sidebar', ['page' => 'find_vendors'])
@@ -97,6 +103,9 @@
           @endunless
           <a href="{{ route('user.vendor.message', $vendor->id) }}" class="vd-storefront-btn vd-storefront-btn--message">Message Vendor</a>
           <button type="button" class="vd-storefront-btn vd-storefront-btn--consultation open-schedule-modal" data-vendor-id="{{ $vendor->id }}">★ Request Consultation</button>
+          @if($canMarkBooked)
+            <button type="button" class="vd-storefront-btn vd-storefront-btn--consultation mark-booked-btn" data-vendor-uuid="{{ $vendor->uuid }}">Mark as Booked</button>
+          @endif
         </div>
       </div>
     </section>
@@ -278,6 +287,7 @@
 </main>
 
 @include('couple.partials.schedule-consultation-modal')
+@include('couple.partials.mark-booked-modal')
 
 <div id="vd-lightbox" class="vd-lightbox">
   <button type="button" class="vd-lightbox__close" data-modal-close aria-label="Close">&times;</button>
@@ -337,6 +347,9 @@
           .then(function (data) {
             if (data.status) {
               inquiryBtn.textContent = 'Inquiry Sent ✓';
+              if (data.has_conflict) {
+                WinToast.show('Heads up — this vendor already has something on their calendar on your wedding date. We\'ve let them know too, but they may not end up being available.', 'error');
+              }
             } else {
               inquiryBtn.textContent = 'Send Inquiry';
               inquiryBtn.disabled = false;
@@ -376,6 +389,13 @@
         return;
       }
 
+      var bookBtn = e.target.closest('.mark-booked-btn');
+      if (bookBtn) {
+        pendingBookVendorUuid = bookBtn.dataset.vendorUuid;
+        openModal(markBookedModal);
+        return;
+      }
+
       var scheduleBtn = e.target.closest('.open-schedule-modal');
       if (scheduleBtn) {
         pendingScheduleVendorId = scheduleBtn.dataset.vendorId;
@@ -398,6 +418,28 @@
       if (e.target.classList && (e.target.classList.contains('vd-modal-overlay') || e.target.id === 'vd-lightbox' || e.target.id === 'vd-lightbox-all')) {
         closeModal(e.target);
       }
+    });
+
+    // ——— Mark as Booked modal ———
+    var markBookedModal = document.getElementById('vd-mark-booked-modal');
+    var markBookedConfirmBtn = document.getElementById('vd-mark-booked-confirm');
+    var pendingBookVendorUuid = null;
+
+    markBookedConfirmBtn.addEventListener('click', function () {
+      if (!pendingBookVendorUuid) return;
+      markBookedConfirmBtn.disabled = true;
+      fetch('{{ route('user.book.vendor') }}', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-TOKEN': csrf,
+        },
+        body: JSON.stringify({ vendor_uuid: pendingBookVendorUuid }),
+      }).then(function () {
+        window.location.reload();
+      }).finally(function () {
+        markBookedConfirmBtn.disabled = false;
+      });
     });
 
     document.querySelectorAll('[data-vd-review-text]').forEach(function (textEl) {

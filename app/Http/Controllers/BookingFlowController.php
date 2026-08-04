@@ -40,8 +40,11 @@ class BookingFlowController extends Controller
         if(!$vendor){
             return ["status" => false];
         }
-        $this->bookingService->sendInquiry($user, $vendor);
-        return ["status" => true];
+        $result = $this->bookingService->sendInquiry($user, $vendor);
+        if ($result === false) {
+            return ["status" => false];
+        }
+        return ["status" => true, "has_conflict" => $result['has_conflict'] ?? false];
     }
 
     //vendor answer meeting request from client

@@ -18,14 +18,25 @@ class BookingService {
         $pairing = Pairing::create(
             ['vendor_id' => $vendor->id, 'client_id' => $client->id, 'status' => 1, 'approved' => 1, 'vendor_type' => $vendor->type]
         );
+
+        // An inquiry is about hiring the vendor for the wedding itself, so the
+        // relevant conflict check is against the couple's actual wedding date
+        // (not a picked date, like the consultation flow) — same as the
+        // consultation conflict flag pattern in requestMeeting().
+        $hasConflict = false;
+        if (!empty($client->wedding_date)) {
+            $weddingDay = Carbon::parse($client->wedding_date)->format('Y-m-d');
+            $hasConflict = in_array($weddingDay, $vendor->busyDates(), true);
+        }
+
         $conversation = $client->directMessageWith($vendor);
         $message = Chat::message('Client Inquiry')
             ->type('inquiry')
-            ->data(['first_name' => $client->first_name, 'fiance_first_name' => $client->fiance_first_name, 'wedding_date' => Carbon::parse($client->wedding_date)->format('Y-m-d')])
+            ->data(['first_name' => $client->first_name, 'fiance_first_name' => $client->fiance_first_name, 'wedding_date' => Carbon::parse($client->wedding_date)->format('Y-m-d'), 'has_conflict' => $hasConflict])
             ->from($client)
             ->to($conversation)
             ->send();
-        return true;
+        return ['status' => true, 'has_conflict' => $hasConflict];
     }
 
     public function requestMeeting(User $client, Vendor $vendor, $meetingDate) {
