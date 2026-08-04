@@ -860,18 +860,22 @@ class Vendor extends Authenticatable
      *
      * @return list<string>
      */
-    public function busyDates(int $daysAhead = 180): array
+    public function busyDates(): array
     {
-        $rangeEnd = Carbon::now()->addDays($daysAhead);
+        // No upper bound — weddings and vendor bookings routinely get
+        // scheduled a year or more out, and the couple-facing calendar lets
+        // couples browse arbitrarily far into the future, so this needs to
+        // match that same unbounded range rather than an arbitrary cutoff.
+        $today = Carbon::now()->startOfDay();
 
         $meetingDates = $this->meetings()
             ->where('approved', 1)
-            ->whereBetween('date', [Carbon::now()->startOfDay(), $rangeEnd])
+            ->where('date', '>=', $today)
             ->pluck('date')
             ->map(fn ($date) => Carbon::parse($date)->format('Y-m-d'));
 
         $calendarEventDates = VendorCalendarEvent::where('vendor_id', $this->id)
-            ->whereBetween('starts_at', [Carbon::now()->startOfDay(), $rangeEnd])
+            ->where('starts_at', '>=', $today)
             ->pluck('starts_at')
             ->map(fn ($date) => Carbon::parse($date)->format('Y-m-d'));
 
