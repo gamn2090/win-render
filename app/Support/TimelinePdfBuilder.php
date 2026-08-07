@@ -9,12 +9,19 @@ class TimelinePdfBuilder
 {
     private const KEY_VENDOR_ID = '__KEYSTONE__';
     private const MAX_LINES = 26;
+    private const SOURCE_RELATIVE = 'html_templates/WIN Timeline Tool 3-18-26.html';
 
     /**
      * Builds the same "key events + vendor task milestones" schedule the
      * tool's own client-side "Print or Save PDF" export shows — ported from
      * exportPDF() in the raw HTML template so shared PDFs match what a
      * couple would get downloading it themselves.
+     *
+     * dompdf (a pure-PHP renderer, no browser/OS emoji font available) can't
+     * render color emoji — they come out as "?" tofu boxes — so icons use a
+     * plain shape marker here instead of the couple's actual emoji picks.
+     * Everything else (logo, heart between names, layout) matches the
+     * browser print view.
      *
      * @param  array<string, mixed>  $state  Decoded CoupleTimelineDraft payload
      */
@@ -24,7 +31,6 @@ class TimelinePdfBuilder
         $dayEndMin = $state['dayEndMin'] ?? 22 * 60;
         $vendors = $state['vendors'] ?? [];
         $blocks = $state['blocks'] ?? [];
-        $vendorIcons = $state['vendorIcons'] ?? [];
 
         $vendorsById = [];
         foreach ($vendors as $vendor) {
@@ -46,7 +52,7 @@ class TimelinePdfBuilder
                     'start' => self::formatTime($startMin),
                     'end' => self::formatTime($endMin),
                     'label' => $block['title'] ?? 'Key event',
-                    'icon' => $block['icon'] ?? '◆',
+                    'icon' => '◆',
                     'durationMin' => max(0, $endMin - $startMin),
                 ];
                 continue;
@@ -54,7 +60,7 @@ class TimelinePdfBuilder
 
             $vendor = $vendorsById[$block['vendorId'] ?? null] ?? null;
             $category = trim($vendor['category'] ?? 'Vendor');
-            $icon = $vendorIcons[$category] ?? '•';
+            $icon = '•';
 
             $tasks = $block['tasks'] ?? [];
             usort($tasks, fn ($a, $b) => ($a['atMin'] ?? 0) <=> ($b['atMin'] ?? 0));
@@ -78,16 +84,37 @@ class TimelinePdfBuilder
         usort($lines, fn ($a, $b) => $a['startMin'] <=> $b['startMin']);
         $lines = array_slice($lines, 0, self::MAX_LINES);
 
-        $windowLabel = self::formatTime($dayStartMin) . ' to ' . self::formatTime($dayEndMin);
+        $windowLabel = 'US Letter Landscape • Window ' . self::formatTime($dayStartMin) . ' to ' . self::formatTime($dayEndMin);
 
         $pdf = Pdf::loadView('pdf.timeline', [
             'coupleName' => $coupleName,
             'lines' => $lines,
             'windowLabel' => $windowLabel,
             'stamp' => Carbon::now()->format('M d, Y'),
+            'logoSrc' => self::logoSrc(),
         ])->setPaper([0, 0, 792, 612]); // 11in x 8.5in landscape, in points
 
         return $pdf->output();
+    }
+
+    /**
+     * The WIN logo lives as a single base64 data URI in the source HTML
+     * template (see the .brandLogo <img>) — pull it from there instead of
+     * keeping a second copy that could drift out of sync.
+     */
+    private static function logoSrc(): ?string
+    {
+        $sourcePath = base_path(self::SOURCE_RELATIVE);
+        if (! file_exists($sourcePath)) {
+            return null;
+        }
+
+        $html = file_get_contents($sourcePath);
+        if (! preg_match('/class="brandLogo"\s+src="([^"]+)"/', $html, $match)) {
+            return null;
+        }
+
+        return $match[1];
     }
 
     private static function formatTime(int $min): string

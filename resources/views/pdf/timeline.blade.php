@@ -10,7 +10,11 @@
   body {
     margin: 0;
     padding: 0.35in;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    /* dompdf's "Helvetica"/"Arial" map to core PDF fonts, which only cover
+       WinAnsi/Latin-1 — the ♥ between the couple's names silently drops to
+       "?" on those. DejaVu Sans is bundled with dompdf and actually covers
+       the Unicode ranges this page needs. */
+    font-family: "DejaVu Sans", sans-serif;
     color: #151515;
   }
   .header {
@@ -21,6 +25,7 @@
     margin-bottom: 12px;
   }
   .header td { vertical-align: middle; }
+  .logo { height: 40px; width: auto; }
   .title {
     margin: 0;
     font-size: 20px;
@@ -75,9 +80,12 @@
 <body>
   <table class="header">
     <tr>
+      @if($logoSrc)
+        <td style="width:52px;"><img class="logo" src="{{ $logoSrc }}" alt="WIN" /></td>
+      @endif
       <td>
         <p class="title">{{ $coupleName }} Timeline</p>
-        <p class="sub">Window {{ $windowLabel }}</p>
+        <p class="sub">{{ $windowLabel }}</p>
       </td>
       <td class="meta">
         <div>{{ $stamp }}</div>
