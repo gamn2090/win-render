@@ -51,10 +51,8 @@
   };
   $rankingModel = $data['ranking'] ?? $vendor->vendor_ranking();
   $ranking = is_object($rankingModel) ? $rankingModel->toArray() : (array) $rankingModel;
-  $vendorCommunityRank = $vendor->vendorCommunityRankValue();
-  $vendorCommunityPts = (int) ($vendorCommunityRank['value'] ?? 0);
-  $vendorCommunityMax = (int) ($vendorCommunityRank['max'] ?? 0);
-  $vendorCommunityPct = $vendorCommunityMax > 0 ? round(($vendorCommunityPts / $vendorCommunityMax) * 100) : 0;
+  // Same persisted vendor_ranking() score the Insights page reads, so the two pages never disagree.
+  $vendorCommunityPts = (int) round($ranking['vendor_community'] ?? 0);
   /* Mockup dashboard_vendor.png: 4 anillos (no Client Community en UI; sí entra al score total en backend).
      Rendered with the same SVG ring gauge as the Insights page (see vendor/insights.blade.php)
      so the two pages share one visual language instead of two different ring styles. */
@@ -62,7 +60,7 @@
     ['label' => 'Badges', 'key' => 'badges', 'color' => '#8B6FBE', 'display' => 'percent', 'value' => round($ranking['badges'] ?? 0)],
     ['label' => 'Endorse.', 'key' => 'endorsements', 'color' => '#F26B1D', 'display' => 'percent', 'value' => round($ranking['endorsements'] ?? 0)],
     ['label' => 'Reviews', 'key' => 'reviews', 'color' => '#2DA771', 'display' => 'percent', 'value' => round($ranking['reviews'] ?? 0)],
-    ['label' => 'Vendor Community', 'key' => 'vendor_community', 'color' => '#C9930A', 'display' => 'points', 'points' => $vendorCommunityPts, 'value' => $vendorCommunityPct],
+    ['label' => 'Vendor Community', 'key' => 'vendor_community', 'color' => '#C9930A', 'display' => 'points', 'points' => $vendorCommunityPts, 'value' => $vendorCommunityPts],
   ];
   /* Mismos 4 badges del dashboard antiguo (PNG en /images + helpers del modelo). */
   $dashboardBadgeSlots = [

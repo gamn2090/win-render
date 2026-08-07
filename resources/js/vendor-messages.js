@@ -232,8 +232,16 @@ document.addEventListener('DOMContentLoaded', () => {
       const data = message.data;
       const statusClass = data.accepted ? 'vd-chat__consult-status--accepted' : 'vd-chat__consult-status--declined';
       const statusText = data.accepted ? 'You accepted this consultation.' : 'You declined this consultation.';
+      const suggestHtml = (!data.accepted && data.meeting_uuid) ? `<div class="vd-chat__consult-actions">
+          <button type="button" class="vd-chat__consult-btn vd-chat__consult-btn--suggest" data-consult-suggest-meeting="${escapeHtml(data.meeting_uuid)}">Suggest New Time</button>
+        </div>
+        <div class="vd-chat__consult-suggest-form" data-consult-suggest-form="${escapeHtml(data.meeting_uuid)}" hidden>
+          <input type="datetime-local" class="vd-chat__consult-suggest-input" />
+          <button type="button" class="vd-chat__consult-btn vd-chat__consult-btn--accept" data-consult-suggest-send="${escapeHtml(data.meeting_uuid)}">Send</button>
+        </div>` : '';
       return `<div class="vm-message-view__system">
         <div class="vd-chat__consult-status ${statusClass}">${statusText}</div>
+        ${suggestHtml}
       </div>`;
     }
 
