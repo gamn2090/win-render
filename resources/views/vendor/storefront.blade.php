@@ -130,16 +130,13 @@
               Invite to Connect
             </button>
           @endif
-          <button
-            type="button"
-            id="messageVendorButton"
+          <a
+            href="{{ url('/vendor/message/'.$vendor->id) }}"
             class="vsf-profile__cta vsf-profile__cta--message"
-            data-message-url="{{ url('/vendor/message/'.$vendor->id) }}"
-            data-conversation-prefix="/inbox/conversation/"
           >
             <span class="vsf-profile__cta-icon" aria-hidden="true">💬</span>
             Message Vendor
-          </button>
+          </a>
           <button
             type="button"
             id="endorse-button"

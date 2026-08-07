@@ -66,22 +66,10 @@
           <img src="{{ $fcAssets }}/ok.png" alt="" width="16" height="16" />
           Apply Filters
         </button>
-        <button
-          type="button"
-          class="fc-btn fc-btn--event"
-          aria-haspopup="dialog"
-          aria-expanded="false"
-          aria-controls="join-event-modal"
-          data-hs-overlay="#join-event-modal"
-        >
-          <img src="{{ $fcAssets }}/heart.png" alt="" width="16" height="16" />
-          Join Event
-        </button>
       </div>
     </div>
   </section>
 
-  <x-fc-join-event-modal />
   <x-fc-contact-confirm-modal />
 
   <section class="fc-grid" aria-label="Couple listings">

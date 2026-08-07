@@ -659,7 +659,17 @@ class Vendor extends Authenticatable
     }
 
     public function qualifiesForDiscount(){
-        return false;    
+        return false;
+    }
+
+    // True if this vendor has an active paid membership through either
+    // billing path this app supports: a real Stripe subscription
+    // (isSubscribed()), or a manually-granted, unexpired, confirmed Payment
+    // record (payment() — used by AdminController::addMonths() for
+    // comped/manually-invoiced accounts that never go through Stripe).
+    public function isActiveMember(): bool
+    {
+        return $this->isSubscribed() || $this->payment() !== "ERR";
     }
 
     /*

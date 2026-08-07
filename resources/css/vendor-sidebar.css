@@ -14,7 +14,14 @@
   left: 0;
   z-index: 50;
   width: 230px;
+  /* 100vh in mobile Chrome measures the viewport as if its collapsible
+     address bar were already hidden, so at scroll position 0 (bar still
+     expanded) the actual visible height is shorter than 100vh — pushing
+     the logout button (last item, bottom of this fixed-height sidebar)
+     behind the browser chrome. 100dvh tracks the real visible viewport;
+     100vh stays first as a fallback for browsers without dvh support. */
   height: 100vh;
+  height: 100dvh;
   overflow-x: hidden;
   overflow-y: auto;
   background: #d5c6e7;

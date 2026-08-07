@@ -27,6 +27,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('vendors:refresh-google-reviews')->daily();
+        $schedule->command('vendors:grant-monthly-credits')->monthlyOn(1, '00:00');
     }
 
     /**

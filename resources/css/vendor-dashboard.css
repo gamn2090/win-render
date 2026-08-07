@@ -1239,6 +1239,13 @@
   overflow: hidden;
 }
 
+/* "View My Vendors" mobile expand — desktop always shows every card and
+   links out to the full vendor list instead, so these stay inert there. */
+.vd-browse__more-hint,
+.vd-browse__view-more-mobile {
+  display: none;
+}
+
 .vd-vendor-card__image-link {
   display: block;
   line-height: 0;
@@ -1404,6 +1411,27 @@
 
   .vd-browse__grid {
     grid-template-columns: 1fr;
+  }
+
+  .vd-vendor-card--extra {
+    display: none;
+  }
+
+  .vd-browse__more-hint {
+    display: block;
+    text-align: center;
+    margin: 10px 0 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: #7a7a7a;
+  }
+
+  .vd-browse__view-more-desktop {
+    display: none;
+  }
+
+  .vd-browse__view-more-mobile {
+    display: block;
   }
 
   .vd-greeting__title {

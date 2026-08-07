@@ -258,7 +258,7 @@
       <div class="vd-browse__grid">
         @forelse($bookedVendors as $pairing)
           @php $vendor = $pairing->vendor; @endphp
-          <article class="vd-vendor-card">
+          <article class="vd-vendor-card @if($loop->index >= 5) vd-vendor-card--extra @endif">
             <a href="{{ route('profile.vendor', $vendor->uuid) }}" class="vd-vendor-card__image-link" tabindex="-1" aria-hidden="true">
               @if($vendor->coverImageUrl())
                 <img class="vd-vendor-card__image" src="{{ $vendor->coverImageUrl() }}" alt="" />
@@ -290,8 +290,14 @@
           <p style="grid-column:1/-1;text-align:center;color:#7a7a7a;">You haven't booked any vendors yet.</p>
         @endforelse
       </div>
-      <p style="text-align:center;margin-top:16px;">
+      @if($bookedVendors->count() > 5)
+        <p class="vd-browse__more-hint">+{{ $bookedVendors->count() - 5 }} more vendor{{ $bookedVendors->count() - 5 === 1 ? '' : 's' }}</p>
+      @endif
+      <p style="text-align:center;margin-top:16px;" class="vd-browse__view-more-desktop">
         <a href="{{ route('client.vendor.list') }}" class="vd-promo__btn vd-promo__btn--purple" style="display:inline-flex;">View More Vendors</a>
+      </p>
+      <p style="text-align:center;margin-top:16px;" class="vd-browse__view-more-mobile">
+        <a href="{{ route('client.vendor.list') }}" class="vd-promo__btn vd-promo__btn--purple" style="display:inline-flex;">View My Vendors</a>
       </p>
     </section>
 

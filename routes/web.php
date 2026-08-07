@@ -263,6 +263,10 @@ Route::middleware('auth:web')->group(function () {
         ->name('couple.timeline.draft.save');
     Route::post('/couple/timeline/draft/clear', [TimelineToolController::class, 'clearCoupleDraft'])
         ->name('couple.timeline.draft.clear');
+    Route::get('/couple/timeline/share/recipients', [TimelineToolController::class, 'shareRecipients'])
+        ->name('couple.timeline.share.recipients');
+    Route::post('/couple/timeline/share', [TimelineToolController::class, 'share'])
+        ->name('couple.timeline.share');
 });
 
 

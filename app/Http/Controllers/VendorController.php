@@ -426,7 +426,7 @@ class VendorController extends Controller
         $joinedEvents = $user->joinedEvents()->get()->concat([null]);
         $searchResults = User::whereIn('id', $inquiries)->where(function ($query) use ($joinedEvents){
             $query->whereIn('event', $joinedEvents)->orWhereNull('event');
-        })->where('created_at', '<=', Carbon::now()->subHours(24))->with('pairing', 'inquiries')->orderBy('first_name', 'asc')->orderBy('fiance_first_name', 'asc');
+        })->with('pairing', 'inquiries')->orderBy('first_name', 'asc')->orderBy('fiance_first_name', 'asc');
         if($request->wedding_date == 'false'){
             $searchResults = $searchResults->where('wedding_date', '!=', null);
         }

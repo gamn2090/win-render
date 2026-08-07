@@ -489,6 +489,16 @@ HTML;
       const bump = spl.has(k)?10 : imp.has(k)?5 : 0;
       if(bump){ o[k] = (o[k]||0)+bump; added += bump; }
     });
+
+    if(added > 0){
+      const donors = [...active].filter(k=>
+        k!=="other" && !pinned.has(k) && !imp.has(k) && !spl.has(k)
+      );
+      const dSum = donors.reduce((s,k)=>s+(o[k]||0), 0) || added;
+      donors.forEach(k=>{
+        o[k] = Math.max(0.5, (o[k]||0) - added*((o[k]||0)/dSum));
+      });
+    }
 JS,
             '    applyPriorityToAlloc(o, active, pinned);',
             $html

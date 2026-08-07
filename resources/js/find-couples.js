@@ -69,46 +69,4 @@ $(document).ready(function () {
     contactClient(clientUuid);
   });
 
-  $('#join-event-btn').on('click', function () {
-    const formData = {
-      event: $('#event-code').val(),
-    };
-
-    $.ajax({
-      type: 'POST',
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-      },
-      url: '/vendor/event/join',
-      data: formData,
-      success: function () {
-        closeOverlay('#join-event-modal');
-        Swal.fire({
-          title: 'Congratulations!',
-          text: 'You have joined this event!',
-          icon: 'success',
-          confirmButtonText: 'Ok',
-          confirmButtonColor: '#6432C8',
-        }).then(function () {
-          window.location.href = '/vendor/couples';
-        });
-      },
-      error: function () {
-        Swal.fire({
-          title: 'Oops!',
-          text: "We couldn't find this event. Make sure you have the right join code!",
-          icon: 'error',
-          confirmButtonText: 'Ok',
-          confirmButtonColor: '#6432C8',
-        });
-      },
-    });
-  });
-
-  $('#event-code').on('keydown', function (event) {
-    if (event.key === 'Enter') {
-      event.preventDefault();
-      $('#join-event-btn').trigger('click');
-    }
-  });
 });

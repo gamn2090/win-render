@@ -93,19 +93,4 @@ $(document).ready(function () {
       },
     });
   });
-
-  $('#messageVendorButton').on('click', function () {
-    const url = $(this).data('message-url');
-    const prefix = $(this).data('conversation-prefix');
-    if (!url) {
-      return;
-    }
-    $.ajax({
-      type: 'GET',
-      url: url,
-      success: function (data) {
-        window.location = prefix + data;
-      },
-    });
-  });
 });

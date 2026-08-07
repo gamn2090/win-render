@@ -480,59 +480,71 @@
     .blockTasks{position:absolute; left:8px; right:8px; bottom:28px; height:6px; pointer-events:none; opacity:.95}
     .taskDot{position:absolute; top:0; width:6px; height:6px; border-radius:999px; background:rgba(249,87,1,.92); border:1px solid rgba(21,21,21,.10)}
 
-    /* Share dropdown (concept) — rendered in a portal so it never clips */
+    /* Share modal — rendered in a portal so it never clips */
     .sharePortal{
       position:fixed;
       inset:0;
       z-index:999999;
       pointer-events:none;
     }
-    .shareMenu{
+    .shareOverlay{
       position:absolute;
-      width:320px;
-      background:#fff;
-      border:1px solid rgba(21,21,21,.14);
-      border-radius:14px;
-      box-shadow:0 18px 42px rgba(0,0,0,.18);
-      overflow:hidden;
-      pointer-events:auto;
-    }
-    .shareMenuTitle{
-      padding:12px 12px 10px;
-      font-size:11px;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      color:rgba(21,21,21,.62);
-      font-weight:860;
-      background:linear-gradient(180deg, rgba(100,50,200,.08), rgba(255,255,255,1));
-      border-bottom:1px solid rgba(21,21,21,.08);
-    }
-    .shareDivider{height:1px;background:rgba(21,21,21,.08)}
-    .shareItem{
-      width:100%;
+      inset:0;
+      background:rgba(21,21,21,.45);
       display:flex;
       align-items:center;
-      gap:10px;
-      padding:10px 12px;
+      justify-content:center;
+      pointer-events:auto;
+      padding:16px;
+    }
+    .shareModal{
+      width:100%;
+      max-width:420px;
+      max-height:min(640px, 90vh);
+      display:flex;
+      flex-direction:column;
       background:#fff;
-      border:0;
-      cursor:pointer;
-      text-align:left;
-      font-family:inherit;
+      border-radius:16px;
+      box-shadow:0 18px 42px rgba(0,0,0,.22);
+      overflow:hidden;
     }
-    .shareItem:hover{background:rgba(21,21,21,.03)}
-    .shareDot{
-      width:20px;height:20px;border-radius:10px;
-      display:inline-flex;align-items:center;justify-content:center;
-      background:rgba(100,50,200,.10);
-      border:1px solid rgba(100,50,200,.22);
-      color:var(--winPurple);
-      font-size:12px;
-      flex:0 0 auto;
+    .shareModalHead{
+      padding:16px 18px;
+      border-bottom:1px solid rgba(21,21,21,.08);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
     }
-    .shareText{display:flex;flex-direction:column;min-width:0;gap:2px}
-    .sharePrimary{font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .shareSecondary{font-size:12px;color:rgba(21,21,21,.62);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .shareModalTitle{margin:0;font-size:16px;font-weight:900;color:var(--ink,#151515)}
+    .shareModalClose{
+      border:0;background:transparent;cursor:pointer;font-size:18px;
+      color:rgba(21,21,21,.55);line-height:1;padding:4px;
+    }
+    .shareModalBody{padding:14px 18px;overflow-y:auto;flex:1 1 auto}
+    .shareSectionTitle{
+      font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+      font-weight:860;color:rgba(21,21,21,.55);margin:14px 0 8px;
+    }
+    .shareSectionTitle:first-child{margin-top:0}
+    .shareVendorRow{
+      display:flex;align-items:center;gap:10px;
+      padding:8px 6px;border-radius:10px;cursor:pointer;
+    }
+    .shareVendorRow:hover{background:rgba(21,21,21,.03)}
+    .shareVendorRow input{flex:0 0 auto;width:16px;height:16px;accent-color:var(--winPurple);cursor:pointer}
+    .shareVendorText{display:flex;flex-direction:column;min-width:0;gap:1px}
+    .shareVendorName{font-weight:800;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .shareVendorType{font-size:11.5px;color:rgba(21,21,21,.55)}
+    .shareEmpty{font-size:12.5px;color:rgba(21,21,21,.55);padding:6px}
+    .shareChannelRow{display:flex;gap:16px;margin-top:4px}
+    .shareChannelLabel{display:flex;align-items:center;gap:7px;font-size:13.5px;font-weight:700;cursor:pointer}
+    .shareChannelLabel input{width:16px;height:16px;accent-color:var(--winPurple);cursor:pointer}
+    .shareModalFoot{
+      padding:14px 18px;border-top:1px solid rgba(21,21,21,.08);
+      display:flex;align-items:center;justify-content:flex-end;gap:8px;
+    }
+    .shareError{font-size:12.5px;color:#c0392b;margin:0 18px;padding-top:8px}
 
 </style>
 </head>
@@ -577,6 +589,7 @@
 <div class="footerActions" style="justify-content:flex-end">
 <button class="btn primary" id="exportBtn" type="button">Export</button>
         <button class="btn" id="shareBtn" type="button">Share</button>
+        <div id="sharePortal" class="sharePortal"></div>
 </div>
 </div>
 </div>
@@ -2234,61 +2247,124 @@ function exportPDF(){
     
     
 
-    // Share (concept) — dropdown list of vendors + "All vendors"
+    // Share modal — lets a couple share their timeline PDF with vendors from
+    // Favorites and/or My Wedding Team, over WIN chat and/or email. Only
+    // present for the couple's own timeline — shareConfig is null for
+    // vendor-facing views, in which case the button just hides itself.
     const shareBtn = document.getElementById("shareBtn")
     const sharePortal = document.getElementById("sharePortal")
+    const shareCfg = (window.__WIN_TIMELINE_BRIDGE__ || {}).shareConfig || null
 
     function closeShare(){
       if(!sharePortal) return
       sharePortal.innerHTML = ""
     }
 
-    function buildShareMenu(){
-      if(!sharePortal || !shareBtn) return
-      sharePortal.innerHTML = ""
-
-      const btnRect = shareBtn.getBoundingClientRect()
-      const menu = document.createElement("div")
-      menu.className = "shareMenu"
-
-      const top = Math.min(window.innerHeight - 12, btnRect.bottom + 10)
-      const left = Math.min(window.innerWidth - 12 - 320, Math.max(12, btnRect.right - 320))
-      menu.style.top = top + "px"
-      menu.style.left = left + "px"
-
-      const vendors = (state?.vendors || []).filter(v => v.id !== KEY_VENDOR_ID)
-      const vendorRows = vendors.map(v => `
-        <button class="shareItem" type="button" data-share="${escapeHtml(v.id)}">
-          <span class="shareDot">→</span>
-          <span class="shareText">
-            <span class="sharePrimary">${escapeHtml(v.category || "Vendor")}</span>
-            <span class="shareSecondary">${escapeHtml(v.name || "")}</span>
+    function shareVendorRow(v){
+      return `
+        <label class="shareVendorRow">
+          <input type="checkbox" data-share-vendor="${escapeHtml(v.id)}" />
+          <span class="shareVendorText">
+            <span class="shareVendorName">${escapeHtml(v.name || "Vendor")}</span>
+            ${v.type ? `<span class="shareVendorType">${escapeHtml(v.type)}</span>` : ``}
           </span>
-        </button>
-      `).join("")
-
-      menu.innerHTML = `
-        <div class="shareMenuTitle">Share with</div>
-
-        <button class="shareItem" type="button" data-share="all">
-          <span class="shareDot">✓</span>
-          <span class="shareText">
-            <span class="sharePrimary">All vendors</span>
-            <span class="shareSecondary">Concept: share exported PDF</span>
-          </span>
-        </button>
-
-        <div class="shareDivider"></div>
-        ${vendorRows || `<div style="padding:10px 12px;color:rgba(21,21,21,.62);font-size:13px;">No vendors yet</div>`}
+        </label>
       `
-      sharePortal.appendChild(menu)
+    }
 
-      menu.addEventListener("click", (e)=>{
-        const item = e.target.closest("[data-share]")
-        if(!item) return
-        const target = item.getAttribute("data-share")
-        showToast(target === "all" ? "Share concept: all vendors" : ("Share concept: " + target))
-        closeShare()
+    function buildShareMenu(){
+      if(!sharePortal || !shareBtn || !shareCfg) return
+      sharePortal.innerHTML = `
+        <div class="shareOverlay" data-share-overlay>
+          <div class="shareModal">
+            <div class="shareModalHead">
+              <h3 class="shareModalTitle">Share Timeline</h3>
+              <button type="button" class="shareModalClose" data-share-close aria-label="Close">&times;</button>
+            </div>
+            <div class="shareModalBody">
+              <div id="shareRecipients">Loading vendors&hellip;</div>
+              <div class="shareSectionTitle">Send via</div>
+              <div class="shareChannelRow">
+                <label class="shareChannelLabel"><input type="checkbox" data-share-channel="chat" checked /> WIN Chat</label>
+                <label class="shareChannelLabel"><input type="checkbox" data-share-channel="email" /> Email</label>
+              </div>
+            </div>
+            <p class="shareError" id="shareError" hidden></p>
+            <div class="shareModalFoot">
+              <button type="button" class="btn" data-share-close>Cancel</button>
+              <button type="button" class="btn primary" id="shareSendBtn">Send</button>
+            </div>
+          </div>
+        </div>
+      `
+
+      const overlay = sharePortal.querySelector("[data-share-overlay]")
+      overlay.addEventListener("click", (e)=>{ if(e.target === overlay) closeShare() })
+      sharePortal.querySelectorAll("[data-share-close]").forEach(btn=>btn.addEventListener("click", closeShare))
+
+      const recipientsEl = document.getElementById("shareRecipients")
+      const errorEl = document.getElementById("shareError")
+      const sendBtn = document.getElementById("shareSendBtn")
+
+      function showShareError(msg){ errorEl.textContent = msg; errorEl.hidden = false }
+      function clearShareError(){ errorEl.hidden = true; errorEl.textContent = "" }
+
+      fetch(shareCfg.recipientsUrl, { headers: { "Accept":"application/json" }, credentials:"same-origin" })
+        .then(r=>r.json())
+        .then(data=>{
+          const favorites = data.favorites || []
+          const weddingTeam = data.weddingTeam || []
+          if(favorites.length === 0 && weddingTeam.length === 0){
+            recipientsEl.innerHTML = `<div class="shareEmpty">You don't have any favorited or booked vendors yet.</div>`
+            return
+          }
+          recipientsEl.innerHTML = `
+            ${favorites.length ? `<div class="shareSectionTitle">Favorites</div>${favorites.map(shareVendorRow).join("")}` : ``}
+            ${weddingTeam.length ? `<div class="shareSectionTitle">My Wedding Team</div>${weddingTeam.map(shareVendorRow).join("")}` : ``}
+          `
+        })
+        .catch(()=>{
+          recipientsEl.innerHTML = `<div class="shareEmpty">Couldn't load your vendors. Please try again.</div>`
+        })
+
+      sendBtn.addEventListener("click", ()=>{
+        clearShareError()
+        const vendorIds = Array.from(sharePortal.querySelectorAll("[data-share-vendor]:checked")).map(el=>parseInt(el.getAttribute("data-share-vendor"), 10))
+        const channels = Array.from(sharePortal.querySelectorAll("[data-share-channel]:checked")).map(el=>el.getAttribute("data-share-channel"))
+
+        if(vendorIds.length === 0){ showShareError("Pick at least one vendor to share with."); return }
+        if(channels.length === 0){ showShareError("Pick at least one way to send it (chat or email)."); return }
+
+        sendBtn.disabled = true
+        sendBtn.textContent = "Sending…"
+
+        fetch(shareCfg.sendUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": (window.__WIN_TIMELINE_BRIDGE__ || {}).csrfToken || "",
+            "X-Requested-With": "XMLHttpRequest",
+            "Accept": "application/json"
+          },
+          credentials: "same-origin",
+          body: JSON.stringify({ vendor_ids: vendorIds, channels })
+        })
+          .then(r=>r.json().then(data=>({ok:r.ok, data})))
+          .then(({ok, data})=>{
+            if(!ok || !data.status){
+              showShareError(data.message || "Something went wrong sending your timeline. Please try again.")
+              sendBtn.disabled = false
+              sendBtn.textContent = "Send"
+              return
+            }
+            showToast("Timeline shared!")
+            closeShare()
+          })
+          .catch(()=>{
+            showShareError("Something went wrong sending your timeline. Please try again.")
+            sendBtn.disabled = false
+            sendBtn.textContent = "Send"
+          })
       })
     }
 
@@ -2299,19 +2375,11 @@ function exportPDF(){
       else buildShareMenu()
     }
 
-    shareBtn?.addEventListener("click", toggleShare)
-
-    // Close only when clicking outside the menu and outside the button
-    document.addEventListener("pointerdown", (e)=>{
-      if(!sharePortal || !sharePortal.innerHTML.trim()) return
-      const menu = sharePortal.querySelector(".shareMenu")
-      if(menu && (menu.contains(e.target) || shareBtn?.contains(e.target))) return
-      closeShare()
-    }, true)
-
-    window.addEventListener("resize", ()=>{
-      if(sharePortal && sharePortal.innerHTML.trim()) buildShareMenu()
-    })
+    if(shareCfg){
+      shareBtn?.addEventListener("click", toggleShare)
+    } else if(shareBtn){
+      shareBtn.style.display = "none"
+    }
 // Time window
     document.getElementById("overallTimeWindowBtn").addEventListener("click", openTimeWindowDrawer)
     document.getElementById("vendorTimeWindowBtn").addEventListener("click", openTimeWindowDrawer)
