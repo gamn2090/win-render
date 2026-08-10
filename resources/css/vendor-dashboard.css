@@ -1018,6 +1018,10 @@
   margin-bottom: 20px;
 }
 
+.vd-duo--top-align {
+  align-items: start;
+}
+
 .vd-network-summary {
   display: flex;
   align-items: center;
@@ -1232,25 +1236,6 @@
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 16px;
-}
-
-/* Wedding Team sharing a row with the Booked Vendors Savings card — fewer
-   columns since it only gets half the dashboard width there. */
-.vd-browse--half {
-  margin-bottom: 0;
-}
-
-.vd-browse--half .vd-browse__grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.vd-browse--half .vd-browse__more-hint {
-  display: block;
-  text-align: center;
-  margin: 10px 0 0;
-  font-size: 13px;
-  font-weight: 600;
-  color: #7a7a7a;
 }
 
 .vd-savings-list {
@@ -1503,8 +1488,7 @@
     grid-template-columns: 1fr;
   }
 
-  .vd-browse__grid,
-  .vd-browse--half .vd-browse__grid {
+  .vd-browse__grid {
     grid-template-columns: 1fr;
   }
 

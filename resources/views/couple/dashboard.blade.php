@@ -255,55 +255,56 @@
       </article>
     </section>
 
-    <section class="vd-duo" aria-label="Wedding team and savings">
-      <div class="vd-browse vd-browse--half">
-        <h2 class="vd-browse__title">Your Wedding Team</h2>
-        <div class="vd-browse__divider" aria-hidden="true"></div>
-        <div class="vd-browse__grid">
-          @forelse($bookedVendors as $pairing)
-            @php $vendor = $pairing->vendor; @endphp
-            @if($loop->index < 4)
-            <article class="vd-vendor-card">
-              <a href="{{ route('profile.vendor', $vendor->uuid) }}" class="vd-vendor-card__image-link" tabindex="-1" aria-hidden="true">
-                @if($vendor->coverImageUrl())
-                  <img class="vd-vendor-card__image" src="{{ $vendor->coverImageUrl() }}" alt="" />
-                @else
-                  <div class="vd-vendor-card__image win-cover-placeholder"></div>
-                @endif
-              </a>
-              <div class="vd-vendor-card__body">
-                <h3 class="vd-vendor-card__name">{{ $vendor->business_name }}</h3>
-                <div class="vd-vendor-card__meta">
-                  @if($vendor->getType())
-                    <span class="vd-vendor-card__type">
-                      <img src="{{ asset($vendor->getType()->icon) }}" alt="" class="vd-vendor-card__type-icon" width="18" height="18" />
-                      <span class="vd-vendor-card__type-label">{{ $vendor->getType()->type }}</span>
-                    </span>
-                  @endif
-                  <span class="vd-vendor-card__rating">
-                    <span class="vd-vendor-card__rating-num">★ {{ number_format($vendor->googleRating(), 1) }}</span>
+    <section class="vd-browse">
+      <h2 class="vd-browse__title">Your Wedding Team</h2>
+      <div class="vd-browse__divider" aria-hidden="true"></div>
+      <div class="vd-browse__grid">
+        @forelse($bookedVendors as $pairing)
+          @php $vendor = $pairing->vendor; @endphp
+          <article class="vd-vendor-card @if($loop->index >= 5) vd-vendor-card--extra @endif">
+            <a href="{{ route('profile.vendor', $vendor->uuid) }}" class="vd-vendor-card__image-link" tabindex="-1" aria-hidden="true">
+              @if($vendor->coverImageUrl())
+                <img class="vd-vendor-card__image" src="{{ $vendor->coverImageUrl() }}" alt="" />
+              @else
+                <div class="vd-vendor-card__image win-cover-placeholder"></div>
+              @endif
+            </a>
+            <div class="vd-vendor-card__body">
+              <h3 class="vd-vendor-card__name">{{ $vendor->business_name }}</h3>
+              <div class="vd-vendor-card__meta">
+                @if($vendor->getType())
+                  <span class="vd-vendor-card__type">
+                    <img src="{{ asset($vendor->getType()->icon) }}" alt="" class="vd-vendor-card__type-icon" width="18" height="18" />
+                    <span class="vd-vendor-card__type-label">{{ $vendor->getType()->type }}</span>
                   </span>
-                </div>
-                <p class="vd-vendor-card__location">{{ $vendor->location }}</p>
-                <div class="vd-vendor-card__actions">
-                  <a href="{{ route('user.vendor.message', $vendor->id) }}" class="vd-vendor-card__btn vd-vendor-card__btn--message">Message</a>
-                  <a href="{{ route('profile.vendor', $vendor->uuid) }}" class="vd-vendor-card__btn vd-vendor-card__btn--storefront">Storefront</a>
-                </div>
+                @endif
+                <span class="vd-vendor-card__rating">
+                  <span class="vd-vendor-card__rating-num">★ {{ number_format($vendor->googleRating(), 1) }}</span>
+                </span>
               </div>
-            </article>
-            @endif
-          @empty
-            <p style="grid-column:1/-1;text-align:center;color:#7a7a7a;">You haven't booked any vendors yet.</p>
-          @endforelse
-        </div>
-        @if($bookedVendors->count() > 4)
-          <p class="vd-browse__more-hint">+{{ $bookedVendors->count() - 4 }} more vendor{{ $bookedVendors->count() - 4 === 1 ? '' : 's' }}</p>
-        @endif
-        <p style="text-align:center;margin-top:16px;">
-          <a href="{{ route('client.vendor.list') }}" class="vd-promo__btn vd-promo__btn--purple" style="display:inline-flex;">View My Vendors</a>
-        </p>
+              <p class="vd-vendor-card__location">{{ $vendor->location }}</p>
+              <div class="vd-vendor-card__actions">
+                <a href="{{ route('user.vendor.message', $vendor->id) }}" class="vd-vendor-card__btn vd-vendor-card__btn--message">Message</a>
+                <a href="{{ route('profile.vendor', $vendor->uuid) }}" class="vd-vendor-card__btn vd-vendor-card__btn--storefront">Storefront</a>
+              </div>
+            </div>
+          </article>
+        @empty
+          <p style="grid-column:1/-1;text-align:center;color:#7a7a7a;">You haven't booked any vendors yet.</p>
+        @endforelse
       </div>
+      @if($bookedVendors->count() > 5)
+        <p class="vd-browse__more-hint">+{{ $bookedVendors->count() - 5 }} more vendor{{ $bookedVendors->count() - 5 === 1 ? '' : 's' }}</p>
+      @endif
+      <p style="text-align:center;margin-top:16px;" class="vd-browse__view-more-desktop">
+        <a href="{{ route('client.vendor.list') }}" class="vd-promo__btn vd-promo__btn--purple" style="display:inline-flex;">View More Vendors</a>
+      </p>
+      <p style="text-align:center;margin-top:16px;" class="vd-browse__view-more-mobile">
+        <a href="{{ route('client.vendor.list') }}" class="vd-promo__btn vd-promo__btn--purple" style="display:inline-flex;">View My Vendors</a>
+      </p>
+    </section>
 
+    <section class="vd-duo vd-duo--top-align" aria-label="Savings and referrals">
       <article class="vd-card vd-card--feed" id="vd-booked-savings">
         <div class="vd-card__head">
           <h2 class="vd-card__title">Booked Vendors Savings</h2>
@@ -342,9 +343,7 @@
           @endif
         </div>
       </article>
-    </section>
 
-    <section class="vd-promo-row" aria-label="Vendor CTA">
       <div class="vd-promo vd-promo--refer">
         <h3 class="vd-promo__title">Connect with top vendors tailored to your needs</h3>
         <div class="vd-network-summary" style="padding:0;margin:12px 0;">
