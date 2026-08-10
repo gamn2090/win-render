@@ -14,6 +14,7 @@
 @php
   $user = Auth::guard('web')->user();
   $bookedVendors = $pairings->filter(fn ($p) => $p->status == 3 && $p->vendor);
+  $totalSavings = $user->moneySaved($bookedVendors->pluck('vendor'));
   $unreadCount = $user->unreadMessagesCount();
   $hour = (int) now()->format('G');
   $greeting = $hour < 12 ? 'Good morning' : ($hour < 17 ? 'Good afternoon' : 'Good evening');
@@ -32,18 +33,12 @@
         {{ $greeting }}, {{ ucfirst(strtolower($user->first_name)) }} &amp; {{ ucfirst(strtolower($user->fiance_first_name)) }} 💍
       </h1>
 
-      @if($user->moneySaved($user->bookedVendors()) > 0)
-        <div class="vd-savings-banner">
-          You've saved ${{ $user->moneySaved($user->bookedVendors()) }} with WIN vendor discounts!
-        </div>
-      @else
-        <a href="{{ route('search.vendors') }}" class="vd-savings-banner">Start Saving by Booking Vendors</a>
-      @endif
+      <button type="button" id="vd-savings-cta" class="vd-savings-banner" data-scroll-target="#vd-booked-savings">Start Saving by Booking Vendors</button>
 
       <p class="vd-greeting__sub">Here's what's happening with your Wedding Day Plan</p>
     </header>
 
-    <section class="vd-stats" aria-label="Key metrics">
+    <section class="vd-stats vd-stats--5" aria-label="Key metrics">
       <article class="vd-stat-card" style="--vd-stat-accent: #6432c8;">
         <div class="vd-stat-card__top">
           <span class="vd-stat-card__icon-wrap" style="background:#f0ebf9;">📅</span>
@@ -89,6 +84,14 @@
           <p class="vd-stat-card__label">Vendor Matches</p>
           <a href="{{ route('search.vendors') }}" class="vd-stat-card__cta">Find Vendors</a>
         </div>
+      </article>
+
+      <article class="vd-stat-card" style="--vd-stat-accent: #22c55e;">
+        <div class="vd-stat-card__top">
+          <span class="vd-stat-card__icon-wrap" style="background:#e6f7f1;">💲</span>
+        </div>
+        <p class="vd-stat-card__value">${{ number_format($totalSavings) }}</p>
+        <p class="vd-stat-card__label">Total Savings</p>
       </article>
     </section>
 
@@ -252,53 +255,93 @@
       </article>
     </section>
 
-    <section class="vd-browse">
-      <h2 class="vd-browse__title">Your Wedding Team</h2>
-      <div class="vd-browse__divider" aria-hidden="true"></div>
-      <div class="vd-browse__grid">
-        @forelse($bookedVendors as $pairing)
-          @php $vendor = $pairing->vendor; @endphp
-          <article class="vd-vendor-card @if($loop->index >= 5) vd-vendor-card--extra @endif">
-            <a href="{{ route('profile.vendor', $vendor->uuid) }}" class="vd-vendor-card__image-link" tabindex="-1" aria-hidden="true">
-              @if($vendor->coverImageUrl())
-                <img class="vd-vendor-card__image" src="{{ $vendor->coverImageUrl() }}" alt="" />
-              @else
-                <div class="vd-vendor-card__image win-cover-placeholder"></div>
-              @endif
-            </a>
-            <div class="vd-vendor-card__body">
-              <h3 class="vd-vendor-card__name">{{ $vendor->business_name }}</h3>
-              <div class="vd-vendor-card__meta">
-                @if($vendor->getType())
-                  <span class="vd-vendor-card__type">
-                    <img src="{{ asset($vendor->getType()->icon) }}" alt="" class="vd-vendor-card__type-icon" width="18" height="18" />
-                    <span class="vd-vendor-card__type-label">{{ $vendor->getType()->type }}</span>
-                  </span>
+    <section class="vd-duo" aria-label="Wedding team and savings">
+      <div class="vd-browse vd-browse--half">
+        <h2 class="vd-browse__title">Your Wedding Team</h2>
+        <div class="vd-browse__divider" aria-hidden="true"></div>
+        <div class="vd-browse__grid">
+          @forelse($bookedVendors as $pairing)
+            @php $vendor = $pairing->vendor; @endphp
+            @if($loop->index < 4)
+            <article class="vd-vendor-card">
+              <a href="{{ route('profile.vendor', $vendor->uuid) }}" class="vd-vendor-card__image-link" tabindex="-1" aria-hidden="true">
+                @if($vendor->coverImageUrl())
+                  <img class="vd-vendor-card__image" src="{{ $vendor->coverImageUrl() }}" alt="" />
+                @else
+                  <div class="vd-vendor-card__image win-cover-placeholder"></div>
                 @endif
-                <span class="vd-vendor-card__rating">
-                  <span class="vd-vendor-card__rating-num">★ {{ number_format($vendor->googleRating(), 1) }}</span>
-                </span>
+              </a>
+              <div class="vd-vendor-card__body">
+                <h3 class="vd-vendor-card__name">{{ $vendor->business_name }}</h3>
+                <div class="vd-vendor-card__meta">
+                  @if($vendor->getType())
+                    <span class="vd-vendor-card__type">
+                      <img src="{{ asset($vendor->getType()->icon) }}" alt="" class="vd-vendor-card__type-icon" width="18" height="18" />
+                      <span class="vd-vendor-card__type-label">{{ $vendor->getType()->type }}</span>
+                    </span>
+                  @endif
+                  <span class="vd-vendor-card__rating">
+                    <span class="vd-vendor-card__rating-num">★ {{ number_format($vendor->googleRating(), 1) }}</span>
+                  </span>
+                </div>
+                <p class="vd-vendor-card__location">{{ $vendor->location }}</p>
+                <div class="vd-vendor-card__actions">
+                  <a href="{{ route('user.vendor.message', $vendor->id) }}" class="vd-vendor-card__btn vd-vendor-card__btn--message">Message</a>
+                  <a href="{{ route('profile.vendor', $vendor->uuid) }}" class="vd-vendor-card__btn vd-vendor-card__btn--storefront">Storefront</a>
+                </div>
               </div>
-              <p class="vd-vendor-card__location">{{ $vendor->location }}</p>
-              <div class="vd-vendor-card__actions">
-                <a href="{{ route('user.vendor.message', $vendor->id) }}" class="vd-vendor-card__btn vd-vendor-card__btn--message">Message</a>
-                <a href="{{ route('profile.vendor', $vendor->uuid) }}" class="vd-vendor-card__btn vd-vendor-card__btn--storefront">Storefront</a>
-              </div>
-            </div>
-          </article>
-        @empty
-          <p style="grid-column:1/-1;text-align:center;color:#7a7a7a;">You haven't booked any vendors yet.</p>
-        @endforelse
+            </article>
+            @endif
+          @empty
+            <p style="grid-column:1/-1;text-align:center;color:#7a7a7a;">You haven't booked any vendors yet.</p>
+          @endforelse
+        </div>
+        @if($bookedVendors->count() > 4)
+          <p class="vd-browse__more-hint">+{{ $bookedVendors->count() - 4 }} more vendor{{ $bookedVendors->count() - 4 === 1 ? '' : 's' }}</p>
+        @endif
+        <p style="text-align:center;margin-top:16px;">
+          <a href="{{ route('client.vendor.list') }}" class="vd-promo__btn vd-promo__btn--purple" style="display:inline-flex;">View My Vendors</a>
+        </p>
       </div>
-      @if($bookedVendors->count() > 5)
-        <p class="vd-browse__more-hint">+{{ $bookedVendors->count() - 5 }} more vendor{{ $bookedVendors->count() - 5 === 1 ? '' : 's' }}</p>
-      @endif
-      <p style="text-align:center;margin-top:16px;" class="vd-browse__view-more-desktop">
-        <a href="{{ route('client.vendor.list') }}" class="vd-promo__btn vd-promo__btn--purple" style="display:inline-flex;">View More Vendors</a>
-      </p>
-      <p style="text-align:center;margin-top:16px;" class="vd-browse__view-more-mobile">
-        <a href="{{ route('client.vendor.list') }}" class="vd-promo__btn vd-promo__btn--purple" style="display:inline-flex;">View My Vendors</a>
-      </p>
+
+      <article class="vd-card vd-card--feed" id="vd-booked-savings">
+        <div class="vd-card__head">
+          <h2 class="vd-card__title">Booked Vendors Savings</h2>
+        </div>
+        <div class="vd-card__body">
+          <div class="vd-card__scroll">
+            <div class="vd-savings-list">
+              @forelse($bookedVendors as $pairing)
+                @php $vendor = $pairing->vendor; @endphp
+                <div class="vd-savings-row">
+                  <x-avatar :model="$vendor" class="vd-list-row__avatar" />
+                  <div class="vd-savings-row__text">
+                    <p class="vd-savings-row__name">{{ $vendor->business_name }}</p>
+                    @if($vendor->getType())
+                      <p class="vd-savings-row__type">{{ $vendor->getType()->type }}</p>
+                    @endif
+                  </div>
+                  <span class="vd-savings-row__amount">
+                    @if(($vendor->discount ?? 0) > 0)
+                      ${{ number_format($vendor->discount) }} saved
+                    @else
+                      No discount offered
+                    @endif
+                  </span>
+                </div>
+              @empty
+                <p class="vd-list-row__preview" style="padding:12px 0;">Book a vendor to start tracking your WIN savings here.</p>
+              @endforelse
+            </div>
+          </div>
+          @if($bookedVendors->isNotEmpty())
+            <div class="vd-savings-total">
+              <span>Total Saved</span>
+              <span class="vd-savings-total__amount">${{ number_format($totalSavings) }}</span>
+            </div>
+          @endif
+        </div>
+      </article>
     </section>
 
     <section class="vd-promo-row" aria-label="Vendor CTA">
@@ -325,5 +368,16 @@
 </main>
 
 <x-chat-modal />
+<script>
+  document.getElementById('vd-savings-cta')?.addEventListener('click', () => {
+    const target = document.getElementById('vd-booked-savings');
+    if (!target) return;
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    target.classList.remove('vd-highlight-pulse');
+    void target.offsetWidth;
+    target.classList.add('vd-highlight-pulse');
+    target.addEventListener('animationend', () => target.classList.remove('vd-highlight-pulse'), { once: true });
+  });
+</script>
 </body>
 </html>
