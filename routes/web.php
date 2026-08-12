@@ -38,6 +38,23 @@ use Illuminate\Http\Request;
 Route::post('stripe/webhook', [\Laravel\Cashier\Http\Controllers\WebhookController::class, 'handleWebhook'])
     ->name('cashier.webhook');
 
+// No real server crontab exists in this container (apache2-foreground is PID 1,
+// no cron daemon) — an external HTTP-pinging cron service hits this once a
+// minute, and Laravel's scheduler internally decides which of the commands
+// registered in app/Console/Kernel.php are actually due to run. Only ONE
+// external trigger is needed regardless of how many scheduled commands exist.
+Route::get('/cron/run-schedule', function (Request $request) {
+    $secret = (string) config('services.cron.secret');
+    if ($secret === '' || ! hash_equals($secret, (string) $request->query('token'))) {
+        abort(403);
+    }
+
+    \Illuminate\Support\Facades\Artisan::call('schedule:run');
+
+    return response(\Illuminate\Support\Facades\Artisan::output(), 200)
+        ->header('Content-Type', 'text/plain');
+})->name('cron.run-schedule');
+
 Route::get('/', function () {
     if (Auth::guard('vendor')->check()) {
         return redirect('/vendor/dashboard');

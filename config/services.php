@@ -40,6 +40,14 @@ return [
         'key' => env('GOOGLE_MAPS_API_KEY'),
     ],
 
+    'cron' => [
+        // Shared secret for the /cron/run-schedule endpoint — this app has no
+        // real server crontab (containerized, apache2-foreground as PID 1), so
+        // an external HTTP-pinging cron service (e.g. cron-job.org) triggers
+        // `php artisan schedule:run` once a minute instead.
+        'secret' => env('CRON_SECRET'),
+    ],
+
     'stripe' => [
         'secret' => env('STRIPE_SECRET'),
         'payment_link_price' => env('STRIPE_PAYMENT_LINK_PRICE'),
