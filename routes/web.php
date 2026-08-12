@@ -33,6 +33,11 @@ use Illuminate\Http\Request;
 */
 
 
+// Cashier's own signature-verifying controller — VerifyCsrfToken already
+// excludes 'stripe/*' (see app/Http/Middleware/VerifyCsrfToken.php).
+Route::post('stripe/webhook', [\Laravel\Cashier\Http\Controllers\WebhookController::class, 'handleWebhook'])
+    ->name('cashier.webhook');
+
 Route::get('/', function () {
     if (Auth::guard('vendor')->check()) {
         return redirect('/vendor/dashboard');

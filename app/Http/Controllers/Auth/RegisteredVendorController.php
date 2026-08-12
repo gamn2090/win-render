@@ -157,6 +157,14 @@ class RegisteredVendorController extends Controller
 
         $user = Vendor::create($vendorData);
 
+        // Dev-environment convenience: new vendors normally start with 0 contact
+        // credits until an active membership grants them, which blocks testing
+        // Find Couples locally. Give dev signups 10 credits automatically.
+        if (App::environment('development')) {
+            $user->contact_credits = 10;
+            $user->save();
+        }
+
         if($request->ref_by != null){
             $user->ref_by = intval($request->ref_by);
             $user->save();
@@ -192,6 +200,15 @@ class RegisteredVendorController extends Controller
                 'vendor_name' => $user->business_name,
             ])->delay(now()->addHours(48));
         }
+
+        \App\Jobs\TrackKlaviyoEvent::dispatch('Vendor Registered', $user->email, [
+            'vendor_type' => $user->getType()?->type,
+            'business_name' => $user->business_name,
+        ], [
+            'first_name' => $user->first_name,
+            'last_name' => $user->last_name,
+            'organization' => $user->business_name,
+        ]);
 
         event(new Registered($user));
 

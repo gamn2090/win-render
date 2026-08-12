@@ -26,7 +26,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->command('vendors:refresh-google-reviews')->daily();
+        // Runs before vendors:recalculate-rankings so Reviews scores reflect that day's Google ratings.
+        $schedule->command('vendors:refresh-google-reviews')->dailyAt('00:30');
+        $schedule->command('vendors:recalculate-rankings')->dailyAt('01:00');
         $schedule->command('vendors:grant-monthly-credits')->monthlyOn(1, '00:00');
     }
 

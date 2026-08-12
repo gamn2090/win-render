@@ -1266,9 +1266,13 @@ body[data-mode="done"] .cardBody{background:rgba(100,50,200,.04) !important;}
   // Core rebalancer. Guaranteed invariants after call:
   //   - Inactive keys = 0
   //   - Pinned keys unchanged (clamped to [0,99])
-  //   - Unlocked active keys share (100 - pinnedSum) proportionally, min 0.5% each
-  //   - Total = exactly 100
-  // _rebalance: enforce floor minimums and normalize allocations to 100%
+  //   - Unlocked active keys keep their own recommended %, UNLESS their
+  //     combined weight overflows the room left after pinned categories —
+  //     only then do they get scaled down proportionally to fit.
+  //   - Total is AT MOST 100 — any recommended weight left un-selected (no
+  //     vendor added for it) stays unallocated as budget surplus instead of
+  //     being distributed across whichever categories the couple did add.
+  // _rebalance: enforce floor minimums, shrink only on overflow, never fill unused room
   // MIN floor: 0.5% for all vendors; 0% for the "other" catch-all
   function _rebalance(o, active, pinned){
     VENDOR_TYPES.forEach(vt=>{ if(!active.has(vt.key)) o[vt.key] = 0; });
@@ -1292,12 +1296,6 @@ body[data-mode="done"] .cardBody{background:rgba(100,50,200,.04) !important;}
     const unlocked = [...active].filter(k=>!p.has(k));
 
     if(unlocked.length === 0){
-      // Nothing left to absorb the remaining budget share. Only nudge for
-      // genuine floating-point drift (target ~0) — a real shortfall (e.g. all
-      // active vendors are booked but haven't spent the full budget yet) must
-      // stay unallocated rather than being dumped onto whichever pinned
-      // category happens to have the largest amount.
-      if(Math.abs(target) < 0.01) _exactSum(o, active);
       return;
     }
 
@@ -1305,6 +1303,19 @@ body[data-mode="done"] .cardBody{background:rgba(100,50,200,.04) !important;}
     // "other" catch-all vendor has no minimum floor; all real vendor types get MIN.
     function floorFor(k){ return k === "other" ? 0 : MIN; }
 
+    let uSum = unlocked.reduce((s,k)=>s+(o[k]||0), 0);
+
+    if(uSum <= target){
+      // The selected categories' own recommended weights already fit inside
+      // the room left over — keep each at its own %, leave the rest of
+      // `target` unallocated (shows up as budget surplus) rather than
+      // scaling every selected category up to consume the whole budget.
+      unlocked.forEach(k=>{ o[k] = Math.max(floorFor(k), o[k]||0); });
+      return;
+    }
+
+    // Selected categories' combined weight exceeds available room — shrink
+    // proportionally so they fit exactly within `target`.
     const minTotal = unlocked.reduce((s,k)=>s+floorFor(k), 0);
 
     if(target <= minTotal){
@@ -1312,9 +1323,6 @@ body[data-mode="done"] .cardBody{background:rgba(100,50,200,.04) !important;}
       _exactSum(o, active);
       return;
     }
-
-    let uSum = unlocked.reduce((s,k)=>s+(o[k]||0), 0);
-    if(uSum <= 0) uSum = target;
 
     unlocked.forEach(k=>{
       o[k] = Math.max(floorFor(k), (o[k]||0) / uSum * target);

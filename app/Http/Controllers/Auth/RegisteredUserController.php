@@ -179,6 +179,13 @@ class RegisteredUserController extends Controller
             ]);
         }
 
+        \App\Jobs\TrackKlaviyoEvent::dispatch('Couple Registered', $user->email, [
+            'wedding_date' => $user->wedding_date,
+        ], [
+            'first_name' => $user->first_name,
+            'last_name' => $user->last_name,
+        ]);
+
         Auth::guard('vendor')->logout();
         Auth::guard('web')->login($user);
         $request->session()->regenerate();

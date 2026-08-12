@@ -230,6 +230,7 @@ class VendorController extends Controller
 
     public function insights(Request $request){
         $vendor = $request->user();
+        $this->vendorService->refreshEarnedBadges($vendor);
         $score = $vendor->updateAllRankingScores();
         $placement = Vendor::where('type', $vendor->type)->where('score', '>', $vendor->score)->count();
         $vendorTypeModel = $vendor->getType();
@@ -657,6 +658,15 @@ class VendorController extends Controller
         $payment = Payment::where('vendor_id', $request->user()->id)->where('confirmed', false)->first();
         $payment->confirmed = true;
         $payment->save();
+
+        \App\Jobs\TrackKlaviyoEvent::dispatch('Vendor Subscription Started', $request->user()->email, [
+            'business_name' => $request->user()->business_name,
+        ], [
+            'first_name' => $request->user()->first_name,
+            'last_name' => $request->user()->last_name,
+            'organization' => $request->user()->business_name,
+        ]);
+
         return redirect('/vendor/dashboard');
     }
 

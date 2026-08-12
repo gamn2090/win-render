@@ -181,6 +181,16 @@ class BookingFlowController extends Controller
             ]);
         }
         $this->bookingService->markBooked($user, $vendor);
+
+        \App\Jobs\TrackKlaviyoEvent::dispatch('Vendor Booked', $user->email, [
+            'vendor_name' => $vendor->business_name,
+            'vendor_type' => $vendor->getType()?->type,
+            'discount' => $vendor->discount ?? 0,
+        ], [
+            'first_name' => $user->first_name,
+            'last_name' => $user->last_name,
+        ]);
+
         return ["status" => true];
     }
 }

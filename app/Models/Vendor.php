@@ -532,7 +532,7 @@ class Vendor extends Authenticatable
         $communityScore = ($communityValue['value'] / max((int) $communityValue['max'], 1)) * 100;
         $vendorCommunityValue = $this->vendorCommunityRankValue();
         $vcMax = max((int) $vendorCommunityValue['max'], 1);
-        $vendorCommunityScore = ((($vendorCommunityValue['value'] / $vcMax) * 100) + (($this->quarterlyReferrals() / 3) * 100)) / 2;
+        $vendorCommunityScore = ((($vendorCommunityValue['value'] / $vcMax) * 100) + min(100, ($this->quarterlyReferrals() / 3) * 100)) / 2;
         $reviewsScore = ($this->googleRating() / 5) * 100;
         $endorsementsScore = ($this->endorsementsScore() / 4) * 100;
         $badgesDecoded = json_decode($this->badges ?? '[]', true);
@@ -612,7 +612,7 @@ class Vendor extends Authenticatable
     }
 
     public function quarterlyReferrals(){
-        return Vendor::where('ref_by', $this->id)->where('created_at', ">=", Carbon::now()->subMonths(4)->format('Y-m-d'))->count();
+        return Vendor::where('ref_by', $this->id)->where('created_at', ">=", Carbon::now()->subMonths(3)->format('Y-m-d'))->count();
     }
 
     public function vendorReferrals(){
@@ -620,7 +620,7 @@ class Vendor extends Authenticatable
     }
 
     public function endorsementsScore(){
-        return min(4, $this->endorsements()->distinct()->count('endorser'));
+        return min(4, $this->endorsements()->where('created_at', '>=', Carbon::now()->subDays(7))->distinct()->count('endorser'));
     }
 
     public function clientReferrals(){

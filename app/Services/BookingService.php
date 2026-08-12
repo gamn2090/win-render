@@ -16,7 +16,7 @@ class BookingService {
             return false;
         }
         $pairing = Pairing::create(
-            ['vendor_id' => $vendor->id, 'client_id' => $client->id, 'status' => 1, 'approved' => 1, 'vendor_type' => $vendor->type]
+            ['vendor_id' => $vendor->id, 'client_id' => $client->id, 'status' => 1, 'approved' => 1, 'vendor_type' => $vendor->type, 'main_connection' => true]
         );
 
         // An inquiry is about hiring the vendor for the wedding itself, so the
@@ -53,7 +53,7 @@ class BookingService {
         $pair = $client->pairingWith($vendor->id);
         if(!$pair){
             $pair = Pairing::create(
-                ['vendor_id' => $vendor->id, 'client_id' => $client->id, 'status' => 2, 'approved' => 1, 'vendor_type' => $vendor->type]
+                ['vendor_id' => $vendor->id, 'client_id' => $client->id, 'status' => 2, 'approved' => 1, 'vendor_type' => $vendor->type, 'main_connection' => true]
             );
         } else {
             $pair->setStatus(2);
