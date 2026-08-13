@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call(VendorTypesSeeder::class);
         $this->call(TagTypesSeeder::class);
+        $this->call(BadgeSeeder::class);
 
         $this->call(UsersAndVendorsSeeder::class);
 

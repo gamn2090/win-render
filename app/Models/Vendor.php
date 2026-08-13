@@ -682,6 +682,7 @@ class Vendor extends Authenticatable
 
     public function addView(){
         $this->storefront_views = $this->storefront_views + 1;
+        $this->storefront_views_month = $this->storefront_views_month + 1;
         $this->save();
     }
 
@@ -704,28 +705,40 @@ class Vendor extends Authenticatable
     }
 
     public function communityBuilderBadge(){
-        $totalConnectionsCount = Cache::remember('vendor_connections_count', 120, function () {
-            return VendorConnection::count();
+        // The top-15% cutoff must be sized against vendors of THIS vendor's
+        // own type (the population the leaderboard query below is actually
+        // ranking), not a global count of connections across every type —
+        // otherwise the cutoff is arbitrarily too generous or too strict
+        // depending on how big this type is relative to the whole system.
+        $totalVendorsOfType = Cache::remember('vendor_type_count_' . $this->type, 120, function () {
+            return Vendor::where('type', $this->type)->count();
         });
-        $top_15_percent = max(1, ceil($totalConnectionsCount * 0.15));
-        $connections = Cache::remember('last-3-months-connections-' . $this->type, 120, function () use ($top_15_percent) {
+        $top_15_percent = max(1, ceil($totalVendorsOfType * 0.15));
+        // All-time connection counts (no rolling window — despite the old cache
+        // key name implying "last 3 months," the query never filtered by date).
+        $connections = Cache::remember('top-connections-by-type-' . $this->type, 120, function () use ($top_15_percent) {
             return VendorConnection::where('approved', true)->where('aff_vendor_type', $this->type)
             ->select('aff_vendor', DB::raw('COUNT(*) AS cnt'))
             ->groupBy('aff_vendor')
             ->orderByRaw('COUNT(*) DESC')
             ->limit($top_15_percent)
             ->get();
-        }); 
-        foreach($connections->toArray() as $entry){
-            if($entry["aff_vendor"] == $this->id){
-                return true;
-            }
-        }
-        return false;
+        });
+        return $connections->contains(fn ($entry) => (int) $entry->aff_vendor === (int) $this->id);
     }
 
     public function trendingBadge(){
-        $above = Vendor::where('storefront_views', '>', $this->storefront_views)->count();
+        // storefront_views_month resets each calendar month (see
+        // vendors:recalculate-rankings), so this reflects recent momentum
+        // instead of a lifetime view count that only ever grows.
+        $myViews = (int) $this->storefront_views_month;
+        // A vendor with zero views this month can't be "trending" — without
+        // this guard, every dormant/new vendor tied at 0 would qualify
+        // whenever fewer than 15% of vendors have any views yet this month.
+        if ($myViews <= 0) {
+            return false;
+        }
+        $above = Vendor::where('storefront_views_month', '>', $myViews)->count();
         $totalCount = Cache::remember('vendors_count', 30, function () {
             return Vendor::count();
         });

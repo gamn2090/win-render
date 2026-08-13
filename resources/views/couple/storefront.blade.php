@@ -288,6 +288,9 @@
 
 @include('couple.partials.schedule-consultation-modal')
 @include('couple.partials.mark-booked-modal')
+@unless($hasPairing)
+  @include('couple.partials.inquiry-confirm-modal')
+@endunless
 
 <div id="vd-lightbox" class="vd-lightbox">
   <button type="button" class="vd-lightbox__close" data-modal-close aria-label="Close">&times;</button>
@@ -336,29 +339,7 @@
 
       var inquiryBtn = e.target.closest('#send-inquiry-btn');
       if (inquiryBtn) {
-        inquiryBtn.disabled = true;
-        inquiryBtn.textContent = 'Sending…';
-        fetch('{{ route('user.send.inquiry') }}', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': csrf },
-          body: JSON.stringify({ vendor_id: inquiryBtn.dataset.vendorId }),
-        })
-          .then(function (r) { return r.json(); })
-          .then(function (data) {
-            if (data.status) {
-              inquiryBtn.textContent = 'Inquiry Sent ✓';
-              if (data.has_conflict) {
-                WinToast.show('Heads up — this vendor already has something on their calendar on your wedding date. We\'ve let them know too, but they may not end up being available.', 'error');
-              }
-            } else {
-              inquiryBtn.textContent = 'Send Inquiry';
-              inquiryBtn.disabled = false;
-            }
-          })
-          .catch(function () {
-            inquiryBtn.textContent = 'Send Inquiry';
-            inquiryBtn.disabled = false;
-          });
+        openInquiryModal();
         return;
       }
 
@@ -441,6 +422,93 @@
         markBookedConfirmBtn.disabled = false;
       });
     });
+
+    // ——— Send Inquiry confirmation modal (3 steps: availability → price → send) ———
+    var inquiryModal = document.getElementById('vd-inquiry-modal');
+    var openInquiryModal = function () {};
+    if (inquiryModal) {
+      var inquiryNextBtn = document.getElementById('vd-inquiry-next');
+      var inquiryBackBtn = document.getElementById('vd-inquiry-back');
+      var inquiryStepBodies = inquiryModal.querySelectorAll('[data-inquiry-step]');
+      var inquiryAvailabilityIcon = document.getElementById('vd-inquiry-availability-icon');
+      var inquiryAvailabilityText = document.getElementById('vd-inquiry-availability-text');
+      var inquiryStep = 1;
+      var inquirySending = false;
+      var weddingDate = @json(!empty($user->wedding_date) ? \Carbon\Carbon::parse($user->wedding_date)->format('Y-m-d') : null);
+      var inquiryHasConflict = !!weddingDate && vendorBusyDates.indexOf(weddingDate) !== -1;
+
+      function showInquiryStep(step) {
+        inquiryStep = step;
+        // .vd-modal__body/.vd-modal__btn set `display` via class rules that
+        // out-specificity the [hidden] UA default, so drive visibility with
+        // an explicit inline style instead of the `hidden` attribute alone.
+        inquiryStepBodies.forEach(function (body) {
+          var isActive = parseInt(body.dataset.inquiryStep, 10) === step;
+          body.hidden = !isActive;
+          body.style.display = isActive ? '' : 'none';
+        });
+        inquiryBackBtn.hidden = step === 1;
+        inquiryBackBtn.style.display = step === 1 ? 'none' : '';
+        inquiryNextBtn.textContent = step === 3 ? 'Send Inquiry' : 'Continue';
+      }
+
+      openInquiryModal = function () {
+        if (inquiryHasConflict) {
+          inquiryAvailabilityIcon.textContent = '!';
+          inquiryAvailabilityText.textContent = 'This vendor already has something on their calendar on your wedding date. Would you like to continue anyway?';
+        } else {
+          inquiryAvailabilityIcon.textContent = '✓';
+          inquiryAvailabilityText.textContent = 'Good news — this vendor has nothing on their calendar for your wedding date yet.';
+        }
+        showInquiryStep(1);
+        openModal(inquiryModal);
+      };
+
+      inquiryBackBtn.addEventListener('click', function () {
+        if (inquiryStep > 1) showInquiryStep(inquiryStep - 1);
+      });
+
+      inquiryNextBtn.addEventListener('click', function () {
+        if (inquiryStep < 3) {
+          showInquiryStep(inquiryStep + 1);
+          return;
+        }
+        if (inquirySending) return;
+        inquirySending = true;
+        inquiryNextBtn.disabled = true;
+        var sendBtn = document.getElementById('send-inquiry-btn');
+        fetch('{{ route('user.send.inquiry') }}', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': csrf },
+          body: JSON.stringify({ vendor_id: sendBtn ? sendBtn.dataset.vendorId : null }),
+        })
+          .then(function (r) { return r.json(); })
+          .then(function (data) {
+            closeModal(inquiryModal);
+            if (data.status) {
+              if (sendBtn) {
+                sendBtn.textContent = 'Inquiry Sent ✓';
+                sendBtn.disabled = true;
+              }
+              if (data.has_conflict) {
+                WinToast.show('Heads up — this vendor already has something on their calendar on your wedding date. We\'ve let them know too, but they may not end up being available.', 'error');
+              } else {
+                WinToast.show('Inquiry sent!', 'success');
+              }
+            } else {
+              WinToast.show('Something went wrong, please try again.', 'error');
+            }
+          })
+          .catch(function () {
+            closeModal(inquiryModal);
+            WinToast.show('Something went wrong, please try again.', 'error');
+          })
+          .finally(function () {
+            inquirySending = false;
+            inquiryNextBtn.disabled = false;
+          });
+      });
+    }
 
     document.querySelectorAll('[data-vd-review-text]').forEach(function (textEl) {
       var toggle = textEl.nextElementSibling;

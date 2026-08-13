@@ -16,7 +16,7 @@ class KlaviyoService
      */
     public static function integrationsEnabled(): bool
     {
-        if (App::environment(['local', 'staging'])) {
+        if (App::environment(['development', 'staging'])) {
             return false;
         }
 
