@@ -721,23 +721,33 @@
   color: #6432c8;
 }
 
-/* Segmented status pills */
+/* Segmented status pills — stacked vertically (one stage per row) instead of
+   a horizontal chained bar. The chained version (negative margins + clip-path
+   arrows) could be wider than its grid cell, especially at 2-column mobile
+   width, and bled into the neighboring column; a stack never overflows
+   horizontally regardless of how many stages or how narrow the cell is. */
 .fc-stage-bar {
-  display: inline-flex;
+  display: flex;
+  flex-direction: column;
   align-items: stretch;
-  max-width: 100%;
+  width: 100%;
+  gap: 4px;
+  box-sizing: border-box;
 }
 
 .fc-stage-bar__pill {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
   padding: 5px 10px;
+  border-radius: 20px;
   font-size: 10px;
   font-weight: 600;
   line-height: 1.1;
   color: #fff;
   white-space: nowrap;
+  box-sizing: border-box;
 }
 
 .fc-stage-bar__pill--inquiry {
@@ -750,45 +760,6 @@
 
 .fc-stage-bar__pill--booked {
   background: #d45630;
-}
-
-.fc-stage-bar--single .fc-stage-bar__pill--inquiry {
-  border-radius: 20px;
-  padding: 5px 14px;
-}
-
-.fc-stage-bar--double .fc-stage-bar__pill--inquiry {
-  border-radius: 20px 0 0 20px;
-  padding-right: 12px;
-  clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 50%, calc(100% - 6px) 100%, 0 100%);
-  padding-right: 14px;
-}
-
-.fc-stage-bar--double .fc-stage-bar__pill--consult {
-  border-radius: 0 20px 20px 0;
-  margin-left: -4px;
-  padding-left: 12px;
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 6px 50%);
-}
-
-.fc-stage-bar--triple .fc-stage-bar__pill--inquiry {
-  border-radius: 20px 0 0 20px;
-  clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 50%, calc(100% - 6px) 100%, 0 100%);
-  padding-right: 14px;
-}
-
-.fc-stage-bar--triple .fc-stage-bar__pill--consult {
-  margin-left: -4px;
-  clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 50%, calc(100% - 6px) 100%, 0 100%, 6px 50%);
-  padding-left: 12px;
-  padding-right: 14px;
-}
-
-.fc-stage-bar--triple .fc-stage-bar__pill--booked {
-  border-radius: 0 20px 20px 0;
-  margin-left: -4px;
-  padding-left: 12px;
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 6px 50%);
 }
 
 @media (max-width: 639px) {

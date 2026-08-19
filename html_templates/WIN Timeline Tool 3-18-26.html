@@ -521,7 +521,7 @@
       border:0;background:transparent;cursor:pointer;font-size:18px;
       color:rgba(21,21,21,.55);line-height:1;padding:4px;
     }
-    .shareModalBody{padding:14px 18px;overflow-y:auto;flex:1 1 auto}
+    .shareModalBody{padding:14px 18px;overflow-y:auto;flex:1 1 auto;min-height:0}
     .shareSectionTitle{
       font-size:11px;letter-spacing:.1em;text-transform:uppercase;
       font-weight:860;color:rgba(21,21,21,.55);margin:14px 0 8px;
@@ -589,7 +589,6 @@
 <div class="footerActions" style="justify-content:flex-end">
 <button class="btn primary" id="exportBtn" type="button">Export</button>
         <button class="btn" id="shareBtn" type="button">Share</button>
-        <div id="sharePortal" class="sharePortal"></div>
 </div>
 </div>
 </div>
@@ -742,12 +741,22 @@
 </div>
 <div aria-live="polite" class="toast" id="toast" role="status"></div>
 </div>
+
+<!-- Direct body child (not nested inside a .card) — .card has
+     backdrop-filter, which creates a containing block that traps
+     position:fixed descendants, clipping the "portal" instead of letting it
+     cover the full viewport. Must also come before the main script tag
+     further down, since it looks this up with getElementById at parse time.
+     (Deliberately not spelling out that tag literally in this comment — the
+     controller's bridge-script injection does a naive first-match string
+     replace on that exact substring anywhere in the file, comments included.) -->
+<div id="sharePortal" class="sharePortal"></div>
 <script>
     const KEY_VENDOR_ID = "__KEYSTONE__"
 
     const state = {
-      dayStartMin: 10 * 60,
-      dayEndMin: 22 * 60,
+      dayStartMin: 7 * 60,
+      dayEndMin: 23 * 60,
       snapMin: 15,
 
       couple: {
@@ -1343,31 +1352,13 @@
             e.stopPropagation()
             beginDragResize(e, b.id, rowEl, "right")
           })
-          // Touch drag equivalents
-          block.addEventListener("touchstart", (e) => {
-            const isHandle = e.target && e.target.closest && e.target.closest("[data-resize]")
-            if(isHandle) return
-            e.preventDefault()
-            const touch = e.touches[0]
-            const startX = touch.clientX
-            const origStart = b.startMin, dur = b.endMin - b.startMin
-            const rect = rowEl.getBoundingClientRect()
-            let hasMoved = false
-            const onMove = (ev) => {
-              hasMoved = true
-              const cx = ev.touches[0].clientX
-              const clamped = clamp(roundToSnap(origStart + Math.round((cx - startX)/rect.width*totalWindow())), state.dayStartMin, state.dayEndMin - dur)
-              b.startMin = clamped; b.endMin = clamped + dur
-              document.querySelectorAll(`[data-block-id="${b.id}"]`).forEach(el => updateBlockEl(el, b))
-            }
-            const onEnd = () => {
-              document.removeEventListener("touchmove", onMove)
-              document.removeEventListener("touchend", onEnd)
-              if(hasMoved){ renderAll(); showToast("Moved") }
-            }
-            document.addEventListener("touchmove", onMove, { passive: false })
-            document.addEventListener("touchend", onEnd)
-          }, { passive: false })
+          // Touch drag equivalents — deliberately NOT registered on the block
+          // body itself (only on the thin resize handles below). The block
+          // fills most of the row's width, so a whole-block touchstart
+          // handler that calls preventDefault() hijacks the same horizontal
+          // gesture the row needs for native scroll-to-see-more, making the
+          // timeline effectively unscrollable on mobile. Repositioning a
+          // block on touch still works via the edit-block form.
           block.querySelector("[data-resize='left']").addEventListener("touchstart", (e) => {
             e.stopPropagation(); e.preventDefault()
             const startX = e.touches[0].clientX, origStart = b.startMin, origEnd = b.endMin
@@ -1533,6 +1524,16 @@
         notes:"",
         tasks:[]
       })
+
+      // Advance the form to start where this event just ended, so adding
+      // another event continues the day instead of defaulting back to the
+      // same start time that was just used.
+      const nextStart = formatTime(endMin)
+      if([...els.keyEventStart.options].some(o => o.value === nextStart)){
+        els.keyEventStart.value = nextStart
+        syncKeyEventEndTime()
+      }
+
       renderAll()
       showToast("Key event added")
     }
@@ -1575,6 +1576,16 @@
         notes:"",
         tasks:[]
       })
+
+      // Advance the form to start where this block just ended, so adding
+      // another block continues the day instead of defaulting back to the
+      // same start time that was just used.
+      const nextStart = formatTime(endMin)
+      if([...els.vendorBlockStart.options].some(o => o.value === nextStart)){
+        els.vendorBlockStart.value = nextStart
+        syncVendorBlockEndTime()
+      }
+
       renderAll()
       showToast("Vendor block added")
     }
@@ -1746,8 +1757,8 @@
       if(!confirm("This will remove all vendors, blocks, and events and reset the timeline window. Are you sure?")) return
       state.blocks = []
       state.vendors = []
-      state.dayStartMin = 10 * 60
-      state.dayEndMin   = 22 * 60
+      state.dayStartMin = 7 * 60
+      state.dayEndMin   = 23 * 60
       renderAll()
       showToast("Timeline reset")
     }
@@ -1785,7 +1796,7 @@ function exportPDF(){
           endMin: b.endMin,
           start: formatTime(b.startMin),
           end: formatTime(b.endMin),
-          label: b.title || "Key event",
+          label: b.eventName || "Key event",
           icon: b.icon || "◆",
           durationMin: Math.max(0, b.endMin - b.startMin)
         })
@@ -2142,8 +2153,8 @@ function exportPDF(){
       showToast("Window updated")
     }
     function resetWindow(){
-      state.dayStartMin = 10*60
-      state.dayEndMin = 22*60
+      state.dayStartMin = 7*60
+      state.dayEndMin = 23*60
       closeTimeWindowDrawer()
       renderAll()
       showToast("Window reset")
@@ -2421,6 +2432,5 @@ function exportPDF(){
     loadState()
     renderAll()
   </script>
-  
 </body>
 </html>

@@ -21,6 +21,16 @@
 
   $metrics = [
     [
+      'key' => 'reviews',
+      'label' => 'Reviews',
+      'legend' => 'Reviews',
+      'color' => '#ED9A47',
+      'nameColor' => '#ED9A47',
+      'description' => 'The quantity and overall rankings of your reviews.',
+      'tip' => 'Minimum of 25 reviews at 5 Stars.',
+      'weight' => '25% Total.',
+    ],
+    [
       'key' => 'client_community',
       'label' => 'Client Community',
       'legend' => 'Client Community',
@@ -28,7 +38,7 @@
       'nameColor' => '#5E34C1',
       'description' => 'The number of clients you invite to WIN and collaborate with.',
       'tip' => '3 new client invites & accounts established per month.',
-      'weight' => '30% Total - Cycles Monthly.',
+      'weight' => '25% Total - Cycles Monthly.',
     ],
     [
       'key' => 'vendor_community',
@@ -36,9 +46,9 @@
       'legend' => 'Vendor Community',
       'color' => '#627DF6',
       'nameColor' => '#627DF6',
-      'description' => 'The growth of your vendor network, the number of vendors you invite to WIN resulting in increased community engagement & collaboration.',
-      'tip' => '3 new vendor invites & accounts established. 1 Preferred Vendor added to your storefront from each category (21 total categories).',
-      'weight' => '25% Total - Cycles Quarterly.',
+      'description' => 'The growth of your vendor network — the vendors you collaborate with within the WIN community.',
+      'tip' => '1 point for every vendor added to your preferred vendors list. 20 points total to achieve a perfect score.',
+      'weight' => '20% Total - Cycles Every 6 Months.',
     ],
     [
       'key' => 'endorsements',
@@ -48,7 +58,7 @@
       'nameColor' => '#9B8BB8',
       'description' => 'The number of endorsements received from fellow vendors.',
       'tip' => '4 unique peer endorsements achieved.',
-      'weight' => '15% Total - Cycles Weekly.',
+      'weight' => '15% Total - Cycles Monthly.',
     ],
     [
       'key' => 'badges',
@@ -58,17 +68,7 @@
       'nameColor' => '#E6632B',
       'description' => 'Special achievements earned and displayed on your storefront.',
       'tip' => 'Achievement of 4 total badges (Community Builder, Early Adopter, Trending, and Fast Responder).',
-      'weight' => '10% Total.',
-    ],
-    [
-      'key' => 'reviews',
-      'label' => 'Reviews',
-      'legend' => 'Reviews',
-      'color' => '#ED9A47',
-      'nameColor' => '#ED9A47',
-      'description' => 'The quantity and overall rankings of your reviews.',
-      'tip' => 'Google reviews at 5 Stars.',
-      'weight' => '20% Total.',
+      'weight' => '15% Total.',
     ],
   ];
 

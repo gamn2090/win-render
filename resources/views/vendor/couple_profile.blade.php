@@ -22,21 +22,17 @@
       }
   }
 
-  $venueName = 'Name Of Venue';
-  $venueLocation = 'City, State';
+  $venueLocation = $client->wedding_location ?: 'City, State';
   $bioText = $client->bio ?? '';
 
-  if (preg_match('/Wedding venue:\s*([^,\n]+)(?:,\s*([^\n]+))?/i', $bioText, $venueMatch)) {
+  // Prefer the real wedding_venue_name column; fall back to the old
+  // "Wedding venue: X" bio-prefix hack for accounts that set it before the
+  // dedicated column existed.
+  $venueName = $client->wedding_venue_name;
+  if (! $venueName && preg_match('/Wedding venue:\s*([^,\n]+)/i', $bioText, $venueMatch)) {
       $venueName = trim($venueMatch[1]);
-      if (! empty($venueMatch[2])) {
-          $venueLocation = trim($venueMatch[2]);
-      } elseif ($client->wedding_location) {
-          $venueLocation = $client->wedding_location;
-      }
-  } elseif ($client->wedding_location) {
-      $venueName = $client->wedding_location;
-      $venueLocation = $client->wedding_location;
   }
+  $venueName = $venueName ?: 'Name Of Venue';
 
   $bookingWindow = $client->booking_date ?: '0-3 Months';
 

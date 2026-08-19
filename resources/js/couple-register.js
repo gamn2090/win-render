@@ -69,6 +69,8 @@ $(document).ready(function() {
         page -= 1;
         $('#btn-back').trigger('click');
         $('#btn-back').trigger('click');
+        $('#submit-spinner').css('display', 'none');
+        $('#btn-finish-setup').attr('disabled', false);
         $('#formErrors').html('');
         try {
             const payload = err.responseJSON || JSON.parse(err.responseText);
@@ -101,6 +103,16 @@ $(document).ready(function() {
           });
           return false;
         }
+      }
+      if (!$('#booking_date').val()) {
+        Swal.fire({
+          title: 'Oops!',
+          text: 'Please let us know when you\'re looking to book vendors.',
+          icon: 'error',
+          confirmButtonText: 'Retry',
+          confirmButtonColor: '#6432C8',
+        });
+        return false;
       }
       const password = $('#password_first').val();
       const passwordConfirmation = $('#password_confirmation').val();
@@ -247,6 +259,7 @@ $(document).ready(function() {
           email: $("#new-email").val(),
           wedding_date: $("#client-wedding-date").val(),
           wedding_location: $("#client-venue").val(),
+          venue_name: $("#client-venue-name").val(),
           can_request: +$("#hs-allow-contact").is(':checked'),
           vt: vt,
           bio: $("#user-bio").val(),
@@ -267,10 +280,12 @@ $(document).ready(function() {
             uploadImage(userData);
           },
           error: function(err){
-            
+
             page -= 1;
             $("#btn-back").trigger("click");
             $("#btn-back").trigger("click");
+            $('#submit-spinner').css('display', 'none');
+            $('#btn-finish-setup').attr('disabled', false);
             let messages = JSON.parse(err.responseText)["errors"];
             console.log(typeof messages);
             $("#formErrors").html('');
@@ -291,6 +306,7 @@ $(document).ready(function() {
           email: $("#new-email").val(),
           wedding_date: $("#client-wedding-date").val(),
           wedding_location: $("#client-venue").val(),
+          venue_name: $("#client-venue-name").val(),
           can_request: +$("#hs-allow-contact").is(':checked'),
           vt: vt,
           bio: $("#user-bio").val(),

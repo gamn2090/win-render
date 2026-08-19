@@ -2149,50 +2149,6 @@ body[data-mode="done"] .cardBody{background:rgba(100,50,200,.04) !important;}
   }
   render();
 
-  // ── Export dropdown ──────────────────────────────────────
-  const _exportBtn  = document.getElementById("exportBtn");
-  const _exportMenu = document.getElementById("exportMenu");
-  _exportBtn?.addEventListener("click", e => { e.stopPropagation(); _exportMenu?.classList.toggle("open"); });
-  document.addEventListener("click", () => _exportMenu?.classList.remove("open"));
-
-  document.getElementById("printBtn")?.addEventListener("click", () => {
-    _exportMenu?.classList.remove("open"); window.print();
-  });
-
-  function exportCSV() {
-    const total = parseMoney(state.totalBudget);
-    const rows  = pctToRows().filter(r => r.isActive);
-    const bookedTotal = rows.reduce((s,r) => s + r.spent, 0);
-    let csv = "WIN Wedding Investment Planner\n";
-    csv += `Total Budget,${total}\nTotal Booked,${bookedTotal}\nRemaining,${total-bookedTotal}\n\n`;
-    csv += "Category,Allocation %,Planned,Spent,Remaining\n";
-    rows.forEach(r => {
-      csv += `"${r.label}",${(Math.round(r.pct*10)/10).toFixed(1)}%,${Math.round(r.planned)},${Math.round(r.spent)},${Math.round(r.remaining)}\n`;
-    });
-    const blob = new Blob([csv], {type:"text/csv;charset=utf-8;"});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href=url; a.download="win-wedding-budget.csv";
-    document.body.appendChild(a); a.click(); document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-    toast("CSV downloaded ✓"); _exportMenu?.classList.remove("open");
-  }
-  document.getElementById("csvBtn")?.addEventListener("click", exportCSV);
-
-  function copySummary() {
-    const total = parseMoney(state.totalBudget);
-    const rows  = pctToRows().filter(r => r.isActive);
-    const bookedTotal = rows.reduce((s,r) => s + r.spent, 0);
-    let text = `WIN Wedding Investment Planner\n${"-".repeat(38)}\n`;
-    text += `Total Budget:  ${fmtMoney(total)}\nBooked So Far: ${fmtMoney(bookedTotal)}\nRemaining:     ${fmtMoney(total-bookedTotal)}\n\nCategory Breakdown:\n`;
-    rows.forEach(r => {
-      text += `  ${r.label.padEnd(24)}${(Math.round(r.pct*10)/10).toFixed(1).padStart(5)}%  ${fmtMoney(r.planned)}\n`;
-    });
-    navigator.clipboard?.writeText(text).then(() => toast("Copied ✓")).catch(() => toast("Copy failed"));
-    _exportMenu?.classList.remove("open");
-  }
-  document.getElementById("copyBtn")?.addEventListener("click", copySummary);
-
   // Always land at the top of the tool with the "About this tool" guide in
   // view — never mid-scroll into the wizard/results. The guide itself
   // already defaults to expanded (no .collapsed class in the markup and

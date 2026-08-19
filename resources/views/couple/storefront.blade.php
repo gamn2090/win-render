@@ -595,6 +595,25 @@
       renderCalendar();
     });
 
+    // Arriving from "Schedule Consultation" in the message view — open the
+    // modal automatically instead of making the couple click again.
+    if (new URLSearchParams(window.location.search).get('openConsultation') === '1') {
+      pendingScheduleVendorId = {{ $vendor->id }};
+      selectedDate = null;
+      calendarViewDate = new Date();
+      scheduleConfirmBtn.disabled = true;
+      var deepLinkBusyWarningEl = document.getElementById('vd-calendar-busy-warning');
+      if (deepLinkBusyWarningEl) deepLinkBusyWarningEl.hidden = true;
+      renderCalendar();
+      openModal(scheduleModal);
+
+      // Strip the flag from the URL so a reload (e.g. after submitting the
+      // request below) doesn't keep reopening the modal on every load.
+      var cleanUrl = new URL(window.location.href);
+      cleanUrl.searchParams.delete('openConsultation');
+      window.history.replaceState({}, '', cleanUrl.toString());
+    }
+
     scheduleConfirmBtn.addEventListener('click', function () {
       if (!selectedDate || !pendingScheduleVendorId) return;
 

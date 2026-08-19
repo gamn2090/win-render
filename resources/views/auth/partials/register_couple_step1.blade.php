@@ -50,6 +50,25 @@
                     </div>
                 </div>
 
+                <div class="join-us-couple-form-row">
+                    <div class="join-us-couple-form-col">
+                        <label for="client-venue-name" class="join-us-vendor-label join-us-couple-label">Wedding Venue Name</label>
+                        <input id="client-venue-name" type="text" class="join-us-vendor-input" placeholder="E.g. Evergreen Hall" autocomplete="off">
+                    </div>
+                    <div class="join-us-couple-form-col">
+                        <label for="booking_date" class="join-us-vendor-label join-us-couple-label">Looking To Book Vendors Within <span class="req">*</span></label>
+                        <div class="join-us-vendor-field-control join-us-vendor-field-control--select">
+                            <select id="booking_date" name="booking_date" class="join-us-vendor-input">
+                                <option value="" selected disabled>Select a timeframe</option>
+                                <option value="0-3 Months">0-3 Months</option>
+                                <option value="3-6 Months">3-6 Months</option>
+                                <option value="6-12 Months">6-12 Months</option>
+                                <option value="12+ Months">12+ Months</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="join-us-couple-form-row join-us-couple-form-row--full">
                     <div class="join-us-couple-form-col">
                         <label for="new-email" class="join-us-vendor-label join-us-couple-label">Email <span class="req">*</span></label>

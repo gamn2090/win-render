@@ -20,13 +20,18 @@ class RecalculateVendorRankings extends Command
 
     public function handle(VendorService $vendorService): int
     {
-        // Trending is meant to reflect "this month" — reset the monthly
-        // counter before recalculating badges, so the 1st of the month
-        // starts everyone fresh instead of comparing against last month's
-        // accumulated views.
+        // Reset cyclical badge counters BEFORE recalculating, so today's/this
+        // week's activity isn't compared against a stale prior-period count.
         if (now()->day === 1) {
             Vendor::query()->update(['storefront_views_month' => 0]);
         }
+        // Trending badge: recalculates weekly.
+        if (now()->isMonday()) {
+            Vendor::query()->update(['storefront_views_week' => 0]);
+        }
+        // Fast Responder badge: an ongoing daily cycle — a vendor who stops
+        // responding within 24h loses it the next day until they qualify again.
+        Vendor::query()->update(['fast_responses_today' => 0]);
 
         $count = 0;
 

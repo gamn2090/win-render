@@ -541,7 +541,55 @@ JS,
             $html
         );
 
+        $html = self::applyDownloadPdfPatch($html);
+
         return WinPlanningToolEnglishUi::appendInvestmentPlannerOverrides($html);
+    }
+
+    /**
+     * The "Print / PDF" export option only ever called window.print() (the
+     * browser's native print dialog on the live page) — no actual PDF file
+     * was ever produced or downloaded, and the chart/graph wasn't guaranteed
+     * to render sensibly through arbitrary print CSS. Point it at the real
+     * server-rendered PDF (App\Support\InvestmentPlannerPdfBuilder) instead,
+     * via the pdfUrl the controller injects into window.__WIN_PLANNER_BRIDGE__.
+     * There are two duplicate wiring blocks in the raw template (an earlier
+     * and a later export-menu implementation); both must be patched.
+     */
+    private static function applyDownloadPdfPatch(string $html): string
+    {
+        $html = str_replace(
+            '<button class="exportOption" id="printBtn" type="button">🖨️ Print / PDF</button>',
+            '<button class="exportOption" id="printBtn" type="button">⬇️ Download PDF</button>',
+            $html
+        );
+
+        $html = str_replace(
+            '  $("#printBtn")?.addEventListener("click", ()=>{
+    exportMenu?.classList.remove("open");
+    window.print();
+  });',
+            '  $("#printBtn")?.addEventListener("click", ()=>{
+    exportMenu?.classList.remove("open");
+    const pdfUrl = (window.__WIN_PLANNER_BRIDGE__||{}).pdfUrl;
+    if(pdfUrl){ window.location.href = pdfUrl; } else { window.print(); }
+  });',
+            $html
+        );
+
+        $html = str_replace(
+            '  document.getElementById("printBtn")?.addEventListener("click", () => {
+    _exportMenu?.classList.remove("open"); window.print();
+  });',
+            '  document.getElementById("printBtn")?.addEventListener("click", () => {
+    _exportMenu?.classList.remove("open");
+    const pdfUrl = (window.__WIN_PLANNER_BRIDGE__||{}).pdfUrl;
+    if(pdfUrl){ window.location.href = pdfUrl; } else { window.print(); }
+  });',
+            $html
+        );
+
+        return $html;
     }
 
     /**

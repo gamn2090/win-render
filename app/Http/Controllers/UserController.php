@@ -120,21 +120,17 @@ class UserController extends Controller
             }
         }
 
-        $venueName = 'Name of Venue';
-        $venueLocation = 'City, State';
+        $venueLocation = $user->wedding_location ?: 'City, State';
         $bioText = $user->bio ?? '';
 
-        if (preg_match('/Wedding venue:\s*([^,\n]+)(?:,\s*([^\n]+))?/i', $bioText, $venueMatch)) {
+        // Prefer the real wedding_venue_name column; fall back to the old
+        // "Wedding venue: X" bio-prefix hack for accounts that set it before
+        // the dedicated column existed.
+        $venueName = $user->wedding_venue_name;
+        if (!$venueName && preg_match('/Wedding venue:\s*([^,\n]+)/i', $bioText, $venueMatch)) {
             $venueName = trim($venueMatch[1]);
-            if (!empty($venueMatch[2])) {
-                $venueLocation = trim($venueMatch[2]);
-            } elseif ($user->wedding_location) {
-                $venueLocation = $user->wedding_location;
-            }
-        } elseif ($user->wedding_location) {
-            $venueName = $user->wedding_location;
-            $venueLocation = $user->wedding_location;
         }
+        $venueName = $venueName ?: 'Name of Venue';
 
         $bioWithoutVenue = trim(preg_replace('/Wedding venue:.*$/im', '', $bioText));
 

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\CoupleInvestmentPlannerDraft;
+use App\Support\InvestmentPlannerPdfBuilder;
 use App\Support\WinInvestmentPlannerHtmlPatcher;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class CoupleInvestmentPlannerController extends Controller
@@ -42,6 +44,7 @@ class CoupleInvestmentPlannerController extends Controller
             'draftPayload' => $draftPayload,
             'saveUrl' => route('couple.investment_planner.draft.save'),
             'clearUrl' => route('couple.investment_planner.draft.clear'),
+            'pdfUrl' => route('couple.investment_planner.download_pdf'),
         ];
 
         $bridgeScript = '<script>window.__WIN_PLANNER_BRIDGE__ = ' . json_encode($runtimeConfig, JSON_UNESCAPED_SLASHES) . ';(function(){const cfg=window.__WIN_PLANNER_BRIDGE__||{};const key=cfg.storageKey||"win_budget_builder_v99";const saveUrl=cfg.saveUrl;const clearUrl=cfg.clearUrl;const csrf=cfg.csrfToken;const draft=cfg.draftPayload;if(draft&&typeof draft==="string"){try{window.localStorage.setItem(key,draft);}catch(e){}}else{try{window.localStorage.removeItem(key);}catch(e){}}const nativeGet=window.localStorage.getItem.bind(window.localStorage);const nativeSet=window.localStorage.setItem.bind(window.localStorage);const nativeRemove=window.localStorage.removeItem.bind(window.localStorage);window.localStorage.getItem=function(k){return nativeGet(k)};window.localStorage.setItem=function(k,v){nativeSet(k,v);if(k!==key||!saveUrl){return;}fetch(saveUrl,{method:"POST",headers:{"Content-Type":"application/json","X-CSRF-TOKEN":csrf,"X-Requested-With":"XMLHttpRequest"},credentials:"same-origin",body:JSON.stringify({payload:v})}).catch(function(){});};window.localStorage.removeItem=function(k){nativeRemove(k);if(k!==key||!clearUrl){return;}fetch(clearUrl,{method:"POST",headers:{"Content-Type":"application/json","X-CSRF-TOKEN":csrf,"X-Requested-With":"XMLHttpRequest"},credentials:"same-origin"}).catch(function(){});};})();</script>';
@@ -72,6 +75,26 @@ class CoupleInvestmentPlannerController extends Controller
         CoupleInvestmentPlannerDraft::where('user_id', $request->user()->id)->delete();
 
         return response()->json(['cleared' => true]);
+    }
+
+    public function downloadPdf(Request $request)
+    {
+        $user = $request->user();
+        $draft = CoupleInvestmentPlannerDraft::where('user_id', $user->id)->first();
+        $state = $draft?->payload ? json_decode($draft->payload, true) : [];
+        $state = is_array($state) ? $state : [];
+
+        $partnerOne = trim($user->first_name . ' ' . ($user->last_name ?? ''));
+        $partnerTwo = trim(($user->fiance_first_name ?? '') . ' ' . ($user->fiance_last_name ?? ''));
+        $coupleName = $partnerTwo !== '' ? $partnerOne . ' ♥ ' . $partnerTwo : $partnerOne;
+
+        $pdfBytes = InvestmentPlannerPdfBuilder::build($state, $coupleName);
+        $fileName = Str::slug($coupleName ?: 'couple') . '-wedding-budget.pdf';
+
+        return response($pdfBytes, 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
+        ]);
     }
 }
 

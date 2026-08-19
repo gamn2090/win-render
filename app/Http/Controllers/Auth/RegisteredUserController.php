@@ -128,6 +128,7 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
             'wedding_date' => $request->wedding_date,
             'wedding_location' => $request->wedding_location,
+            'wedding_venue_name' => $request->venue_name,
             'bio' => $request->bio,
             'questions' => $request->questions,
             'booking_date' => $request->booking_date,
@@ -248,6 +249,7 @@ class RegisteredUserController extends Controller
         $user->fiance_last_name = $request->fiance_last_name;
         $user->wedding_date = $request->wedding_date;
         $user->wedding_location = $request->wedding_location;
+        $user->wedding_venue_name = $request->venue_name;
         $user->in_network = true;
         $user->bio = $request->bio;
         $user->booking_date = $request->booking_date;

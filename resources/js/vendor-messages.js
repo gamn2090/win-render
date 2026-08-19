@@ -193,6 +193,14 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>`;
     }
 
+    if (message.type === 'endorsement' && message.data) {
+      const data = message.data;
+      const types = Array.isArray(data.types) ? data.types.map(escapeHtml).join(', ') : '';
+      return `<div class="vm-message-view__system">
+        🌟 Congratulations! <strong>${escapeHtml(data.endorser_name)}</strong> endorsed you${types ? ` for: <strong>${types}</strong>` : ''}.
+      </div>`;
+    }
+
     if (message.type === 'consultation-request' && message.data) {
       const data = message.data;
       const resolution = data.meeting_uuid ? resolvedMeetings?.[data.meeting_uuid] : undefined;

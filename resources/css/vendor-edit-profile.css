@@ -610,6 +610,26 @@
     max-width: 100%;
   }
 
+  /* Flatpickr's own default stylesheet sizes each day cell with a fixed
+     pixel width (~39px x 7 columns), which doesn't shrink at narrow mobile
+     widths — the grid ends up wider than the card and gets clipped by
+     .vep-page's overflow-x:hidden. Force the grid to flex/percentage-based
+     sizing so it actually fits. */
+  .vep-select-wrap--calendar-inline .flatpickr-calendar.inline,
+  .vep-select-wrap--calendar-inline .flatpickr-innerContainer,
+  .vep-select-wrap--calendar-inline .flatpickr-rContainer,
+  .vep-select-wrap--calendar-inline .flatpickr-days,
+  .vep-select-wrap--calendar-inline .dayContainer {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .vep-select-wrap--calendar-inline .flatpickr-day {
+    max-width: none;
+    flex: 1 0 14.2857%;
+  }
+
   .vep-btn-save {
     max-width: 100%;
   }
@@ -749,23 +769,35 @@
 }
 
 .piu-item__cover-badge {
+  /* Full-width bar along the bottom instead of a top-left pill — that
+     shared the top row with the remove "X" (top-right), so long/scaled-down
+     text either got clipped or fought the button for space. A separate row
+     never overlaps the X regardless of thumbnail size or text length. */
   position: absolute;
-  top: 6px;
-  left: 6px;
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: 1;
-  padding: 2px 8px;
-  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 20px;
+  padding: 4px 6px;
   background: rgba(35, 31, 32, 0.75);
   color: #fff;
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.02em;
+  text-align: center;
+  line-height: 1.2;
+  box-sizing: border-box;
 }
 
 .piu-item__remove {
   position: absolute;
   top: 6px;
   right: 6px;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;

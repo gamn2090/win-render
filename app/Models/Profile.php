@@ -65,6 +65,27 @@ class Profile extends Model
         return;
     }
 
+    // Drag-to-reorder: only accepts a true permutation of the vendor's own
+    // existing images — never lets this endpoint add, drop, or substitute in
+    // a filename that isn't already theirs.
+    public function reorderImages(array $newOrder){
+        $current = $this->portfolioImages();
+        if (count($newOrder) !== count($current)) {
+            return false;
+        }
+        $sortedNewOrder = $newOrder;
+        sort($sortedNewOrder);
+        $sortedCurrent = $current;
+        sort($sortedCurrent);
+        if ($sortedNewOrder !== $sortedCurrent) {
+            return false;
+        }
+
+        $this->portfolio_images = json_encode(array_values($newOrder));
+        $this->save();
+        return true;
+    }
+
     public function getLink($name){
         switch ($name) {
             case 'facebook':

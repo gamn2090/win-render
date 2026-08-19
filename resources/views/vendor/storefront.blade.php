@@ -43,11 +43,9 @@
 
   $portfolioImages = $profile->portfolioImages();
   $coverImage = $portfolioImages[0] ?? null;
-  $galleryThumbs = array_slice(
-      array_values(array_filter($portfolioImages, static fn ($img) => $img !== $coverImage)),
-      0,
-      5
-  );
+  // Every image shows in the gallery now (no cap, no separate "View All")
+  // so the vendor can drag-reorder any of them directly on the page.
+  $galleryThumbs = array_values(array_filter($portfolioImages, static fn ($img) => $img !== $coverImage));
   $googleRating = (float) $vendor->googleRating();
   $googleRatingDisplay = $googleRating > 0 ? number_format($googleRating, 1) : null;
 
@@ -127,7 +125,7 @@
           @else
             <button type="button" id="connectBtn" class="vsf-profile__cta vsf-profile__cta--connect">
               <span class="vsf-profile__cta-icon" aria-hidden="true">♥</span>
-              Invite to Connect
+              Add as A Preferred Vendo
             </button>
           @endif
           <a
@@ -239,29 +237,43 @@
     @if($coverImage)
       <section id="vsf-photos" class="vsf-card">
         <h3 class="vsf-card__title">See My Work:</h3>
-        <p class="vsf-gallery__label">*Cover Photo</p>
-        <div class="vsf-gallery">
-          <div class="vsf-gallery__hero vsf-gallery__hero--cover">
+        <p class="vsf-gallery__label">*Cover Photo@if($isOwnStorefront) — drag any photo to reorder, drop it here to make it the cover@endif</p>
+        <div class="vsf-gallery" id="vsfPortfolioGallery">
+          <div class="vsf-gallery__hero vsf-gallery__hero--cover" @if($isOwnStorefront) draggable="true" data-image="{{ $coverImage }}" @endif>
             <img
               class="vsf-lightbox-trigger"
               src="{{ \App\Support\ProfileImageStorage::url($coverImage) }}"
               alt=""
               loading="lazy"
+              draggable="false"
             />
           </div>
-          @foreach($galleryThumbs as $index => $image)
-            <div class="vsf-gallery__thumb vsf-gallery__thumb--{{ $index + 1 }}">
-              <img
-                class="vsf-lightbox-trigger"
-                src="{{ \App\Support\ProfileImageStorage::url($image) }}"
-                alt=""
-                loading="lazy"
-              />
-              <button type="button" class="vsf-gallery__cover-btn set-cover-btn" value="{{ $image }}">Set as Cover</button>
-            </div>
-          @endforeach
+          <div class="vsf-gallery__thumbs">
+            @foreach($galleryThumbs as $image)
+              <div class="vsf-gallery__thumb" @if($isOwnStorefront) draggable="true" data-image="{{ $image }}" @endif>
+                <img
+                  class="vsf-lightbox-trigger"
+                  src="{{ \App\Support\ProfileImageStorage::url($image) }}"
+                  alt=""
+                  loading="lazy"
+                  draggable="false"
+                />
+                @if($isOwnStorefront)
+                  <button type="button" class="vsf-gallery__cover-btn set-cover-btn" value="{{ $image }}">Set as Cover</button>
+                @endif
+              </div>
+            @endforeach
+          </div>
         </div>
-        <button type="button" id="viewAllPortfolioImages" class="vsf-gallery__view-all">View All</button>
+        @if($isOwnStorefront)
+          <script>
+            window.vsfPortfolio = {
+              images: @json($portfolioImages),
+              isOwnStorefront: true,
+              storageBaseUrl: "{{ asset('storage/images') }}",
+            };
+          </script>
+        @endif
       </section>
     @endif
 
@@ -451,15 +463,6 @@
 <div id="vsf-lightbox" class="vsf-lightbox" aria-hidden="true">
   <button type="button" id="vsf-lightbox-close" class="vsf-lightbox__close" aria-label="Close">&times;</button>
   <img src="" alt="" />
-</div>
-
-<div id="vsf-lightbox-all" class="vsf-lightbox-all" aria-hidden="true">
-  <button type="button" id="vsf-lightbox-all-close" class="vsf-lightbox__close" aria-label="Close">&times;</button>
-  <div class="vsf-lightbox-all__grid">
-    @foreach($portfolioImages as $image)
-      <img src="{{ \App\Support\ProfileImageStorage::url($image) }}" alt="" loading="lazy" />
-    @endforeach
-  </div>
 </div>
 
 @includeWhen($isCouple, 'modals.check_date')

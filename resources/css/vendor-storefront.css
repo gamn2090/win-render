@@ -333,19 +333,21 @@
   color: #9ca3af;
 }
 
+/* Hero (cover) on the left, all remaining photos wrap in a wide-open grid to
+   the right — flex instead of a fixed hero+5-slot grid so it scales to any
+   photo count without a cap. */
 .vsf-gallery {
-  display: grid;
-  grid-template-columns: minmax(180px, 696.462px) repeat(3, minmax(100px, 226.67px));
-  grid-template-rows: repeat(2, minmax(120px, 340.005px));
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
   gap: 12px;
 }
 
 .vsf-gallery__hero {
-  grid-column: 1;
-  grid-row: 1 / span 2;
+  flex: 1 1 320px;
   width: 100%;
   max-width: 696.462px;
-  max-height: 696.462px;
+  aspect-ratio: 1 / 1;
 }
 
 .vsf-gallery__hero--cover img {
@@ -364,11 +366,17 @@
   cursor: pointer;
 }
 
+.vsf-gallery__thumbs {
+  flex: 2 1 480px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+  align-content: start;
+}
+
 .vsf-gallery__thumb {
   position: relative;
-  width: 100%;
-  max-width: 226.67px;
-  max-height: 340.005px;
+  aspect-ratio: 226.67 / 340.005;
 }
 
 .vsf-gallery__cover-btn {
@@ -396,26 +404,17 @@
   pointer-events: auto;
 }
 
-.vsf-gallery__thumb--1 { grid-column: 2; grid-row: 1; }
-.vsf-gallery__thumb--2 { grid-column: 3; grid-row: 1; }
-.vsf-gallery__thumb--3 { grid-column: 4; grid-row: 1; }
-.vsf-gallery__thumb--4 { grid-column: 2; grid-row: 2; }
-.vsf-gallery__thumb--5 { grid-column: 3; grid-row: 2; }
+.vsf-gallery__hero[draggable="true"],
+.vsf-gallery__thumb[draggable="true"] {
+  cursor: grab;
+}
 
-.vsf-gallery__view-all {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 16px;
-  padding: 10px 22px;
-  border: none;
-  border-radius: 40px;
-  background: #6432c8;
-  color: #fff;
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
+.vsf-gallery--dragging {
+  opacity: 0.4;
+}
+
+.vsf-gallery--drop-target img {
+  box-shadow: 0 0 0 3px #6432c8;
 }
 
 /* Preferred vendors section */
@@ -854,9 +853,9 @@
   border-radius: 0;
 }
 
-/* Lightbox */
-.vsf-lightbox,
-.vsf-lightbox-all {
+/* Lightbox (single-image click-to-enlarge — the gallery itself now shows
+   every photo directly, so there's no separate "view all" lightbox/grid). */
+.vsf-lightbox {
   display: none;
   position: fixed;
   inset: 0;
@@ -868,8 +867,7 @@
   box-sizing: border-box;
 }
 
-.vsf-lightbox.is-open,
-.vsf-lightbox-all.is-open {
+.vsf-lightbox.is-open {
   display: flex;
 }
 
@@ -877,23 +875,6 @@
   max-width: 100%;
   max-height: 90vh;
   border-radius: 12px;
-}
-
-.vsf-lightbox-all__grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-  max-height: 90vh;
-  overflow-y: auto;
-  width: 100%;
-  max-width: 960px;
-}
-
-.vsf-lightbox-all__grid img {
-  width: 100%;
-  height: auto;
-  border-radius: 12px;
-  object-fit: cover;
 }
 
 .vsf-lightbox__close {
@@ -934,26 +915,6 @@
   .vsf-pricing__card {
     padding-left: 16px;
     padding-right: 16px;
-  }
-
-  .vsf-gallery {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-    min-height: 0;
-  }
-
-  .vsf-gallery__hero {
-    grid-column: 1 / -1;
-    grid-row: auto;
-  }
-
-  .vsf-gallery__thumb--1,
-  .vsf-gallery__thumb--2,
-  .vsf-gallery__thumb--3,
-  .vsf-gallery__thumb--4,
-  .vsf-gallery__thumb--5 {
-    grid-column: auto;
-    grid-row: auto;
   }
 
   .vsf-vendors-grid,

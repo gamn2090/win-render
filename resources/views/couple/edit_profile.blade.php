@@ -103,6 +103,16 @@
         </div>
 
         <div class="vd-edit-field">
+          <label class="vd-edit-field__label">Looking To Book Vendors Within <span class="vd-edit-field__required">*</span></label>
+          <select name="booking_date" required>
+            <option value="" disabled {{ $user->booking_date ? '' : 'selected' }}>Select a timeframe</option>
+            @foreach(['0-3 Months', '3-6 Months', '6-12 Months', '12+ Months'] as $window)
+              <option value="{{ $window }}" @selected($user->booking_date === $window)>{{ $window }}</option>
+            @endforeach
+          </select>
+        </div>
+
+        <div class="vd-edit-field">
           <label class="vd-edit-field__label">Bio</label>
           <textarea name="bio" class="vd-edit-field__bio" placeholder="Share a bit about you both">{{ $bioText }}</textarea>
         </div>

@@ -691,6 +691,29 @@ class VendorController extends Controller
         }
         $vendor->endorsements()->where('endorser', $request->user()->id)->whereNotIn('type', $endorsements)->delete();
         Endorsement::upsert($newEndorsements, uniqueBy: ['endorser', 'type', 'vendor_id']);
+
+        if (! empty($newEndorsements)) {
+            $endorser = $request->user();
+            $typeNames = array_map(function ($row) {
+                $endorsementModel = new Endorsement();
+                $endorsementModel->type = $row['type'];
+                return $endorsementModel->typeName();
+            }, $newEndorsements);
+
+            // Vendor has no directMessageWith() convenience method (that only
+            // exists on User) — use its own getDirectMessagesWith()/
+            // createDirectMessageWith() pair instead.
+            $conversation = $endorser->getDirectMessagesWith($vendor) ?: $endorser->createDirectMessageWith($vendor);
+            Chat::message('Endorsement received')
+                ->type('endorsement')
+                ->data(['endorser_name' => $endorser->business_name, 'types' => $typeNames])
+                ->from($endorser)
+                ->to($conversation)
+                ->send();
+
+            \Illuminate\Support\Facades\Mail::to($vendor->email)
+                ->send(new \App\Mail\EndorsementReceived($vendor->business_name, $endorser->business_name, $typeNames));
+        }
     }
 
     //google link

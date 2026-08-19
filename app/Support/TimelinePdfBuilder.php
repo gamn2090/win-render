@@ -27,8 +27,8 @@ class TimelinePdfBuilder
      */
     public static function build(array $state, string $coupleName): string
     {
-        $dayStartMin = $state['dayStartMin'] ?? 10 * 60;
-        $dayEndMin = $state['dayEndMin'] ?? 22 * 60;
+        $dayStartMin = $state['dayStartMin'] ?? 7 * 60;
+        $dayEndMin = $state['dayEndMin'] ?? 23 * 60;
         $vendors = $state['vendors'] ?? [];
         $blocks = $state['blocks'] ?? [];
 
@@ -51,7 +51,7 @@ class TimelinePdfBuilder
                     'startMin' => $startMin,
                     'start' => self::formatTime($startMin),
                     'end' => self::formatTime($endMin),
-                    'label' => $block['title'] ?? 'Key event',
+                    'label' => $block['eventName'] ?? 'Key event',
                     'icon' => '◆',
                     'durationMin' => max(0, $endMin - $startMin),
                 ];

@@ -89,10 +89,13 @@ class ProfileController extends Controller
         // separate concepts — Wedding Location always comes straight from the
         // user's own wedding_location column, never from bio-parsing, so it
         // can't get blanked out just because no venue name was ever entered.
-        $venueName = '';
+        // Prefer the real wedding_venue_name column; fall back to the old
+        // "Wedding venue: X" bio-prefix hack for accounts that set it before
+        // the dedicated column existed.
+        $venueName = (string) ($user->wedding_venue_name ?? '');
         $bioText = $user->bio ?? '';
 
-        if (preg_match('/Wedding venue:\s*([^\n]+)/i', $bioText, $venueMatch)) {
+        if ($venueName === '' && preg_match('/Wedding venue:\s*([^\n]+)/i', $bioText, $venueMatch)) {
             $venueName = trim($venueMatch[1]);
             $bioText = trim(preg_replace('/Wedding venue:.*$/im', '', $bioText));
         }
@@ -257,14 +260,10 @@ class ProfileController extends Controller
         $bioText = trim((string) $request->input('bio'));
         $weddingLocation = trim(implode(', ', array_filter([$venueCity, $venueState])));
 
-        $bio = $bioText;
-        if ($venueName !== '') {
-            $bio = trim('Wedding venue: ' . $venueName . ($bioText !== '' ? "\n" . $bioText : ''));
-        }
-
         $request->user()->fill($request->except(['vt', 'q1', 'q2', 'q3', 'q4', 'venue_name', 'venue_city', 'venue_state', 'bio']));
         $request->user()->wedding_location = $weddingLocation;
-        $request->user()->bio = $bio;
+        $request->user()->wedding_venue_name = $venueName !== '' ? $venueName : null;
+        $request->user()->bio = $bioText;
         $request->user()->allow_vendor_contact = $request->boolean('allow_vendor_contact');
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
@@ -416,6 +415,19 @@ class ProfileController extends Controller
         }
         $request->user()->profile->setCoverImage($image_name);
         return ["status" => true];
+    }
+
+    public function reorderPortfolioImages(Request $request){
+        $user = $request->user();
+        if(!$user){
+            return 'unauthenticated';
+        }
+        $validated = $request->validate([
+            'order' => ['required', 'array'],
+            'order.*' => ['required', 'string'],
+        ]);
+        $ok = $request->user()->profile->reorderImages($validated['order']);
+        return ["status" => $ok];
     }
 
     public function findGooglePlace(Request $request){

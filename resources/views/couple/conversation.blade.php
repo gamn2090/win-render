@@ -56,7 +56,7 @@
             data-vendor-id="{{ $vendor->uuid }}"
             data-favorited="{{ $favorited ? '1' : '0' }}"
           >{{ $favorited ? 'Favorited ♥' : 'Add as Favorite' }}</button>
-          <a href="{{ route('profile.vendor', $vendor->uuid) }}" class="vd-chat-profile__btn">Schedule Consultation</a>
+          <a href="{{ route('profile.vendor', $vendor->uuid) }}?openConsultation=1" class="vd-chat-profile__btn">Schedule Consultation</a>
         </div>
       </aside>
 

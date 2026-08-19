@@ -175,6 +175,8 @@ Route::middleware('auth:vendor')->group(function () {
         ->name('vendor.remove.portfolio');
     Route::post('vendor/portfolio/cover', [ProfileController::class, 'setPortfolioCoverImage'])
         ->name('vendor.portfolio.cover');
+    Route::post('vendor/portfolio/reorder', [ProfileController::class, 'reorderPortfolioImages'])
+        ->name('vendor.portfolio.reorder');
     Route::post('/vendor/request/connection', [VendorController::class, 'createConnectionRequest'])->name('create.connect.request');
     Route::post('/vendor/pairing/answer', [VendorController::class, 'answerPairingRequest'])->name('pairing.request.answer');
 
@@ -278,6 +280,8 @@ Route::middleware('auth:web')->group(function () {
         ->name('couple.investment_planner.draft.save');
     Route::post('/couple/investment-planner/draft/clear', [CoupleInvestmentPlannerController::class, 'clearDraft'])
         ->name('couple.investment_planner.draft.clear');
+    Route::get('/couple/investment-planner/download-pdf', [CoupleInvestmentPlannerController::class, 'downloadPdf'])
+        ->name('couple.investment_planner.download_pdf');
 
     Route::get('/couple/timeline', [TimelineToolController::class, 'showCouple'])
         ->name('couple.timeline');

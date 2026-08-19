@@ -39,6 +39,7 @@ class User extends Authenticatable
         'password',
         'wedding_date',
         'wedding_location',
+        'wedding_venue_name',
         'fiance_first_name',
         'image',
         'fiance_last_name',
@@ -123,14 +124,20 @@ class User extends Authenticatable
     }
 
     public function bookedVendors(){
+        // firstKey/secondLocalKey were swapped (pairings.vendor_id compared
+        // against users.id, and pairings.client_id used as the vendor-side
+        // join key) — matched only by coincidental id overlap, so this
+        // silently returned wrong/empty results. Also scoped to actually-
+        // booked pairings (status 3), matching bookedVendorsCount() and
+        // every other "booked vendors" usage in the app.
         return $this->hasManyThrough(
             Vendor::class,
             Pairing::class,
-            'vendor_id', // Foreign key on the environments table...
-            'id', // Foreign key on the deployments table...
-            'id', // Local key on the projects table...
-            'client_id' // Local key on the environments table...
-        );
+            'client_id', // Foreign key on pairings referencing this user
+            'id', // Foreign key on vendors (its own primary key)
+            'id', // Local key on users (this model)
+            'vendor_id' // Local key on pairings referencing vendors
+        )->where('pairings.approved', true)->where('pairings.status', 3);
     }
 
     public function daysUntilWedding(){

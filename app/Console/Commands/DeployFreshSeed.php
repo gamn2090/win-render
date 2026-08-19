@@ -2,8 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Vendor;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 
 class DeployFreshSeed extends Command
@@ -30,6 +32,7 @@ class DeployFreshSeed extends Command
         if (DB::getDriverName() !== 'pgsql') {
             $this->call('migrate:fresh', ['--force' => true]);
             $this->call('db:seed', ['--force' => true]);
+            $this->resetDevVendorCredits();
 
             return self::SUCCESS;
         }
@@ -41,6 +44,7 @@ class DeployFreshSeed extends Command
             DB::select('select pg_advisory_lock(?)', [self::LOCK_KEY]);
             DB::select('select pg_advisory_unlock(?)', [self::LOCK_KEY]);
             $this->info('Done waiting; skipping migrate:fresh/db:seed for this instance.');
+            $this->resetDevVendorCredits();
 
             return self::SUCCESS;
         }
@@ -53,6 +57,25 @@ class DeployFreshSeed extends Command
             DB::select('select pg_advisory_unlock(?)', [self::LOCK_KEY]);
         }
 
+        $this->resetDevVendorCredits();
+
         return self::SUCCESS;
+    }
+
+    /**
+     * Not a real Laravel migration (those only ever run once, tracked in the
+     * migrations table) — this runs every deploy instead, since that's what
+     * was actually asked for: dev environments should always come back up
+     * with every vendor able to test contact-credit-gated features (Find
+     * Couples) without needing an active paid membership.
+     */
+    private function resetDevVendorCredits(): void
+    {
+        if (! App::environment('development')) {
+            return;
+        }
+
+        $count = Vendor::query()->update(['contact_credits' => 10]);
+        $this->info("Development environment — reset contact_credits to 10 for {$count} vendor(s).");
     }
 }

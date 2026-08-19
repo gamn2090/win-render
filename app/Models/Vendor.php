@@ -347,9 +347,13 @@ class Vendor extends Authenticatable
         if($lastMSG != null){
             foreach($lastMSG as $message){
                 if($message->messageable_id == $this->id && $message->is_sender == false){
-                    $first = Carbon::parse($message->created_at)->subHours(12);
-                    $second = Carbon::Now();
-                    if($first->lessThan($second)){
+                    // Fast Responder badge: "responded within 24 hours" — this
+                    // previously compared (received_at - 12h) against now(),
+                    // which is true for virtually any received_at in the past,
+                    // so almost every response was silently marked "fast"
+                    // regardless of actual elapsed time.
+                    $respondedWithin24Hours = Carbon::parse($message->created_at)->diffInHours(Carbon::now()) <= 24;
+                    if($respondedWithin24Hours){
                         $this->addResponse('fast');
                     } else{
                         $this->addResponse('slow');
@@ -527,13 +531,15 @@ class Vendor extends Authenticatable
         return $score;
     }
 
+    // Weights per "Change up to WIN Algorithm": client 25%, vendor 20%,
+    // endorsements 15%, badges 15%, reviews 25% (sums to 100%).
     public function updateAllRankingScores(){
         $communityValue = $this->clientCommunityRankValue();
         $communityScore = ($communityValue['value'] / max((int) $communityValue['max'], 1)) * 100;
         $vendorCommunityValue = $this->vendorCommunityRankValue();
-        $vcMax = max((int) $vendorCommunityValue['max'], 1);
-        $vendorCommunityScore = ((($vendorCommunityValue['value'] / $vcMax) * 100) + min(100, ($this->quarterlyReferrals() / 3) * 100)) / 2;
-        $reviewsScore = ($this->googleRating() / 5) * 100;
+        $vendorCommunityScore = ($vendorCommunityValue['value'] / max((int) $vendorCommunityValue['max'], 1)) * 100;
+        $reviewsValue = $this->reviewsRankValue();
+        $reviewsScore = ($reviewsValue['rating'] + $reviewsValue['quantity']) / 2;
         $endorsementsScore = ($this->endorsementsScore() / 4) * 100;
         $badgesDecoded = json_decode($this->badges ?? '[]', true);
         $badgesScore = ((is_array($badgesDecoded) ? count($badgesDecoded) : 0) / 4) * 100;
@@ -549,13 +555,13 @@ class Vendor extends Authenticatable
                     'badges' => $badgesScore,
                 ]
             );
-            $score = ($rankingModel->client_community * .30) + ($rankingModel->reviews * .20) + ($rankingModel->vendor_community * .25) + ($rankingModel->endorsements * .15) + ($rankingModel->badges * .10);
+            $score = ($rankingModel->client_community * .25) + ($rankingModel->reviews * .25) + ($rankingModel->vendor_community * .20) + ($rankingModel->endorsements * .15) + ($rankingModel->badges * .15);
         } catch (\Throwable $e) {
             Log::warning('VendorRanking updateOrCreate failed', [
                 'vendor_id' => $this->id,
                 'message' => $e->getMessage(),
             ]);
-            $score = ($communityScore * .30) + ($reviewsScore * .20) + ($vendorCommunityScore * .25) + ($endorsementsScore * .15) + ($badgesScore * .10);
+            $score = ($communityScore * .25) + ($reviewsScore * .25) + ($vendorCommunityScore * .20) + ($endorsementsScore * .15) + ($badgesScore * .15);
         }
 
         $this->score = $score;
@@ -576,22 +582,20 @@ class Vendor extends Authenticatable
         return $uniqueTypes;
     }
 
+    // Vendor Community: 1 point per vendor added to the preferred vendors
+    // list (VendorConnection row where this vendor is the host — the same
+    // action as clicking "Invite to Storefront"/"Invite to Connect", no
+    // acceptance from the other vendor required), 20 points = perfect score,
+    // rolling 6-month window ("cycles every 6 months").
     public function vendorCommunityRankValue(){
-        $currentConnections = $this->connections();
-        $uniqueTypes = [
-            "max" => 0,
-            "types" => [],
-            "value" => 0
+        $count = VendorConnection::where('host_vendor', $this->id)
+            ->where('created_at', '>=', Carbon::now()->subMonths(6))
+            ->count();
+
+        return [
+            'max' => 20,
+            'value' => max(0, min(20, $count)),
         ];
-        foreach($currentConnections->get() as $connection){
-            if(in_array($connection->type, $uniqueTypes["types"])){
-                continue;
-            }
-            array_push($uniqueTypes["types"], $connection->type);
-        }
-        $uniqueTypes["max"] = VendorTypes::count();
-        $uniqueTypes["value"] = count($uniqueTypes["types"]);
-        return $uniqueTypes;
     }
 
     public function googleRating(){
@@ -601,6 +605,25 @@ class Vendor extends Authenticatable
         }
 
         return (float) $profile->google_review_score;
+    }
+
+    public function googleReviewsCount(){
+        $profile = $this->profile;
+        if ($profile === null || $profile->google_reviews_count === null) {
+            return 0;
+        }
+
+        return (int) $profile->google_reviews_count;
+    }
+
+    // Reviews: blends rating quality with review volume so quantity actually
+    // matters, not just rating — perfect score needs 25 reviews at 5 stars.
+    // Each leg is already 0-100; updateAllRankingScores() averages them.
+    public function reviewsRankValue(){
+        return [
+            'rating' => ($this->googleRating() / 5) * 100,
+            'quantity' => min(100, ($this->googleReviewsCount() / 25) * 100),
+        ];
     }
 
     public function getReviews(){
@@ -619,8 +642,9 @@ class Vendor extends Authenticatable
         return Vendor::where('ref_by', $this->id)->count();
     }
 
+    // Peer Endorsements: rolling monthly window (was weekly).
     public function endorsementsScore(){
-        return min(4, $this->endorsements()->where('created_at', '>=', Carbon::now()->subDays(7))->distinct()->count('endorser'));
+        return min(4, $this->endorsements()->where('created_at', '>=', Carbon::now()->subMonths(1))->distinct()->count('endorser'));
     }
 
     public function clientReferrals(){
@@ -683,12 +707,14 @@ class Vendor extends Authenticatable
     public function addView(){
         $this->storefront_views = $this->storefront_views + 1;
         $this->storefront_views_month = $this->storefront_views_month + 1;
+        $this->storefront_views_week = $this->storefront_views_week + 1;
         $this->save();
     }
 
     public function addResponse($type){
         if($type == 'fast'){
             $this->fast_responses = $this->fast_responses + 1;
+            $this->fast_responses_today = $this->fast_responses_today + 1;
         } else{
             $this->slow_responses = $this->slow_responses + 1;
         }
@@ -704,41 +730,41 @@ class Vendor extends Authenticatable
         return $earnedBadgeModels;
     }
 
+    // Community Builder: top 25% of ALL vendors (not scoped by type) ranked
+    // by how many vendors they've referred to WIN via their unique referral
+    // link (vendors.ref_by), within a rolling 30-day window ("recycles
+    // monthly based on behaviors within that 30 days").
     public function communityBuilderBadge(){
-        // The top-15% cutoff must be sized against vendors of THIS vendor's
-        // own type (the population the leaderboard query below is actually
-        // ranking), not a global count of connections across every type —
-        // otherwise the cutoff is arbitrarily too generous or too strict
-        // depending on how big this type is relative to the whole system.
-        $totalVendorsOfType = Cache::remember('vendor_type_count_' . $this->type, 120, function () {
-            return Vendor::where('type', $this->type)->count();
+        $totalVendors = Cache::remember('vendors_count', 30, function () {
+            return Vendor::count();
         });
-        $top_15_percent = max(1, ceil($totalVendorsOfType * 0.15));
-        // All-time connection counts (no rolling window — despite the old cache
-        // key name implying "last 3 months," the query never filtered by date).
-        $connections = Cache::remember('top-connections-by-type-' . $this->type, 120, function () use ($top_15_percent) {
-            return VendorConnection::where('approved', true)->where('aff_vendor_type', $this->type)
-            ->select('aff_vendor', DB::raw('COUNT(*) AS cnt'))
-            ->groupBy('aff_vendor')
-            ->orderByRaw('COUNT(*) DESC')
-            ->limit($top_15_percent)
-            ->get();
+        $top_25_percent = max(1, ceil($totalVendors * 0.25));
+
+        $topReferrers = Cache::remember('top-referrers-30d', 120, function () use ($top_25_percent) {
+            return Vendor::whereNotNull('ref_by')
+                ->where('created_at', '>=', Carbon::now()->subDays(30))
+                ->select('ref_by', DB::raw('COUNT(*) AS cnt'))
+                ->groupBy('ref_by')
+                ->orderByRaw('COUNT(*) DESC')
+                ->limit($top_25_percent)
+                ->get();
         });
-        return $connections->contains(fn ($entry) => (int) $entry->aff_vendor === (int) $this->id);
+
+        return $topReferrers->contains(fn ($entry) => (int) $entry->ref_by === (int) $this->id);
     }
 
+    // Trending: top 15% of all vendors by profile (storefront) views,
+    // recalculated weekly — storefront_views_week resets every week (see
+    // vendors:recalculate-rankings).
     public function trendingBadge(){
-        // storefront_views_month resets each calendar month (see
-        // vendors:recalculate-rankings), so this reflects recent momentum
-        // instead of a lifetime view count that only ever grows.
-        $myViews = (int) $this->storefront_views_month;
-        // A vendor with zero views this month can't be "trending" — without
+        $myViews = (int) $this->storefront_views_week;
+        // A vendor with zero views this week can't be "trending" — without
         // this guard, every dormant/new vendor tied at 0 would qualify
-        // whenever fewer than 15% of vendors have any views yet this month.
+        // whenever fewer than 15% of vendors have any views yet this week.
         if ($myViews <= 0) {
             return false;
         }
-        $above = Vendor::where('storefront_views_month', '>', $myViews)->count();
+        $above = Vendor::where('storefront_views_week', '>', $myViews)->count();
         $totalCount = Cache::remember('vendors_count', 30, function () {
             return Vendor::count();
         });
@@ -751,17 +777,27 @@ class Vendor extends Authenticatable
         return false;
     }
 
+    // Early Adopter: vendors who joined within 3 months of RELAUNCH_DATE
+    // (config/badges.php). Never expires — created_at is immutable, so this
+    // evaluates the same way forever once earned (or never earned).
     public function earlyAdopterBadge(){
-        $first = Carbon::parse($this->created_at)->subMonths(6);
-        $second = Carbon::create(2024, 11, 29, 0, 0, 0, 'Europe/London');
-        if($first->lte($second)){
-            return true;
+        $relaunchDateRaw = config('badges.relaunch_date');
+        if (!$relaunchDateRaw) {
+            return false;
         }
-        return false;
+        $relaunch = Carbon::parse($relaunchDateRaw)->startOfDay();
+        $windowEnd = $relaunch->copy()->addMonths(3);
+        $joined = Carbon::parse($this->created_at);
+
+        return $joined->gte($relaunch) && $joined->lte($windowEnd);
     }
 
+    // Fast Responder: at least 5 messages/inquiries responded to within 24h,
+    // counted in fast_responses_today (see sendMessage() for how each
+    // response gets classified) — reset daily, so a vendor who stops
+    // responding quickly loses the badge until they qualify again.
     public function fastResponderBadge(){
-        return $this->fast_responses > $this->slow_responses;
+        return (int) $this->fast_responses_today >= 5;
     }
     
     public function preferredPricing(){
