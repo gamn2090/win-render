@@ -38,10 +38,41 @@ $(document).ready(function () {
 
   // Delegated (not bound once at load) since the gallery re-renders in place
   // after a reorder/cover change — new elements need these handlers too.
+  // The image list is read straight from the DOM at click time (not from
+  // window.vsfPortfolio, which only exists for the owner) so the carousel
+  // works for visitors browsing someone else's storefront too.
+  let vsfLightboxImages = [];
+  let vsfLightboxIndex = 0;
+
+  const vsfOpenLightboxAt = function (index) {
+    if (!vsfLightboxImages.length) return;
+    vsfLightboxIndex = (index + vsfLightboxImages.length) % vsfLightboxImages.length;
+    $('#vsf-lightbox img').attr('src', vsfLightboxImages[vsfLightboxIndex]);
+  };
+
   $(document).on('click', '.vsf-lightbox-trigger', function () {
-    const src = $(this).attr('src');
-    $('#vsf-lightbox img').attr('src', src);
+    vsfLightboxImages = $('#vsfPortfolioGallery .vsf-lightbox-trigger').map(function () {
+      return $(this).attr('src');
+    }).get();
+    vsfOpenLightboxAt(vsfLightboxImages.indexOf($(this).attr('src')));
     $('#vsf-lightbox').addClass('is-open').attr('aria-hidden', 'false');
+  });
+
+  $(document).on('click', '#vsf-lightbox-prev', function (event) {
+    event.stopPropagation();
+    vsfOpenLightboxAt(vsfLightboxIndex - 1);
+  });
+
+  $(document).on('click', '#vsf-lightbox-next', function (event) {
+    event.stopPropagation();
+    vsfOpenLightboxAt(vsfLightboxIndex + 1);
+  });
+
+  $(document).on('keydown', function (event) {
+    if (!$('#vsf-lightbox').hasClass('is-open')) return;
+    if (event.key === 'ArrowLeft') vsfOpenLightboxAt(vsfLightboxIndex - 1);
+    if (event.key === 'ArrowRight') vsfOpenLightboxAt(vsfLightboxIndex + 1);
+    if (event.key === 'Escape') $('#vsf-lightbox').removeClass('is-open').attr('aria-hidden', 'true');
   });
 
   $('#vsf-lightbox, #vsf-lightbox-close').on('click', function (event) {

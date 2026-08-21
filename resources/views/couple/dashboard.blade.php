@@ -5,9 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="csrf-token" content="{{ csrf_token() }}" />
   <title>WIN: Dashboard</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/intro.js@7.2.0/intro.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/intro.js@7.2.0/minified/introjs.min.css" rel="stylesheet">
   @vite(['resources/css/app.css', 'resources/css/vendor-dashboard.css'])
-  @vite(['resources/js/app.js', 'resources/js/chat-modal.js'])
+  @vite(['resources/js/app.js', 'resources/js/chat-modal.js', 'resources/js/couple-dashboard-tour.js'])
   @include('components.fonts')
+  @if(!empty($first_login))
+  <script>window.newUser = true;</script>
+  @endif
   <script>window.winChatModalMeta = { initials: {!! json_encode(\App\Support\AvatarPalette::initialsFor(Auth::guard('web')->user())) !!} };</script>
 </head>
 <body class="vd-page m-0 antialiased overflow-x-hidden">
@@ -36,9 +42,10 @@
       <button type="button" id="vd-savings-cta" class="vd-savings-banner" data-scroll-target="#vd-booked-savings">Start Saving by Booking Vendors</button>
 
       <p class="vd-greeting__sub">Here's what's happening with your Wedding Day Plan</p>
+      <button type="button" id="tutorial-btn" class="vd-tour-btn">Take a Tour</button>
     </header>
 
-    <section class="vd-stats vd-stats--5" aria-label="Key metrics">
+    <section class="vd-stats vd-stats--5" id="vd-stats-section" aria-label="Key metrics">
       <article class="vd-stat-card" style="--vd-stat-accent: #6432c8;">
         <div class="vd-stat-card__top">
           <span class="vd-stat-card__icon-wrap" style="background:#f0ebf9;">📅</span>
@@ -96,7 +103,7 @@
     </section>
 
     <section class="vd-duo" aria-label="Messages and appointments">
-      <article class="vd-card vd-card--feed">
+      <article class="vd-card vd-card--feed" id="vd-messages-card">
         <div class="vd-card__head">
           <h2 class="vd-card__title">Messages</h2>
           <a href="{{ route('client.inbox') }}" class="vd-card__link">View all →</a>
@@ -148,7 +155,7 @@
         </div>
       </article>
 
-      <article class="vd-card vd-card--feed">
+      <article class="vd-card vd-card--feed" id="vd-appointments-card">
         <div class="vd-card__head">
           <h2 class="vd-card__title">My Consultations Appointments</h2>
           <a href="{{ route('appointments.list') }}" class="vd-card__link">View all →</a>
@@ -183,7 +190,7 @@
     </section>
 
     <section class="vd-duo" aria-label="Planning and vendor status">
-      <div style="display:flex;flex-direction:column;gap:16px;">
+      <div id="vd-planning-tools" style="display:flex;flex-direction:column;gap:16px;">
         <h2 class="vd-tool-card__title" style="font-size:20px;">Your Wedding Planning Starts Here</h2>
 
         <article class="vd-tool-card vd-tool-card--investment">
@@ -212,7 +219,7 @@
         </article>
       </div>
 
-      <article class="vd-card vd-card--feed">
+      <article class="vd-card vd-card--feed" id="vd-vendor-status-card">
         <div class="vd-card__head">
           <h2 class="vd-card__title">Vendor Status</h2>
         </div>
@@ -255,7 +262,7 @@
       </article>
     </section>
 
-    <section class="vd-browse">
+    <section class="vd-browse" id="vd-wedding-team-section">
       <h2 class="vd-browse__title">Your Wedding Team</h2>
       <div class="vd-browse__divider" aria-hidden="true"></div>
       <div class="vd-browse__grid">
@@ -344,7 +351,7 @@
         </div>
       </article>
 
-      <div class="vd-promo vd-promo--refer">
+      <div class="vd-promo vd-promo--refer" id="vd-refer-promo">
         <h3 class="vd-promo__title">Connect with top vendors tailored to your needs</h3>
         <div class="vd-network-summary" style="padding:0;margin:12px 0;">
           <div class="vd-network-summary__avatars">

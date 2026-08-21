@@ -846,3 +846,81 @@
     grid-template-columns: repeat(3, 1fr);
   }
 }
+
+.vep-linked-google-business {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.vep-linked-google-business__photo {
+  display: block;
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 8px;
+}
+
+/* Google Business linking — multi-result picker */
+.place-results-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 360px;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+.place-result-card {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 2px solid #e5e0f2;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.place-result-card:hover {
+  border-color: #c7b8ea;
+  background: #faf9fd;
+}
+
+.place-result-card--selected {
+  border-color: #6432c8;
+  background: #f4f0fb;
+}
+
+.place-result-card__name {
+  margin: 0;
+  font-weight: 700;
+  color: #151515;
+}
+
+.place-result-card__meta {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: #6432c8;
+}
+
+.place-result-card__address {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: rgba(21, 21, 21, 0.6);
+}
+
+.place-result-card__check {
+  flex: 0 0 auto;
+  color: #6432c8;
+  font-weight: 700;
+  font-size: 18px;
+  visibility: hidden;
+}
+
+.place-result-card--selected .place-result-card__check {
+  visibility: visible;
+}

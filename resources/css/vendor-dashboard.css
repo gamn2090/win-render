@@ -210,6 +210,24 @@
   color: #6b7280;
 }
 
+.vd-tour-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 18px;
+  border: none;
+  border-radius: 71px;
+  background: #6432c8;
+  color: #fcf6f3;
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.vd-tour-btn:hover {
+  background: #52279f;
+}
+
 .vd-stats {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));

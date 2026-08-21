@@ -30,10 +30,23 @@ $( document ).ready(function() {
     });
   });
 
+  // Resets the modal back to the search step whenever it's opened or closed
+  // (the trigger button and the modal's close button both carry this
+  // attribute), so a vendor who closes it mid-pick always starts fresh.
+  $('body').on('click', '[data-hs-overlay="#link-google-place-modal"]', function () {
+    $('#results-place-section').addClass('hidden');
+    $('#find-place-section').removeClass('hidden');
+    $('#place-results-list').empty();
+    $('#no-results-msg').addClass('hidden');
+    $('#g-place-id').text('');
+    $('#confirm-place-btn').prop('disabled', true).addClass('opacity-50 cursor-not-allowed');
+  });
+
   $('body').on('click', '#business-search-btn', function(event) {
     let formData = {
       search: $('#google_business_name').val(),
     };
+    $('#business-search-btn').prop('disabled', true);
     $.ajax({
       type: "POST",
       headers: {
@@ -42,23 +55,85 @@ $( document ).ready(function() {
       url: "/vendor/business/search",
       data: formData,
       success: function (data) {
-        $("#find-place-section").toggleClass("hidden");
-        $("#confirm-place-section").toggleClass("hidden");
-        $("#place-name").text(data["places"][0]["displayName"]["text"]);
-        $("#place-link").attr("href", data["places"][0]["googleMapsUri"]);
-        $("#g-place-id").text(data["places"][0]["id"]);
-        if((data["places"][0]["formattedAddress"] != null) && (data["places"][0]["formattedAddress"] != "")){
-          $("#place-location-section").toggleClass("hidden");
-          $("#place-location").text(data["places"][0]["formattedAddress"]);
+        $('#business-search-btn').prop('disabled', false);
+
+        const places = (data && data["places"]) || [];
+        const $list = $('#place-results-list').empty();
+        $('#g-place-id').text('');
+        $('#confirm-place-btn').prop('disabled', true).addClass('opacity-50 cursor-not-allowed');
+
+        if (!places.length) {
+          $('#no-results-msg').removeClass('hidden');
+        } else {
+          $('#no-results-msg').addClass('hidden');
+
+          places.forEach(function (place) {
+            const name = (place.displayName && place.displayName.text) || 'Unnamed business';
+            const address = place.formattedAddress || '';
+            const category = place.primaryTypeDisplayName ? place.primaryTypeDisplayName.text : '';
+            const rating = place.rating;
+            const ratingCount = place.userRatingCount;
+
+            const $card = $('<div>')
+              .addClass('place-result-card')
+              .attr('data-place-id', place.id);
+
+            const $info = $('<div>').addClass('place-result-card__info');
+            $('<p>').addClass('place-result-card__name').text(name).appendTo($info);
+            if (category) {
+              $('<p>').addClass('place-result-card__meta').text(category).appendTo($info);
+            }
+            if (rating) {
+              const filled = Math.round(rating);
+              const stars = '★'.repeat(filled) + '☆'.repeat(5 - filled);
+              $('<p>').addClass('place-result-card__meta').text(stars + ' ' + rating + (ratingCount ? ' (' + ratingCount + ' reviews)' : '')).appendTo($info);
+            }
+            if (address) {
+              $('<p>').addClass('place-result-card__address').text(address).appendTo($info);
+            }
+
+            $card.append($info);
+            $('<span>').addClass('place-result-card__check').text('✓').appendTo($card);
+            $list.append($card);
+          });
         }
+
+        $("#find-place-section").addClass("hidden");
+        $("#results-place-section").removeClass("hidden");
+      },
+      error: function () {
+        $('#business-search-btn').prop('disabled', false);
+        Swal.fire({
+          title: 'Error',
+          text: 'Something went wrong searching for your business, please try again.',
+          icon: 'error',
+          confirmButtonColor: '#6432C8'
+        });
       }
     });
   });
 
+  $('body').on('click', '.place-result-card', function () {
+    $('.place-result-card').removeClass('place-result-card--selected');
+    $(this).addClass('place-result-card--selected');
+    $('#g-place-id').text($(this).data('placeId'));
+    $('#confirm-place-btn').prop('disabled', false).removeClass('opacity-50 cursor-not-allowed');
+  });
+
+  $('body').on('click', '#back-to-search-btn', function () {
+    $('#results-place-section').addClass('hidden');
+    $('#find-place-section').removeClass('hidden');
+  });
+
   $('body').on('click', '#confirm-place-btn', function(event) {
+    const placeId = $('#g-place-id').text();
+    if (!placeId) {
+      return;
+    }
     let formData = {
-      place_id: $('#g-place-id').text(),
+      place_id: placeId,
     };
+    $('#confirm-place-btn').prop('disabled', true);
     $.ajax({
       type: "POST",
       headers: {
@@ -74,21 +149,45 @@ $( document ).ready(function() {
           icon:  'success',
           confirmButtonText: 'Ok',
           confirmButtonColor: '#6432C8'
+        }).then(function () {
+          window.location.reload();
+        });
+      },
+      error: function () {
+        $('#confirm-place-btn').prop('disabled', false);
+        Swal.fire({
+          title: 'Error',
+          text: 'Could not link this business, please try again.',
+          icon: 'error',
+          confirmButtonColor: '#6432C8'
         });
       }
     });
   });
 
   $('body').on('click', '#unlink-place-btn', function(event) {
-    $.ajax({
-      type: "POST",
-      headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      },
-      url: "/vendor/business/unlink",
-      success: function (data) {
-        window.location.reload();
+    Swal.fire({
+      title: 'Unlink this business?',
+      text: "You'll stop showing its Google reviews until you link a business again.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Unlink',
+      confirmButtonColor: '#6432C8',
+      cancelButtonColor: '#d33'
+    }).then(function (result) {
+      if (!result.isConfirmed) {
+        return;
       }
+      $.ajax({
+        type: "POST",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url: "/vendor/business/unlink",
+        success: function (data) {
+          window.location.reload();
+        }
+      });
     });
   });
 

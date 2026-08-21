@@ -8,7 +8,7 @@
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
   <script>window.userID = {{ Auth::guard('vendor')->id() }};</script>
   @vite(['resources/css/app.css', 'resources/css/vendor-insights.css', 'resources/css/vendor-dashboard.css'])
-  @vite(['resources/js/app.js', 'resources/js/chat.js', 'resources/js/chat-modal.js'])
+  @vite(['resources/js/app.js', 'resources/js/chat.js', 'resources/js/chat-modal.js', 'resources/js/vendor-dashboard-tour.js'])
   @include('components.fonts')
   @if(!empty($data['first_login']))
   <script>window.newUser = true;</script>
@@ -95,9 +95,10 @@
     <header class="vd-greeting">
       <h1 class="vd-greeting__title">{{ $greeting }}, {{ $vendor->first_name }}</h1>
       <p class="vd-greeting__sub">Here's what's happening with your business today.</p>
+      <button type="button" id="tutorial-btn" class="vd-tour-btn">Take a Tour</button>
     </header>
 
-  <section class="vd-stats" aria-label="Key metrics">
+  <section class="vd-stats" id="vd-stats-section" aria-label="Key metrics">
     <article class="vd-stat-card" style="--vd-stat-accent: #6432c8;">
       <div class="vd-stat-card__top">
         <span class="vd-stat-card__icon-wrap" style="background:#f0ebf9;">👁️</span>
@@ -137,7 +138,7 @@
 
   <section class="vd-trio" aria-label="Overview cards">
     {{-- WINfluence --}}
-    <article class="vd-card">
+    <article class="vd-card" id="vd-winfluence-card">
       <div class="vd-card__head">
         <h2 class="vd-card__title">WINfluence Status</h2>
         <a href="{{ url('/vendor/insights') }}" class="vd-card__link">View Insights →</a>
@@ -229,7 +230,7 @@
     </article>
 
     {{-- Messages (replaces Inbox card on dashboard; nav still has Inbox) --}}
-    <article class="vd-card vd-card--feed">
+    <article class="vd-card vd-card--feed" id="vd-messages-card">
       <div class="vd-card__head">
         <h2 class="vd-card__title">Messages</h2>
         <a href="{{ route('vendor.inbox') }}" class="vd-card__link">View all →</a>
@@ -284,7 +285,7 @@
     </article>
 
     {{-- Appointments --}}
-    <article class="vd-card vd-card--feed">
+    <article class="vd-card vd-card--feed" id="vd-appointments-card">
       <div class="vd-card__head">
         <h2 class="vd-card__title">My Wedding Appointments</h2>
         @if($upcomingCount > 0)
@@ -325,7 +326,7 @@
     </article>
   </section>
 
-  <section class="vd-promo-row" aria-label="Promotions">
+  <section class="vd-promo-row" id="vd-promo-row" aria-label="Promotions">
     <div class="vd-promo vd-promo--refer">
       <h3 class="vd-promo__title">
         <span class="vd-promo__title-line">Refer vendors &amp; clients and</span>
@@ -349,7 +350,7 @@
   </section>
 
   <section class="vd-duo" aria-label="Clients and network">
-    <article class="vd-card">
+    <article class="vd-card" id="vd-clients-card">
       <div class="vd-card__head">
         <h2 class="vd-card__title">Current Clients</h2>
         <a href="{{ url('/vendor/client/list') }}" class="vd-card__link">View all →</a>
@@ -394,7 +395,7 @@
       </div>
     </article>
 
-    <article class="vd-card">
+    <article class="vd-card" id="vd-network-card">
       <div class="vd-card__head">
         <h2 class="vd-card__title">Vendor Network</h2>
         <a href="{{ url('/vendor/list') }}" class="vd-card__link">Explore →</a>
@@ -456,7 +457,7 @@
     </p>
   </section>
 
-  <section class="vd-tools" aria-label="Planning tools">
+  <section class="vd-tools" id="vd-tools-section" aria-label="Planning tools">
     <article class="vd-tool-card vd-tool-card--timeline">
       <div class="vd-tool-card__icon-wrap vd-tool-card__icon-wrap--purple" aria-hidden="true">
         <img class="vd-tool-card__icon" src="{{ $icons }}/page.png" alt="" />

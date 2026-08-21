@@ -125,7 +125,7 @@
           @else
             <button type="button" id="connectBtn" class="vsf-profile__cta vsf-profile__cta--connect">
               <span class="vsf-profile__cta-icon" aria-hidden="true">♥</span>
-              Add as A Preferred Vendo
+              Add as A Preferred Vendor
             </button>
           @endif
           <a
@@ -424,16 +424,27 @@
     @if($googleRatingDisplay)
       <section id="vsf-reviews" class="vsf-section">
         <div class="vsf-reviews__head">
-          <h3 class="vsf-reviews__summary">
-            <span class="vsf-reviews__star" aria-hidden="true">★</span>
-            {{ $googleRatingDisplay }} Rating
-            @if($profile->google_reviews_count > 0)
-              ({{ number_format($profile->google_reviews_count) }})
+          @if($profile->google_photo)
+            @if($profile->google_place_link)
+              <a href="{{ $profile->google_place_link }}" target="_blank" rel="noopener" class="vsf-reviews__google-photo-link">
+                <img src="{{ \App\Support\ProfileImageStorage::url($profile->google_photo) }}" alt="Google Business photo" class="vsf-reviews__google-photo" loading="lazy" />
+              </a>
+            @else
+              <img src="{{ \App\Support\ProfileImageStorage::url($profile->google_photo) }}" alt="Google Business photo" class="vsf-reviews__google-photo" loading="lazy" />
             @endif
-          </h3>
-          @if($profile->google_place_link)
-            <a href="{{ $profile->google_place_link }}" target="_blank" rel="noopener" class="vsf-reviews__see-all">See All</a>
           @endif
+          <div class="vsf-reviews__head-text">
+            <h3 class="vsf-reviews__summary">
+              <span class="vsf-reviews__star" aria-hidden="true">★</span>
+              {{ $googleRatingDisplay }} Rating
+              @if($profile->google_reviews_count > 0)
+                ({{ number_format($profile->google_reviews_count) }})
+              @endif
+            </h3>
+            @if($profile->google_place_link)
+              <a href="{{ $profile->google_place_link }}" target="_blank" rel="noopener" class="vsf-reviews__see-all">See All</a>
+            @endif
+          </div>
         </div>
         <div class="vsf-reviews__grid">
           @foreach($vendor->getReviews() as $review)
@@ -462,7 +473,9 @@
 
 <div id="vsf-lightbox" class="vsf-lightbox" aria-hidden="true">
   <button type="button" id="vsf-lightbox-close" class="vsf-lightbox__close" aria-label="Close">&times;</button>
+  <button type="button" id="vsf-lightbox-prev" class="vsf-lightbox__arrow vsf-lightbox__arrow--prev" aria-label="Previous photo">&#8249;</button>
   <img src="" alt="" />
+  <button type="button" id="vsf-lightbox-next" class="vsf-lightbox__arrow vsf-lightbox__arrow--next" aria-label="Next photo">&#8250;</button>
 </div>
 
 @includeWhen($isCouple, 'modals.check_date')

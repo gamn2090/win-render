@@ -119,7 +119,16 @@
                 <div class="join-us-vendor-field">
                     <div class="join-us-vendor-label join-us-vendor-label--inline">
                         Preferred Pricing
-                        <img src="{{ $questionIcon }}" alt="" class="join-us-vendor-help-icon" title="Discount offered to in-network couples">
+                        <div class="hs-tooltip inline-block">
+                            <div class="hs-tooltip-toggle">
+                                <img src="{{ $questionIcon }}" alt="" class="join-us-vendor-help-icon">
+                                <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity absolute invisible z-20 py-2 px-3 bg-black text-xs leading-relaxed font-medium text-white rounded-lg shadow-sm" role="tooltip" style="width: 320px; max-width: 80vw;">
+                                    Every vendor is encouraged to offer preferred pricing of up to $250 off, though this is not required and is entirely at the vendor's discretion. WIN vendors often choose to offer this incentive because it allows them to work with the right clients and encourages couples to book all their vendors through WIN. No other platform passes on savings and exclusive offers to couples like we do, which keeps us ahead of the competition and ensures our vendors stay busy with bookings. These cash incentives create a WIN-WIN for both couples and vendors.
+                                    <br><br>
+                                    Additionally, because WIN only charges a small, flat-rate fee for wedding businesses, the extra cost for a guaranteed booking remains well below typical expenses on other marketing platforms. In short, we suggest passing the savings on to you, but this decision is left to each vendor and their business model.
+                                </span>
+                            </div>
+                        </div>
                     </div>
                     <div class="join-us-vendor-pricing-grid">
                         @foreach([0, 50, 75, 100, 150, 200, 250] as $amount)

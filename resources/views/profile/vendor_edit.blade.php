@@ -259,9 +259,14 @@
                   @include('modals.link_place')
                 </x-large-modal>
               @else
-                <button class="vep-btn-orange vep-btn-orange--danger" type="button" id="unlink-place-btn">
-                  Remove Linked Business
-                </button>
+                <div class="vep-linked-google-business">
+                  @if($user->profile->google_photo)
+                    <img src="{{ \App\Support\ProfileImageStorage::url($user->profile->google_photo) }}" alt="" class="vep-linked-google-business__photo" />
+                  @endif
+                  <button class="vep-btn-orange vep-btn-orange--danger" type="button" id="unlink-place-btn">
+                    Remove Linked Business
+                  </button>
+                </div>
               @endif
             </div>
 

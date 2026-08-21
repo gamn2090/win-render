@@ -16,6 +16,7 @@ use App\Models\Meeting;
 use App\Models\Review;
 use App\Models\Tag;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Storage;
 use SKAgarwal\GoogleApi\PlacesNew\GooglePlaces;
 use App\Services\VendorService;
 use Illuminate\Support\Str;
@@ -440,13 +441,21 @@ class ProfileController extends Controller
             return 'Too many attempts!';
         }
 
-        $fields = ["places.displayName","places.id","places.formattedAddress","places.googleMapsUri"];
-        
+        $fields = [
+            "places.displayName",
+            "places.id",
+            "places.formattedAddress",
+            "places.googleMapsUri",
+            "places.rating",
+            "places.userRatingCount",
+            "places.primaryTypeDisplayName",
+        ];
+
         $textQuery = $request->search . " USA";
 
         $params = [
             "includePureServiceAreaBusinesses" => true,
-            "maxResultCount" => 1
+            "maxResultCount" => 5
         ];
 
         $response = GooglePlaces::make()->textSearch($textQuery, $fields, $params);
@@ -485,9 +494,13 @@ class ProfileController extends Controller
         $user->google_place_id = null;
         $user->save();
         $profile = $user->profile;
+        if ($profile->google_photo) {
+            Storage::disk('public')->delete('images/' . $profile->google_photo);
+        }
         $profile->google_review_score = null;
         $profile->google_reviews_count = null;
         $profile->google_place_link = null;
+        $profile->google_photo = null;
         $profile->save();
 
         return;

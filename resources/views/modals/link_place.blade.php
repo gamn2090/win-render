@@ -7,23 +7,22 @@
             Submit
         </button>
     </section>
-    <section id="confirm-place-section" class="hidden text-center">
-        <h3 class="subheading mb-4">Is this your business?</h3>
-        <p class="font-semibold text-lg mb-2">Business Name:</p>
-        <p id="place-name" class="mb-2"></p>
-        <p class="font-semibold text-lg mb-2">Link:</p>
-        <a id="place-link" href="#" target="_blank" class="underline text-win-blue">View Google Place</a>
-        <div id="place-location-section" class="hidden mt-2">
-            <p class="font-semibold text-lg mb-2">Location:</p>
-            <p id="place-location" class="mb-4"></p>
+
+    <section id="results-place-section" class="hidden">
+        <h3 class="subheading text-center mb-1">Which business is yours?</h3>
+        <p class="text-center mb-4">Select the listing that matches your business</p>
+
+        <div id="place-results-list" class="place-results-list"></div>
+        <p id="no-results-msg" class="hidden text-center text-gray-500 my-4">No matching businesses found. Try a different search.</p>
+
+        <div class="md:flex justify-center mt-6">
+            <button type="button" id="back-to-search-btn" class="bg-gray-300 uppercase text-gray-800 text-medium px-4 py-1 rounded-lg md:mr-4 mx-auto mb-2 md:mb-0">
+                Back
+            </button>
+            <button id="confirm-place-btn" type="button" disabled class="bg-win-blue uppercase text-white text-medium px-4 py-1 rounded-lg mx-auto opacity-50 cursor-not-allowed">
+                Confirm Match
+            </button>
         </div>
         <p id="g-place-id" class="hidden"></p>
-        <div class="md:flex justify-center mt-6">
-            <button type="button" aria-label="Close" data-hs-overlay="#link-google-place-modal" class="bg-win-red uppercase text-white text-medium px-4 py-1 rounded-lg md:mr-4 mx-auto">
-                Close
-            </button>
-            <button id="confirm-place-btn" type="button" class="bg-win-blue uppercase text-white text-medium px-4 py-1 rounded-lg mx-auto">
-                Confirm
-            </button>
     </section>
 </div>

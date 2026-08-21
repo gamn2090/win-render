@@ -6,7 +6,10 @@ use App\Models\Vendor;
 use App\Models\Inquiry;
 use App\Models\Review;
 use App\Models\TagType;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use SKAgarwal\GoogleApi\PlacesNew\GooglePlaces;
 
 class VendorService {
@@ -113,7 +116,7 @@ class VendorService {
         }
 
         try {
-            $fields = ["reviews", "rating", "userRatingCount", "googleMapsUri"];
+            $fields = ["reviews", "rating", "userRatingCount", "googleMapsUri", "photos"];
             $response = GooglePlaces::make()->placeDetails($vendor->google_place_id, $fields)->array();
         } catch (\Throwable $e) {
             Log::warning('syncGooglePlaceData: Google Places request failed', [
@@ -133,7 +136,48 @@ class VendorService {
         $profile->save();
 
         $this->refreshReviews($vendor, $response['reviews'] ?? null);
+        $this->syncPlacePhoto($vendor, $profile, $response['photos'] ?? null);
 
         return true;
+    }
+
+    /**
+     * Downloads the business's first Google photo (if any) and caches it in
+     * local storage alongside portfolio images, so the storefront doesn't
+     * depend on Google's short-lived signed photo URLs or spend an API call
+     * on every page view. Failures here shouldn't fail the whole sync since
+     * rating/review data already saved successfully by the time this runs.
+     */
+    private function syncPlacePhoto(Vendor $vendor, $profile, ?array $photos): void
+    {
+        $photoName = $photos[0]['name'] ?? null;
+        if (! $photoName) {
+            return;
+        }
+
+        try {
+            $media = GooglePlaces::make()->placePhoto($photoName, maxWidthPx: 800)->array();
+            $photoUri = $media['photoUri'] ?? null;
+            if (! $photoUri) {
+                return;
+            }
+
+            $bytes = Http::timeout(10)->get($photoUri)->body();
+            $filename = 'google-' . Str::random(40) . '.jpg';
+            Storage::disk('public')->put('images/' . $filename, $bytes);
+
+            $previous = $profile->google_photo;
+            $profile->google_photo = $filename;
+            $profile->save();
+
+            if ($previous && $previous !== $filename) {
+                Storage::disk('public')->delete('images/' . $previous);
+            }
+        } catch (\Throwable $e) {
+            Log::warning('syncGooglePlaceData: photo sync failed', [
+                'vendor_id' => $vendor->id,
+                'message' => $e->getMessage(),
+            ]);
+        }
     }
 }
