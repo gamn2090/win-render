@@ -39,7 +39,9 @@ export default defineConfig({
                 'resources/js/vendor-refer-client.js',
                 'resources/js/vendor-invite-vendor.js',
                 'resources/js/chat-modal.js',
-                'resources/js/vendor-calendar.js'
+                'resources/js/vendor-calendar.js',
+                'resources/js/vendor-dashboard-tour.js',
+                'resources/js/couple-dashboard-tour.js'
             ],
             refresh: true,
         }),
