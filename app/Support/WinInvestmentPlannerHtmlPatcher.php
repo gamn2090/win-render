@@ -248,10 +248,10 @@ class WinInvestmentPlannerHtmlPatcher
         state._allocManual.add(key);
         rebalanceTo100(o);
         renderResults(true); saveDraft();',
-            '      ${winPanel}
-      <div class="smallPrint">Lock a category to keep it fixed while others rebalance.</div>`;' => '      ${winPanel}
+            '      ${kpis}
+      <div class="donutWrap">' => '      ${kpis}
       ${buildSurplusPanel(total, spentTotal, activeRows)}
-      <div class="smallPrint">Lock a category to keep it fixed while others rebalance.</div>`;',
+      <div class="donutWrap">',
             '      state.allocPct = freshBaseAlloc();
       applyPrioritySkew();
       render();' => '      applyPrioritySkew();

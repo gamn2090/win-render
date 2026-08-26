@@ -52,7 +52,7 @@ class TimelinePdfBuilder
                     'start' => self::formatTime($startMin),
                     'end' => self::formatTime($endMin),
                     'label' => $block['eventName'] ?? 'Key event',
-                    'icon' => '◆',
+                    'icon' => self::iconFor($block['eventName'] ?? 'Key event'),
                     'durationMin' => max(0, $endMin - $startMin),
                 ];
                 continue;
@@ -60,7 +60,7 @@ class TimelinePdfBuilder
 
             $vendor = $vendorsById[$block['vendorId'] ?? null] ?? null;
             $category = trim($vendor['category'] ?? 'Vendor');
-            $icon = '•';
+            $icon = self::iconFor($category);
 
             $tasks = $block['tasks'] ?? [];
             usort($tasks, fn ($a, $b) => ($a['atMin'] ?? 0) <=> ($b['atMin'] ?? 0));
@@ -115,6 +115,21 @@ class TimelinePdfBuilder
         }
 
         return $match[1];
+    }
+
+    /**
+     * The browser-side "Download Timeline PDF" popup can show the couple's
+     * actual emoji picks since it's just a print window, but dompdf (a
+     * pure-PHP renderer used for the "Share" PDF) can't render color emoji —
+     * they come out as "?" tofu boxes. Rather than have the two PDFs show
+     * different icon sets, both paths use this same plain-letter badge so a
+     * shared PDF always matches a directly-downloaded one.
+     */
+    private static function iconFor(string $label): string
+    {
+        $trimmed = trim($label);
+
+        return $trimmed === '' ? '•' : mb_strtoupper(mb_substr($trimmed, 0, 1));
     }
 
     private static function formatTime(int $min): string

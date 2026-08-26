@@ -56,8 +56,15 @@ $(document).ready(function () {
           title: 'Get Matched with Vendors',
           intro: `Browse vendors tailored to your wedding — click through to find and connect with the right ones for you.`
         },
+        {
+          title: 'Update Your Profile',
+          intro: `Keep your wedding details up to date — your date, venue, and preferences help us match you with the right vendors. Click below to finish your profile now.`
+        },
       ],
-      buttonClass: 'rounded-lg bg-win-purple text-white py-1 px-3'
+      buttonClass: 'rounded-lg bg-win-purple text-white py-1 px-3',
+      doneLabel: 'Complete Profile'
+    }).oncomplete(function () {
+      window.location.href = '/profile/edit';
     });
   }
 

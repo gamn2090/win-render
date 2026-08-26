@@ -730,27 +730,21 @@ class Vendor extends Authenticatable
         return $earnedBadgeModels;
     }
 
-    // Community Builder: top 25% of ALL vendors (not scoped by type) ranked
-    // by how many vendors they've referred to WIN via their unique referral
-    // link (vendors.ref_by), within a rolling 30-day window ("recycles
-    // monthly based on behaviors within that 30 days").
+    // Community Builder: earned when the vendor has sent 3+ new client
+    // invites whose accounts were actually established — a real, approved,
+    // main-connection Pairing — within the current calendar month. Recycles
+    // monthly: a vendor must keep referring clients each month to retain it.
     public function communityBuilderBadge(){
-        $totalVendors = Cache::remember('vendors_count', 30, function () {
-            return Vendor::count();
-        });
-        $top_25_percent = max(1, ceil($totalVendors * 0.25));
+        $now = Carbon::now();
 
-        $topReferrers = Cache::remember('top-referrers-30d', 120, function () use ($top_25_percent) {
-            return Vendor::whereNotNull('ref_by')
-                ->where('created_at', '>=', Carbon::now()->subDays(30))
-                ->select('ref_by', DB::raw('COUNT(*) AS cnt'))
-                ->groupBy('ref_by')
-                ->orderByRaw('COUNT(*) DESC')
-                ->limit($top_25_percent)
-                ->get();
-        });
+        $newClientAccounts = Pairing::where('vendor_id', $this->id)
+            ->where('main_connection', true)
+            ->where('approved', true)
+            ->whereYear('created_at', $now->year)
+            ->whereMonth('created_at', $now->month)
+            ->count();
 
-        return $topReferrers->contains(fn ($entry) => (int) $entry->ref_by === (int) $this->id);
+        return $newClientAccounts >= 3;
     }
 
     // Trending: top 15% of all vendors by profile (storefront) views,

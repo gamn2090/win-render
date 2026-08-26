@@ -333,9 +333,8 @@
   color: #9ca3af;
 }
 
-/* Hero (cover) on the left, all remaining photos wrap in a wide-open grid to
-   the right — flex instead of a fixed hero+5-slot grid so it scales to any
-   photo count without a cap. */
+/* Hero (cover) on the left; up to 6 thumbs wrap in a 3-column grid to the
+   right — "View All" opens the overlay for the rest of the portfolio. */
 .vsf-gallery {
   display: flex;
   flex-wrap: wrap;
@@ -348,7 +347,7 @@
   flex: 1 1 320px;
   width: 100%;
   max-width: 696.462px;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 4 / 5;
 }
 
 .vsf-gallery__hero--cover img {
@@ -357,7 +356,8 @@
 }
 
 .vsf-gallery__hero img,
-.vsf-gallery__thumb img {
+.vsf-gallery__thumb img,
+.vsf-overlay-item img {
   display: block;
   width: 100%;
   height: 100%;
@@ -371,23 +371,65 @@
 }
 
 .vsf-gallery__hero img:hover,
-.vsf-gallery__thumb img:hover {
+.vsf-gallery__thumb img:hover,
+.vsf-overlay-item img:hover {
   transform: scale(1.08);
   z-index: 2;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
 }
 
+/* Up to 6 thumbs, portrait, 2 rows of 3. --vsf-thumb-h is set from JS to
+   half the cover photo's rendered height (vsfUpdateThumbHeightVar). */
 .vsf-gallery__thumbs {
   flex: 2 1 480px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 0;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: var(--vsf-thumb-h, 140px);
+  gap: 10px;
+  padding: 10px;
   align-content: start;
 }
 
 .vsf-gallery__thumb {
   position: relative;
-  aspect-ratio: 1 / 1;
+  height: 100%;
+  aspect-ratio: 3 / 4;
+  justify-self: center;
+}
+
+.vsf-gallery__view-all-btn {
+  display: block;
+  margin: 14px auto 0;
+  padding: 10px 24px;
+  border: 1.5px solid #6432c8;
+  border-radius: 999px;
+  background: #fff;
+  color: #6432c8;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.vsf-gallery__view-all-btn:hover {
+  background: #6432c8;
+  color: #fff;
+}
+
+/* "View All" overlay grid — every photo, draggable to reorder, click opens
+   the carousel, hover reveals the "Set as Cover" chip (same as the main
+   gallery's thumbs). */
+.vsf-overlay-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+  padding: 10px 0;
+}
+
+.vsf-overlay-item {
+  position: relative;
+  aspect-ratio: 3 / 4;
 }
 
 .vsf-gallery__cover-btn {
@@ -414,7 +456,8 @@
   transition: background 0.15s ease, opacity 0.15s ease;
 }
 
-.vsf-gallery__thumb:hover .vsf-gallery__cover-btn {
+.vsf-gallery__thumb:hover .vsf-gallery__cover-btn,
+.vsf-overlay-item:hover .vsf-gallery__cover-btn {
   opacity: 1;
   pointer-events: auto;
 }
@@ -424,7 +467,8 @@
 }
 
 .vsf-gallery__hero[draggable="true"],
-.vsf-gallery__thumb[draggable="true"] {
+.vsf-gallery__thumb[draggable="true"],
+.vsf-overlay-item[draggable="true"] {
   cursor: grab;
 }
 

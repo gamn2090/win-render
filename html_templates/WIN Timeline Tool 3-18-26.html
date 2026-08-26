@@ -138,6 +138,29 @@
     .taskRowHeader{display:grid; grid-template-columns:1.4fr 140px 110px; gap:10px; align-items:center; margin-top:10px; font-size:12px; color:rgba(21,21,21,.62); font-weight:860; letter-spacing:.10em; text-transform:uppercase}
     .taskRow{display:grid; grid-template-columns:1.4fr 140px 110px; gap:10px; align-items:center; margin-top:10px}
 
+    /* Below 640px there's no room for 3 columns side by side, so stack each
+       field under its own label instead of cramming Event/Start/End into one
+       row — .taskRowHeader and .taskRow become "display:contents" so their
+       children (the labels, the selects, the Add button) all flow as direct
+       items of .tasksPanel, and each gets an explicit order so they read
+       top-to-bottom as Event, [select], Start, [select], End, [select], Add. */
+    @media (max-width: 640px){
+      .tasksPanel{display:flex; flex-direction:column}
+      .taskRowHeader, .taskRow{display:contents}
+      .taskRowHeader > div{margin-top:10px}
+      .taskRowHeader > div:nth-child(1){order:1}
+      .taskRowHeader > div:nth-child(2){order:3}
+      .taskRowHeader > div:nth-child(3){order:5}
+      #keyEventPreset{order:2}
+      #keyEventStart{order:4}
+      #keyEventEnd{order:6}
+      #vendorBlockVendor{order:2}
+      #vendorBlockStart{order:4}
+      #vendorBlockEnd{order:6}
+      .taskRowSpacer{display:none}
+      .taskRow > div:last-child{order:7; margin-top:8px}
+    }
+
     .timelineHeader{padding:10px var(--padX) 0}
     .timelineHeaderRow{display:grid; grid-template-columns: var(--leftCol) 1fr; gap: var(--colGap); align-items:stretch}
     .timelineSpacer{height:44px; display:flex; align-items:center; gap:10px; padding-left:var(--padX)}
@@ -159,6 +182,13 @@
        ruler + rows scroll horizontally together (synced via JS) so blocks
        stay readable — swipe sideways instead of squinting. */
     @media (max-width: 1120px){
+      /* .card has overflow:hidden (for its rounded corners) at every width —
+         on some mobile browsers that combines badly with backdrop-filter and
+         clips a scrollable descendant's overflow instead of letting it
+         scroll, which is what was cropping the timeline. The inner
+         .timelineHeader/.rows elements are their own overflow-x:auto scroll
+         containers, so the card itself doesn't need to clip horizontally. */
+      .card{ overflow-x:visible; }
       .timelineHeader, .rows{ overflow-x:auto; -webkit-overflow-scrolling:touch; }
       .timelineHeaderRow{ grid-template-columns:1fr; width:max-content; min-width:100%; }
       .timelineSpacer{ display:none }
@@ -172,6 +202,7 @@
       }
       .rowLeft{ width:260px; max-width:60vw; box-sizing:border-box; }
       .rowRight{ width:720px; flex-shrink:0; }
+      .rowRight.keTimeline{ width:720px !important; }
       .rulerBar{ width:720px; }
     }
 
@@ -616,7 +647,7 @@
 <select id="keyEventEnd"></select>
 </div>
 <div class="taskRow" style="margin-top:8px">
-<div></div><div></div>
+<div class="taskRowSpacer"></div><div class="taskRowSpacer"></div>
 <div><button class="btn accent" id="addKeyEventBtn" type="button" style="width:100%">Add</button></div>
 </div>
 </div>
@@ -634,7 +665,7 @@
 <select id="vendorBlockEnd"></select>
 </div>
 <div class="taskRow" style="margin-top:8px">
-<div></div><div></div>
+<div class="taskRowSpacer"></div><div class="taskRowSpacer"></div>
 <div><button class="btn accent" id="addVendorBlockBtn" type="button" style="width:100%">Add</button></div>
 </div>
 </div>
@@ -1789,6 +1820,16 @@ function exportPDF(){
 
       const lines = []
 
+      // Icons here intentionally ignore the couple's emoji picks (state.icon /
+      // state.vendorIcons) and use a plain letter badge instead — this is the
+      // one icon representation dompdf can also render for the "Share" PDF
+      // (app/Support/TimelinePdfBuilder.php::iconFor), so a downloaded PDF
+      // and a shared PDF always show the same icons instead of drifting.
+      const iconFor = (label) => {
+        const trimmed = String(label || "").trim()
+        return trimmed ? trimmed.charAt(0).toUpperCase() : "•"
+      }
+
       // Key events as primary schedule lines (with durations)
       blocks.filter(b => b.vendorId === KEY_VENDOR_ID).forEach(b=>{
         lines.push({
@@ -1797,7 +1838,7 @@ function exportPDF(){
           start: formatTime(b.startMin),
           end: formatTime(b.endMin),
           label: b.eventName || "Key event",
-          icon: b.icon || "◆",
+          icon: iconFor(b.eventName || "Key event"),
           durationMin: Math.max(0, b.endMin - b.startMin)
         })
       })
@@ -1806,7 +1847,7 @@ function exportPDF(){
       blocks.filter(b => b.vendorId !== KEY_VENDOR_ID).forEach(b=>{
         const v = vendorsById[b.vendorId]
         const cat = (v?.category || "Vendor").trim()
-        const icon = (state.vendorIcons && state.vendorIcons[cat]) ? state.vendorIcons[cat] : "•"
+        const icon = iconFor(cat)
         const tasks = (b.tasks || []).slice().sort((x,y)=>x.atMin-y.atMin)
         tasks.forEach(t=>{
           if(t.atMin < state.dayStartMin || t.atMin > state.dayEndMin) return

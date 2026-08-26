@@ -235,9 +235,14 @@
     </section>
 
     @if($coverImage)
+      @php
+        // Main grid caps at 6 thumbs besides the cover; "View All" opens the
+        // overlay with every photo instead of overflowing the storefront.
+        $galleryThumbsCapped = array_slice($galleryThumbs, 0, 6);
+      @endphp
       <section id="vsf-photos" class="vsf-card">
         <h3 class="vsf-card__title">See My Work:</h3>
-        <p class="vsf-gallery__label">*Cover Photo@if($isOwnStorefront) — drag any photo to reorder, drop it here to make it the cover@endif</p>
+        <p class="vsf-gallery__label">*Cover Photo @if($isOwnStorefront)— drag any photo to reorder, drop it here to make it the cover @endif</p>
         <div class="vsf-gallery" id="vsfPortfolioGallery">
           <div class="vsf-gallery__hero vsf-gallery__hero--cover" @if($isOwnStorefront) draggable="true" data-image="{{ $coverImage }}" @endif>
             <img
@@ -249,7 +254,7 @@
             />
           </div>
           <div class="vsf-gallery__thumbs">
-            @foreach($galleryThumbs as $image)
+            @foreach($galleryThumbsCapped as $image)
               <div class="vsf-gallery__thumb" @if($isOwnStorefront) draggable="true" data-image="{{ $image }}" @endif>
                 <img
                   class="vsf-lightbox-trigger"
@@ -265,15 +270,29 @@
             @endforeach
           </div>
         </div>
-        @if($isOwnStorefront)
-          <script>
-            window.vsfPortfolio = {
-              images: @json($portfolioImages),
-              isOwnStorefront: true,
-              storageBaseUrl: "{{ asset('storage/images') }}",
-            };
-          </script>
-        @endif
+        <button type="button" id="vsfViewAllBtn" class="vsf-gallery__view-all-btn" data-hs-overlay="#vsf-gallery-overlay-modal">View All</button>
+
+        <div id="vsf-gallery-overlay-modal" class="hs-overlay hs-overlay-backdrop-open:bg-black/90 hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto pointer-events-none" role="dialog" tabindex="-1" aria-labelledby="vsf-gallery-overlay-modal-label">
+          <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all sm:max-w-4xl sm:w-full m-3 sm:mx-auto min-h-[calc(100%-3.5rem)] flex items-center">
+            <div class="w-full flex flex-col bg-white shadow-sm rounded-xl pointer-events-auto">
+              <div class="block bg-win-blue py-1 rounded-t-lg text-right">
+                <button id="vsf-gallery-overlay-modal-close-btn" class="text-white mx-3" type="button" aria-label="Close" data-hs-overlay="#vsf-gallery-overlay-modal"><i class="fa-solid fa-xmark"></i></button>
+              </div>
+              <div class="p-4 overflow-y-auto">
+                <p class="vsf-gallery__label">All Photos @if($isOwnStorefront)— drag any photo to reorder, drop it here to make it the cover @endif</p>
+                <div class="vsf-overlay-grid" id="vsfOverlayGrid"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <script>
+          window.vsfPortfolio = {
+            images: @json($portfolioImages),
+            isOwnStorefront: {{ $isOwnStorefront ? 'true' : 'false' }},
+            storageBaseUrl: "{{ asset('storage/images') }}",
+          };
+        </script>
       </section>
     @endif
 

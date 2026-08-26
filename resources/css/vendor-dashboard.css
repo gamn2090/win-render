@@ -953,8 +953,8 @@
    side in one row instead of wrapping and stacking on top of each other. */
 @media (max-width: 639px) {
   .vd-promo--refer {
-    flex-direction: column;
-    align-items: stretch;
+    justify-content: flex-start;
+    min-height: 0;
   }
 
   .vd-promo--refer .vd-promo__title {
@@ -3468,6 +3468,10 @@ button.vd-savings-banner {
   .vd-profile-banner__avatar {
     width: 80px;
     height: 80px;
+  }
+
+  .vd-profile-banner__avatar.win-avatar-fallback {
+    font-size: 26px;
   }
 }
 

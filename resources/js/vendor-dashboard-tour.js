@@ -68,8 +68,15 @@ $(document).ready(function () {
             <li><strong>WIN Wedding Investment Planner</strong>: a budgeting tool you can share with your clients.</li>
           </ul>`
         },
+        {
+          title: 'Update Your Profile',
+          intro: `The best way to start attracting couples is a complete profile — add your photos, pricing, and bio so you show up ready. Click below to finish yours now.`
+        },
       ],
-      buttonClass: 'rounded-lg bg-win-purple text-white py-1 px-3'
+      buttonClass: 'rounded-lg bg-win-purple text-white py-1 px-3',
+      doneLabel: 'Complete Profile'
+    }).oncomplete(function () {
+      window.location.href = '/vendor/profile';
     });
   }
 
