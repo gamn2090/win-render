@@ -645,8 +645,11 @@ class VendorController extends Controller
         ->checkout([
             'success_url' => route('vendor.dashboard', ['payment' => 'awaiting_confirmation']),
             'cancel_url' => route('vendor.dashboard'),
+            // No trial_period_days here on purpose — the trial length is
+            // configured on the Price itself in the Stripe Dashboard, so it
+            // stays the single source of truth instead of being overridden
+            // by a hardcoded value here.
             'subscription_data' => [
-              'trial_period_days' => 60,
               'trial_settings' => ['end_behavior' => ['missing_payment_method' => 'pause']],
             ],
             'payment_method_collection' => 'if_required',
