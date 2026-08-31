@@ -55,6 +55,11 @@ return [
             'STRIPE_CHECKOUT_SUCCESS_URL',
             'https://weddinginsidersnetwork.com/vendor/subscription/confirm/{CHECKOUT_SESSION_ID}'
         ),
+        // The vendor subscription's Stripe Price id — kept out of code since
+        // test-mode and live-mode Stripe accounts each have their own price
+        // ids for "the same" product (test mode was previously hardcoded to
+        // a live-only price id, which silently broke Checkout in test mode).
+        'vendor_price_id' => env('STRIPE_VENDOR_PRICE_ID'),
     ],
 
 ];

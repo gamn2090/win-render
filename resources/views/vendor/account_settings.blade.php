@@ -67,6 +67,17 @@
       </form>
     </section>
 
+    <section id="vd-billing-section" class="vd-edit-card vd-settings-section">
+      <h2 class="vd-settings-section__title">Billing &amp; Subscription</h2>
+      @if($vendor->isActiveMember())
+        <p class="vd-settings-section__desc">You have an active WIN subscription. Manage your payment method, view invoices, or cancel from Stripe's secure billing portal.</p>
+        <a href="{{ route('vendor.billing_portal') }}" class="vd-edit-save-btn" style="display:inline-block;text-decoration:none;text-align:center;">Manage Subscription</a>
+      @else
+        <p class="vd-settings-section__desc">You don't have an active subscription yet. Subscribe to unlock all vendor features via Stripe's secure checkout.</p>
+        <a href="{{ route('vendor.pay') }}" class="vd-edit-save-btn" style="display:inline-block;text-decoration:none;text-align:center;">Subscribe</a>
+      @endif
+    </section>
+
     <section class="vd-edit-card vd-settings-section vd-settings-section--danger">
       <h2 class="vd-settings-section__title">Delete Account</h2>
       <p class="vd-settings-section__desc">

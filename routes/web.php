@@ -130,7 +130,7 @@ Route::middleware('auth:vendor')->group(function () {
     Route::get('/vendor/google/auth/callback', [VendorController::class, 'googleCallback']);
     Route::get('/billing-portal', function (Request $request) {
         return $request->user()->redirectToBillingPortal(route('vendor.dashboard'));
-    });
+    })->name('vendor.billing_portal');
     Route::get('/vendor/insights', [VendorController::class, 'insights'])->name('vendor.insights');
     Route::get('/vendor/storefront', [ProfileController::class, 'vendorStorefront'])->name('vendor.storefront');
     Route::get('/vendor/search/vendors', [VendorController::class, 'searchVendorType'])->name('vendor.search.vendors');

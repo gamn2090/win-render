@@ -640,7 +640,7 @@ class VendorController extends Controller
     //payment
     public function attemptPayment(Request $request){
         return $request->user()
-        ->newSubscription('WIN Subscription', 'price_1QdHXkD7AsRDYMZziFTlqYpC')
+        ->newSubscription('WIN Subscription', config('services.stripe.vendor_price_id'))
         ->allowPromotionCodes()
         ->checkout([
             'success_url' => route('vendor.dashboard', ['payment' => 'awaiting_confirmation']),
