@@ -55,6 +55,29 @@ Route::get('/cron/run-schedule', function (Request $request) {
         ->header('Content-Type', 'text/plain');
 })->name('cron.run-schedule');
 
+// Same reasoning as /cron/run-schedule above — no dedicated queue worker
+// process exists in this container, so queued jobs (TrackKlaviyoEvent,
+// HubSpot's SendEmail, etc.) would just sit in the `jobs` table forever.
+// --stop-when-empty processes whatever's queued right now and exits instead
+// of running forever (which would hang the HTTP request); --max-time is a
+// safety net so one ping can't run longer than a typical request timeout
+// even if jobs keep arriving while it's working.
+Route::get('/cron/run-queue', function (Request $request) {
+    $secret = (string) config('services.cron.secret');
+    if ($secret === '' || ! hash_equals($secret, (string) $request->query('token'))) {
+        abort(403);
+    }
+
+    \Illuminate\Support\Facades\Artisan::call('queue:work', [
+        '--stop-when-empty' => true,
+        '--max-time' => 50,
+        '--tries' => 3,
+    ]);
+
+    return response(\Illuminate\Support\Facades\Artisan::output(), 200)
+        ->header('Content-Type', 'text/plain');
+})->name('cron.run-queue');
+
 Route::get('/', function () {
     if (Auth::guard('vendor')->check()) {
         return redirect('/vendor/dashboard');

@@ -168,6 +168,22 @@ class RegisteredVendorController extends Controller
         if($request->ref_by != null){
             $user->ref_by = intval($request->ref_by);
             $user->save();
+
+            // Notifies the inviting vendor their invite was accepted — same
+            // trigger point that already feeds their WINfluence "Vendor
+            // Community" score via ref_by (Vendor::vendorReferrals()), so
+            // this one registration exercises both at once for testing.
+            $inviter = Vendor::find($user->ref_by);
+            if ($inviter) {
+                \App\Jobs\TrackKlaviyoEvent::dispatch('Vendor Invite Accepted', $inviter->email, [
+                    'invited_vendor_name' => trim($user->first_name . ' ' . $user->last_name),
+                    'invited_business_name' => $user->business_name,
+                ], [
+                    'first_name' => $inviter->first_name,
+                    'last_name' => $inviter->last_name,
+                    'organization' => $inviter->business_name,
+                ]);
+            }
         }
         $event = Event::where("join_link", $request->event)->first();
         if($request->event != null && $event != null){
