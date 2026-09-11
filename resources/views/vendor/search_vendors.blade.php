@@ -27,6 +27,7 @@
         <h1 class="vd-hero__title">Find Vendors</h1>
         <p class="vd-hero__sub">Choose a category to find matching vendors</p>
         <form method="GET" action="{{ route('vendor.search.vendors') }}" class="vd-hero__form">
+          <input type="text" name="q" class="vd-hero__input" placeholder="Search by vendor name" value="{{ request('q') }}" />
           <select name="type" class="vd-hero__select">
             <option value="" @selected(!$selected_type)>All Types</option>
             @foreach($vendor_types as $type)

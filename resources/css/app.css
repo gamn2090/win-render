@@ -77,3 +77,17 @@
 .swal2-styled.swal2-confirm {
     background-color: #6432c8 !important;
 }
+
+/* @tailwindcss/forms' base reset restyles EVERY checkbox on the page,
+   including ones intro.js injects at runtime for its "Don't show this
+   again" control — leaving it looking flat/grey/disabled even though it's
+   still interactive. Restore a visible, clearly-checkable appearance. */
+.introjs-dontShowAgain input[type="checkbox"] {
+    appearance: auto;
+    -webkit-appearance: auto;
+    width: 16px;
+    height: 16px;
+    accent-color: #6432c8;
+    opacity: 1;
+    cursor: pointer;
+}

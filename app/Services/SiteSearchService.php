@@ -116,6 +116,10 @@ class SiteSearchService
         $this->matchClients($vendor, $needle, $results);
         $this->matchCoupleDirectory($vendor, $needle, $results);
         $this->matchConnections($vendor, $needle, $results);
+        // Lets a vendor find ANY other vendor in the directory by name, not
+        // just ones they already have an approved connection with — this
+        // was previously only wired up for the couple-side search.
+        $this->matchVendorTypesAndDirectory($needle, $results);
         $this->matchConversations($vendor, $needle, $results, 'get.vendor.conversation', function ($user) {
             return trim(($user->first_name ?? '') . ' ' . ($user->fiance_first_name ?? ''));
         }, User::class);

@@ -35,6 +35,17 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
 
+  # .env already points MAIL_HOST at "mailpit" (a fake SMTP catcher for local
+  # dev, so no real emails ever leave this machine) but no such service
+  # existed — any code path that sends mail synchronously (not queued) was
+  # failing with a DNS resolution error. Web UI to view "sent" emails at
+  # http://localhost:8025.
+  mailpit:
+    image: axllent/mailpit
+    ports:
+      - "8025:8025"
+      - "1025:1025"
+
 volumes:
   vendor:
   node_modules:

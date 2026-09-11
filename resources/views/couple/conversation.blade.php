@@ -219,8 +219,22 @@
         var isMine = !!m.is_sender;
         var row = document.createElement('div');
         row.className = 'vd-chat__row ' + (isMine ? 'vd-chat__row--mine' : 'vd-chat__row--vendor');
+
+        var bubbleHtml;
+        if (m.type === 'attachment') {
+          var attachName = (m.data && m.data.attachment_name) || 'document.pdf';
+          var attachUrl = (m.data && m.data.download_url) || '#';
+          bubbleHtml = '<div class="vd-chat__bubble">' +
+            (m.body ? '<p>' + escapeHtml(m.body) + '</p>' : '') +
+            '<p class="vd-chat__attachment-hint">Click below to download:</p>' +
+            '<a href="' + escapeHtml(attachUrl) + '" target="_blank" rel="noopener" class="vd-chat__attachment-link">' + escapeHtml(attachName) + '</a>' +
+            '</div>';
+        } else {
+          bubbleHtml = '<div class="vd-chat__bubble">' + escapeHtml(m.body) + '</div>';
+        }
+
         row.innerHTML =
-          '<div class="vd-chat__bubble">' + escapeHtml(m.body) + '</div>' +
+          bubbleHtml +
           '<div class="vd-chat__meta">' +
             '<span class="vd-chat__avatar-sm">' + initials(isMine ? mySenderName : vendorSenderName) + '</span>' +
             '<span class="vd-chat__time">' + formatTime(m.created_at) + '</span>' +

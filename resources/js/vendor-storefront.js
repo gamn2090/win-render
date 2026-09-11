@@ -20,15 +20,28 @@ function vsfThumbHtml(name, itemClass) {
   `;
 }
 
-// Recomputes the thumbnail row height so each thumb is exactly half the
-// cover photo's rendered height, no matter how the flexible hero resizes
-// across breakpoints.
+// Recomputes the thumbnail row height so the WHOLE 2-row thumbs block
+// (including its own padding and the gap between the two rows) lines up
+// exactly with the cover photo's rendered height — top edges and bottom
+// edges both flush. Solves paddingTop + rowHeight*2 + rowGap + paddingBottom
+// = heroHeight for rowHeight, reading the real padding/gap from CSS instead
+// of hardcoding them so it stays correct if those values ever change.
 function vsfUpdateThumbHeightVar() {
   const gallery = document.getElementById('vsfPortfolioGallery');
   const hero = gallery && gallery.querySelector('.vsf-gallery__hero');
-  if (!gallery || !hero) return;
-  const h = hero.getBoundingClientRect().height;
-  if (h > 0) gallery.style.setProperty('--vsf-thumb-h', (h / 2) + 'px');
+  const thumbsEl = gallery && gallery.querySelector('.vsf-gallery__thumbs');
+  if (!gallery || !hero || !thumbsEl) return;
+
+  const heroHeight = hero.getBoundingClientRect().height;
+  if (heroHeight <= 0) return;
+
+  const style = getComputedStyle(thumbsEl);
+  const paddingTop = parseFloat(style.paddingTop) || 0;
+  const paddingBottom = parseFloat(style.paddingBottom) || 0;
+  const rowGap = parseFloat(style.rowGap || style.gap) || 0;
+
+  const rowHeight = (heroHeight - paddingTop - paddingBottom - rowGap) / 2;
+  if (rowHeight > 0) gallery.style.setProperty('--vsf-thumb-h', rowHeight + 'px');
 }
 
 function vsfRenderPortfolioGallery(images) {

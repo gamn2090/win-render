@@ -200,13 +200,12 @@ class VendorController extends Controller
         $this->vendorService->refreshEarnedBadges($vendor);
 
         $subscription_status = $request->payment;
-        $first_login = false;
-
         $vendorSubscription = $vendor->stripeSubscription();
 
-        if($subscription_status == 'awaiting_confirmation' || $vendorSubscription){
-            $first_login = $request->session()->pull('first-login', false);
-        }
+        // Was previously gated behind already having a subscription, so a
+        // brand-new vendor (no subscription yet) never got the tour on their
+        // actual first login — the couple dashboard has no such gate.
+        $first_login = $request->session()->pull('first-login', false);
 
         $data = [
             "clients" => $vendor->clients(5),

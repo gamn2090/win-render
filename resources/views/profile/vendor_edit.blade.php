@@ -360,7 +360,7 @@
 
           <!-- Image display and sorting section -->
           <h3 class="piu-label">Upload Images:</h3>
-          <p class="piu-hint">The first image you upload becomes your storefront cover photo.</p>
+          <p class="piu-hint">The first image you upload becomes your storefront cover photo. Re-arrange &amp; change your cover photo live in your storefront — <a href="{{ route('vendor.storefront') }}" target="_blank" rel="noopener">visit your storefront here</a>.</p>
           <div id="imageContainer" class="piu-grid"></div>
 
           <div class="piu-actions">
@@ -648,7 +648,11 @@
               .then(results => callback(results))
               .catch(error => console.error("Error resizing images:", error));
         }
-        resizeImages($("#portfolioImageUpload").prop('files'), 1000, 1000, function(resizedImages) {
+        // 1000px looked soft/pixelated on retina displays at the storefront's
+        // larger placements (cover photo renders up to ~700px CSS-wide, which
+        // needs ~1400-2100px of real pixels on a 2x-3x DPI screen). 2000px
+        // covers that comfortably while still capping runaway file sizes.
+        resizeImages($("#portfolioImageUpload").prop('files'), 2000, 2000, function(resizedImages) {
             let userData = new FormData();
             let iter = 0;
             resizedImages.forEach(({ name, blob }) => {
@@ -667,16 +671,40 @@
                 data: userData,
                 processData: false,
                 success: function (data) {
+                  $("#imageUploadSpinner").css("display", "none");
+                  const uploaded = Array.isArray(data) ? data.length : 0;
+                  const attempted = resizedImages.length;
+                  if (uploaded === 0) {
+                    Swal.fire({
+                      title: 'Upload failed',
+                      text: 'None of your images were uploaded — please try again with fewer images at once.',
+                      icon: 'error',
+                      confirmButtonText: 'Ok',
+                      confirmButtonColor: '#6432C8'
+                    });
+                    return;
+                  }
                   Swal.fire({
-                    title: 'Success!',
-                    text: `You have uploaded ${data.length} image(s) to your portfolio.`,
-                    icon: 'success',
+                    title: uploaded < attempted ? 'Partially uploaded' : 'Success!',
+                    text: uploaded < attempted
+                      ? `Only ${uploaded} of ${attempted} image(s) uploaded — try uploading the rest in a smaller batch.`
+                      : `You have uploaded ${uploaded} image(s) to your portfolio.`,
+                    icon: uploaded < attempted ? 'warning' : 'success',
                     confirmButtonText: 'Continue',
                     confirmButtonColor: '#6432C8'
                   });
-                  $("#imageUploadSpinner").css("display", "none");
                   portfolioImages = portfolioImages.concat(data);
                   renderPortfolioGrid();
+                },
+                error: function () {
+                  $("#imageUploadSpinner").css("display", "none");
+                  Swal.fire({
+                    title: 'Upload failed',
+                    text: 'Something went wrong uploading your images — please try again with fewer images at once.',
+                    icon: 'error',
+                    confirmButtonText: 'Ok',
+                    confirmButtonColor: '#6432C8'
+                  });
                 }
               });
             });

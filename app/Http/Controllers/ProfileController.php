@@ -387,7 +387,10 @@ class ProfileController extends Controller
         $profile = $request->user()->profile;
         $profileImages = json_decode($profile->portfolio_images);
         $fileNames = [];
-        foreach($request->all() as $k => $file){
+        foreach($request->allFiles() as $k => $file){
+            if(!$file->isValid()){
+                continue;
+            }
             $filename = Str::random(40) . '.jpg';
             $file->storeAs('images',$filename,'public');
             array_push($profileImages, $filename);

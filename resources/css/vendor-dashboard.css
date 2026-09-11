@@ -1950,6 +1950,19 @@ button.vd-savings-banner {
   cursor: pointer;
 }
 
+.vd-hero__input {
+  flex: 2 1 280px;
+  min-width: 0;
+  height: 52px;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 4px;
+  background: #fff;
+  color: #231f20;
+  font-size: 16px;
+  font-weight: 500;
+}
+
 .vd-hero__btn {
   flex-shrink: 0;
   height: 52px;
@@ -2572,6 +2585,23 @@ button.vd-savings-banner {
   border: 1px solid #e5e7eb;
   color: #374151;
   border-bottom-left-radius: 4px;
+}
+
+.vd-chat__attachment-hint {
+  margin: 4px 0 2px;
+  font-size: 11px;
+  opacity: 0.85;
+}
+
+.vd-chat__attachment-link {
+  color: #2563eb;
+  text-decoration: underline;
+  font-weight: 700;
+  word-break: break-word;
+}
+
+.vd-chat__row--mine .vd-chat__attachment-link {
+  color: #bfdbfe;
 }
 
 .vd-chat__row--mine .vd-chat__bubble {
@@ -3222,10 +3252,11 @@ button.vd-savings-banner {
   bottom: 4px;
   left: 50%;
   transform: translateX(-50%);
-  width: 5px;
-  height: 5px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background: #dc2626;
+  box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.2);
 }
 
 .vd-calendar__day--busy.vd-calendar__day--selected::after {
@@ -3242,10 +3273,11 @@ button.vd-savings-banner {
 }
 
 .vd-calendar__legend-dot {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   background: #dc2626;
+  box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.2);
   flex-shrink: 0;
 }
 

@@ -545,14 +545,21 @@ class Vendor extends Authenticatable
         $badgesScore = ((is_array($badgesDecoded) ? count($badgesDecoded) : 0) / 4) * 100;
 
         try {
+            // vendor_rankings' score columns are integer in Postgres, but
+            // these are all percentages from division (e.g. 1/3*100 =
+            // 33.333...) — Postgres rejects a non-integer string outright
+            // (SQLSTATE 22P02) instead of silently rounding like MySQL would,
+            // which was throwing here and leaving the row permanently stale
+            // for any vendor whose math didn't happen to land on a whole
+            // number, while vendors.score below kept updating regardless.
             $rankingModel = VendorRanking::updateOrCreate(
                 ['vendor_id' => $this->id],
                 [
-                    'client_community' => $communityScore,
-                    'vendor_community' => $vendorCommunityScore,
-                    'reviews' => $reviewsScore,
-                    'endorsements' => $endorsementsScore,
-                    'badges' => $badgesScore,
+                    'client_community' => (int) round($communityScore),
+                    'vendor_community' => (int) round($vendorCommunityScore),
+                    'reviews' => (int) round($reviewsScore),
+                    'endorsements' => (int) round($endorsementsScore),
+                    'badges' => (int) round($badgesScore),
                 ]
             );
             $score = ($rankingModel->client_community * .25) + ($rankingModel->reviews * .25) + ($rankingModel->vendor_community * .20) + ($rankingModel->endorsements * .15) + ($rankingModel->badges * .15);
@@ -564,7 +571,10 @@ class Vendor extends Authenticatable
             $score = ($communityScore * .25) + ($reviewsScore * .25) + ($vendorCommunityScore * .20) + ($endorsementsScore * .15) + ($badgesScore * .15);
         }
 
-        $this->score = $score;
+        // vendors.score is also an integer column — same rounding guard as
+        // vendor_rankings above, so a weighted average that doesn't land on
+        // a whole number can't hit the same Postgres type error here too.
+        $this->score = (int) round($score);
         $this->save();
 
         return $score;

@@ -6,6 +6,12 @@
   <meta name="csrf-token" content="{{ csrf_token() }}" />
   <title>WIN: Vendor Dashboard</title>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <!-- Loaded here (not just via layouts.vendor_navigation further down the
+       body) so the tour library is ready before the page finishes parsing —
+       otherwise the first-login tour visibly lags behind the couple
+       dashboard's, which loads intro.js in <head> the same way. -->
+  <script src="https://cdn.jsdelivr.net/npm/intro.js@7.2.0/intro.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/intro.js@7.2.0/minified/introjs.min.css" rel="stylesheet">
   <script>window.userID = {{ Auth::guard('vendor')->id() }};</script>
   @vite(['resources/css/app.css', 'resources/css/vendor-insights.css', 'resources/css/vendor-dashboard.css'])
   @vite(['resources/js/app.js', 'resources/js/chat.js', 'resources/js/chat-modal.js', 'resources/js/vendor-dashboard-tour.js'])

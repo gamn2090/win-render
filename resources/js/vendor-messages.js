@@ -280,7 +280,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const time = formatTime(message.created_at);
       const attachBubbleHtml = `<div class="vd-chat__bubble">
           ${message.body ? `<p>${escapeHtml(message.body)}</p>` : ''}
-          <a href="${escapeHtml(url)}" target="_blank" rel="noopener" style="color:inherit;font-weight:600;">${escapeHtml(name)}</a>
+          <p class="vd-chat__attachment-hint">Click below to download:</p>
+          <a href="${escapeHtml(url)}" target="_blank" rel="noopener" class="vd-chat__attachment-link">${escapeHtml(name)}</a>
         </div>`;
       const attachMetaHtml = `<div class="vd-chat__meta">
           <span class="vd-chat__avatar-sm">${escapeHtml(initials)}</span>
