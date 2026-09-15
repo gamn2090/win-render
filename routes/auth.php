@@ -122,4 +122,14 @@ Route::middleware('auth:admin')->group(function () {
         ->name('admin.add.months');
     Route::get('/admin/csv/vendors', [AdminController::class, 'generateVendorCSV'])
         ->name('admin.csv.vendors');
+    Route::post('/admin/logout', [AdminController::class, 'logout'])
+        ->name('logout.admin');
+    Route::post('/admin/couples/delete', [AdminController::class, 'deleteCouples'])
+        ->name('admin.couples.delete');
+    Route::post('/admin/vendors/delete', [AdminController::class, 'deleteVendors'])
+        ->name('admin.vendors.delete');
+    Route::post('/admin/create', [AdminController::class, 'createAdmin'])
+        ->name('admin.create');
+    Route::post('/admin/password/update', [AdminController::class, 'updatePassword'])
+        ->name('admin.password.update');
 });

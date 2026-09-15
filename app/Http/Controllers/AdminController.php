@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Admin;
+use App\Models\User;
 use App\Models\Vendor;
 use App\Models\Payment;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Models\VendorTypes;
@@ -14,17 +16,128 @@ use Carbon\Carbon;
 
 class AdminController extends Controller
 {
-    //
-
     public function dashboard(){
-        $data = [
-            "vendor_types" => VendorTypes::all(),
-            "vendor_types_count" => []
-        ];
-        foreach($data["vendor_types"] as $type){
-            array_push($data["vendor_types_count"], $type->countVendorsWithType());
+        $couples = User::select('id', 'first_name', 'last_name', 'fiance_first_name', 'email', 'created_at')
+            ->orderByDesc('created_at')
+            ->paginate(25, ['*'], 'couples_page');
+
+        $vendors = Vendor::select('id', 'first_name', 'last_name', 'business_name', 'email', 'type', 'created_at')
+            ->orderByDesc('created_at')
+            ->paginate(25, ['*'], 'vendors_page');
+
+        return view('admin.dashboard', [
+            'couples' => $couples,
+            'vendors' => $vendors,
+            'admin' => Auth::guard('admin')->user(),
+            'page' => 'dashboard',
+        ]);
+    }
+
+    /**
+     * Bulk-deletes couples via the existing `couple:delete` command, which
+     * already handles cascading their related data.
+     */
+    public function deleteCouples(Request $request)
+    {
+        $ids = collect($request->input('ids', []))
+            ->filter()
+            ->map(fn ($id) => (int) $id)
+            ->values()
+            ->all();
+
+        if (empty($ids)) {
+            return response()->json(['status' => false, 'message' => 'No couples selected.'], 422);
         }
-        return view('admin.dashboard', ["data" => $data]);
+
+        Artisan::call('couple:delete', ['ids' => $ids]);
+
+        return response()->json([
+            'status' => true,
+            'message' => count($ids) . ' couple(s) deleted.',
+        ]);
+    }
+
+    /**
+     * Bulk-deletes vendors via the existing `vendor:delete` command — but
+     * first filters out any vendor with an active subscription/membership,
+     * since those must never be deletable from here.
+     */
+    public function deleteVendors(Request $request)
+    {
+        $ids = collect($request->input('ids', []))
+            ->filter()
+            ->map(fn ($id) => (int) $id)
+            ->values()
+            ->all();
+
+        if (empty($ids)) {
+            return response()->json(['status' => false, 'message' => 'No vendors selected.'], 422);
+        }
+
+        $vendors = Vendor::whereIn('id', $ids)->get();
+        $blocked = $vendors->filter(fn ($v) => $v->isActiveMember());
+        $deletable = $vendors->reject(fn ($v) => $v->isActiveMember());
+
+        if ($deletable->isNotEmpty()) {
+            Artisan::call('vendor:delete', ['ids' => $deletable->pluck('id')->all()]);
+        }
+
+        return response()->json([
+            'status' => true,
+            'deleted_count' => $deletable->count(),
+            'blocked' => $blocked->map(function ($v) {
+                return $v->business_name ?: trim($v->first_name . ' ' . $v->last_name);
+            })->values(),
+        ]);
+    }
+
+    /**
+     * Admins are never created through a public route — only from inside
+     * the admin dashboard by an already-authenticated admin.
+     */
+    public function createAdmin(Request $request)
+    {
+        $validated = $request->validate([
+            'username' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:admins,email', 'unique:vendors,email', 'unique:users,email'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+
+        Admin::create([
+            'username' => $validated['username'],
+            'email' => strtolower($validated['email']),
+            'password' => Hash::make($validated['password']),
+        ]);
+
+        return response()->json(['status' => true, 'message' => 'Admin account created.']);
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $admin = Auth::guard('admin')->user();
+
+        $validated = $request->validate([
+            'current_password' => ['required', 'string'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+
+        if (! Hash::check($validated['current_password'], $admin->password)) {
+            return response()->json(['status' => false, 'message' => 'Current password is incorrect.'], 422);
+        }
+
+        $admin->password = Hash::make($validated['password']);
+        $admin->save();
+
+        return response()->json(['status' => true, 'message' => 'Password updated.']);
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::guard('admin')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/');
     }
 
     public function addMonths(Request $request){

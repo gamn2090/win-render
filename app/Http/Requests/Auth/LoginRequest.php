@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\Admin;
 use App\Models\User;
 use App\Models\Vendor;
 use Illuminate\Auth\Events\Lockout;
@@ -57,6 +58,21 @@ class LoginRequest extends FormRequest
         $credentials = ['email' => $email, 'password' => $this->input('password')];
         $remember = $this->boolean('remember');
 
+        // Admin emails are guaranteed (by validation at creation time, see
+        // AdminController::createAdmin) never to collide with a vendor or
+        // couple email, so checking this first is unambiguous.
+        if (Admin::where('email', $email)->exists()) {
+            if (! Auth::guard('admin')->attempt($credentials, $remember)) {
+                throw ValidationException::withMessages([
+                    'email' => trans('auth.failed'),
+                ]);
+            }
+            Auth::guard('web')->logout();
+            Auth::guard('vendor')->logout();
+
+            return 'admin';
+        }
+
         $coupleExists = User::where('email', $email)->exists();
         $vendorExists = Vendor::where('email', $email)->exists();
 
@@ -93,9 +109,24 @@ class LoginRequest extends FormRequest
         return 'vendor';
     }
 
-    public function vendorAuthenticate(): void
+    /**
+     * @return 'vendor'|'admin'
+     */
+    public function vendorAuthenticate(): string
     {
         //$this->ensureIsNotRateLimited();
+
+        $email = strtolower((string) $this->input('email'));
+
+        if (Admin::where('email', $email)->exists()) {
+            if (! Auth::guard('admin')->attempt(['email' => $email, 'password' => $this->input('password')], $this->boolean('remember'))) {
+                throw ValidationException::withMessages([
+                    'email' => trans('auth.failed'),
+                ]);
+            }
+
+            return 'admin';
+        }
 
         if (! Auth::guard('vendor')->attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             //RateLimiter::hit($this->throttleKey());
@@ -106,6 +137,8 @@ class LoginRequest extends FormRequest
         }
 
         //RateLimiter::clear($this->throttleKey());
+
+        return 'vendor';
     }
 
     public function adminAuthenticate(): void

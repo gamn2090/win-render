@@ -627,7 +627,7 @@
       success: function(data) {
         const res = typeof data === 'string' ? JSON.parse(data) : data;
         if (res.status) {
-          window.location.href = res.role === 'couple' ? '/dashboard' : '/vendor/dashboard';
+          window.location.href = res.role === 'admin' ? '/admin/dashboard' : (res.role === 'couple' ? '/dashboard' : '/vendor/dashboard');
           return;
         }
         restore();
@@ -666,7 +666,7 @@
       success: function(data) {
         const res = typeof data === 'string' ? JSON.parse(data) : data;
         if (res.status) {
-          window.location.href = res.role === 'vendor' ? '/vendor/dashboard' : '/dashboard';
+          window.location.href = res.role === 'admin' ? '/admin/dashboard' : (res.role === 'vendor' ? '/vendor/dashboard' : '/dashboard');
           return;
         }
         restore();

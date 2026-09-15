@@ -80,14 +80,14 @@ class AuthenticatedSessionController extends Controller
     public function vendorStore(LoginRequest $request): JsonResponse
     {
         $request->merge(['email' => strtolower((string) $request->input('email'))]);
-        $request->vendorAuthenticate();
+        $role = $request->vendorAuthenticate();
         Auth::guard('web')->logout();
 
         $request->session()->regenerate();
 
         return response()->json([
             'status' => true,
-            'role' => 'vendor',
+            'role' => $role,
         ]);
     }
 

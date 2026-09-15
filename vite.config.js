@@ -41,7 +41,8 @@ export default defineConfig({
                 'resources/js/chat-modal.js',
                 'resources/js/vendor-calendar.js',
                 'resources/js/vendor-dashboard-tour.js',
-                'resources/js/couple-dashboard-tour.js'
+                'resources/js/couple-dashboard-tour.js',
+                'resources/js/admin-dashboard.js'
             ],
             refresh: true,
         }),

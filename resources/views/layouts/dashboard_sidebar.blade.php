@@ -9,6 +9,13 @@
       $brandCaption = 'Vendor Dashboard';
       $profileEditUrl = url('/vendor/profile');
       $logoutRoute = route('logout.vendor');
+  } elseif ($role === 'admin') {
+      $account = Auth::guard('admin')->user();
+      $displayName = $account->username ?? 'Admin';
+      $brandUrl = url('/admin/dashboard');
+      $brandCaption = 'Admin Dashboard';
+      $profileEditUrl = null;
+      $logoutRoute = route('logout.admin');
   } else {
       $account = Auth::guard('web')->user();
       $displayName = trim(($account->first_name ?? '') . ' & ' . ($account->fiance_first_name ?? ''));
@@ -18,9 +25,11 @@
       $logoutRoute = route('logout');
   }
 
-  $unreadCount = $role === 'couple'
-      ? $account->unreadConversationsCount()
-      : count($account->getUnreadMessagesCount()['vendor_notifs'] ?? []);
+  $unreadCount = match ($role) {
+      'couple' => $account->unreadConversationsCount(),
+      'vendor' => count($account->getUnreadMessagesCount()['vendor_notifs'] ?? []),
+      default => 0,
+  };
 
   $navLinkClasses = function (string $key) use ($currentPage) {
       $active = $currentPage === $key;
@@ -28,7 +37,7 @@
   };
 @endphp
 
-<aside id="dashboard-sidebar" class="dashboard-sidebar" aria-label="{{ $role === 'vendor' ? 'Vendor navigation' : 'Couple navigation' }}">
+<aside id="dashboard-sidebar" class="dashboard-sidebar" aria-label="{{ ucfirst($role) }} navigation">
   <div class="dashboard-sidebar__brand">
     <a href="{{ $brandUrl }}">
       <img class="dashboard-sidebar__logo" src="{{ asset('assets/img/vendor-home/logo_orange.png') }}" alt="WIN" width="50" height="50" />
@@ -37,21 +46,39 @@
   </div>
 
   <div class="dashboard-sidebar__profile">
-    <x-avatar
-      id="dashboard-sidebar-avatar"
-      :model="$account"
-      class="dashboard-sidebar__avatar"
-    />
+    @if($role === 'admin')
+      <span class="dashboard-sidebar__avatar win-avatar-fallback" aria-hidden="true">🛡️</span>
+    @else
+      <x-avatar
+        id="dashboard-sidebar-avatar"
+        :model="$account"
+        class="dashboard-sidebar__avatar"
+      />
+    @endif
     <div class="dashboard-sidebar__profile-text">
       <p class="dashboard-sidebar__profile-name" title="{{ $displayName }}">{{ $displayName }}</p>
-      <a href="{{ $profileEditUrl }}" class="dashboard-sidebar__profile-photo">
-        <span class="dashboard-sidebar__profile-camera" aria-hidden="true">📷</span>
-        Update profile
-      </a>
+      @if($profileEditUrl)
+        <a href="{{ $profileEditUrl }}" class="dashboard-sidebar__profile-photo">
+          <span class="dashboard-sidebar__profile-camera" aria-hidden="true">📷</span>
+          Update profile
+        </a>
+      @endif
     </div>
   </div>
 
-  @if($role === 'vendor')
+  @if($role === 'admin')
+    <div class="dashboard-sidebar__section">
+      <p class="dashboard-sidebar__section-label">MAIN</p>
+      <ul class="dashboard-sidebar__nav">
+        <li>
+          <a href="{{ url('/admin/dashboard') }}" class="{{ $navLinkClasses('dashboard') }}">
+            <span class="dashboard-sidebar__emoji dashboard-sidebar__emoji--dashboard" aria-hidden="true">⊞</span>
+            <span class="dashboard-sidebar__label">Dashboard</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  @elseif($role === 'vendor')
     <div class="dashboard-sidebar__section">
       <p class="dashboard-sidebar__section-label">MAIN</p>
       <ul class="dashboard-sidebar__nav">

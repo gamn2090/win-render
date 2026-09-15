@@ -10,6 +10,7 @@ use App\Models\Inquiry;
 use App\Models\Profile;
 use App\Models\CoupleTimelineDraft;
 use App\Models\CoupleInvestmentPlannerDraft;
+use Illuminate\Support\Facades\DB;
 use Chat;
 
 class DeleteCouples extends Command
@@ -41,42 +42,51 @@ class DeleteCouples extends Command
                 continue;
             }
 
-            $this->deleteCouple($user);
-            $this->info("Couple {$id} and its relationships were deleted.");
+            try {
+                $this->deleteCouple($user);
+                $this->info("Couple {$id} and its relationships were deleted.");
+            } catch (\Throwable $e) {
+                $this->error("Couple {$id} could not be deleted, rolled back: " . $e->getMessage());
+            }
         }
     }
 
     protected function deleteCouple(User $user): void
     {
-        //delete conversations
-        $convos = Chat::conversations()->setPaginationParams(['sorting' => 'desc'])
-            ->setParticipant($user)
-            ->page(1)
-            ->get();
-        foreach ($convos as $convo) {
-            $convo->delete();
-        }
+        // Wrapped so a failure partway through (e.g. one delete throws)
+        // rolls back everything for this couple instead of leaving orphaned
+        // partial deletes — the whole thing is one all-or-nothing unit.
+        DB::transaction(function () use ($user) {
+            //delete conversations
+            $convos = Chat::conversations()->setPaginationParams(['sorting' => 'desc'])
+                ->setParticipant($user)
+                ->page(1)
+                ->get();
+            foreach ($convos as $convo) {
+                $convo->delete();
+            }
 
-        //remove favorites
-        Favorite::where('user_id', $user->id)->delete();
+            //remove favorites
+            Favorite::where('user_id', $user->id)->delete();
 
-        //remove pairings
-        Pairing::where('client_id', $user->id)->delete();
+            //remove pairings
+            Pairing::where('client_id', $user->id)->delete();
 
-        //remove inquiries
-        Inquiry::where('user_id', $user->id)->delete();
+            //remove inquiries
+            Inquiry::where('user_id', $user->id)->delete();
 
-        //delete meetings
-        $user->meetings()->delete();
+            //delete meetings
+            $user->meetings()->delete();
 
-        //delete planning tool drafts
-        CoupleTimelineDraft::where('user_id', $user->id)->delete();
-        CoupleInvestmentPlannerDraft::where('user_id', $user->id)->delete();
+            //delete planning tool drafts
+            CoupleTimelineDraft::where('user_id', $user->id)->delete();
+            CoupleInvestmentPlannerDraft::where('user_id', $user->id)->delete();
 
-        //delete profile
-        Profile::where('type', 'client')->where('belongs_to', $user->id)->delete();
+            //delete profile
+            Profile::where('type', 'client')->where('belongs_to', $user->id)->delete();
 
-        //delete couple
-        $user->delete();
+            //delete couple
+            $user->delete();
+        });
     }
 }
