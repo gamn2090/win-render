@@ -3,10 +3,10 @@
 FROM php:8.2-cli-bookworm
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    git unzip libzip-dev libpq-dev libicu-dev libpng-dev libjpeg62-turbo-dev libfreetype6-dev libonig-dev \
+    git unzip libzip-dev default-mysql-client libicu-dev libpng-dev libjpeg62-turbo-dev libfreetype6-dev libonig-dev \
     && docker-php-ext-configure intl \
     && docker-php-ext-configure gd --with-jpeg --with-freetype \
-    && docker-php-ext-install -j$(nproc) intl pdo_pgsql mbstring zip exif pcntl bcmath gd \
+    && docker-php-ext-install -j$(nproc) intl pdo_mysql mbstring zip exif pcntl bcmath gd \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # PHP's compiled-in defaults (post_max_size=8M, max_file_uploads=20) are too

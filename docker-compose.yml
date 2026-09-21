@@ -12,7 +12,10 @@ services:
       - vendor:/var/www/html/vendor
     depends_on:
       - db
-    command: sh -c "composer install --no-interaction && php artisan migrate --force && if [ \"$$APP_ENV\" = development ]; then php artisan db:seed --force; fi && php artisan serve --host=0.0.0.0 --port=8000"
+    # SEED_DEMO_DATA is opt-in (not tied to APP_ENV) because the "development"
+    # database can be a real production import (see db:reconcile-legacy-migrations) —
+    # auto-seeding on every boot would silently mix fake demo rows into real data.
+    command: sh -c "composer install --no-interaction && php artisan migrate --force && if [ \"$$SEED_DEMO_DATA\" = true ]; then php artisan db:seed --force; fi && php artisan serve --host=0.0.0.0 --port=8000"
 
   vite:
     image: node:20
@@ -25,15 +28,14 @@ services:
     command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
 
   db:
-    image: postgres:16
+    image: mariadb:10.6
     environment:
-      POSTGRES_DB: winetwork_main
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 426620
+      MARIADB_DATABASE: winetwork_main
+      MARIADB_ROOT_PASSWORD: 426620
     ports:
-      - "5432:5432"
+      - "3306:3306"
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - db_data:/var/lib/mysql
 
   # .env already points MAIL_HOST at "mailpit" (a fake SMTP catcher for local
   # dev, so no real emails ever leave this machine) but no such service
