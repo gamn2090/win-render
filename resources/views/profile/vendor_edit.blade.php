@@ -353,10 +353,11 @@
                 <polyline points="17 8 12 3 7 8" />
                 <line x1="12" x2="12" y1="3" y2="15" />
               </svg>
-              Upload Pictures <i id="imageUploadSpinner" class="fas fa-circle-notch animate-spin text-lg hidden"></i>
+              Upload Pictures <i id="imageUploadSpinner" class="fas fa-circle-notch animate-spin text-lg" style="display: none;"></i>
             </button>
             <input id="portfolioImageUpload" type="file" accept="image/*" hidden multiple/>
           </div>
+          <p id="imageUploadStatus" class="piu-upload-status hidden">Your photos are being uploaded&hellip; this can take a bit for larger batches, please don't close this window.</p>
 
           <!-- Image display and sorting section -->
           <h3 class="piu-label">Upload Images:</h3>
@@ -607,6 +608,18 @@
       });
 
       imageUpload.addEventListener('change', (event) => {
+        const selectedFiles = $("#portfolioImageUpload").prop('files');
+        if (!selectedFiles || selectedFiles.length === 0) {
+          return;
+        }
+        // Disable/show feedback the instant files are picked (the OS file
+        // dialog closing), not after the client-side resize finishes — the
+        // resize step itself can take a few seconds for a large batch, and
+        // that gap was a window where the button looked idle and clickable.
+        $("#imageUploadSpinner").css("display", "block");
+        $("#imageUploadStatus").removeClass("hidden");
+        $("#uploadPortfolioImageButton").prop("disabled", true);
+
         function resizeImages(files, maxWidth, maxHeight, callback) {
           const promises = [];
           Array.from(files).forEach(file => {
@@ -646,20 +659,31 @@
 
           Promise.all(promises)
               .then(results => callback(results))
-              .catch(error => console.error("Error resizing images:", error));
+              .catch(error => {
+                console.error("Error resizing images:", error);
+                $("#imageUploadSpinner").css("display", "none");
+                $("#imageUploadStatus").addClass("hidden");
+                $("#uploadPortfolioImageButton").prop("disabled", false);
+                Swal.fire({
+                  title: 'Upload failed',
+                  text: 'One of your images could not be processed — please try again.',
+                  icon: 'error',
+                  confirmButtonText: 'Ok',
+                  confirmButtonColor: '#6432C8'
+                });
+              });
         }
         // 1000px looked soft/pixelated on retina displays at the storefront's
         // larger placements (cover photo renders up to ~700px CSS-wide, which
         // needs ~1400-2100px of real pixels on a 2x-3x DPI screen). 2000px
         // covers that comfortably while still capping runaway file sizes.
-        resizeImages($("#portfolioImageUpload").prop('files'), 2000, 2000, function(resizedImages) {
+        resizeImages(selectedFiles, 2000, 2000, function(resizedImages) {
             let userData = new FormData();
             let iter = 0;
             resizedImages.forEach(({ name, blob }) => {
                 userData.append('image' + String(iter), blob, name);
                 iter +=1;
             });
-            $("#imageUploadSpinner").css("display", "block");
             $.ajax({
                 type: "POST",
                 headers: {
@@ -672,6 +696,8 @@
                 processData: false,
                 success: function (data) {
                   $("#imageUploadSpinner").css("display", "none");
+                  $("#imageUploadStatus").addClass("hidden");
+                  $("#uploadPortfolioImageButton").prop("disabled", false);
                   const uploaded = Array.isArray(data) ? data.length : 0;
                   const attempted = resizedImages.length;
                   if (uploaded === 0) {
@@ -698,6 +724,8 @@
                 },
                 error: function () {
                   $("#imageUploadSpinner").css("display", "none");
+                  $("#imageUploadStatus").addClass("hidden");
+                  $("#uploadPortfolioImageButton").prop("disabled", false);
                   Swal.fire({
                     title: 'Upload failed',
                     text: 'Something went wrong uploading your images — please try again with fewer images at once.',

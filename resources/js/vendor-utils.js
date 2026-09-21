@@ -2,12 +2,21 @@ $( document ).ready(function() {
   // Contact confirm for Find Couples lives in find-couples.js (fc-contact-confirm-modal).
 
   $('body').on('click', '#endorse-btn', function(event) {
+    let $btn = $(this);
+    // No immediate feedback here meant a slow/failed request looked like the
+    // click "didn't register," so people clicked again — guard against that
+    // double submission and give instant visual feedback on the first click.
+    if ($btn.prop('disabled')) {
+      return;
+    }
+    $btn.prop('disabled', true).data('original-text', $btn.text()).text('Submitting...');
+
     let endorsements = new Array();
     $.each($("input[name='endorsements[]']:checked"), function() {
       endorsements.push($(this).val());
     });
     let formData = {
-      vendor_uuid: $(this).data("vendor-uuid"),
+      vendor_uuid: $btn.data("vendor-uuid"),
       endorsements: endorsements,
     };
     $.ajax({
@@ -18,11 +27,22 @@ $( document ).ready(function() {
       url: "/vendor/endorse",
       data: formData,
       success: function (data) {
+        $btn.prop('disabled', false).text($btn.data('original-text'));
         $("#endorse-vendor-modal-close-btn").trigger("click");
         Swal.fire({
           title: 'Success!',
           text: "You have submitted an endorsement for this vendor!",
           icon:  'success',
+          confirmButtonText: 'Ok',
+          confirmButtonColor: '#6432C8'
+        });
+      },
+      error: function () {
+        $btn.prop('disabled', false).text($btn.data('original-text'));
+        Swal.fire({
+          title: 'Something went wrong',
+          text: "We couldn't submit your endorsement — please try again.",
+          icon: 'error',
           confirmButtonText: 'Ok',
           confirmButtonColor: '#6432C8'
         });

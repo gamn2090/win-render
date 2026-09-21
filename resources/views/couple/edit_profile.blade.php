@@ -217,7 +217,11 @@
 
   document.getElementById('cropButton').addEventListener('click', function () {
     if (!cropper) return;
-    const canvas = cropper.getCroppedCanvas({ width: 300, height: 300 });
+    // 300px looked pixelated wherever this photo is shown larger than a tiny
+    // thumbnail — e.g. the vendor-facing Find Couples cards render it in a
+    // ~250-330px box with object-fit: cover, which needs 500-990px of real
+    // pixels on a 2x-3x retina screen. 800px covers that comfortably.
+    const canvas = cropper.getCroppedCanvas({ width: 800, height: 800 });
     canvas.toBlob(function (blob) {
       if (!blob) return;
       const fileInput = document.getElementById('imageUpload');
